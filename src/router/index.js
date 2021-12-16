@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import dashboard from './modules/dashboard/dashboard'
 
 Vue.use(VueRouter)
 
@@ -10,40 +11,31 @@ const router = new VueRouter({
     return { x: 0, y: 0 }
   },
   routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: () => import('@/views/Home.vue'),
-      meta: {
-        pageTitle: 'Home',
-        breadcrumb: [
-          {
-            text: 'Home',
-            active: true,
-          },
-        ],
-      },
-    },
-    {
-      path: '/second-page',
-      name: 'second-page',
-      component: () => import('@/views/SecondPage.vue'),
-      meta: {
-        pageTitle: 'Second Page',
-        breadcrumb: [
-          {
-            text: 'Second Page',
-            active: true,
-          },
-        ],
-      },
-    },
+    ...dashboard,
+    // {
+    //   path: '/second-page',
+    //   name: 'second-page',
+    //   component: () => import('@/views/SecondPage.vue'),
+    //   meta: {
+    //     pageTitle: 'Second Page',
+    //     breadcrumb: [
+    //       {
+    //         text: 'Second Page',
+    //         active: true,
+    //       },
+    //     ],
+    //     resource: 'Home',
+    //     action: 'read',
+    //   },
+    // },
     {
       path: '/login',
-      name: 'login',
-      component: () => import('@/views/Login.vue'),
+      name: 'auth-login',
+      component: () => import('@/views/auth/Login.vue'),
       meta: {
         layout: 'full',
+        resource: 'Guest',
+        redirectIfLoggedIn: true,
       },
     },
     {
@@ -52,6 +44,7 @@ const router = new VueRouter({
       component: () => import('@/views/error/Error404.vue'),
       meta: {
         layout: 'full',
+        resource: 'Guest',
       },
     },
     {
@@ -59,16 +52,6 @@ const router = new VueRouter({
       redirect: 'error-404',
     },
   ],
-})
-
-// ? For splash screen
-// Remove afterEach hook if you are not using splash screen
-router.afterEach(() => {
-  // Remove initial loading
-  const appLoading = document.getElementById('loading-bg')
-  if (appLoading) {
-    appLoading.style.display = 'none'
-  }
 })
 
 export default router

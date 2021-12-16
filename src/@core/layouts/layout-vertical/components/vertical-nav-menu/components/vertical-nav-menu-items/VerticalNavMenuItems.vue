@@ -1,12 +1,14 @@
 <template>
-  <ul>
-    <component
-      :is="resolveNavItemComponent(item)"
-      v-for="item in items"
-      :key="item.header || item.title"
-      :item="item"
-    />
-  </ul>
+  <div>
+    <ul>
+      <component
+        :is="resolveNavItemComponent(item)"
+        v-for="item in items"
+        :key="item.header || item.title"
+        :item="item"
+      />
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -20,20 +22,20 @@ export default {
   components: {
     VerticalNavMenuHeader,
     VerticalNavMenuLink,
-    VerticalNavMenuGroup,
+    VerticalNavMenuGroup
   },
   props: {
     items: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
   setup() {
     provide('openGroups', ref([]))
 
     return {
-      resolveNavItemComponent,
+      resolveNavItemComponent
     }
-  },
+  }
 }
 </script>

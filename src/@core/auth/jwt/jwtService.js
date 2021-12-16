@@ -1,5 +1,6 @@
 import jwtDefaultConfig from './jwtDefaultConfig'
 
+console.log('jwtDefaultConfig', 'JwtService')
 export default class JwtService {
   // Will be used by this service for making API calls
   axiosIns = null
@@ -30,7 +31,7 @@ export default class JwtService {
         }
         return config
       },
-      error => Promise.reject(error),
+      error => Promise.reject(error)
     )
 
     // Add request/response interceptor
@@ -45,14 +46,14 @@ export default class JwtService {
         if (response && response.status === 401) {
           if (!this.isAlreadyFetchingAccessToken) {
             this.isAlreadyFetchingAccessToken = true
-            this.refreshToken().then(r => {
+            this.refreshToken().then(res => {
               this.isAlreadyFetchingAccessToken = false
 
               // Update accessToken in localStorage
-              this.setToken(r.data.accessToken)
-              this.setRefreshToken(r.data.refreshToken)
+              this.setToken(res.data.accessToken)
+              this.setRefreshToken(res.data.refreshToken)
 
-              this.onAccessTokenFetched(r.data.accessToken)
+              this.onAccessTokenFetched(res.data.accessToken)
             })
           }
           const retryOriginalRequest = new Promise(resolve => {
@@ -64,18 +65,25 @@ export default class JwtService {
               resolve(this.axiosIns(originalRequest))
             })
           })
+          console.log(
+            'JwtService -> constructor -> retryOriginalRequest',
+            retryOriginalRequest
+          )
           return retryOriginalRequest
         }
         return Promise.reject(error)
-      },
+      }
     )
   }
 
   onAccessTokenFetched(accessToken) {
-    this.subscribers = this.subscribers.filter(callback => callback(accessToken))
+    this.subscribers = this.subscribers.filter(callback =>
+      callback(accessToken)
+    )
   }
 
   addSubscriber(callback) {
+    console.log('JwtService -> addSubscriber -> callback', this.subscribers)
     this.subscribers.push(callback)
   }
 
@@ -95,7 +103,7 @@ export default class JwtService {
     localStorage.setItem(this.jwtConfig.storageRefreshTokenKeyName, value)
   }
 
-  login(...args) {
+  async login(...args) {
     return this.axiosIns.post(this.jwtConfig.loginEndpoint, ...args)
   }
 

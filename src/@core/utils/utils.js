@@ -1,6 +1,11 @@
+import {
+  reactive,
+  getCurrentInstance,
+  watch,
+  toRefs,
+} from '@vue/composition-api'
 import router from '@/router'
 // eslint-disable-next-line object-curly-newline
-import { reactive, getCurrentInstance, watch, toRefs } from '@vue/composition-api'
 
 export const isObject = obj => typeof obj === 'object' && obj !== null
 
@@ -15,7 +20,8 @@ export const isToday = date => {
   )
 }
 
-const getRandomFromArray = array => array[Math.floor(Math.random() * array.length)]
+const getRandomFromArray = array =>
+  array[Math.floor(Math.random() * array.length)]
 
 // ? Light and Dark variant is not included
 // prettier-ignore
@@ -37,7 +43,7 @@ export const useRouter = () => {
     () => vm.$route,
     r => {
       state.route = r
-    },
+    }
   )
 
   return { ...toRefs(state), router: vm.$router }

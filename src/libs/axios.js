@@ -4,9 +4,10 @@ import Vue from 'vue'
 import axios from 'axios'
 
 const axiosIns = axios.create({
+  withCredentials: true,
   // You can add your headers here
   // ================================
-  // baseURL: 'https://some-domain.com/api/',
+  baseURL: process.env.VUE_APP_API_URL,
   // timeout: 1000,
   // headers: {'X-Custom-Header': 'foobar'}
 })
