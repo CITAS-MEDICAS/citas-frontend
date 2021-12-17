@@ -1,13 +1,12 @@
 <template>
   <b-card
     no-body
-    :class="{'open': visible}"
+    :class="{ open: visible }"
     @mouseenter="collapseOpen"
     @mouseleave="collapseClose"
   >
     <b-card-header
-
-      :class="{'collapsed': !visible}"
+      :class="{ collapsed: !visible }"
       :aria-expanded="visible ? 'true' : 'false'"
       :aria-controls="collapseItemID"
       role="tab"
@@ -33,9 +32,7 @@
 </template>
 
 <script>
-import {
-  BCard, BCardHeader, BCardBody, BCollapse,
-} from 'bootstrap-vue'
+import { BCard, BCardHeader, BCardBody, BCollapse } from 'bootstrap-vue'
 import { v4 as uuidv4 } from 'uuid'
 
 export default {
@@ -64,7 +61,9 @@ export default {
   },
   computed: {
     accordion() {
-      return this.$parent.accordion ? `accordion-${this.$parent.collapseID}` : null
+      return this.$parent.accordion
+        ? `accordion-${this.$parent.collapseID}`
+        : null
     },
   },
   created() {

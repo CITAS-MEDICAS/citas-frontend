@@ -17,7 +17,12 @@ import ar from 'vee-validate/dist/locale/ar.json'
 import en from 'vee-validate/dist/locale/en.json'
 
 // eslint-disable-next-line object-curly-newline
-import { validatorPositive, validatorUrlValidator, validatorPassword, validatorCreditCard } from './validators'
+import {
+  validatorPositive,
+  validatorUrlValidator,
+  validatorPassword,
+  validatorCreditCard,
+} from './validators'
 
 // ////////////////////////////////////////////////////////
 // General
@@ -59,7 +64,8 @@ export const credit = extend('credit-card', {
 
 export const password = extend('password', {
   validate: validatorPassword,
-  message: 'Your {_field_} must contain at least one uppercase, one lowercase, one special character and one digit',
+  message:
+    'Your {_field_} must contain at least one uppercase, one lowercase, one special character and one digit',
 })
 
 export const url = extend('url', {

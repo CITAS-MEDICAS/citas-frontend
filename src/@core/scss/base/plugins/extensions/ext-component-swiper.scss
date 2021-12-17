@@ -63,12 +63,20 @@
   }
   .swiper-button-next {
     &:after {
-      background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $white), '#', '%23'));
+      background-image: url(str-replace(
+        str-replace($chevron-right, 'currentColor', $white),
+        '#',
+        '%23'
+      ));
     }
   }
   .swiper-button-prev {
     &:after {
-      background-image: url(str-replace(str-replace($chevron-left, 'currentColor', $white), '#', '%23'));
+      background-image: url(str-replace(
+        str-replace($chevron-left, 'currentColor', $white),
+        '#',
+        '%23'
+      ));
     }
   }
 
@@ -91,12 +99,20 @@
   &.swiper-container-rtl {
     .swiper-button-next {
       &:after {
-        background-image: url(str-replace(str-replace($chevron-left, 'currentColor', $white), '#', '%23'));
+        background-image: url(str-replace(
+          str-replace($chevron-left, 'currentColor', $white),
+          '#',
+          '%23'
+        ));
       }
     }
     .swiper-button-prev {
       &:after {
-        background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $white), '#', '%23'));
+        background-image: url(str-replace(
+          str-replace($chevron-right, 'currentColor', $white),
+          '#',
+          '%23'
+        ));
       }
     }
   }
@@ -206,7 +222,11 @@
 
 .swiper-button-prev {
   &:after {
-    background-image: url(str-replace(str-replace($chevron-left, 'currentColor', $primary), '#', '%23'));
+    background-image: url(str-replace(
+      str-replace($chevron-left, 'currentColor', $primary),
+      '#',
+      '%23'
+    ));
     background-repeat: no-repeat;
     background-position: center;
     background-size: 44px;
@@ -220,7 +240,11 @@
 
 .swiper-button-next {
   &:after {
-    background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $primary), '#', '%23'));
+    background-image: url(str-replace(
+      str-replace($chevron-right, 'currentColor', $primary),
+      '#',
+      '%23'
+    ));
     background-repeat: no-repeat;
     background-position: center;
     background-size: 44px;
@@ -235,7 +259,11 @@
 .swiper-container-rtl {
   .swiper-button-prev {
     &:after {
-      background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $primary), '#', '%23'));
+      background-image: url(str-replace(
+        str-replace($chevron-right, 'currentColor', $primary),
+        '#',
+        '%23'
+      ));
       background-repeat: no-repeat;
       background-position: center;
       background-size: 44px;
@@ -248,7 +276,11 @@
 
   .swiper-button-next {
     &:after {
-      background-image: url(str-replace(str-replace($chevron-left, 'currentColor', $primary), '#', '%23'));
+      background-image: url(str-replace(
+        str-replace($chevron-left, 'currentColor', $primary),
+        '#',
+        '%23'
+      ));
       background-repeat: no-repeat;
       background-position: center;
       background-size: 44px;

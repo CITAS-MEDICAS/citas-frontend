@@ -3,10 +3,10 @@
     v-if="canViewVerticalNavMenuGroup(item)"
     class="dropdown dropdown-submenu"
     :class="{
-      'show': isOpen,
-      'disabled': item.disabled,
+      show: isOpen,
+      disabled: item.disabled,
       'sidebar-group-active active open': isActive,
-      'openLeft': openChildDropdownOnLeft
+      openLeft: openChildDropdownOnLeft,
     }"
     @mouseenter="() => updateGroupOpen(true)"
     @mouseleave="() => updateGroupOpen(false)"
@@ -14,16 +14,13 @@
     <b-link
       class="dropdown-item"
       href="#"
-      :class="{'dropdown-toggle': item.children}"
+      :class="{ 'dropdown-toggle': item.children }"
       @click="() => updateGroupOpen(!isOpen)"
     >
       <feather-icon :icon="item.icon || 'CircleIcon'" />
       <span class="menu-title">{{ t(item.title) }}</span>
     </b-link>
-    <ul
-      ref="refChildDropdown"
-      class="dropdown-menu"
-    >
+    <ul ref="refChildDropdown" class="dropdown-menu">
       <component
         :is="resolveNavItemComponent(child)"
         v-for="child in item.children"
@@ -91,6 +88,4 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

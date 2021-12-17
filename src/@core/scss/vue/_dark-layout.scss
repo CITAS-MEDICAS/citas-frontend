@@ -32,7 +32,8 @@ body {
     .b-avatar-group {
       .b-avatar-group-inner {
         .b-avatar {
-          box-shadow: 0 0 0 2px $theme-dark-card-bg, inset 0 0 0 1px rgba(40, 48, 70, 0.07);
+          box-shadow: 0 0 0 2px $theme-dark-card-bg,
+            inset 0 0 0 1px rgba(40, 48, 70, 0.07);
         }
       }
     }
@@ -364,7 +365,9 @@ body {
     // ------------------------------------------------
     // Checkbox
     // ------------------------------------------------
-    .was-validated .custom-control-input:invalid ~ .custom-control-label::before,
+    .was-validated
+      .custom-control-input:invalid
+      ~ .custom-control-label::before,
     .custom-control-input.is-invalid ~ .custom-control-label::before {
       border-color: $danger !important;
     }

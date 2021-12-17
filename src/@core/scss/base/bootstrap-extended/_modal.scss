@@ -101,8 +101,10 @@
     width: ($modal-slide-in-width-sm - 5);
 
     .modal-content {
-      padding-bottom: ($modal-title-line-height * $close-font-size) + $modal-header-padding-y;
-      padding-top: ($modal-title-line-height * $close-font-size) + $modal-header-padding-y;
+      padding-bottom: ($modal-title-line-height * $close-font-size) +
+        $modal-header-padding-y;
+      padding-top: ($modal-title-line-height * $close-font-size) +
+        $modal-header-padding-y;
       overflow: auto;
       border-radius: 0;
       height: 100%;

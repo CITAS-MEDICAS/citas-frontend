@@ -1,6 +1,10 @@
 $bs-height-base: ($line-height-base + $input-btn-padding-y * 2) !default;
-$bs-height-lg: (floor($font-size-lg * $line-height-base) + $input-btn-padding-y-lg * 2) !default;
-$bs-height-sm: (floor($font-size-sm * 1.5) + $input-btn-padding-y-lg * 2) !default;
+$bs-height-lg: (
+  floor($font-size-lg * $line-height-base) + $input-btn-padding-y-lg * 2
+) !default;
+$bs-height-sm: (
+  floor($font-size-sm * 1.5) + $input-btn-padding-y-lg * 2
+) !default;
 $bs-height-xs: (floor($font-size-sm * 0.2) + $input-btn-padding-y-lg) !default;
 
 .btn-social {
@@ -36,7 +40,12 @@ $bs-height-xs: (floor($font-size-sm * 0.2) + $input-btn-padding-y-lg) !default;
 }
 
 // Social button Mixin
-@mixin btn-social($color-bg, $color: #fff, $hover: $color-bg, $border-hover: $color-bg) {
+@mixin btn-social(
+  $color-bg,
+  $color: #fff,
+  $hover: $color-bg,
+  $border-hover: $color-bg
+) {
   background-color: $color-bg;
   @include button-variant($color-bg, $color, $hover, $border-hover);
   color: $white !important;

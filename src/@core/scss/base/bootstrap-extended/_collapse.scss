@@ -115,7 +115,11 @@
       top: 58%;
       right: 1rem;
       margin-top: -8px;
-      background-image: url(str-replace(str-replace($chevron-down, 'currentColor', $body-color), '#', '%23'));
+      background-image: url(str-replace(
+        str-replace($chevron-down, 'currentColor', $body-color),
+        '#',
+        '%23'
+      ));
       background-repeat: no-repeat;
       background-position: center;
       background-size: 14px;
@@ -127,7 +131,11 @@
 
     &:disabled {
       &:before {
-        background-image: url(str-replace(str-replace($chevron-up, 'currentColor', $body-color), '#', '%23'));
+        background-image: url(str-replace(
+          str-replace($chevron-up, 'currentColor', $body-color),
+          '#',
+          '%23'
+        ));
       }
     }
   }

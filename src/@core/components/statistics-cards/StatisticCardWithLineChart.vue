@@ -7,14 +7,8 @@
         </h2>
         <span>{{ statisticTitle }}</span>
       </div>
-      <b-avatar
-        :variant="`light-${color}`"
-        size="45"
-      >
-        <feather-icon
-          size="21"
-          :icon="icon"
-        />
+      <b-avatar :variant="`light-${color}`" size="45">
+        <feather-icon size="21" :icon="icon" />
       </b-avatar>
     </b-card-body>
 
@@ -25,7 +19,6 @@
       :options="chartOptionsComputed"
       :series="chartData"
     />
-
   </b-card>
 </template>
 
@@ -73,7 +66,9 @@ export default {
       if (this.chartOptions === null) {
         const options = JSON.parse(JSON.stringify(lineChartOptions))
 
-        options.fill.gradient.gradientToColors = [this.gradientToColor(this.color)]
+        options.fill.gradient.gradientToColors = [
+          this.gradientToColor(this.color),
+        ]
         options.colors = [$themeColors[this.color]]
 
         return options

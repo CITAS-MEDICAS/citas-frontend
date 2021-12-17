@@ -1,15 +1,8 @@
 <template>
   <b-card no-body>
     <b-card-body class="pb-0">
-      <b-avatar
-        class="mb-1"
-        :variant="`light-${color}`"
-        size="45"
-      >
-        <feather-icon
-          size="21"
-          :icon="icon"
-        />
+      <b-avatar class="mb-1" :variant="`light-${color}`" size="45">
+        <feather-icon size="21" :icon="icon" />
       </b-avatar>
       <div class="truncate">
         <h2 class="mb-25 font-weight-bolder">
@@ -26,7 +19,6 @@
       :options="chartOptionsComputed"
       :series="chartData"
     />
-
   </b-card>
 </template>
 

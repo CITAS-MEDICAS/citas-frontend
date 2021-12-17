@@ -30,7 +30,7 @@ export default class JwtService {
         }
         return config
       },
-      error => Promise.reject(error),
+      error => Promise.reject(error)
     )
 
     // Add request/response interceptor
@@ -67,12 +67,14 @@ export default class JwtService {
           return retryOriginalRequest
         }
         return Promise.reject(error)
-      },
+      }
     )
   }
 
   onAccessTokenFetched(accessToken) {
-    this.subscribers = this.subscribers.filter(callback => callback(accessToken))
+    this.subscribers = this.subscribers.filter(callback =>
+      callback(accessToken)
+    )
   }
 
   addSubscriber(callback) {

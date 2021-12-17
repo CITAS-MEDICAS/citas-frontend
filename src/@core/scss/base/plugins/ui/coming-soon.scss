@@ -11,7 +11,8 @@ $usn-x-large: 1200px;
 // create sass list to pass media query data
 // if a breakpoint name changes, remember to
 // update it in the list below as well
-$mq-sync: xs $usn-x-small, sm $usn-small, md $usn-medium, lg $usn-large, xl $usn-x-large;
+$mq-sync: xs $usn-x-small, sm $usn-small, md $usn-medium, lg $usn-large,
+  xl $usn-x-large;
 
 // build each media query for js ingestion
 @each $mq in $mq-sync {

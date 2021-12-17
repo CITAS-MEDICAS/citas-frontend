@@ -28,7 +28,9 @@ $chat-widget-height: 390px;
     background-color: $chat-image-back-color;
     padding: 1rem;
     position: relative;
-    height: calc(100% - #{$chat-head-footer-height} - #{$chat-head-footer-height});
+    height: calc(
+      100% - #{$chat-head-footer-height} - #{$chat-head-footer-height}
+    );
     .avatar {
       img {
         border: 2px solid $white;
@@ -62,7 +64,11 @@ $chat-widget-height: 390px;
         margin: 0 1rem 10px 0;
         clear: both;
         color: $white;
-        @include gradient-directional(map-get($primary-color, 'base'), map-get($primary-color, 'lighten-2'), 80deg);
+        @include gradient-directional(
+          map-get($primary-color, 'base'),
+          map-get($primary-color, 'lighten-2'),
+          80deg
+        );
         border-radius: $border-radius;
         box-shadow: 0 4px 8px 0 rgba($black, 0.12);
         max-width: 75%;

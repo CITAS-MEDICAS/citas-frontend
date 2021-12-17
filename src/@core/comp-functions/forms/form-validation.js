@@ -4,7 +4,10 @@ import { ref, nextTick } from '@vue/composition-api'
 // ! This is coupled with "veeValidate" plugin
 // ===========================================================
 
-export default function formValidation(resetFormData, clearFormData = () => {}) {
+export default function formValidation(
+  resetFormData,
+  clearFormData = () => {}
+) {
   // ------------------------------------------------
   // refFormObserver
   // ! This is for veeValidate Observer
@@ -27,7 +30,13 @@ export default function formValidation(resetFormData, clearFormData = () => {}) 
   // * It returns true/false based on validation
   // ------------------------------------------------
   // eslint-disable-next-line object-curly-newline
-  const getValidationState = ({ dirty, validated, required: fieldRequired, changed, valid = null }) => {
+  const getValidationState = ({
+    dirty,
+    validated,
+    required: fieldRequired,
+    changed,
+    valid = null,
+  }) => {
     const result = dirty || validated ? valid : null
     return !fieldRequired && !changed ? null : result
   }

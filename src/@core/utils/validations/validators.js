@@ -26,7 +26,8 @@ export const validatorUrlValidator = val => {
     return true
   }
   /* eslint-disable no-useless-escape */
-  const re = /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/
+  const re =
+    /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/
   /* eslint-enable no-useless-escape */
   return re.test(val)
 }

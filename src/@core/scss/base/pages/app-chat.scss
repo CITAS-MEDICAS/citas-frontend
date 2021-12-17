@@ -148,7 +148,9 @@ $chat-profile-sidebar-head-height: 200px;
       }
       .contact-list {
         .chat-info {
-          width: calc(100% - 46px); // ? avatar size with 2px border = 42+2+2 =46px
+          width: calc(
+            100% - 46px
+          ); // ? avatar size with 2px border = 42+2+2 =46px
           padding-right: 0;
         }
       }
@@ -168,7 +170,9 @@ $chat-profile-sidebar-head-height: 200px;
         padding: 0.786rem 1.286rem;
         .chat-info {
           margin-top: 0.3rem;
-          width: calc(100% - 46px - 46px); // ? avatar size with 2px border = 42+2+2 =46px & date area width = 46px
+          width: calc(
+            100% - 46px - 46px
+          ); // ? avatar size with 2px border = 42+2+2 =46px & date area width = 46px
           padding: 0 0.75rem;
           .card-text,
           p {
@@ -184,7 +188,11 @@ $chat-profile-sidebar-head-height: 200px;
           background: $body-bg;
         }
         &.active {
-          @include gradient-directional(map-get($primary-color, 'base'), map-get($primary-color, 'lighten-2'), 80deg);
+          @include gradient-directional(
+            map-get($primary-color, 'base'),
+            map-get($primary-color, 'lighten-2'),
+            80deg
+          );
           h1,
           h2,
           h3,

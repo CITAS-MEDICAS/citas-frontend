@@ -25,7 +25,10 @@ export default {
   mutations: {
     TOGGLE_RTL(state) {
       state.layout.isRTL = !state.layout.isRTL
-      document.documentElement.setAttribute('dir', state.layout.isRTL ? 'rtl' : 'ltr')
+      document.documentElement.setAttribute(
+        'dir',
+        state.layout.isRTL ? 'rtl' : 'ltr'
+      )
     },
     UPDATE_SKIN(state, skin) {
       state.layout.skin = skin
@@ -35,7 +38,8 @@ export default {
 
       // Update DOM for dark-layout
       if (skin === 'dark') document.body.classList.add('dark-layout')
-      else if (document.body.className.match('dark-layout')) document.body.classList.remove('dark-layout')
+      else if (document.body.className.match('dark-layout'))
+        document.body.classList.remove('dark-layout')
     },
     UPDATE_ROUTER_TRANSITION(state, val) {
       state.layout.routerTransition = val

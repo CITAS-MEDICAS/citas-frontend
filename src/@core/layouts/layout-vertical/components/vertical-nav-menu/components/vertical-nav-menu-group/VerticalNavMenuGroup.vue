@@ -3,8 +3,8 @@
     v-if="canViewVerticalNavMenuGroup(item)"
     class="nav-item has-sub"
     :class="{
-      'open': isOpen,
-      'disabled': item.disabled,
+      open: isOpen,
+      disabled: item.disabled,
       'sidebar-group-active': isActive,
     }"
   >
@@ -23,11 +23,7 @@
         {{ item.tag }}
       </b-badge>
     </b-link>
-    <b-collapse
-      v-model="isOpen"
-      class="menu-content"
-      tag="ul"
-    >
+    <b-collapse v-model="isOpen" class="menu-content" tag="ul">
       <component
         :is="resolveNavItemComponent(child)"
         v-for="child in item.children"
@@ -68,12 +64,8 @@ export default {
     },
   },
   setup(props) {
-    const {
-      isOpen,
-      isActive,
-      updateGroupOpen,
-      updateIsActive,
-    } = useVerticalNavMenuGroup(props.item)
+    const { isOpen, isActive, updateGroupOpen, updateIsActive } =
+      useVerticalNavMenuGroup(props.item)
 
     const { t } = useI18nUtils()
     const { canViewVerticalNavMenuGroup } = useAclUtils()
@@ -95,6 +87,4 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -84,7 +84,11 @@ $vs-dropdown-box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.1);
     }
 
     // Icon
-    background-image: url(str-replace(str-replace($check, 'currentColor', $white), '#', '%23'));
+    background-image: url(str-replace(
+      str-replace($check, 'currentColor', $white),
+      '#',
+      '%23'
+    ));
     background-repeat: no-repeat;
     background-position: center;
     background-size: 1.1rem;
