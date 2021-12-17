@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import dashboard from './modules/pages/dashboard'
+import pages from './modules/pages/pages'
+import medicalCenter from '@/router/modules/administration/medicalCenter'
+import medicalUnit from '@/router/modules/administration/medicalUnit'
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -9,66 +14,7 @@ const router = new VueRouter({
   scrollBehavior() {
     return { x: 0, y: 0 }
   },
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: () => import('@/views/Home.vue'),
-      meta: {
-        pageTitle: 'Home',
-        breadcrumb: [
-          {
-            text: 'Home',
-            active: true,
-          },
-        ],
-      },
-    },
-    {
-      path: '/second-page',
-      name: 'second-page',
-      component: () => import('@/views/SecondPage.vue'),
-      meta: {
-        pageTitle: 'Second Page',
-        breadcrumb: [
-          {
-            text: 'Second Page',
-            active: true,
-          },
-        ],
-      },
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: () => import('@/views/Login.vue'),
-      meta: {
-        layout: 'full',
-      },
-    },
-    {
-      path: '/error-404',
-      name: 'error-404',
-      component: () => import('@/views/error/Error404.vue'),
-      meta: {
-        layout: 'full',
-      },
-    },
-    {
-      path: '*',
-      redirect: 'error-404',
-    },
-  ],
-})
-
-// ? For splash screen
-// Remove afterEach hook if you are not using splash screen
-router.afterEach(() => {
-  // Remove initial loading
-  const appLoading = document.getElementById('loading-bg')
-  if (appLoading) {
-    appLoading.style.display = 'none'
-  }
+  routes: [...pages, ...dashboard, ...medicalCenter, ...medicalUnit],
 })
 
 export default router
