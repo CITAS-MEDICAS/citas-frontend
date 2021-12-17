@@ -1,8 +1,5 @@
 <template>
-  <ul
-    id="main-menu-navigation"
-    class="nav navbar-nav"
-  >
+  <ul id="main-menu-navigation" class="nav navbar-nav">
     <component
       :is="resolveNavComponent(item)"
       v-for="item in items"

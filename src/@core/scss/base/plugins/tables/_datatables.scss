@@ -22,7 +22,11 @@ table.dataTable {
     .sorting_desc {
       padding-right: inherit;
       &:before {
-        background-image: url(str-replace(str-replace($chevron-up, 'currentColor', $table-head-color), '#', '%23'));
+        background-image: url(str-replace(
+          str-replace($chevron-up, 'currentColor', $table-head-color),
+          '#',
+          '%23'
+        ));
         background-repeat: no-repeat;
         background-position: center;
         background-size: 12px;
@@ -34,7 +38,11 @@ table.dataTable {
         top: 0.5rem;
       }
       &:after {
-        background-image: url(str-replace(str-replace($chevron-down, 'currentColor', $table-head-color), '#', '%23'));
+        background-image: url(str-replace(
+          str-replace($chevron-down, 'currentColor', $table-head-color),
+          '#',
+          '%23'
+        ));
         background-repeat: no-repeat;
         background-position: center;
         background-size: 12px;

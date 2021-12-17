@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="btn-scroll-to-top"
-    :class="{'show': y > 250}"
-  >
+  <div class="btn-scroll-to-top" :class="{ show: y > 250 }">
     <!-- We have wrapper because ripple effect give position relative to this absolute positioned btn -->
     <!-- Hence due to that our btn get lost -->
     <b-button
@@ -11,10 +8,7 @@
       class="btn-icon"
       @click="scrollToTop"
     >
-      <feather-icon
-        icon="ArrowUpIcon"
-        size="16"
-      />
+      <feather-icon icon="ArrowUpIcon" size="16" />
     </b-button>
   </div>
 </template>
@@ -44,24 +38,23 @@ export default {
 
     return { y, scrollToTop }
   },
-
 }
 </script>
 
 <style lang="scss" scoped>
 .btn-scroll-to-top {
   position: fixed;
-    bottom: 5%;
-    right: 30px;
-    z-index: 99;
+  bottom: 5%;
+  right: 30px;
+  z-index: 99;
 
-    opacity: 0;
-    // transform: translateY(100px);
-    transition: all .5s ease;
+  opacity: 0;
+  // transform: translateY(100px);
+  transition: all 0.5s ease;
 
-    &.show {
-      opacity: 1;
-      // transform: translateY(0)
-    }
+  &.show {
+    opacity: 1;
+    // transform: translateY(0)
+  }
 }
 </style>

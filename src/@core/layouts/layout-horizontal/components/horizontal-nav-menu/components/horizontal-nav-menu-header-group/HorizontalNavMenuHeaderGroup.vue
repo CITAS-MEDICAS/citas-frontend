@@ -4,16 +4,13 @@
     class="dropdown nav-item"
     :class="{
       'sidebar-group-active active open': isActive,
-      'show': isOpen,
+      show: isOpen,
     }"
     @mouseenter="() => updateGroupOpen(true)"
     @mouseleave="() => updateGroupOpen(false)"
   >
     <b-link class="nav-link dropdown-toggle d-flex align-items-center">
-      <feather-icon
-        size="14"
-        :icon="item.icon"
-      />
+      <feather-icon size="14" :icon="item.icon" />
       <span>{{ t(item.header) }}</span>
     </b-link>
     <ul class="dropdown-menu">
@@ -52,12 +49,8 @@ export default {
     },
   },
   setup(props) {
-    const {
-      isActive,
-      updateIsActive,
-      isOpen,
-      updateGroupOpen,
-    } = useHorizontalNavMenuHeaderGroup(props.item)
+    const { isActive, updateIsActive, isOpen, updateGroupOpen } =
+      useHorizontalNavMenuHeaderGroup(props.item)
 
     const { t } = useI18nUtils()
     const { canViewHorizontalNavMenuHeaderGroup } = useAclUtils()

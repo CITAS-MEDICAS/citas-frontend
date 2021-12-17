@@ -65,7 +65,11 @@
   &::after {
     border: none !important;
     content: ' ';
-    background-image: url(str-replace(str-replace($chevron-down, 'currentColor', $white), '#', '%23'));
+    background-image: url(str-replace(
+      str-replace($chevron-down, 'currentColor', $white),
+      '#',
+      '%23'
+    ));
     background-repeat: no-repeat;
     background-position: center;
     background-size: 16px;
@@ -118,7 +122,11 @@
   .dropdown-toggle {
     // changed icon dropup caret
     &::after {
-      background-image: url(str-replace(str-replace($chevron-up, 'currentColor', $white), '#', '%23'));
+      background-image: url(str-replace(
+        str-replace($chevron-up, 'currentColor', $white),
+        '#',
+        '%23'
+      ));
       background-repeat: no-repeat;
       background-position: center;
       background-size: 16px;
@@ -139,7 +147,11 @@
     // changed icon dropup caret
     &::before {
       border: none !important;
-      background-image: url(str-replace(str-replace($chevron-left, 'currentColor', $white), '#', '%23'));
+      background-image: url(str-replace(
+        str-replace($chevron-left, 'currentColor', $white),
+        '#',
+        '%23'
+      ));
       background-repeat: no-repeat;
       background-position: center;
       background-size: 16px;
@@ -161,7 +173,11 @@
     // changed icon dropup caret
     &::after {
       border: none !important;
-      background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $white), '#', '%23'));
+      background-image: url(str-replace(
+        str-replace($chevron-right, 'currentColor', $white),
+        '#',
+        '%23'
+      ));
       background-repeat: no-repeat;
       background-position: center;
       background-size: 16px;

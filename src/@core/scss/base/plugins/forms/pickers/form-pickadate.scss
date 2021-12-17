@@ -34,13 +34,25 @@
   height: 18px;
 }
 .picker__nav--prev:before {
-  background-image: url(str-replace(str-replace($chevron-left, 'currentColor', $body-color), '#', '%23'));
+  background-image: url(str-replace(
+    str-replace($chevron-left, 'currentColor', $body-color),
+    '#',
+    '%23'
+  ));
 }
 .picker__nav--next:before {
-  background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $body-color), '#', '%23'));
+  background-image: url(str-replace(
+    str-replace($chevron-right, 'currentColor', $body-color),
+    '#',
+    '%23'
+  ));
 }
 .picker__button--close:before {
-  background-image: url(str-replace(str-replace($remove, 'currentColor', $danger), '#', '%23'));
+  background-image: url(str-replace(
+    str-replace($remove, 'currentColor', $danger),
+    '#',
+    '%23'
+  ));
   height: 10px !important;
 }
 
@@ -159,9 +171,17 @@
 //RTL Style
 [dir='rtl'] {
   .picker__nav--prev:before {
-    background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $body-color), '#', '%23'));
+    background-image: url(str-replace(
+      str-replace($chevron-right, 'currentColor', $body-color),
+      '#',
+      '%23'
+    ));
   }
   .picker__nav--next:before {
-    background-image: url(str-replace(str-replace($chevron-left, 'currentColor', $body-color), '#', '%23'));
+    background-image: url(str-replace(
+      str-replace($chevron-left, 'currentColor', $body-color),
+      '#',
+      '%23'
+    ));
   }
 }

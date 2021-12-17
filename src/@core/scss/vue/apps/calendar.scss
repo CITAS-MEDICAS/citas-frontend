@@ -8,7 +8,11 @@
 
 .fc-sidebarToggle-button {
   // content: '';
-  background-image: url(str-replace(str-replace($menu, 'currentColor', $body-color), '#', '%23'));
+  background-image: url(str-replace(
+    str-replace($menu, 'currentColor', $body-color),
+    '#',
+    '%23'
+  ));
   width: 25px;
   height: 25px;
   margin-right: 0.7rem !important;

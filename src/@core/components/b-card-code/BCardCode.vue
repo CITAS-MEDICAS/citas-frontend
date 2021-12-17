@@ -1,9 +1,5 @@
 <template>
-  <b-card
-    v-bind="cardAttrs"
-    no-body
-    v-on="$listeners"
-  >
+  <b-card v-bind="cardAttrs" no-body v-on="$listeners">
     <div class="card-header">
       <!-- Title & SubTitle -->
       <div>
@@ -61,7 +57,11 @@
 
 <script>
 import {
-  BCard, BCardTitle, BCardSubTitle, BCardBody, BCollapse,
+  BCard,
+  BCardTitle,
+  BCardSubTitle,
+  BCardBody,
+  BCollapse,
 } from 'bootstrap-vue'
 import 'prismjs'
 import 'prismjs/themes/prism-tomorrow.css'
@@ -116,36 +116,36 @@ export default {
     border-radius: 0.5rem;
   }
 
-    /* width */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-      background: #2d2d2d;
-      border-radius: 100%;
+  /* width */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: #2d2d2d;
+    border-radius: 100%;
 
-      .dark-layout & {
-        background-color: $theme-dark-body-bg !important;
-      }
+    .dark-layout & {
+      background-color: $theme-dark-body-bg !important;
     }
+  }
 
-    /* Track */
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
 
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-      border-radius: 0.5rem;
-      background: rgba(241,241,241,.4);
-    }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0.5rem;
+    background: rgba(241, 241, 241, 0.4);
+  }
 
-    /* Handle on hover */
-    // ::-webkit-scrollbar-thumb:hover {
-    // }
+  /* Handle on hover */
+  // ::-webkit-scrollbar-thumb:hover {
+  // }
 
-    ::-webkit-scrollbar-corner {
-      display: none;
-    }
+  ::-webkit-scrollbar-corner {
+    display: none;
+  }
 }
 
 .code-toggler {

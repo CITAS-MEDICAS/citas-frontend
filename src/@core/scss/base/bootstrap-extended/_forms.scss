@@ -252,7 +252,11 @@ textarea {
 // Select Inputs Specific SCSS
 select.form-control {
   &:not([multiple='multiple']) {
-    background-image: url(str-replace(str-replace($chevron-down, 'currentColor', $input-border-color), '#', '%23'));
+    background-image: url(str-replace(
+      str-replace($chevron-down, 'currentColor', $input-border-color),
+      '#',
+      '%23'
+    ));
     background-position: calc(100% - 12px) 13px, calc(100% - 20px) 13px, 100% 0;
     background-size: 18px 14px, 18px 14px;
     background-repeat: no-repeat;

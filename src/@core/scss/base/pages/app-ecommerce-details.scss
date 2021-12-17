@@ -139,7 +139,11 @@
     left: 0;
 
     &:after {
-      background-image: url(str-replace(str-replace($chevron-left, 'currentColor', $primary), '#', '%23'));
+      background-image: url(str-replace(
+        str-replace($chevron-left, 'currentColor', $primary),
+        '#',
+        '%23'
+      ));
       background-repeat: no-repeat;
       background-position: center;
       background-size: 44px;
@@ -154,7 +158,11 @@
     right: 0;
 
     &:after {
-      background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $primary), '#', '%23'));
+      background-image: url(str-replace(
+        str-replace($chevron-right, 'currentColor', $primary),
+        '#',
+        '%23'
+      ));
       background-repeat: no-repeat;
       background-position: center;
       background-size: 44px;
@@ -168,7 +176,11 @@
   .swiper-container-rtl {
     .swiper-button-prev {
       &:after {
-        background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $primary), '#', '%23'));
+        background-image: url(str-replace(
+          str-replace($chevron-right, 'currentColor', $primary),
+          '#',
+          '%23'
+        ));
         background-repeat: no-repeat;
         background-position: center;
         background-size: 44px;
@@ -181,7 +193,11 @@
 
     .swiper-button-next {
       &:after {
-        background-image: url(str-replace(str-replace($chevron-left, 'currentColor', $primary), '#', '%23'));
+        background-image: url(str-replace(
+          str-replace($chevron-left, 'currentColor', $primary),
+          '#',
+          '%23'
+        ));
         background-repeat: no-repeat;
         background-position: center;
         background-size: 44px;
@@ -267,7 +283,9 @@
 }
 
 @include media-breakpoint-down(sm) {
-  .ecommerce-application .swiper-responsive-breakpoints.swiper-container .swiper-slide {
+  .ecommerce-application
+    .swiper-responsive-breakpoints.swiper-container
+    .swiper-slide {
     padding: 1rem;
   }
 }

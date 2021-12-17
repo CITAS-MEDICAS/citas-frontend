@@ -122,7 +122,11 @@
   font-size: 0.95rem;
 
   &:after {
-    background-image: url(str-replace(str-replace($chevron-down, 'currentColor', $body-color), '#', '%23'));
+    background-image: url(str-replace(
+      str-replace($chevron-down, 'currentColor', $body-color),
+      '#',
+      '%23'
+    ));
     left: 5px;
   }
 }

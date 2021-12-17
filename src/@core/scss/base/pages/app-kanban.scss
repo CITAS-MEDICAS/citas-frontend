@@ -79,7 +79,8 @@ $avatar-add-new-color: rgba(108, 117, 125, 0.12);
           box-shadow: $box-shadow;
           cursor: pointer;
           @include border-radius($card-border-radius);
-          transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1), background 0s, color 0s, border 0s;
+          transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1), background 0s,
+            color 0s, border 0s;
 
           i,
           svg {

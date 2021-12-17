@@ -1,10 +1,5 @@
 <template>
-  <e-charts
-    ref="line"
-    :options="option"
-    theme="theme-color"
-    auto-resize
-  />
+  <e-charts ref="line" :options="option" theme="theme-color" auto-resize />
 </template>
 
 <script>

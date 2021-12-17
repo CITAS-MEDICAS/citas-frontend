@@ -1,6 +1,5 @@
 <template>
   <layout-horizontal>
-
     <router-view />
 
     <template #navbar="{ toggleVerticalMenuActive }">

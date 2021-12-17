@@ -7,32 +7,17 @@
           :class="{ rotate: isCollapsed }"
           @click="$emit('collapse')"
         >
-          <feather-icon
-            icon="ChevronDownIcon"
-            size="16"
-          />
+          <feather-icon icon="ChevronDownIcon" size="16" />
         </a>
       </li>
       <li v-if="availableActions.includes('refresh')">
-        <a
-          data-action="reload"
-          @click="$emit('refresh')"
-        >
-          <feather-icon
-            icon="RotateCwIcon"
-            size="14"
-          />
+        <a data-action="reload" @click="$emit('refresh')">
+          <feather-icon icon="RotateCwIcon" size="14" />
         </a>
       </li>
       <li v-if="availableActions.includes('close')">
-        <a
-          data-action="close"
-          @click="$emit('close')"
-        >
-          <feather-icon
-            icon="XIcon"
-            size="14"
-          />
+        <a data-action="close" @click="$emit('close')">
+          <feather-icon icon="XIcon" size="14" />
         </a>
       </li>
     </ul>

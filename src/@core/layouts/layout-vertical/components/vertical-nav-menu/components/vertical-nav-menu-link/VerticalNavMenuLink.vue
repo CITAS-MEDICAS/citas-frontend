@@ -3,14 +3,11 @@
     v-if="canViewVerticalNavMenuLink(item)"
     class="nav-item"
     :class="{
-      'active': isActive,
-      'disabled': item.disabled
+      active: isActive,
+      disabled: item.disabled,
     }"
   >
-    <b-link
-      v-bind="linkProps"
-      class="d-flex align-items-center"
-    >
+    <b-link v-bind="linkProps" class="d-flex align-items-center">
       <feather-icon :icon="item.icon || 'CircleIcon'" />
       <span class="menu-title text-truncate">{{ t(item.title) }}</span>
       <b-badge
@@ -45,7 +42,9 @@ export default {
     },
   },
   setup(props) {
-    const { isActive, linkProps, updateIsActive } = useVerticalNavMenuLink(props.item)
+    const { isActive, linkProps, updateIsActive } = useVerticalNavMenuLink(
+      props.item
+    )
     const { t } = useI18nUtils()
     const { canViewVerticalNavMenuLink } = useAclUtils()
 
@@ -61,6 +60,5 @@ export default {
       t,
     }
   },
-
 }
 </script>

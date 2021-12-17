@@ -56,9 +56,17 @@
     pointer-events: none;
     margin-top: -0.7rem;
     filter: blur(5px);
-    background: linear-gradient(#fff 41%, hsla(0, 0%, 100%, 0.11) 95%, hsla(0, 0%, 100%, 0));
+    background: linear-gradient(
+      #fff 41%,
+      hsla(0, 0%, 100%, 0.11) 95%,
+      hsla(0, 0%, 100%, 0)
+    );
     .bordered-layout & {
-      background: linear-gradient($body-bg 41%, hsla(0, 0%, 100%, 0.11) 95%, hsla(0, 0%, 100%, 0));
+      background: linear-gradient(
+        $body-bg 41%,
+        hsla(0, 0%, 100%, 0.11) 95%,
+        hsla(0, 0%, 100%, 0)
+      );
     }
   }
 
@@ -91,11 +99,13 @@
         font-weight: 600;
         letter-spacing: 0.01rem;
         font-size: 1.45rem;
-        animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
+        animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1
+          fadein;
       }
     }
     .modern-nav-toggle {
-      animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
+      animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1
+        fadein;
     }
   }
 
@@ -114,7 +124,7 @@
 
     &.navigation-main {
       overflow-x: hidden;
-      padding-bottom: .75rem;
+      padding-bottom: 0.75rem;
       > li:first-child {
         margin-top: 0.5rem;
       }

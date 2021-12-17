@@ -54,9 +54,7 @@ export default {
           },
           splitLine: {
             lineStyle: {
-              color: [
-                '#eeeeee',
-              ],
+              color: ['#eeeeee'],
             },
           },
           axisLine: {

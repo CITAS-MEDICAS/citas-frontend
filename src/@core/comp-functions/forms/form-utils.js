@@ -8,7 +8,7 @@ export const useInputImageRenderer = (inputEl, callback) => {
       () => {
         callback(reader.result)
       },
-      false,
+      false
     )
 
     if (file) {

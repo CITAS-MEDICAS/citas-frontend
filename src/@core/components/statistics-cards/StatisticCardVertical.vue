@@ -1,14 +1,7 @@
 <template>
   <b-card class="text-center">
-    <b-avatar
-      class="mb-1"
-      :variant="`light-${color}`"
-      size="45"
-    >
-      <feather-icon
-        size="21"
-        :icon="icon"
-      />
+    <b-avatar class="mb-1" :variant="`light-${color}`" size="45">
+      <feather-icon size="21" :icon="icon" />
     </b-avatar>
     <div class="truncate">
       <h2 class="mb-25 font-weight-bolder">

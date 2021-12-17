@@ -93,7 +93,8 @@
     .context-menu-list {
       .context-menu-item {
         &.context-menu-submenu:after {
-          border-color: transparent $theme-dark-body-color transparent transparent;
+          border-color: transparent $theme-dark-body-color transparent
+            transparent;
         }
       }
     }
