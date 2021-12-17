@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'MedifalUnitCreate.vue',
+  name: 'MedifalUnitCreateVue',
 }
 </script>
 

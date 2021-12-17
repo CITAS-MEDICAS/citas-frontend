@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'MedicalCenterCreate.vue',
+  name: 'MedicalCenterCreateVue',
 }
 </script>
 
