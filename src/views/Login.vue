@@ -29,7 +29,7 @@
           </b-card-text>
 
           <!-- form -->
-          <validation-observer ref="loginValidation">
+          <validation-observer ref="loginForm">
             <b-form class="auth-login-form mt-2" @submit.prevent>
               <!-- email -->
               <b-form-group label="Email" label-for="login-email">
@@ -116,27 +116,6 @@
               <span>&nbsp;Create an account</span>
             </b-link>
           </b-card-text>
-
-          <!-- divider -->
-          <div class="divider my-2">
-            <div class="divider-text">or</div>
-          </div>
-
-          <!-- social buttons -->
-          <div class="auth-footer-btn d-flex justify-content-center">
-            <b-button variant="facebook" href="javascript:void(0)">
-              <feather-icon icon="FacebookIcon" />
-            </b-button>
-            <b-button variant="twitter" href="javascript:void(0)">
-              <feather-icon icon="TwitterIcon" />
-            </b-button>
-            <b-button variant="google" href="javascript:void(0)">
-              <feather-icon icon="MailIcon" />
-            </b-button>
-            <b-button variant="github" href="javascript:void(0)">
-              <feather-icon icon="GithubIcon" />
-            </b-button>
-          </div>
         </b-col>
       </b-col>
       <!-- /Login-->
@@ -148,55 +127,31 @@
 /* eslint-disable global-require */
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import VuexyLogo from '@core/layouts/components/Logo.vue'
-import {
-  BRow,
-  BCol,
-  BLink,
-  BFormGroup,
-  BFormInput,
-  BInputGroupAppend,
-  BInputGroup,
-  BFormCheckbox,
-  BCardText,
-  BCardTitle,
-  BImg,
-  BForm,
-  BButton,
-} from 'bootstrap-vue'
+
 import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import store from '@/store/index'
 
+// import { getHomeRouteForLoggedInUser } from '@/auth/utils'
+import { useJwt } from '@/auth/jwt/useJwt'
+
 export default {
   components: {
-    BRow,
-    BCol,
-    BLink,
-    BFormGroup,
-    BFormInput,
-    BInputGroupAppend,
-    BInputGroup,
-    BFormCheckbox,
-    BCardText,
-    BCardTitle,
-    BImg,
-    BForm,
-    BButton,
     VuexyLogo,
     ValidationProvider,
-    ValidationObserver,
+    ValidationObserver
   },
   mixins: [togglePasswordVisibility],
   data() {
     return {
       status: '',
-      password: '',
-      userEmail: '',
+      userEmail: 'administrador@app.com',
+      password: 'password',
       sideImg: require('@/assets/images/pages/login-v2.svg'),
       // validation rulesimport store from '@/store/index'
       required,
-      email,
+      email
     }
   },
   computed: {
@@ -210,24 +165,43 @@ export default {
         return this.sideImg
       }
       return this.sideImg
-    },
+    }
   },
   methods: {
-    validationForm() {
-      this.$refs.loginValidation.validate().then(success => {
-        if (success) {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'Form Submitted',
-              icon: 'EditIcon',
-              variant: 'success',
-            },
+    async validationForm() {
+      const isValid = await this.$refs.loginForm.validate()
+      console.log('validationForm -> isValid', isValid)
+
+      if (isValid) {
+        useJwt
+          .login({
+            email: this.userEmail,
+            password: this.password
           })
-        }
-      })
-    },
-  },
+          .then(({ data }) => {
+            const { userData } = data
+            useJwt.setToken(data.access_token)
+            useJwt.setRefreshToken(data.refresh_token)
+            localStorage.setItem('userData', JSON.stringify(userData))
+
+            // this.$router.replace(getHomeRouteForLoggedInUser(user.role))
+            this.$router.replace('/').then(() => {
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: `Bienvenido ${userData?.name || ''}`,
+                  icon: 'CoffeeIcon',
+                  variant: 'success'
+                }
+              })
+            })
+          })
+          .catch(error => {
+            console.log('validationForm -> error', error)
+          })
+      }
+    }
+  }
 }
 </script>
 
