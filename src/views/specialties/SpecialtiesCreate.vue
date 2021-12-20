@@ -4,7 +4,7 @@
       <b-col cols="12" xl="9" md="8">
         <b-card no-body>
           <b-card-body>
-            <MedicalCenterForm ref="refForm" />
+            <SpecialtiesForm ref="refForm" />
           </b-card-body>
         </b-card>
         <pre>{{ formData }}</pre>
@@ -22,14 +22,14 @@
 <script>
 import { provide, ref } from '@vue/composition-api'
 
-import MedicalCenterForm from './components/MedicalCenterForm'
-import { MedicalCenterResource } from '@/network/lib/medicalCenter'
+import SpecialtiesForm from './components/SpecialtiesForm'
+import { SpecialtiesResource } from '@/network/lib/specialties'
 import ToastificationContent from '@core/components/toastification/ToastificationContent'
 
 export default {
-  name: 'MedicalCenterEdit',
+  name: 'MedicalCenterCreate',
   components: {
-    MedicalCenterForm,
+    SpecialtiesForm,
   },
   setup() {
     const formData = ref({
@@ -45,19 +45,16 @@ export default {
       formData,
     }
   },
-  mounted() {
-    this.getResourceData()
-  },
   methods: {
     async handleSubmit() {
       const isValid = await this.$refs.refForm.validate()
 
       if (!isValid) return
 
-      const { data } = await MedicalCenterResource.update(this.$route.params.id, this.formData)
+      const { data } = await SpecialtiesResource.store(this.formData)
 
-      if (data.medicalCenter) {
-        this.$router.push({ name: 'medical-center-list' }).then(() => {
+      if (data.specialties) {
+        this.$router.push({ name: 'specialties-list' }).then(() => {
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -71,10 +68,6 @@ export default {
     },
     handleCancel() {
       this.$router.push({ name: 'medical-center-list' })
-    },
-    async getResourceData() {
-      const { data } = await MedicalCenterResource.getById(this.$route.params.id)
-      this.formData = data.medicalCenter
     },
   },
 }

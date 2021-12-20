@@ -18,10 +18,10 @@ export default [
   },
   {
     title: 'Especialidades',
-    route: null,
+    route: 'specialties-list',
     icon: 'UserIcon',
     action: 'read',
-    resource: 'Home',
+    resource: 'Especialidades',
   },
   {
     title: 'Turnos',

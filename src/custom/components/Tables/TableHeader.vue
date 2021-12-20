@@ -9,6 +9,7 @@
           class="per-page-selector d-inline-block ml-50 mr-1"
           :clearable="false"
         />
+
         <slot name="button" />
       </b-col>
       <b-col cols="12" md="6">

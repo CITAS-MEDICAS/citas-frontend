@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import dashboard from './modules/pages/dashboard'
 import pages from './modules/pages/pages'
 import medicalCenter from './modules/administration/medicalCenter'
+import specialities from '@/router/modules/administration/specialities'
 import medicalUnit from './modules/administration/medicalUnit'
 
 Vue.use(VueRouter)
@@ -14,7 +15,7 @@ const router = new VueRouter({
   scrollBehavior() {
     return { x: 0, y: 0 }
   },
-  routes: [...pages, ...dashboard, ...medicalCenter, ...medicalUnit],
+  routes: [...pages, ...dashboard, ...medicalCenter, ...medicalUnit, ...specialities],
 })
 
 export default router

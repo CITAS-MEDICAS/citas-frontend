@@ -1,5 +1,5 @@
 import { ref, provide, watch } from '@vue/composition-api'
-import { MedicalCenterResource } from '@/network/lib/medicalCenter'
+import { app } from '@/main'
 
 const useList = function () {
   const refTable = ref(null)
@@ -28,6 +28,41 @@ const useList = function () {
   provide('searchQuery', searchQuery)
   provide('currentPage', currentPage)
 
+  const deleteResource = async (resourceId, ResourceClass) => {
+    const result = await app.$swal({
+      title: '¿Esta used seguro/a?',
+      text: 'No se pordrá revertir este cambio.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, eliminar!',
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        confirmButton: 'btn btn-warning',
+        cancelButton: 'btn btn-outline-dark ml-1',
+      },
+      buttonsStyling: false,
+    })
+
+    if (!result) return false
+
+    const isDeleted = await ResourceClass.destroy(resourceId)
+
+    if (isDeleted.status == 204) {
+      app.$swal({
+        icon: 'success',
+        title: '¡Eliminado!',
+        text: 'La operación se realizo exitosamente.',
+        customClass: {
+          confirmButton: 'btn btn-success',
+        },
+      })
+
+      return true
+    }
+
+    return false
+  }
+
   return {
     refTable,
     perPage,
@@ -37,6 +72,7 @@ const useList = function () {
     searchQuery,
     sortBy,
     isSortDirDesc,
+    deleteResource,
   }
 }
 

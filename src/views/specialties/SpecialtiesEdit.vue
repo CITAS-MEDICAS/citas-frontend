@@ -4,7 +4,7 @@
       <b-col cols="12" xl="9" md="8">
         <b-card no-body>
           <b-card-body>
-            <MedicalCenterForm ref="refForm" />
+            <SpecialtiesForm ref="refForm" />
           </b-card-body>
         </b-card>
         <pre>{{ formData }}</pre>
@@ -22,14 +22,14 @@
 <script>
 import { provide, ref } from '@vue/composition-api'
 
-import MedicalCenterForm from './components/MedicalCenterForm'
-import { MedicalCenterResource } from '@/network/lib/medicalCenter'
+import SpecialtiesForm from './components/SpecialtiesForm'
+import { SpecialtiesResource } from '@/network/lib/specialties'
 import ToastificationContent from '@core/components/toastification/ToastificationContent'
 
 export default {
   name: 'MedicalCenterEdit',
   components: {
-    MedicalCenterForm,
+    SpecialtiesForm,
   },
   setup() {
     const formData = ref({
@@ -54,10 +54,10 @@ export default {
 
       if (!isValid) return
 
-      const { data } = await MedicalCenterResource.update(this.$route.params.id, this.formData)
+      const { data } = await SpecialtiesResource.update(this.$route.params.id, this.formData)
 
-      if (data.medicalCenter) {
-        this.$router.push({ name: 'medical-center-list' }).then(() => {
+      if (data.specialties) {
+        this.$router.push({ name: 'specialties-list' }).then(() => {
           this.$toast({
             component: ToastificationContent,
             props: {

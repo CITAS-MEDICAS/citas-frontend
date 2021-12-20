@@ -2,7 +2,9 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <b-button variant="primary" :to="{ name: 'medical-center-create' }"> Crear Centro</b-button>
+        <b-button variant="primary" :to="{ name: 'specialties-create' }">
+          Crear Especialidad
+        </b-button>
       </template>
     </table-header>
 
@@ -61,7 +63,7 @@ import useList from '../../custom/libs/useList'
 
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
-import { MedicalCenterResource } from '@/network/lib/medicalCenter'
+import { SpecialtiesResource } from '@/network/lib/specialties'
 
 export default {
   components: {
@@ -84,7 +86,7 @@ export default {
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
-      const { data } = await MedicalCenterResource.getAll({
+      const { data } = await SpecialtiesResource.getAll({
         q: searchQuery.value,
         limit: perPage.value,
         page: currentPage.value,
@@ -119,7 +121,7 @@ export default {
   },
   methods: {
     async handleDelete(resourceId) {
-      const result = await this.deleteResource(resourceId, MedicalCenterResource)
+      const result = await this.deleteResource(resourceId, SpecialtiesResource)
       if (result) {
         this.fetchItems()
       }
