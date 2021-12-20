@@ -24,10 +24,7 @@
           :is-last="tour.isLast"
           :labels="tour.labels"
         >
-          <div
-            slot="actions"
-            class="tour-actions d-flex justify-content-between"
-          >
+          <div slot="actions" class="tour-actions d-flex justify-content-between">
             <!-- Skip Button -->
             <b-button
               v-if="tour.currentStep != tour.steps.length - 1"

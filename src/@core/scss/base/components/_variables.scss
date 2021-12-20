@@ -98,15 +98,9 @@ $border-radius-xs: 0.12rem !default;
 $input-border-radius-xl: $border-radius-xl !default;
 $input-border-radius-xs: $border-radius-xs !default;
 
-$input-height-xl: (
-  ($font-size-xl * $line-height-xl) + ($input-padding-y-xl * 2)
-) !default;
-$input-height-xs: (
-  ($font-size-xs * $line-height-xs) + ($input-padding-y-xs * 2)
-) !default;
-$input-height-sm: (
-  ($font-size-sm * $line-height-sm) + ($input-padding-y-sm * 2)
-) !default;
+$input-height-xl: (($font-size-xl * $line-height-xl) + ($input-padding-y-xl * 2)) !default;
+$input-height-xs: (($font-size-xs * $line-height-xs) + ($input-padding-y-xs * 2)) !default;
+$input-height-sm: (($font-size-sm * $line-height-sm) + ($input-padding-y-sm * 2)) !default;
 
 //  -------------------------------
 //  Blank Page Bg Color

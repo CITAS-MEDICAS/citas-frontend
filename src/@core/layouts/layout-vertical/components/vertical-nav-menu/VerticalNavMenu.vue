@@ -3,9 +3,7 @@
     class="main-menu menu-fixed menu-accordion menu-shadow"
     :class="[
       {
-        expanded:
-          !isVerticalMenuCollapsed ||
-          (isVerticalMenuCollapsed && isMouseHovered),
+        expanded: !isVerticalMenuCollapsed || (isVerticalMenuCollapsed && isMouseHovered),
       },
       skin === 'semi-dark' ? 'menu-dark' : 'menu-light',
     ]"
@@ -69,10 +67,7 @@
         }
       "
     >
-      <vertical-nav-menu-items
-        :items="navMenuItems"
-        class="navigation navigation-main"
-      />
+      <vertical-nav-menu-items :items="navMenuItems" class="navigation navigation-main" />
     </vue-perfect-scrollbar>
     <!-- /main menu content-->
   </div>

@@ -3,6 +3,8 @@ import { ToastPlugin, ModalPlugin } from 'bootstrap-vue'
 import VueCompositionAPI from '@vue/composition-api'
 
 import router from './router'
+import './router/security'
+
 import store from './store'
 import App from './App.vue'
 

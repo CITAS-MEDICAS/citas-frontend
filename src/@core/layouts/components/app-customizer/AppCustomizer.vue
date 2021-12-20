@@ -10,9 +10,7 @@
     <!-- /Toggler -->
 
     <!-- Header -->
-    <div
-      class="customizer-section d-flex justify-content-between align-items-center"
-    >
+    <div class="customizer-section d-flex justify-content-between align-items-center">
       <div>
         <h4 class="text-uppercase mb-0">Theme Customizer</h4>
         <small>Customize &amp; Preview in Real Time</small>
@@ -54,13 +52,7 @@
 
         <!-- RTL -->
         <b-form-group label="RTL" label-cols="10">
-          <b-form-checkbox
-            v-model="isRTL"
-            class="mr-0 mt-50"
-            name="is-rtl"
-            switch
-            inline
-          />
+          <b-form-checkbox v-model="isRTL" class="mr-0 mt-50" name="is-rtl" switch inline />
         </b-form-group>
 
         <!-- Router Transition -->
@@ -134,14 +126,8 @@
         </b-form-group>
 
         <!-- Navbar Type -->
-        <b-form-group
-          :label="layoutType === 'vertical' ? 'Navbar Type' : 'Menu Type'"
-        >
-          <b-form-radio-group
-            v-model="navbarType"
-            name="navbar-type"
-            :options="navbarTypes"
-          />
+        <b-form-group :label="layoutType === 'vertical' ? 'Navbar Type' : 'Menu Type'">
+          <b-form-radio-group v-model="navbarType" name="navbar-type" :options="navbarTypes" />
         </b-form-group>
       </div>
 
@@ -149,11 +135,7 @@
       <div class="customizer-section">
         <!-- Footer Type -->
         <b-form-group label="Footer Type">
-          <b-form-radio-group
-            v-model="footerType"
-            name="footer-type"
-            :options="footerTypes"
-          />
+          <b-form-radio-group v-model="footerType" name="footer-type" :options="footerTypes" />
         </b-form-group>
       </div>
     </vue-perfect-scrollbar>
@@ -161,12 +143,7 @@
 </template>
 
 <script>
-import {
-  BLink,
-  BFormRadioGroup,
-  BFormGroup,
-  BFormCheckbox,
-} from 'bootstrap-vue'
+import { BLink, BFormRadioGroup, BFormGroup, BFormCheckbox } from 'bootstrap-vue'
 import vSelect from 'vue-select'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import useAppCustomizer from './useAppCustomizer'
@@ -226,9 +203,7 @@ export default {
 
     if (layoutType.value === 'horizontal') {
       // Remove semi-dark skin option in horizontal layout
-      const skinSemiDarkIndex = skinOptions.findIndex(
-        s => s.value === 'semi-dark'
-      )
+      const skinSemiDarkIndex = skinOptions.findIndex(s => s.value === 'semi-dark')
       delete skinOptions[skinSemiDarkIndex]
 
       // Remove menu hidden radio in horizontal layout => As we already have switch for it

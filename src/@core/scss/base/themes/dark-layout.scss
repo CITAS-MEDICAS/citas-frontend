@@ -738,11 +738,7 @@
           .page-link {
             &:before {
               background-image: url(str-replace(
-                str-replace(
-                  $chevron-left,
-                  'currentColor',
-                  $theme-dark-text-muted-color
-                ),
+                str-replace($chevron-left, 'currentColor', $theme-dark-text-muted-color),
                 '#',
                 '%23'
               ));
@@ -763,11 +759,7 @@
           .page-link {
             &:after {
               background-image: url(str-replace(
-                str-replace(
-                  $chevron-right,
-                  'currentColor',
-                  $theme-dark-text-muted-color
-                ),
+                str-replace($chevron-right, 'currentColor', $theme-dark-text-muted-color),
                 '#',
                 '%23'
               ));
@@ -948,8 +940,7 @@
     .avatar {
       img,
       .avatar-content {
-        box-shadow: 0 0 0 2px $theme-dark-card-bg,
-          inset 0 0 0 1px rgba($theme-dark-card-bg, 0.07);
+        box-shadow: 0 0 0 2px $theme-dark-card-bg, inset 0 0 0 1px rgba($theme-dark-card-bg, 0.07);
       }
     }
   }
@@ -1442,11 +1433,7 @@
           }
           &:after {
             background-image: url(str-replace(
-              str-replace(
-                $chevron-down,
-                'currentColor',
-                $theme-dark-body-color
-              ),
+              str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
               '#',
               '%23'
             ));
@@ -1699,11 +1686,7 @@
         .email-info-dropup {
           .dropdown-toggle::after {
             background-image: url(str-replace(
-              str-replace(
-                $chevron-down,
-                'currentColor',
-                $theme-dark-text-muted-color
-              ),
+              str-replace($chevron-down, 'currentColor', $theme-dark-text-muted-color),
               '#',
               '%23'
             ));
@@ -2303,9 +2286,7 @@
 
   /********** HORIZONTAL LAYOUT **********/
   .horizontal-layout {
-    &.navbar-sticky
-      .horizontal-menu-wrapper
-      .navbar-horizontal.header-navbar.fixed-top {
+    &.navbar-sticky .horizontal-menu-wrapper .navbar-horizontal.header-navbar.fixed-top {
       box-shadow: 0 4px 24px 0 rgba($black, 0.75) !important;
     }
     .horizontal-menu-wrapper {
@@ -2340,11 +2321,7 @@
           .nav-link {
             &.dropdown-toggle::after {
               background-image: url(str-replace(
-                str-replace(
-                  $chevron-down,
-                  'currentColor',
-                  $theme-dark-body-color
-                ),
+                str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
                 '#',
                 '%23'
               ));
@@ -2376,11 +2353,7 @@
           .dropdown-toggle {
             &::after {
               background-image: url(str-replace(
-                str-replace(
-                  $chevron-right,
-                  'currentColor',
-                  $theme-dark-body-color
-                ),
+                str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
                 '#',
                 '%23'
               ));

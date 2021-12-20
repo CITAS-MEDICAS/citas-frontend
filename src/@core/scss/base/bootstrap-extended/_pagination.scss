@@ -79,11 +79,7 @@
       .page-link {
         &:before {
           background-image: url(str-replace(
-            str-replace(
-              $chevron-left,
-              'currentColor',
-              $pagination-disabled-color
-            ),
+            str-replace($chevron-left, 'currentColor', $pagination-disabled-color),
             '#',
             '%23'
           ));
@@ -150,11 +146,7 @@
       .page-link {
         &:after {
           background-image: url(str-replace(
-            str-replace(
-              $chevron-right,
-              'currentColor',
-              $pagination-disabled-color
-            ),
+            str-replace($chevron-right, 'currentColor', $pagination-disabled-color),
             '#',
             '%23'
           ));
@@ -185,11 +177,7 @@
       &:hover {
         &:before {
           background-image: url(str-replace(
-            str-replace(
-              $chevron-left,
-              'currentColor',
-              $pagination-active-color
-            ),
+            str-replace($chevron-left, 'currentColor', $pagination-active-color),
             '#',
             '%23'
           )) !important;
@@ -200,11 +188,7 @@
       .page-link {
         &:before {
           background-image: url(str-replace(
-            str-replace(
-              $chevron-left,
-              'currentColor',
-              $pagination-disabled-color
-            ),
+            str-replace($chevron-left, 'currentColor', $pagination-disabled-color),
             '#',
             '%23'
           ));
@@ -243,11 +227,7 @@
       .page-link {
         &:after {
           background-image: url(str-replace(
-            str-replace(
-              $chevron-right,
-              'currentColor',
-              $pagination-disabled-color
-            ),
+            str-replace($chevron-right, 'currentColor', $pagination-disabled-color),
             '#',
             '%23'
           ));

@@ -33,16 +33,8 @@
 }
 
 // Transformed menu icons
-.vertical-layout.vertical-menu-modern.menu-expanded
-  .main-menu
-  .navigation
-  li.has-sub
-  > a:after,
-.vertical-layout.vertical-overlay-menu.menu-open
-  .main-menu
-  .navigation
-  li.has-sub
-  > a:after {
+.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation li.has-sub > a:after,
+.vertical-layout.vertical-overlay-menu.menu-open .main-menu .navigation li.has-sub > a:after {
   transform: rotate(180deg);
 }
 .vertical-layout.vertical-menu-modern.menu-expanded
@@ -54,10 +46,7 @@
 }
 
 // Horizontal menu
-.horizontal-menu
-  .header-navbar.navbar-horizontal
-  .dropdown-menu
-  .dropdown-toggle::after {
+.horizontal-menu .header-navbar.navbar-horizontal .dropdown-menu .dropdown-toggle::after {
   background-image: url(str-replace(
     str-replace($chevron-left, 'currentColor', $body-color),
     '#',
@@ -154,14 +143,10 @@
 }
 
 // Select2
-.select2-container--default
-  .select2-selection--single
-  .select2-selection__arrow {
+.select2-container--default .select2-selection--single .select2-selection__arrow {
   left: 1px;
 }
-.select2-container--default
-  .select2-selection--multiple
-  .select2-selection__choice {
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
   float: right;
 }
 .select2-search__field {

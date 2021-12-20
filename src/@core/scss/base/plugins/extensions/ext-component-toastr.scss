@@ -77,11 +77,7 @@
     background-color: $success;
   }
   &:after {
-    background-image: url(str-replace(
-      str-replace($check, 'currentColor', $white),
-      '#',
-      '%23'
-    ));
+    background-image: url(str-replace(str-replace($check, 'currentColor', $white), '#', '%23'));
   }
 }
 .toast-error {
@@ -95,11 +91,7 @@
     background-color: $danger;
   }
   &:after {
-    background-image: url(str-replace(
-      str-replace($remove, 'currentColor', $white),
-      '#',
-      '%23'
-    ));
+    background-image: url(str-replace(str-replace($remove, 'currentColor', $white), '#', '%23'));
   }
 }
 .toast-info {
@@ -113,11 +105,7 @@
     background-color: $info;
   }
   &:after {
-    background-image: url(str-replace(
-      str-replace($infoIcon, 'currentColor', $white),
-      '#',
-      '%23'
-    ));
+    background-image: url(str-replace(str-replace($infoIcon, 'currentColor', $white), '#', '%23'));
   }
 }
 .toast-warning {

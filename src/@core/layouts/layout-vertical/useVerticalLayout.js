@@ -9,18 +9,14 @@ export default function useVerticalLayout(navbarType, footerType) {
 
   const currentBreakpoint = ref('xl')
 
-  const isVerticalMenuCollapsed = computed(
-    () => store.state.verticalMenu.isVerticalMenuCollapsed
-  )
+  const isVerticalMenuCollapsed = computed(() => store.state.verticalMenu.isVerticalMenuCollapsed)
 
   const layoutClasses = computed(() => {
     const classes = []
 
     if (currentBreakpoint.value === 'xl') {
       classes.push('vertical-menu-modern')
-      classes.push(
-        isVerticalMenuCollapsed.value ? 'menu-collapsed' : 'menu-expanded'
-      )
+      classes.push(isVerticalMenuCollapsed.value ? 'menu-collapsed' : 'menu-expanded')
     } else {
       classes.push('vertical-overlay-menu')
       classes.push(isVerticalMenuActive.value ? 'menu-open' : 'menu-hide')
@@ -58,8 +54,7 @@ export default function useVerticalLayout(navbarType, footerType) {
   }
 
   const overlayClasses = computed(() => {
-    if (currentBreakpoint.value !== 'xl' && isVerticalMenuActive.value)
-      return 'show'
+    if (currentBreakpoint.value !== 'xl' && isVerticalMenuActive.value) return 'show'
     return null
   })
 

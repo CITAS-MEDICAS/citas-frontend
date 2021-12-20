@@ -47,7 +47,7 @@ $container-max-widths: (
   md: 720px,
   lg: 960px,
   xl: 1140px,
-  xxl: 1440px // Custom xxl size,,,,,,,,,
+  xxl: 1440px,
 ) !default;
 // scss-docs-end container-max-widths
 
@@ -201,8 +201,7 @@ $btn-border-radius-lg: 0.358rem !default;
 $btn-border-radius-sm: 0.358rem !default;
 
 $btn-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-  border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, background 0s,
-  border 0s !default;
+  border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, background 0s, border 0s !default;
 
 // Forms
 $custom-control-border-color: #d8d6de;
@@ -242,9 +241,8 @@ $input-height-sm: 2.142rem !default;
 $input-height-lg: 3.2857rem !default;
 
 $input-group-addon-bg: white !default;
-$custom-forms-transition: background-color 0.15s ease-in-out,
-  border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, background 0s,
-  border-color 0s !default;
+$custom-forms-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+  box-shadow 0.15s ease-in-out, background 0s, border-color 0s !default;
 
 $custom-control-indicator-border-color: $custom-control-border-color;
 

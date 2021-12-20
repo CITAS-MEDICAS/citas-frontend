@@ -66,9 +66,7 @@ export default {
       if (this.chartOptions === null) {
         const options = JSON.parse(JSON.stringify(lineChartOptions))
 
-        options.fill.gradient.gradientToColors = [
-          this.gradientToColor(this.color),
-        ]
+        options.fill.gradient.gradientToColors = [this.gradientToColor(this.color)]
         options.colors = [$themeColors[this.color]]
 
         return options

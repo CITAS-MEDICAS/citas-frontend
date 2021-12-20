@@ -1,7 +1,6 @@
 import { isToday } from './utils'
 
-export const kFormatter = num =>
-  num > 999 ? `${(num / 1000).toFixed(1)}k` : num
+export const kFormatter = num => (num > 999 ? `${(num / 1000).toFixed(1)}k` : num)
 
 export const title = (value, replacer = ' ') => {
   if (!value) return ''

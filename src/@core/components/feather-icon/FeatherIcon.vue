@@ -37,10 +37,7 @@ export default {
     )
 
     // Return span with children
-    return h('span', { staticClass: 'feather-icon position-relative' }, [
-      svg,
-      badgeEl,
-    ])
+    return h('span', { staticClass: 'feather-icon position-relative' }, [svg, badgeEl])
   },
 }
 </script>

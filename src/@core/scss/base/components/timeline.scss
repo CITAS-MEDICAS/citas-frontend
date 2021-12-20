@@ -53,10 +53,7 @@
 
         &:before {
           content: '';
-          background: rgba(
-            $color: $timeline-point-indicator-color,
-            $alpha: 0.12
-          );
+          background: rgba($color: $timeline-point-indicator-color, $alpha: 0.12);
           height: $timeline-point-indicator-wrapper-size;
           width: $timeline-point-indicator-wrapper-size;
           display: block;

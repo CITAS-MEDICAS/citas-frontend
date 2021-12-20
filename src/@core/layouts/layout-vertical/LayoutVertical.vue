@@ -20,9 +20,7 @@
           'header-navbar navbar navbar-shadow align-items-center',
         ]"
       >
-        <app-navbar-vertical-layout
-          :toggle-vertical-menu-active="toggleVerticalMenuActive"
-        />
+        <app-navbar-vertical-layout :toggle-vertical-menu-active="toggleVerticalMenuActive" />
       </slot>
     </b-navbar>
     <!--/ Navbar -->
@@ -40,11 +38,7 @@
     <!-- /Vertical Nav Menu -->
 
     <!-- Vertical Nav Menu Overlay -->
-    <div
-      class="sidenav-overlay"
-      :class="overlayClasses"
-      @click="isVerticalMenuActive = false"
-    />
+    <div class="sidenav-overlay" :class="overlayClasses" @click="isVerticalMenuActive = false" />
     <!-- /Vertical Nav Menu Overlay -->
 
     <!-- Content -->
@@ -107,19 +101,13 @@ export default {
     layoutContentRenderer() {
       const rendererType = this.$route.meta.contentRenderer
       if (rendererType === 'sidebar-left') return 'layout-content-renderer-left'
-      if (rendererType === 'sidebar-left-detached')
-        return 'layout-content-renderer-left-detached'
+      if (rendererType === 'sidebar-left-detached') return 'layout-content-renderer-left-detached'
       return 'layout-content-renderer-default'
     },
   },
   setup() {
-    const {
-      routerTransition,
-      navbarBackgroundColor,
-      navbarType,
-      footerType,
-      isNavMenuHidden,
-    } = useAppConfig()
+    const { routerTransition, navbarBackgroundColor, navbarType, footerType, isNavMenuHidden } =
+      useAppConfig()
 
     const {
       isVerticalMenuActive,

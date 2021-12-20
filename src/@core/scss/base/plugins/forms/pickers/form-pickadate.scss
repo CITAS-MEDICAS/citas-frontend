@@ -48,11 +48,7 @@
   ));
 }
 .picker__button--close:before {
-  background-image: url(str-replace(
-    str-replace($remove, 'currentColor', $danger),
-    '#',
-    '%23'
-  ));
+  background-image: url(str-replace(str-replace($remove, 'currentColor', $danger), '#', '%23'));
   height: 10px !important;
 }
 

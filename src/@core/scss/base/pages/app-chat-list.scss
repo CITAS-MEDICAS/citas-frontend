@@ -28,9 +28,7 @@ $chat-widget-height: 390px;
     background-color: $chat-image-back-color;
     padding: 1rem;
     position: relative;
-    height: calc(
-      100% - #{$chat-head-footer-height} - #{$chat-head-footer-height}
-    );
+    height: calc(100% - #{$chat-head-footer-height} - #{$chat-head-footer-height});
     .avatar {
       img {
         border: 2px solid $white;

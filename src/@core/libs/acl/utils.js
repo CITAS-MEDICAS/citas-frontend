@@ -17,8 +17,7 @@ export const can = (action, subject) => {
  * Based on item's action and resource
  * @param {Object} item navigation object item
  */
-export const canViewVerticalNavMenuLink = item =>
-  can(item.action, item.resource)
+export const canViewVerticalNavMenuLink = item => can(item.action, item.resource)
 
 /**
  * Check if user can view item based on it's ability
@@ -43,24 +42,21 @@ export const canViewVerticalNavMenuGroup = item => {
  * Based on item's action and resource
  * @param {Object} item navigation object item
  */
-export const canViewVerticalNavMenuHeader = item =>
-  can(item.action, item.resource)
+export const canViewVerticalNavMenuHeader = item => can(item.action, item.resource)
 
 /**
  * Check if user can view item based on it's ability
  * Based on item's action and resource
  * @param {Object} item navigation object item
  */
-export const canViewHorizontalNavMenuLink = item =>
-  can(item.action, item.resource)
+export const canViewHorizontalNavMenuLink = item => can(item.action, item.resource)
 
 /**
  * Check if user can view item based on it's ability
  * Based on item's action and resource
  * @param {Object} item navigation object item
  */
-export const canViewHorizontalNavMenuHeaderLink = item =>
-  can(item.action, item.resource)
+export const canViewHorizontalNavMenuHeaderLink = item => can(item.action, item.resource)
 
 /**
  * Check if user can view item based on it's ability
