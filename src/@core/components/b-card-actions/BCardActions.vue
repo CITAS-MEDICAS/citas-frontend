@@ -55,14 +55,7 @@
 </template>
 
 <script>
-import {
-  BCard,
-  BCardTitle,
-  BCardSubTitle,
-  BCardBody,
-  BCollapse,
-  BOverlay,
-} from 'bootstrap-vue'
+import { BCard, BCardTitle, BCardSubTitle, BCardBody, BCollapse, BOverlay } from 'bootstrap-vue'
 import BCardActionsContainer from './BCardActionsContainer.vue'
 
 export default {
@@ -123,9 +116,7 @@ export default {
     },
     availableActions() {
       const actions = []
-      const allFalse =
-        (this.actionCollapse || this.actionRefresh || this.actionClose) ===
-        false
+      const allFalse = (this.actionCollapse || this.actionRefresh || this.actionClose) === false
 
       if (this.actionCollapse || allFalse) actions.push('collapse')
       if (this.actionRefresh || allFalse) actions.push('refresh')
@@ -138,11 +129,7 @@ export default {
   },
   methods: {
     removeCard() {
-      this.$set(
-        this.cardStyles,
-        'maxHeight',
-        `${this.$refs.bCard.clientHeight}px`
-      )
+      this.$set(this.cardStyles, 'maxHeight', `${this.$refs.bCard.clientHeight}px`)
       setTimeout(() => {
         this.$set(this.cardStyles, 'maxHeight', '0px')
         this.$set(this.cardStyles, 'overflow', 'hidden')

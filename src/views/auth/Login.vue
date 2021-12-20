@@ -10,9 +10,7 @@
 
       <!-- Left Text-->
       <b-col lg="8" class="d-none d-lg-flex align-items-center p-5">
-        <div
-          class="w-100 d-lg-flex align-items-center justify-content-center px-5"
-        >
+        <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
           <b-img fluid :src="imgUrl" alt="Login V2" />
         </div>
       </b-col>
@@ -33,11 +31,7 @@
             <b-form class="auth-login-form mt-2" @submit.prevent>
               <!-- email -->
               <b-form-group label="Email" label-for="login-email">
-                <validation-provider
-                  #default="{ errors }"
-                  name="Email"
-                  rules="required|email"
-                >
+                <validation-provider #default="{ errors }" name="Email" rules="required|email">
                   <b-form-input
                     id="login-email"
                     v-model="userEmail"
@@ -57,11 +51,7 @@
                     <small>Forgot Password?</small>
                   </b-link>
                 </div>
-                <validation-provider
-                  #default="{ errors }"
-                  name="Password"
-                  rules="required"
-                >
+                <validation-provider #default="{ errors }" name="Password" rules="required">
                   <b-input-group
                     class="input-group-merge"
                     :class="errors.length > 0 ? 'is-invalid' : null"
@@ -89,22 +79,13 @@
 
               <!-- checkbox -->
               <b-form-group>
-                <b-form-checkbox
-                  id="remember-me"
-                  v-model="status"
-                  name="checkbox-1"
-                >
+                <b-form-checkbox id="remember-me" v-model="status" name="checkbox-1">
                   Remember Me
                 </b-form-checkbox>
               </b-form-group>
 
               <!-- submit buttons -->
-              <b-button
-                type="submit"
-                variant="primary"
-                block
-                @click="validationForm"
-              >
+              <b-button type="submit" variant="primary" block @click="validationForm">
                 Sign in
               </b-button>
             </b-form>
@@ -140,7 +121,7 @@ export default {
   components: {
     VuexyLogo,
     ValidationProvider,
-    ValidationObserver
+    ValidationObserver,
   },
   mixins: [togglePasswordVisibility],
   data() {
@@ -151,7 +132,7 @@ export default {
       sideImg: require('@/assets/images/pages/login-v2.svg'),
       // validation rulesimport store from '@/store/index'
       required,
-      email
+      email,
     }
   },
   computed: {
@@ -165,7 +146,7 @@ export default {
         return this.sideImg
       }
       return this.sideImg
-    }
+    },
   },
   methods: {
     async validationForm() {
@@ -176,7 +157,7 @@ export default {
         useJwt
           .login({
             email: this.userEmail,
-            password: this.password
+            password: this.password,
           })
           .then(({ data }) => {
             const { userData } = data
@@ -191,8 +172,8 @@ export default {
                 props: {
                   title: `Bienvenido ${userData?.name || ''}`,
                   icon: 'CoffeeIcon',
-                  variant: 'success'
-                }
+                  variant: 'success',
+                },
               })
             })
           })
@@ -200,8 +181,8 @@ export default {
             console.log('validationForm -> error', error)
           })
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

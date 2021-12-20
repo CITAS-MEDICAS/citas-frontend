@@ -2,11 +2,7 @@ import router from './index'
 
 import { canNavigate } from '@/libs/acl/routeProtection'
 
-import {
-  isUserLoggedIn,
-  getUserData,
-  getHomeRouteForLoggedInUser,
-} from '@/auth/utils'
+import { isUserLoggedIn, getUserData, getHomeRouteForLoggedInUser } from '@/auth/utils'
 
 router.beforeEach((to, _, next) => {
   const isLoggedIn = isUserLoggedIn()

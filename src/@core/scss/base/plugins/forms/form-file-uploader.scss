@@ -72,11 +72,7 @@
 
     &:before {
       content: '';
-      background-image: url(str-replace(
-        str-replace($remove, 'currentColor', $danger),
-        '#',
-        '%23'
-      ));
+      background-image: url(str-replace(str-replace($remove, 'currentColor', $danger), '#', '%23'));
       display: inline-block;
       line-height: 1;
       z-index: 2;

@@ -38,8 +38,7 @@
     .b-avatar {
       transition: all 0.25s ease 0s;
       border-width: 0;
-      box-shadow: 0 0 0 2px $avatar-group-border,
-        inset 0 0 0 1px rgba($black, 0.07);
+      box-shadow: 0 0 0 2px $avatar-group-border, inset 0 0 0 1px rgba($black, 0.07);
       cursor: pointer;
       &.pull-up:hover {
         transition: all 0.25s ease 0s;

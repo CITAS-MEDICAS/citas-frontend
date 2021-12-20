@@ -4,10 +4,7 @@ import { ref, nextTick } from '@vue/composition-api'
 // ! This is coupled with "veeValidate" plugin
 // ===========================================================
 
-export default function formValidation(
-  resetFormData,
-  clearFormData = () => {}
-) {
+export default function formValidation(resetFormData, clearFormData = () => {}) {
   // ------------------------------------------------
   // refFormObserver
   // ! This is for veeValidate Observer

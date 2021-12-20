@@ -17,14 +17,9 @@
     </div>
 
     <slot>
-      <div
-        class="d-flex flex-sm-row flex-column flex-wrap justify-content-between mb-1 mb-sm-0"
-      >
+      <div class="d-flex flex-sm-row flex-column flex-wrap justify-content-between mb-1 mb-sm-0">
         <h6 v-text="title" />
-        <small
-          class="timeline-item-time text-nowrap text-muted"
-          v-text="time"
-        />
+        <small class="timeline-item-time text-nowrap text-muted" v-text="time" />
       </div>
       <p class="mb-0" v-text="subtitle" />
     </slot>
@@ -166,10 +161,7 @@ $timeline-border-color: $border-color;
   .timeline-item {
     &:last-of-type {
       &:after {
-        background: linear-gradient(
-          $theme-dark-border-color,
-          $theme-dark-card-bg
-        );
+        background: linear-gradient($theme-dark-border-color, $theme-dark-card-bg);
       }
     }
     &:not(:last-of-type) {

@@ -129,18 +129,13 @@ export default {
       })
     },
     removeItemFromCart(productId) {
-      this.$store
-        .dispatch('app-ecommerce/removeProductFromCart', { productId })
-        .then(() => {
-          const itemIndex = this.items.findIndex(p => p.id === productId)
-          this.items.splice(itemIndex, 1)
+      this.$store.dispatch('app-ecommerce/removeProductFromCart', { productId }).then(() => {
+        const itemIndex = this.items.findIndex(p => p.id === productId)
+        this.items.splice(itemIndex, 1)
 
-          // Update count in cart items state
-          this.$store.commit(
-            'app-ecommerce/UPDATE_CART_ITEMS_COUNT',
-            this.items.length
-          )
-        })
+        // Update count in cart items state
+        this.$store.commit('app-ecommerce/UPDATE_CART_ITEMS_COUNT', this.items.length)
+      })
     },
   },
 }

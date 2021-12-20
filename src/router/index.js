@@ -3,8 +3,8 @@ import VueRouter from 'vue-router'
 
 import dashboard from './modules/pages/dashboard'
 import pages from './modules/pages/pages'
-import medicalCenter from '@/router/modules/administration/medicalCenter'
-import medicalUnit from '@/router/modules/administration/medicalUnit'
+import medicalCenter from './modules/administration/medicalCenter'
+import medicalUnit from './modules/administration/medicalUnit'
 
 Vue.use(VueRouter)
 

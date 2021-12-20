@@ -27,14 +27,7 @@
 @each $color_name, $color in $colors {
   @each $color_type, $color_value in $color {
     @if $color_type == 'base' {
-      @if (
-        $color_name !=
-          'light' and
-          $color_name !=
-          'black' and
-          $color_name !=
-          'white'
-      ) {
+      @if ($color_name != 'light' and $color_name != 'black' and $color_name != 'white') {
         .bg-gradient-#{$color_name},
         .btn-gradient-#{$color_name} {
           color: $white;

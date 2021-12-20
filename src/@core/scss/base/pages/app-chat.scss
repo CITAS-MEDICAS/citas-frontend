@@ -148,9 +148,7 @@ $chat-profile-sidebar-head-height: 200px;
       }
       .contact-list {
         .chat-info {
-          width: calc(
-            100% - 46px
-          ); // ? avatar size with 2px border = 42+2+2 =46px
+          width: calc(100% - 46px); // ? avatar size with 2px border = 42+2+2 =46px
           padding-right: 0;
         }
       }

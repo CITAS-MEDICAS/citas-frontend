@@ -71,15 +71,15 @@
   height: calc(
     100vh -
       calc(
-        calc(#{$contentPadding} * #{$spacingSides}) + #{$navbarHeight} + #{$footerHeight} +
-          #{$floatingNavMargin} + #{$horizontalMenuHeight}
+        calc(#{$contentPadding} * #{$spacingSides}) + #{$navbarHeight} + #{$footerHeight} + #{$floatingNavMargin} +
+          #{$horizontalMenuHeight}
       )
   );
   height: calc(
     var(--vh, 1vh) * 100 -
       calc(
-        calc(#{$contentPadding} * #{$spacingSides}) + #{$navbarHeight} + #{$footerHeight} +
-          #{$floatingNavMargin} + #{$horizontalMenuHeight}
+        calc(#{$contentPadding} * #{$spacingSides}) + #{$navbarHeight} + #{$footerHeight} + #{$floatingNavMargin} +
+          #{$horizontalMenuHeight}
       )
   );
   // responsive size height
@@ -88,15 +88,13 @@
       height: calc(
         100vh -
           calc(
-            calc(calc(#{$contentPadding} - 0.8rem) * #{$spacingSides}) + #{$navbarHeight} +
-              #{$footerHeight}
+            calc(calc(#{$contentPadding} - 0.8rem) * #{$spacingSides}) + #{$navbarHeight} + #{$footerHeight}
           )
       );
       height: calc(
         var(--vh, 1vh) * 100 -
           calc(
-            calc(calc(#{$contentPadding} - 0.8rem) * #{$spacingSides}) + #{$navbarHeight} +
-              #{$footerHeight}
+            calc(calc(#{$contentPadding} - 0.8rem) * #{$spacingSides}) + #{$navbarHeight} + #{$footerHeight}
           )
       );
     }
@@ -105,19 +103,15 @@
       height: calc(
         100vh -
           calc(
-            calc(
-                calc(#{$contentPadding} * #{$spacingSides}) -
-                  calc(0.8rem * #{$spacingSides})
-              ) + #{$navbarHeight} + #{$footerHeight} + #{$floatingNavMargin} + #{$horizontalMenuHeight}
+            calc(calc(#{$contentPadding} * #{$spacingSides}) - calc(0.8rem * #{$spacingSides})) + #{$navbarHeight} +
+              #{$footerHeight} + #{$floatingNavMargin} + #{$horizontalMenuHeight}
           )
       );
       height: calc(
         var(--vh, 1vh) * 100 -
           calc(
-            calc(
-                calc(#{$contentPadding} * #{$spacingSides}) -
-                  calc(0.8rem * #{$spacingSides})
-              ) + #{$navbarHeight} + #{$footerHeight} + #{$floatingNavMargin} + #{$horizontalMenuHeight}
+            calc(calc(#{$contentPadding} * #{$spacingSides}) - calc(0.8rem * #{$spacingSides})) + #{$navbarHeight} +
+              #{$footerHeight} + #{$floatingNavMargin} + #{$horizontalMenuHeight}
           )
       );
     }
@@ -147,8 +141,7 @@
     background: $theme-bg;
     .navigation-header {
       color: lighten($theme-color, 21.5%);
-      margin: calc(#{$content-padding} + 0.286rem) 0 0.8rem
-        ($content-padding + 0.2rem);
+      margin: calc(#{$content-padding} + 0.286rem) 0 0.8rem ($content-padding + 0.2rem);
       padding: 0;
       line-height: 1.5;
       letter-spacing: 0.01rem;
@@ -245,11 +238,7 @@
       &.active {
         z-index: 1;
         > a {
-          background: linear-gradient(
-            118deg,
-            rgba($primary, 1),
-            rgba($primary, 0.7)
-          );
+          background: linear-gradient(118deg, rgba($primary, 1), rgba($primary, 0.7));
           box-shadow: 0 0 10px 1px rgba($primary, 0.7);
           color: $white;
           font-weight: 400;
@@ -327,11 +316,7 @@
         }
 
         .active {
-          background: linear-gradient(
-            118deg,
-            rgba($primary, 1),
-            rgba($primary, 0.7)
-          );
+          background: linear-gradient(118deg, rgba($primary, 1), rgba($primary, 0.7));
           box-shadow: 0 0 10px 1px rgba($primary, 0.7);
           border-radius: 4px;
           z-index: 1;
@@ -347,12 +332,7 @@
 // $menu-expanded-width : Expanded menu width
 // $menu-collapsed-width: Collapsed menu width
 // ================================================
-@mixin menu-content(
-  $menu-expanded-width,
-  $menu-collapsed-width,
-  $theme-color,
-  $theme-bg
-) {
+@mixin menu-content($menu-expanded-width, $menu-collapsed-width, $theme-color, $theme-bg) {
   .main-menu-content {
     > span.menu-title,
     a.menu-title {

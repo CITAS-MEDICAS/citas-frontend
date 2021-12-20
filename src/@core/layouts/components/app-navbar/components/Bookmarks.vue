@@ -14,17 +14,8 @@
         :delay="{ show: 1000, hide: 50 }"
       />
     </b-nav-item>
-    <b-nav-item-dropdown
-      link-classes="bookmark-star"
-      lazy
-      @hidden="resetsearchQuery"
-    >
-      <feather-icon
-        slot="button-content"
-        icon="StarIcon"
-        size="21"
-        class="text-warning"
-      />
+    <b-nav-item-dropdown link-classes="bookmark-star" lazy @hidden="resetsearchQuery">
+      <feather-icon slot="button-content" icon="StarIcon" size="21" class="text-warning" />
 
       <!-- Dropdown Content -->
       <li style="min-width: 300px">
@@ -61,9 +52,7 @@
             />
           </b-dropdown-item>
           <b-dropdown-item
-            v-show="
-              !(filteredData.pages && filteredData.pages.length) && searchQuery
-            "
+            v-show="!(filteredData.pages && filteredData.pages.length) && searchQuery"
             disabled
           >
             No Results Found.
@@ -102,9 +91,7 @@ export default {
   },
   setup() {
     const searchAndBookmarkDataPages = ref(searchAndBookmarkData.pages)
-    const bookmarks = ref(
-      searchAndBookmarkData.pages.data.filter(page => page.isBookmarked)
-    )
+    const bookmarks = ref(searchAndBookmarkData.pages.data.filter(page => page.isBookmarked))
     const currentSelected = ref(-1)
 
     const perfectScrollbarSettings = {
@@ -132,9 +119,7 @@ export default {
 
     const toggleBookmarked = item => {
       // Find Index of item/page in bookmarks' array
-      const pageIndexInBookmarks = bookmarks.value.findIndex(
-        i => i.route === item.route
-      )
+      const pageIndexInBookmarks = bookmarks.value.findIndex(i => i.route === item.route)
 
       // If index is > -1 => Item is bookmarked => Remove item from bookmarks array using index
       // Else => Item is not bookmarked => Add item to bookmarks' array
