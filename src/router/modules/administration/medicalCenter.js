@@ -8,9 +8,6 @@ export default [
       breadcrumb: [
         {
           text: 'Centros de Salud',
-        },
-        {
-          text: 'Listado',
           active: true,
         },
       ],

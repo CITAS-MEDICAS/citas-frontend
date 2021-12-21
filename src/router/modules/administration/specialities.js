@@ -8,9 +8,6 @@ export default [
       breadcrumb: [
         {
           text: 'Especialidades',
-        },
-        {
-          text: 'Listado',
           active: true,
         },
       ],

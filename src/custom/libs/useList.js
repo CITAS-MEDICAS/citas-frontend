@@ -42,7 +42,6 @@ const useList = function () {
       },
       buttonsStyling: false,
     })
-    console.log('-> result', result)
 
     if (!result.isConfirmed) return false
 
