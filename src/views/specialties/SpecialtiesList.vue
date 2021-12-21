@@ -23,18 +23,18 @@
       <template #cell(actions)="data">
         <div class="text-nowrap">
           <b-button
-            v-b-tooltip.hover.top="'Editar Centro'"
+            v-b-tooltip.hover.top="'Editar Especialidad'"
             variant="flat-success"
             class="btn-icon rounded-circle"
             :to="{
-              name: 'medical-center-edit',
+              name: 'specialties-edit',
               params: { id: data.item.id },
             }"
           >
             <feather-icon icon="EditIcon" />
           </b-button>
           <b-button
-            v-b-tooltip.hover.top="'Eliminar Centro'"
+            v-b-tooltip.hover.top="'Eliminar Especialidad'"
             variant="flat-danger"
             class="btn-icon rounded-circle"
             @click="handleDelete(data.item.id)"
@@ -46,7 +46,7 @@
 
       <template #cell(name)="data">
         <b-link
-          :to="{ name: 'medical-center-edit', params: { id: data.item.id } }"
+          :to="{ name: 'specialties-edit', params: { id: data.item.id } }"
           class="font-weight-bold"
         >
           {{ data.value }}
@@ -81,6 +81,7 @@ export default {
       sortBy,
       isSortDirDesc,
       deleteResource,
+      refetchData,
     } = useList()
 
     const fetchItems = async () => {
@@ -100,9 +101,8 @@ export default {
     const tableColumns = [
       { key: 'actions', label: 'Acciones', thStyle: { width: '100px' } },
       { key: 'id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
-      { key: 'name', label: 'Centro de Salud', sortable: true },
-      { key: 'institution_code', label: 'Código de Establecimiento', sortable: true },
-      { key: 'institution_network', label: 'Red de Salud', sortable: true },
+      { key: 'name', label: 'Especialidad', sortable: true },
+      { key: 'is_general', label: 'Es General', sortable: true },
     ]
 
     return {
@@ -117,13 +117,14 @@ export default {
       isSortDirDesc,
       fetchItems,
       deleteResource,
+      refetchData,
     }
   },
   methods: {
     async handleDelete(resourceId) {
-      const result = await this.deleteResource(resourceId, SpecialtiesResource)
-      if (result) {
-        this.fetchItems()
+      const isDeleted = await this.deleteResource(resourceId, SpecialtiesResource)
+      if (isDeleted) {
+        this.refetchData()
       }
     },
   },

@@ -79,6 +79,7 @@ export default {
       sortBy,
       isSortDirDesc,
       deleteResource,
+      refetchData,
     } = useList()
 
     const fetchItems = async () => {
@@ -115,13 +116,14 @@ export default {
       isSortDirDesc,
       fetchItems,
       deleteResource,
+      refetchData,
     }
   },
   methods: {
     async handleDelete(resourceId) {
-      const result = await this.deleteResource(resourceId, MedicalCenterResource)
-      if (result) {
-        this.fetchItems()
+      const isDeleted = await this.deleteResource(resourceId, MedicalCenterResource)
+      if (isDeleted) {
+        this.refetchData()
       }
     },
   },

@@ -42,8 +42,9 @@ const useList = function () {
       },
       buttonsStyling: false,
     })
+    console.log('-> result', result)
 
-    if (!result) return false
+    if (!result.isConfirmed) return false
 
     const isDeleted = await ResourceClass.destroy(resourceId)
 
@@ -52,15 +53,26 @@ const useList = function () {
         icon: 'success',
         title: '¡Eliminado!',
         text: 'La operación se realizo exitosamente.',
+        timer: 1500,
         customClass: {
           confirmButton: 'btn btn-success',
         },
       })
 
       return true
-    }
+    } else {
+      app.$swal({
+        icon: 'warning',
+        title: '¡Error!',
+        text: 'Ocurrio un error en el proceso.',
+        timer: 1500,
+        customClass: {
+          confirmButton: 'btn btn-success',
+        },
+      })
 
-    return false
+      return false
+    }
   }
 
   return {
@@ -73,6 +85,7 @@ const useList = function () {
     sortBy,
     isSortDirDesc,
     deleteResource,
+    refetchData,
   }
 }
 

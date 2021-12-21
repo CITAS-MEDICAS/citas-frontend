@@ -34,9 +34,7 @@ export default {
   setup() {
     const formData = ref({
       name: '',
-      address: '',
-      institution_code: '',
-      institution_network: '',
+      is_general: false,
     })
 
     provide('formData', formData)
@@ -73,8 +71,8 @@ export default {
       this.$router.push({ name: 'medical-center-list' })
     },
     async getResourceData() {
-      const { data } = await MedicalCenterResource.getById(this.$route.params.id)
-      this.formData = data.medicalCenter
+      const { data } = await SpecialtiesResource.getById(this.$route.params.id)
+      this.formData = data.specialties
     },
   },
 }

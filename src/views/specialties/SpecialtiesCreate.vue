@@ -34,9 +34,7 @@ export default {
   setup() {
     const formData = ref({
       name: '',
-      address: '',
-      institution_code: '',
-      institution_network: '',
+      is_general: false,
     })
 
     provide('formData', formData)
