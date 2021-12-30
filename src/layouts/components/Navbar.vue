@@ -22,7 +22,7 @@
       >
         <template #button-content>
           <div class="d-sm-flex d-none user-nav">
-            <p class="user-name font-weight-bolder mb-0">John Doe</p>
+            <p class="user-name font-weight-bolder mb-0">{{ getUser.fullname }}</p>
             <span class="user-status">Admin</span>
           </div>
           <b-avatar
@@ -40,26 +40,11 @@
           <span>Profile</span>
         </b-dropdown-item>
 
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon size="16" icon="MailIcon" class="mr-50" />
-          <span>Inbox</span>
-        </b-dropdown-item>
-
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon size="16" icon="CheckSquareIcon" class="mr-50" />
-          <span>Task</span>
-        </b-dropdown-item>
-
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon size="16" icon="MessageSquareIcon" class="mr-50" />
-          <span>Chat</span>
-        </b-dropdown-item>
-
         <b-dropdown-divider />
 
-        <b-dropdown-item link-class="d-flex align-items-center">
+        <b-dropdown-item link-class="d-flex align-items-center" @click="handleLogout">
           <feather-icon size="16" icon="LogOutIcon" class="mr-50" />
-          <span>Logout</span>
+          <span>Logouts</span>
         </b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
@@ -67,25 +52,14 @@
 </template>
 
 <script>
-import {
-  BLink,
-  BNavbarNav,
-  BNavItemDropdown,
-  BDropdownItem,
-  BDropdownDivider,
-  BAvatar,
-} from 'bootstrap-vue'
+import { mapGetters } from 'vuex'
+
 import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue'
+import { AUTH_LOGOUT } from '@/store/modules/auth'
+import { initialAbility } from '@/libs/acl/config'
 
 export default {
   components: {
-    BLink,
-    BNavbarNav,
-    BNavItemDropdown,
-    BDropdownItem,
-    BDropdownDivider,
-    BAvatar,
-
     // Navbar Components
     DarkToggler,
   },
@@ -93,6 +67,20 @@ export default {
     toggleVerticalMenuActive: {
       type: Function,
       default: () => {},
+    },
+  },
+  computed: {
+    ...mapGetters(['getUser']),
+  },
+  methods: {
+    handleLogout() {
+      this.$store.dispatch(AUTH_LOGOUT).then(() => {
+        this.$router.push({ name: 'auth-login' })
+      })
+      // Reset ability
+      this.$ability.update(initialAbility)
+
+      // Redirect to login page
     },
   },
 }

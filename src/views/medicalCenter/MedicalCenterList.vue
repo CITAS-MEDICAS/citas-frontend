@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import useList from '../../custom/libs/useList'
+import useList from '@/custom/libs/useList'
 
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'

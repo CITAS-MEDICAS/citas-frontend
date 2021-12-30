@@ -7,7 +7,6 @@
             <MedicalCenterForm ref="refForm" />
           </b-card-body>
         </b-card>
-        <pre>{{ formData }}</pre>
       </b-col>
       <b-col cols="12" xl="3" md="4">
         <b-card>

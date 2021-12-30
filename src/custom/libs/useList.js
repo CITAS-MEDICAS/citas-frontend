@@ -8,8 +8,9 @@ const useList = function () {
   const currentPage = ref(1)
   const totalRows = ref(0)
   const searchQuery = ref('')
-  const sortBy = ref('id')
+  const sortBy = ref('updated_at')
   const isSortDirDesc = ref(true)
+  const isBusy = ref(false)
 
   let timer = null
 
@@ -83,6 +84,7 @@ const useList = function () {
     searchQuery,
     sortBy,
     isSortDirDesc,
+    isBusy,
     deleteResource,
     refetchData,
   }

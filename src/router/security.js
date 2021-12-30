@@ -6,7 +6,7 @@ import { isUserLoggedIn, getUserData, getHomeRouteForLoggedInUser } from '@/auth
 
 router.beforeEach((to, _, next) => {
   const isLoggedIn = isUserLoggedIn()
-  console.log('router.beforeEach -> isLoggedIn', isLoggedIn)
+  // console.log('router.beforeEach -> isLoggedIn', isLoggedIn)
 
   if (!canNavigate(to)) {
     console.log('router.beforeEach -> isLoggedIn', isLoggedIn)
@@ -20,7 +20,9 @@ router.beforeEach((to, _, next) => {
   // Redirect if logged in
   if (to.meta.redirectIfLoggedIn && isLoggedIn) {
     const userData = getUserData()
-    next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
+    // TODO: logica para hacer redireccion si el usuario esta autenticado
+    return next('/')
+    // next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
   }
 
   return next()

@@ -85,7 +85,7 @@
               </b-form-group>
 
               <!-- submit buttons -->
-              <b-button type="submit" variant="primary" block @click="validationForm">
+              <b-button type="submit" variant="primary" block @click="handleLogin">
                 Sign in
               </b-button>
             </b-form>
@@ -115,7 +115,7 @@ import ToastificationContent from '@core/components/toastification/Toastificatio
 import store from '@/store/index'
 
 // import { getHomeRouteForLoggedInUser } from '@/auth/utils'
-import { useJwt } from '@/auth/jwt/useJwt'
+import { AUTH_REQUEST } from '@/store/modules/auth'
 
 export default {
   components: {
@@ -149,36 +149,26 @@ export default {
     },
   },
   methods: {
-    async validationForm() {
+    async handleLogin() {
       const isValid = await this.$refs.loginForm.validate()
-      console.log('validationForm -> isValid', isValid)
 
       if (isValid) {
-        useJwt
-          .login({
+        this.$store
+          .dispatch(AUTH_REQUEST, {
             email: this.userEmail,
             password: this.password,
           })
-          .then(({ data }) => {
-            const { userData } = data
-            useJwt.setToken(data.access_token)
-            useJwt.setRefreshToken(data.refresh_token)
-            localStorage.setItem('userData', JSON.stringify(userData))
-
-            // this.$router.replace(getHomeRouteForLoggedInUser(user.role))
+          .then(user => {
             this.$router.replace('/').then(() => {
               this.$toast({
                 component: ToastificationContent,
                 props: {
-                  title: `Bienvenido ${userData?.name || ''}`,
+                  title: `Bienvenido ${user?.fullname || ''}`,
                   icon: 'CoffeeIcon',
                   variant: 'success',
                 },
               })
             })
-          })
-          .catch(error => {
-            console.log('validationForm -> error', error)
           })
       }
     },

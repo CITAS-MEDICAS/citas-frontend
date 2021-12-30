@@ -37,26 +37,19 @@ export default class JwtService {
     this.axiosIns.interceptors.response.use(
       response => response,
       error => {
-        // const { config, response: { status } } = error
         const { config, response } = error
         const originalRequest = config
 
-        // if (status === 401) {
+        if (originalRequest.url.includes('api/auth/login')) {
+          return Promise.reject(error)
+        }
+
         if (response && response.status === 401) {
-          if (!this.isAlreadyFetchingAccessToken) {
-            this.isAlreadyFetchingAccessToken = true
-            this.refreshToken().then(r => {
-              this.isAlreadyFetchingAccessToken = false
+          this.fetchRefreshToken()
 
-              // Update accessToken in localStorage
-              this.setToken(r.data.accessToken)
-              this.setRefreshToken(r.data.refreshToken)
-
-              this.onAccessTokenFetched(r.data.accessToken)
-            })
-          }
           const retryOriginalRequest = new Promise(resolve => {
             this.addSubscriber(accessToken => {
+              console.log('-> accessToken', accessToken)
               // Make sure to assign accessToken according to your response.
               // Check: https://pixinvent.ticksy.com/ticket/2413870
               // Change Authorization header
@@ -69,6 +62,23 @@ export default class JwtService {
         return Promise.reject(error)
       }
     )
+  }
+
+  fetchRefreshToken() {
+    if (this.isAlreadyFetchingAccessToken) return
+
+    this.isAlreadyFetchingAccessToken = true
+    this.refreshToken().then(({ data }) => {
+      console.log('-> data', data)
+      this.isAlreadyFetchingAccessToken = false
+
+      if (data.access_token && data.refresh_token) {
+        this.setToken(data.access_token)
+        this.setRefreshToken(data.refresh_token)
+      }
+
+      this.onAccessTokenFetched(data.access_token)
+    })
   }
 
   onAccessTokenFetched(accessToken) {
@@ -95,8 +105,26 @@ export default class JwtService {
     localStorage.setItem(this.jwtConfig.storageRefreshTokenKeyName, value)
   }
 
+  setUserData(userData) {
+    localStorage.setItem(this.jwtConfig.storageUserDataKeyName, JSON.stringify(userData))
+  }
+
+  getUserData() {
+    return JSON.parse(localStorage.getItem(this.jwtConfig.storageUserDataKeyName))
+  }
+
+  clearStorage() {
+    localStorage.removeItem(this.jwtConfig.storageTokenKeyName)
+    localStorage.removeItem(this.jwtConfig.storageRefreshTokenKeyName)
+    localStorage.removeItem(this.jwtConfig.storageUserDataKeyName)
+  }
+
   login(...args) {
     return this.axiosIns.post(this.jwtConfig.loginEndpoint, ...args)
+  }
+
+  logout() {
+    return this.axiosIns.post(this.jwtConfig.logoutEndpoint)
   }
 
   register(...args) {
@@ -105,7 +133,7 @@ export default class JwtService {
 
   refreshToken() {
     return this.axiosIns.post(this.jwtConfig.refreshEndpoint, {
-      refreshToken: this.getRefreshToken(),
+      refresh_token: this.getRefreshToken(),
     })
   }
 }

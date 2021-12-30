@@ -1,13 +1,148 @@
 <template>
-  <div>
-    <h1>COnsultorio List</h1>
-  </div>
+  <b-card no-body>
+    <table-header :per-page-options="perPageOptions">
+      <template #button>
+        <b-button variant="primary" :to="{ name: 'medical-unit-create' }">
+          Crear Consultorio
+        </b-button>
+      </template>
+    </table-header>
+
+    <b-table
+      ref="refTable"
+      :items="fetchItems"
+      :fields="tableColumns"
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="isSortDirDesc"
+      :busy="isBusy"
+      show-empty
+      empty-text="No se encontraron resultados"
+      responsive
+      primary-key="id"
+      class="position-relative"
+    >
+      <template #cell(actions)="data">
+        <div class="text-nowrap">
+          <b-button
+            v-b-tooltip.hover.top="'Editar Consultorio'"
+            variant="flat-success"
+            class="btn-icon rounded-circle"
+            :to="{
+              name: 'medical-unit-edit',
+              params: { id: data.item.id },
+            }"
+          >
+            <feather-icon icon="EditIcon" />
+          </b-button>
+          <b-button
+            v-b-tooltip.hover.top="'Eliminar Consultorio'"
+            variant="flat-danger"
+            class="btn-icon rounded-circle"
+            @click="handleDelete(data.item.id)"
+          >
+            <feather-icon icon="TrashIcon" />
+          </b-button>
+        </div>
+      </template>
+
+      <template #cell(name)="data">
+        <b-link
+          :to="{ name: 'medical-center-edit', params: { id: data.item.id } }"
+          class="font-weight-bold"
+        >
+          {{ data.value }}
+        </b-link>
+      </template>
+      <template #table-busy>
+        <div class="text-center text-primary my-2">
+          <b-spinner class="align-middle mr-2" />
+          <strong>Cargando...</strong>
+        </div>
+      </template>
+    </b-table>
+
+    <table-pagination :total-rows="totalRows" :per-page="perPage" />
+  </b-card>
 </template>
 
 <script>
+import useList from '@/custom/libs/useList'
+
+import TableHeader from '@/custom/components/Tables/TableHeader'
+import TablePagination from '@/custom/components/Tables/TablePagination'
+import { MedicalUnitResource } from '@/network/lib/medicalUnit'
+
 export default {
-  name: 'MedicalUnitList',
+  components: {
+    TableHeader,
+    TablePagination,
+  },
+  setup() {
+    let {
+      refTable,
+      perPage,
+      perPageOptions,
+      currentPage,
+      totalRows,
+      searchQuery,
+      sortBy,
+      isSortDirDesc,
+      isBusy,
+      deleteResource,
+      refetchData,
+    } = useList()
+
+    const fetchItems = async () => {
+      isBusy.value = true
+      const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
+
+      const { data } = await MedicalUnitResource.getAll({
+        q: searchQuery.value,
+        limit: perPage.value,
+        page: currentPage.value,
+        [sortOption]: sortBy.value,
+        include: 'center;specialty;type;serviceHour',
+      })
+
+      isBusy.value = false
+      totalRows.value = data.total_data
+      return data.rows
+    }
+
+    const tableColumns = [
+      { key: 'actions', label: 'Acciones', thStyle: { width: '100px' } },
+      { key: 'id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
+      { key: 'name', label: 'Consultorio', sortable: true },
+      { key: 'code', label: 'Código', sortable: true },
+      { key: 'is_general', label: 'Es General', sortable: true },
+      { key: 'center', label: 'Centro', sortable: false },
+      { key: 'specialty', label: 'Especialidad', sortable: false },
+      { key: 'type', label: 'Tipo Consultorio', sortable: false },
+    ]
+
+    return {
+      refTable,
+      perPage,
+      perPageOptions,
+      currentPage,
+      totalRows,
+      searchQuery,
+      tableColumns,
+      sortBy,
+      isSortDirDesc,
+      isBusy,
+      fetchItems,
+      deleteResource,
+      refetchData,
+    }
+  },
+  methods: {
+    async handleDelete(resourceId) {
+      const isDeleted = await this.deleteResource(resourceId, MedicalUnitResource)
+      if (isDeleted) {
+        this.refetchData()
+      }
+    },
+  },
 }
 </script>
-
-<style scoped></style>

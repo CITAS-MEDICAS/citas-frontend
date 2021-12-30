@@ -15,4 +15,6 @@ vSelect.props.components.default = () => ({
   },
 })
 
-Vue.component(vSelect)
+Vue.component('v-select', vSelect)
+
+require('@core/scss/vue/libs/vue-select.scss')
