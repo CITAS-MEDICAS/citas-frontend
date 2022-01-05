@@ -1,20 +1,22 @@
 <template>
   <div class="page-wrapper">
     <b-row>
-      <b-col cols="12" xl="9" md="8">
+      <b-col cols="12" xl="9" lg="8">
         <b-card no-body>
           <b-card-body>
             <MedicalUnitForm ref="refForm" />
           </b-card-body>
         </b-card>
       </b-col>
-      <b-col cols="12" xl="3" md="4">
+      <b-col cols="12" xl="3" lg="4">
         <b-card>
           <b-button variant="primary" block @click="handleSubmit()">Guardar</b-button>
           <b-button variant="outline-secondary" block @click="handleCancel()">Cancelar</b-button>
         </b-card>
       </b-col>
     </b-row>
+
+    <pre>{{ formData }}</pre>
   </div>
 </template>
 
@@ -40,6 +42,7 @@ export default {
       service_hour_id: null,
       specialty_type_id: null,
       unit_type_id: null,
+      users: [],
     })
 
     provide('formData', formData)

@@ -1,119 +1,163 @@
 <template>
   <div>
-    <h3 class="my-2">Usuarios Consultorio</h3>
-    <b-row>
-      <b-col xl="9" md="8">
-        <b-card no-body>
-          <b-table
-            ref="refTable"
-            :items="fetchItems"
-            :fields="tableColumns"
-            :sort-by.sync="sortBy"
-            :sort-desc.sync="isSortDirDesc"
-            :busy="isBusy"
-            show-empty
-            empty-text="No se encontraron resultados"
-            responsive
-            primary-key="id"
-            class="position-relative"
-          >
-            <template #cell(actions)="data">
-              <div class="text-nowrap">
+    <b-row align-v="center" align-h="between">
+      <b-col class="my-1">
+        <h3 class="mb-0">Usuarios Consultorio</h3>
+      </b-col>
+      <b-col class="my-1" md="4">
+        <b-button variant="primary" block @click="addItem()"> Agregar Personal</b-button>
+      </b-col>
+    </b-row>
+
+    <validation-observer>
+      <div class="table-responsive" style="padding-bottom: 150px">
+        <table class="table table-sm table-bordered">
+          <thead>
+            <tr>
+              <th></th>
+              <th width="50%">NOMBRE</th>
+              <th width="40%">ROL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in formData.users" :key="index">
+              <td align="center">
                 <b-button
-                  v-b-tooltip.hover.top="'Editar Consultorio'"
-                  variant="flat-success"
-                  class="btn-icon rounded-circle"
-                  :to="{
-                    name: 'medical-unit-edit',
-                    params: { id: data.item.id },
-                  }"
-                >
-                  <feather-icon icon="EditIcon" />
-                </b-button>
-                <b-button
-                  v-b-tooltip.hover.top="'Eliminar Consultorio'"
                   variant="flat-danger"
                   class="btn-icon rounded-circle"
-                  @click="handleDelete(data.item.id)"
+                  @click="removeItem(index)"
                 >
                   <feather-icon icon="TrashIcon" />
                 </b-button>
-              </div>
-            </template>
-          </b-table>
-        </b-card>
-      </b-col>
-      <b-col xl="3" md="4">
-        <b-card no-body>
-          <b-button variant="primary" block @click="handleSubmit()">
-            Agregar Usuario al Consultorio
-          </b-button>
-        </b-card>
-      </b-col>
-    </b-row>
+              </td>
+              <td>
+                <validation-provider
+                  v-slot="{ errors }"
+                  :vid="`user_${index}`"
+                  name="Usuario"
+                  rules="required"
+                >
+                  <v-select
+                    v-model="item.user_id"
+                    label="fullname"
+                    :clearable="false"
+                    :reduce="record => record.id"
+                    :options="users"
+                    :selectable="option => !selectedUsers.includes(option.id)"
+                  >
+                    <template #search="{ attributes, events }">
+                      <input
+                        class="vs__search"
+                        :required="errors.length ? false : null"
+                        v-bind="attributes"
+                        v-on="events"
+                      />
+                    </template>
+                  </v-select>
+                </validation-provider>
+              </td>
+              <td>
+                <validation-provider
+                  v-slot="{ errors }"
+                  :vid="`role_${index}`"
+                  name="Rol"
+                  rules="required"
+                >
+                  <v-select
+                    v-model="item.role_id"
+                    label="display_name"
+                    :clearable="false"
+                    :options="getRoles(item.user_id, index)"
+                    :reduce="record => record.id"
+                  >
+                    <template #search="{ attributes, events }">
+                      <input
+                        class="vs__search"
+                        :required="errors.length ? false : null"
+                        v-bind="attributes"
+                        v-on="events"
+                      />
+                    </template>
+                  </v-select>
+                </validation-provider>
+              </td>
+            </tr>
+            <tr v-if="formData.users.length === 0">
+              <td colspan="3">
+                <p class="text-center my-5">
+                  El consultorio aun no tiene Personal registrado.
+                  <a href="#" @click.prevent="addItem">Agregar Personal.</a>
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </validation-observer>
   </div>
 </template>
 
 <script>
-import useList from '@/custom/libs/useList'
-import { MedicalUnitResource } from '@/network/lib/medicalUnit'
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
+import { inject, ref } from '@vue/composition-api'
+import { UserResource } from '@/network/lib/users'
 
 export default {
   name: 'MedicalUnitUsersList',
+  components: {
+    ValidationObserver,
+    ValidationProvider,
+  },
+  data() {
+    return {
+      users: [],
+    }
+  },
   setup() {
-    let {
-      refTable,
-      perPage,
-      perPageOptions,
-      currentPage,
-      totalRows,
-      searchQuery,
-      sortBy,
-      isSortDirDesc,
-      isBusy,
-      deleteResource,
-      refetchData,
-    } = useList()
+    const formData = inject('formData')
 
-    const fetchItems = async () => {
-      isBusy.value = true
-      const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
-
-      const { data } = await MedicalUnitResource.getAll({
-        q: searchQuery.value,
-        limit: perPage.value,
-        page: currentPage.value,
-        [sortOption]: sortBy.value,
-        include: 'center;specialty;type;serviceHour',
+    const addItem = () => {
+      formData.value.users.push({
+        id: (Math.random() * 1000).toFixed(),
+        ...{
+          user_id: null,
+          role_id: null,
+        },
       })
-
-      isBusy.value = false
-      totalRows.value = data.total_data
-      return data.rows
     }
 
-    const tableColumns = [
-      { key: 'actions', label: 'Acciones', thStyle: { width: '100px' } },
-      { key: 'user', label: 'Usuario', sortable: true },
-      { key: 'email', label: 'Email', sortable: true },
-      { key: 'role', label: 'Rol', sortable: false },
-    ]
+    const removeItem = index => {
+      formData.value.users.splice(index, 1)
+    }
 
     return {
-      refTable,
-      perPage,
-      perPageOptions,
-      currentPage,
-      totalRows,
-      searchQuery,
-      tableColumns,
-      sortBy,
-      isSortDirDesc,
-      isBusy,
-      fetchItems,
-      deleteResource,
-      refetchData,
+      formData,
+      addItem,
+      removeItem,
     }
+  },
+  computed: {
+    selectedUsers() {
+      return this.formData.users.map(user => user.user_id)
+    },
+  },
+  mounted() {
+    this.fetchUsers()
+  },
+  methods: {
+    async fetchUsers() {
+      const { data } = await UserResource.getAll({ include: 'roles' })
+      this.users = data.rows
+    },
+    getRoles(userId, index) {
+      const user = this.users.find(item => item.id === userId)
+
+      if (user) {
+        this.formData.users[index].role_id = user.roles[0].id
+        return user.roles
+      }
+      return []
+    },
   },
 }
 </script>

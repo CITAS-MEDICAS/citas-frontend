@@ -82,8 +82,8 @@
     <hr />
 
     <b-row>
-      <b-col sm="5"></b-col>
-      <b-col sm="7">
+      <b-col lg="5"></b-col>
+      <b-col lg="7">
         <b-form-group>
           <validation-provider v-slot="{ errors }" name="Consultorio" rules="required">
             <b-form-checkbox
@@ -146,6 +146,9 @@
         </b-form-group>
       </b-col>
     </b-row>
+
+    <hr />
+    <MedicalUnitUsersList />
   </validation-observer>
 </template>
 
@@ -156,12 +159,14 @@ import { required } from '@validations'
 import { MedicalCenterResource } from '@/network/lib/medicalCenter'
 import { TypesResource } from '@/network/lib/types'
 import { ServiceHoursResource } from '@/network/lib/serviceHours'
+import MedicalUnitUsersList from '@/views/medicalUnit/components/MedicalUnitUsersList'
 
 export default {
   name: 'MedicalUnitForm',
   components: {
     ValidationObserver,
     ValidationProvider,
+    MedicalUnitUsersList,
   },
   data() {
     return {
