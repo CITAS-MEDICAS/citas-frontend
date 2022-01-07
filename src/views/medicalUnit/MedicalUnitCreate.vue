@@ -15,8 +15,6 @@
         </b-card>
       </b-col>
     </b-row>
-
-    <pre>{{ formData }}</pre>
   </div>
 </template>
 

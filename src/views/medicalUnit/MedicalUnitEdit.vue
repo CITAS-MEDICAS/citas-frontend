@@ -79,9 +79,24 @@ export default {
       this.$router.push({ name: 'medical-unit-list' })
     },
     async getResourceData() {
-      const { data } = await MedicalUnitResource.getById(this.$route.params.id)
-      data.medicalUnit.users = []
-      this.formData = data.medicalUnit
+      const { data } = await MedicalUnitResource.getById(this.$route.params.id, {
+        include: 'staff',
+      })
+
+      this.formData = this.processData(data.medicalUnit)
+    },
+
+    processData(data) {
+      const users = data.staff.map(user => {
+        return {
+          user_id: user.pivot.user_id,
+          role_id: user.pivot.role_id,
+        }
+      })
+
+      data.staff = undefined
+      data.users = users
+      return data
     },
   },
 }

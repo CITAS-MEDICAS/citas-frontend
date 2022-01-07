@@ -146,7 +146,7 @@ export default {
   },
   methods: {
     async fetchUsers() {
-      const { data } = await UserResource.getAll({ include: 'roles' })
+      const { data } = await UserResource.getAll({ scope: 'onlyStaffRoles', include: 'roles' })
       this.users = data.rows
     },
     getRoles(userId, index) {

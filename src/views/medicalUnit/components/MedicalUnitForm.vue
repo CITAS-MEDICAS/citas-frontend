@@ -1,5 +1,12 @@
 <template>
   <validation-observer ref="refFormObserver">
+    <div class="d-flex justify-content-end align-items-center">
+      <label for="is_enabled" class="mr-5">Habilitado para Consultas </label>
+      <b-form-checkbox id="is_enabled" v-model="formData.is_enabled" :checked="true" switch />
+    </div>
+
+    <hr />
+
     <b-row>
       <b-col lg="5"></b-col>
       <b-col lg="7">
@@ -84,23 +91,6 @@
     <b-row>
       <b-col lg="5"></b-col>
       <b-col lg="7">
-        <b-form-group>
-          <validation-provider v-slot="{ errors }" name="Consultorio" rules="required">
-            <b-form-checkbox
-              v-model="formData.is_general"
-              checked="true"
-              name="check-button"
-              switch
-              inline
-              :state="errors.length ? false : null"
-            >
-              Es general
-            </b-form-checkbox>
-
-            <small class="text-danger">{{ errors[0] }}</small>
-          </validation-provider>
-        </b-form-group>
-
         <b-form-group label="Tipo de Consultorio">
           <validation-provider v-slot="{ errors }" name="Tipo de Consultorio" rules="required">
             <v-select
@@ -146,7 +136,6 @@
         </b-form-group>
       </b-col>
     </b-row>
-
     <hr />
     <MedicalUnitUsersList />
   </validation-observer>
