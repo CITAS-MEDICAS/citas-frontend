@@ -137,7 +137,7 @@
       </b-col>
     </b-row>
     <hr />
-    <MedicalUnitUsersList />
+    <MedicalUnitUsersList ref="refUsersList" />
   </validation-observer>
 </template>
 
@@ -171,14 +171,18 @@ export default {
   setup() {
     const formData = inject('formData')
     const refFormObserver = ref(null)
+    const refUsersList = ref(null)
 
     const validate = async () => {
-      return await refFormObserver.value.validate()
+      const form = await refFormObserver.value.validate()
+      const list = await refUsersList.value.validate()
+      return form && list
     }
 
     return {
       formData,
       refFormObserver,
+      refUsersList,
       required,
       validate,
     }

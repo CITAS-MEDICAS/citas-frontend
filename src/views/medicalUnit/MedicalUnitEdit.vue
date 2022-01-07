@@ -22,7 +22,6 @@
 import { provide, ref } from '@vue/composition-api'
 
 import MedicalUnitForm from './components/MedicalUnitForm'
-import MedicalUnitUsersList from '@/views/medicalUnit/components/MedicalUnitUsersList'
 
 import { MedicalUnitResource } from '@/network/lib/medicalUnit'
 import ToastificationContent from '@core/components/toastification/ToastificationContent'

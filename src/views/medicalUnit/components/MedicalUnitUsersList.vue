@@ -9,7 +9,7 @@
       </b-col>
     </b-row>
 
-    <validation-observer>
+    <validation-observer ref="refFormObserver">
       <div class="table-responsive" style="padding-bottom: 150px">
         <table class="table table-sm table-bordered">
           <thead>
@@ -54,6 +54,7 @@
                       />
                     </template>
                   </v-select>
+                  <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </td>
               <td>
@@ -79,6 +80,7 @@
                       />
                     </template>
                   </v-select>
+                  <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </td>
             </tr>
@@ -99,6 +101,7 @@
 
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
+import { required } from '@validations'
 import { inject, ref } from '@vue/composition-api'
 import { UserResource } from '@/network/lib/users'
 
@@ -115,6 +118,9 @@ export default {
   },
   setup() {
     const formData = inject('formData')
+    const refFormObserver = ref(null)
+
+    const validate = async () => await refFormObserver.value.validate()
 
     const addItem = () => {
       formData.value.users.push({
@@ -132,8 +138,11 @@ export default {
 
     return {
       formData,
+      refFormObserver,
+      required,
       addItem,
       removeItem,
+      validate,
     }
   },
   computed: {
