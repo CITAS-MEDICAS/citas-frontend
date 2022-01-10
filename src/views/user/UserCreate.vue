@@ -4,7 +4,7 @@
       <b-col cols="12" xl="9" lg="8">
         <b-card no-body>
           <b-card-body>
-            <MedicalUnitForm ref="refForm" />
+            <UserForm ref="refForm" />
           </b-card-body>
         </b-card>
       </b-col>
@@ -21,27 +21,30 @@
 <script>
 import { provide, ref } from '@vue/composition-api'
 
-import MedicalUnitForm from './components/MedicalUnitForm'
-
-import { MedicalUnitResource } from '@/network/lib/medicalUnit'
+import UserForm from './components/UserForm'
+import { UserResource } from '@/network/lib/users'
 import ToastificationContent from '@core/components/toastification/ToastificationContent'
 
 export default {
-  name: 'MedicalUnitEdit',
+  name: 'UserCreate',
   components: {
-    MedicalUnitForm,
+    UserForm,
   },
   setup() {
     const formData = ref({
       name: '',
-      code: '',
-      duration_time: '',
-      is_general: false,
-      medical_center_id: null,
-      service_hour_id: null,
-      specialty_type_id: null,
-      unit_type_id: null,
-      users: [],
+      paternal_surname: '',
+      maternal_surname: '',
+      ci: '',
+      ci_exp: '',
+      birth_date: '',
+      gender: '',
+      phone_number: '',
+      staff_registration_code: '',
+      email: '',
+      password: '',
+      password_confirmation: '',
+      roles: [],
     })
 
     provide('formData', formData)
@@ -50,19 +53,16 @@ export default {
       formData,
     }
   },
-  mounted() {
-    this.getResourceData()
-  },
   methods: {
     async handleSubmit() {
       const isValid = await this.$refs.refForm.validate()
 
       if (!isValid) return
 
-      const { data } = await MedicalUnitResource.update(this.$route.params.id, this.formData)
+      const { data } = await UserResource.store(this.formData)
 
-      if (data.medicalUnit) {
-        this.$router.push({ name: 'medical-unit-list' }).then(() => {
+      if (data.user) {
+        this.$router.push({ name: 'user-list' }).then(() => {
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -75,28 +75,7 @@ export default {
       }
     },
     handleCancel() {
-      this.$router.push({ name: 'medical-unit-list' })
-    },
-    async getResourceData() {
-      const { data } = await MedicalUnitResource.getById(this.$route.params.id, {
-        include: 'staff',
-      })
-
-      this.formData = this.processData(data.medicalUnit)
-    },
-
-    processData(data) {
-      const users = data.staff.map(user => {
-        return {
-          id: (Math.random() * 1000).toFixed(),
-          user_id: user.pivot.user_id,
-          role_id: user.pivot.role_id,
-        }
-      })
-
-      data.staff = undefined
-      data.users = users
-      return data
+      this.$router.push({ name: 'user-list' })
     },
   },
 }

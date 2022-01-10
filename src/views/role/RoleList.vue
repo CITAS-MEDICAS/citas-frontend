@@ -2,9 +2,7 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <b-button variant="primary" :to="{ name: 'medical-unit-create' }">
-          Crear Consultorio
-        </b-button>
+        <b-button variant="primary" :to="{ name: 'medical-center-create' }"> Crear Rol</b-button>
       </template>
     </table-header>
 
@@ -14,7 +12,6 @@
       :fields="tableColumns"
       :sort-by.sync="sortBy"
       :sort-desc.sync="isSortDirDesc"
-      :busy="isBusy"
       show-empty
       empty-text="No se encontraron resultados"
       responsive
@@ -24,18 +21,18 @@
       <template #cell(actions)="data">
         <div class="text-nowrap">
           <b-button
-            v-b-tooltip.hover.top="'Editar Consultorio'"
+            v-b-tooltip.hover.top="'Editar Rol'"
             variant="flat-success"
             class="btn-icon rounded-circle"
             :to="{
-              name: 'medical-unit-edit',
+              name: 'medical-center-edit',
               params: { id: data.item.id },
             }"
           >
             <feather-icon icon="EditIcon" />
           </b-button>
           <b-button
-            v-b-tooltip.hover.top="'Eliminar Consultorio'"
+            v-b-tooltip.hover.top="'Eliminar Rol'"
             variant="flat-danger"
             class="btn-icon rounded-circle"
             @click="handleDelete(data.item.id)"
@@ -47,17 +44,11 @@
 
       <template #cell(name)="data">
         <b-link
-          :to="{ name: 'medical-unit-edit', params: { id: data.item.id } }"
+          :to="{ name: 'medical-center-edit', params: { id: data.item.id } }"
           class="font-weight-bold"
         >
           {{ data.value }}
         </b-link>
-      </template>
-      <template #table-busy>
-        <div class="text-center text-primary my-2">
-          <b-spinner class="align-middle mr-2" />
-          <strong>Cargando...</strong>
-        </div>
       </template>
     </b-table>
 
@@ -70,9 +61,10 @@ import useList from '@/custom/libs/useList'
 
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
-import { MedicalUnitResource } from '@/network/lib/medicalUnit'
+import { RoleResource } from '@/network/lib/role'
 
 export default {
+  name: 'RoleList',
   components: {
     TableHeader,
     TablePagination,
@@ -87,24 +79,20 @@ export default {
       searchQuery,
       sortBy,
       isSortDirDesc,
-      isBusy,
       deleteResource,
       refetchData,
     } = useList()
 
     const fetchItems = async () => {
-      isBusy.value = true
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
-      const { data } = await MedicalUnitResource.getAll({
+      const { data } = await RoleResource.getAll({
         q: searchQuery.value,
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
-        include: 'center;specialty;type;serviceHour',
       })
 
-      isBusy.value = false
       totalRows.value = data.total_data
       return data.rows
     }
@@ -112,12 +100,9 @@ export default {
     const tableColumns = [
       { key: 'actions', label: 'Acciones', thStyle: { width: '100px' } },
       { key: 'id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
-      { key: 'name', label: 'Consultorio', sortable: true },
-      { key: 'code', label: 'Código', sortable: true },
-      { key: 'is_general', label: 'Es General', sortable: true },
-      { key: 'center', label: 'Centro', sortable: false },
-      { key: 'specialty', label: 'Especialidad', sortable: false },
-      { key: 'type', label: 'Tipo Consultorio', sortable: false },
+      { key: 'name', label: 'Rol', sortable: true },
+      { key: 'display_name', label: 'Nombre', sortable: true },
+      { key: 'description', label: 'Descripción', sortable: true },
     ]
 
     return {
@@ -130,7 +115,6 @@ export default {
       tableColumns,
       sortBy,
       isSortDirDesc,
-      isBusy,
       fetchItems,
       deleteResource,
       refetchData,
@@ -138,7 +122,7 @@ export default {
   },
   methods: {
     async handleDelete(resourceId) {
-      const isDeleted = await this.deleteResource(resourceId, MedicalUnitResource)
+      const isDeleted = await this.deleteResource(resourceId, RoleResource)
       if (isDeleted) {
         this.refetchData()
       }
@@ -146,3 +130,5 @@ export default {
   },
 }
 </script>
+
+<style scoped></style>

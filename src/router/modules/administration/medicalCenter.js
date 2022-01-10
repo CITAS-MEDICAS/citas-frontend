@@ -31,7 +31,6 @@ export default [
       ],
     },
   },
-
   {
     path: '/centros-de-salud/editar/:id',
     name: 'medical-center-edit',

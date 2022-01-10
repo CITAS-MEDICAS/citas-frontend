@@ -4,14 +4,14 @@ export default [
   },
   {
     title: 'Personal',
-    route: null,
+    route: 'user-list',
     icon: 'UserIcon',
     action: 'read',
     resource: 'Home',
   },
   {
     title: 'Roles',
-    route: null,
+    route: 'role-list',
     icon: 'UserIcon',
     action: 'read',
     resource: 'Home',

@@ -6,6 +6,8 @@ import pages from './modules/pages/pages'
 import medicalCenter from './modules/administration/medicalCenter'
 import specialities from '@/router/modules/administration/specialities'
 import medicalUnit from './modules/administration/medicalUnit'
+import user from './modules/users/user'
+import role from './modules/users/role'
 
 Vue.use(VueRouter)
 
@@ -15,7 +17,17 @@ const router = new VueRouter({
   scrollBehavior() {
     return { x: 0, y: 0 }
   },
-  routes: [...pages, ...dashboard, ...medicalCenter, ...medicalUnit, ...specialities],
+  routes: [
+    ...pages,
+    ...dashboard,
+    // Administration
+    ...medicalCenter,
+    ...medicalUnit,
+    ...specialities,
+    // Users
+    ...user,
+    ...role,
+  ],
 })
 
 export default router

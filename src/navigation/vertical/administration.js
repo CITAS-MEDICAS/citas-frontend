@@ -16,6 +16,7 @@ export default [
     action: 'read',
     resource: 'Centros',
   },
+
   {
     title: 'Especialidades',
     route: 'specialties-list',
@@ -23,6 +24,7 @@ export default [
     action: 'read',
     resource: 'Especialidades',
   },
+
   {
     title: 'Turnos',
     route: null,

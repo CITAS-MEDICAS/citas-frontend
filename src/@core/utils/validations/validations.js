@@ -127,22 +127,20 @@ localize('es', es)
 //   return re.test(val) || 'URL is invalid'
 // }
 
-// export const date = val => {
+export const date = val => {
+  // If blank return
+  if (val === undefined || val === null || val.length === 0) return true
 
-//   // If blank return
-//   if (val === undefined || val === null || val.length === 0) return true
+  // https://github.com/quasarframework/quasar/blob/dev/ui/src/utils/patterns.js
+  return /^-?[\d]+\/[0-1]\d\/[0-3]\d$/.test(val) || 'Date is invalid'
+}
 
-//   // https://github.com/quasarframework/quasar/blob/dev/ui/src/utils/patterns.js
-//   return /^-?[\d]+\/[0-1]\d\/[0-3]\d$/.test(val) || 'Date is invalid'
-// }
+export const max = (val, max) => {
+  // If blank return
+  if (val === undefined || val === null) return true
 
-// export const max = (val, max) => {
-
-//   // If blank return
-//   if (val === undefined || val === null) return true
-
-//   return val.length <= max || `More than ${max} characters are not allowed`
-// }
+  return val.length <= max || `More than ${max} characters are not allowed`
+}
 
 // export const max_arr = (val, max) => {
 //   return val.length <= max || `More than ${max} values are not allowed`
