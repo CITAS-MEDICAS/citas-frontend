@@ -182,7 +182,7 @@
 
     <UserRoleList ref="refUserRoleList" />
 
-    <pre>{{ formData }}</pre>
+    <UserCenterList ref="refUserCenterList" />
   </validation-observer>
 </template>
 
@@ -191,6 +191,7 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { inject, ref } from '@vue/composition-api'
 import { required, confirmed, min, email, date } from '@validations'
 import UserRoleList from '@/views/user/components/UserRoleList'
+import UserCenterList from '@/views/user/components/UserCenterList'
 
 export default {
   name: 'UserForm',
@@ -198,6 +199,7 @@ export default {
     ValidationObserver,
     ValidationProvider,
     UserRoleList,
+    UserCenterList,
   },
   data() {
     return {
@@ -208,17 +210,20 @@ export default {
     const formData = inject('formData')
     const refFormObserver = ref(null)
     const refUserRoleList = ref(null)
+    const refUserCenterList = ref(null)
 
     const validate = async () => {
       const form = await refFormObserver.value.validate()
       const list = await refUserRoleList.value.validate()
-      return form && list
+      const list2 = await refUserCenterList.value.validate()
+      return form && list && list2
     }
 
     return {
       formData,
       refFormObserver,
       refUserRoleList,
+      refUserCenterList,
       required,
       confirmed,
       min,

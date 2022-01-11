@@ -45,6 +45,7 @@ export default {
       password: '',
       password_confirmation: '',
       roles: [],
+      centers: [],
     })
 
     provide('formData', formData)

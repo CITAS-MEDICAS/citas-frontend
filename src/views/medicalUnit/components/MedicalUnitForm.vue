@@ -45,6 +45,58 @@
             <small class="text-danger">{{ errors[0] }}</small>
           </validation-provider>
         </b-form-group>
+      </b-col>
+    </b-row>
+
+    <hr />
+
+    <b-row>
+      <b-col lg="5"></b-col>
+      <b-col lg="7">
+        <b-form-group label="Tipo de Consultorio">
+          <validation-provider v-slot="{ errors }" name="Tipo de Consultorio" rules="required">
+            <v-select
+              v-model="formData.unit_type_id"
+              :options="unitTypes"
+              :clearable="true"
+              :reduce="item => item.value"
+              label="label"
+              @input="changeUnitType"
+            >
+              <template #search="{ attributes, events }">
+                <input
+                  class="vs__search"
+                  :required="errors.length ? false : null"
+                  v-bind="attributes"
+                  v-on="events"
+                />
+              </template>
+            </v-select>
+            <small class="text-danger">{{ errors[0] }}</small>
+          </validation-provider>
+        </b-form-group>
+
+        <b-form-group label="Especialidad">
+          <validation-provider v-slot="{ errors }" name="Especialidad" rules="required">
+            <v-select
+              v-model="formData.specialty_type_id"
+              :options="filterSpecialties"
+              :clearable="true"
+              :reduce="item => item.value"
+              label="label"
+            >
+              <template #search="{ attributes, events }">
+                <input
+                  class="vs__search"
+                  :required="errors.length ? false : null"
+                  v-bind="attributes"
+                  v-on="events"
+                />
+              </template>
+            </v-select>
+            <small class="text-danger">{{ errors[0] }}</small>
+          </validation-provider>
+        </b-form-group>
 
         <b-row>
           <b-col sm="6">
@@ -87,56 +139,6 @@
     </b-row>
 
     <hr />
-
-    <b-row>
-      <b-col lg="5"></b-col>
-      <b-col lg="7">
-        <b-form-group label="Tipo de Consultorio">
-          <validation-provider v-slot="{ errors }" name="Tipo de Consultorio" rules="required">
-            <v-select
-              v-model="formData.unit_type_id"
-              :options="unitTypes"
-              :clearable="true"
-              :reduce="item => item.value"
-              label="label"
-            >
-              <template #search="{ attributes, events }">
-                <input
-                  class="vs__search"
-                  :required="errors.length ? false : null"
-                  v-bind="attributes"
-                  v-on="events"
-                />
-              </template>
-            </v-select>
-            <small class="text-danger">{{ errors[0] }}</small>
-          </validation-provider>
-        </b-form-group>
-
-        <b-form-group label="Especialidad">
-          <validation-provider v-slot="{ errors }" name="Especialidad" rules="required">
-            <v-select
-              v-model="formData.specialty_type_id"
-              :options="specialties"
-              :clearable="true"
-              :reduce="item => item.value"
-              label="label"
-            >
-              <template #search="{ attributes, events }">
-                <input
-                  class="vs__search"
-                  :required="errors.length ? false : null"
-                  v-bind="attributes"
-                  v-on="events"
-                />
-              </template>
-            </v-select>
-            <small class="text-danger">{{ errors[0] }}</small>
-          </validation-provider>
-        </b-form-group>
-      </b-col>
-    </b-row>
-    <hr />
     <MedicalUnitUsersList ref="refUsersList" />
   </validation-observer>
 </template>
@@ -163,6 +165,7 @@ export default {
       serviceHour: [],
       unitTypes: [],
       specialties: [],
+      filterSpecialties: [],
     }
   },
   created() {
@@ -217,6 +220,7 @@ export default {
       this.serviceHour = serviceHours
       this.unitTypes = unitTypes
       this.specialties = specialties
+      this.filterSpecialties = specialties
     },
 
     mapItems(items, value, label) {
@@ -229,6 +233,31 @@ export default {
           label: item[label],
         }
       })
+    },
+
+    changeUnitType() {
+      const unitType = this.unitTypes.find(item => this.formData.unit_type_id == item.value)
+      this.formData.specialty_type_id = null
+
+      switch (unitType.label) {
+        case 'Consultorio Familiar':
+          const specialties = this.specialties.filter(item =>
+            item.label.toLowerCase().includes('familiar')
+          )
+          this.formData.specialty_type_id = specialties ? specialties[0].value : ''
+          this.filterSpecialties = specialties
+          break
+        case 'Atención de Emergencia':
+          const emergencies = this.specialties.filter(item =>
+            item.label.toLowerCase().includes('emergencia')
+          )
+          this.formData.specialty_type_id = emergencies ? emergencies[0].value : ''
+          this.filterSpecialties = emergencies
+          break
+        default:
+          this.filterSpecialties = this.specialties
+          break
+      }
     },
   },
 }

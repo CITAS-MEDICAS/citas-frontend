@@ -45,6 +45,7 @@ export default {
       password: '',
       password_confirmation: '',
       roles: [],
+      centers: [],
     })
 
     provide('formData', formData)
@@ -83,7 +84,7 @@ export default {
     },
     async getResourceData() {
       const { data } = await UserResource.getById(this.$route.params.id, {
-        include: 'roles',
+        include: 'roles;centers',
       })
       this.formData = this.processData(data.user)
     },
@@ -98,6 +99,17 @@ export default {
 
       data.roles = undefined
       data.roles = roles
+
+      const centers = data.centers.map(center => {
+        return {
+          id: (Math.random() * 1000).toFixed(),
+          center_id: center.id,
+        }
+      })
+
+      data.centers = undefined
+      data.centers = centers
+
       return data
     },
   },
