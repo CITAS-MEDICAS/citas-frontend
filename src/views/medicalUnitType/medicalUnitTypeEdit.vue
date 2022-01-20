@@ -4,7 +4,7 @@
       <b-col cols="12" xl="9" md="8">
         <b-card no-body>
           <b-card-body>
-            <SpecialtiesForm ref="refForm" />
+            <medicalUnitTypeForm ref="refForm" />
           </b-card-body>
         </b-card>
         <pre>{{ formData }}</pre>
@@ -22,19 +22,18 @@
 <script>
 import { provide, ref } from '@vue/composition-api'
 
-import SpecialtiesForm from './components/SpecialtiesForm'
+import medicalUnitTypeForm from './components/medicalUnitTypeForm'
 import { TypesResource } from '@/network/lib/types'
 import ToastificationContent from '@core/components/toastification/ToastificationContent'
 
 export default {
-  name: 'specialtiesCreate',
+  name: 'medicalUnitTypeEdit',
   components: {
-    SpecialtiesForm,
+    medicalUnitTypeForm,
   },
   setup() {
     const formData = ref({
       name: '',
-      type: 'specialty',
     })
 
     provide('formData', formData)
@@ -43,20 +42,23 @@ export default {
       formData,
     }
   },
+  created() {
+    this.getResourceData()
+  },
   methods: {
     async handleSubmit() {
       const isValid = await this.$refs.refForm.validate()
 
       if (!isValid) return
 
-      const { data } = await TypesResource.store(this.formData)
+      const { data } = await TypesResource.update(this.$route.params.id, this.formData)
 
       if (data.types) {
         this.$router.push({ name: 'specialties-list' }).then(() => {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: `Creado Exitosamente!`,
+              title: `Especialidad Registrada Exitosamente!`,
               icon: 'CheckIcon',
               variant: 'success',
             },
@@ -65,7 +67,11 @@ export default {
       }
     },
     handleCancel() {
-      this.$router.push({ name: 'medical-center-list' })
+      this.$router.push({ name: 'specialties-list' })
+    },
+    async getResourceData() {      
+      const { data } = await TypesResource.getById(this.$route.params.id)      
+      this.formData = data.types
     },
   },
 }

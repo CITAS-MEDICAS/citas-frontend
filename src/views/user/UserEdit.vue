@@ -64,7 +64,6 @@ export default {
       if (!isValid) return
 
       const { data } = await UserResource.update(this.$route.params.id, this.formData)
-      console.log('-> data', data)
 
       if (data.user) {
         this.$router.push({ name: 'user-list' }).then(() => {

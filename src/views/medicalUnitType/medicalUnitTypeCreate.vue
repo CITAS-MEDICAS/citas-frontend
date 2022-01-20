@@ -4,10 +4,9 @@
       <b-col cols="12" xl="9" md="8">
         <b-card no-body>
           <b-card-body>
-            <SpecialtiesForm ref="refForm" />
+            <medicalUnitTypeForm ref="refForm" />
           </b-card-body>
         </b-card>
-        <pre>{{ formData }}</pre>
       </b-col>
       <b-col cols="12" xl="3" md="4">
         <b-card>
@@ -22,19 +21,19 @@
 <script>
 import { provide, ref } from '@vue/composition-api'
 
-import SpecialtiesForm from './components/SpecialtiesForm'
+import medicalUnitTypeForm from './components/medicalUnitTypeForm'
 import { TypesResource } from '@/network/lib/types'
 import ToastificationContent from '@core/components/toastification/ToastificationContent'
 
 export default {
-  name: 'specialtiesCreate',
+  name: 'relationshipCreate',
   components: {
-    SpecialtiesForm,
+    medicalUnitTypeForm,
   },
   setup() {
     const formData = ref({
       name: '',
-      type: 'specialty',
+      type: 'medical_unit',
     })
 
     provide('formData', formData)
@@ -52,7 +51,7 @@ export default {
       const { data } = await TypesResource.store(this.formData)
 
       if (data.types) {
-        this.$router.push({ name: 'specialties-list' }).then(() => {
+        this.$router.push({ name: 'medical-unit-type-list' }).then(() => {
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -65,7 +64,7 @@ export default {
       }
     },
     handleCancel() {
-      this.$router.push({ name: 'medical-center-list' })
+      this.$router.push({ name: 'medical-unit-type-list' })
     },
   },
 }

@@ -4,10 +4,9 @@
       <b-col cols="12" xl="9" md="8">
         <b-card no-body>
           <b-card-body>
-            <SpecialtiesForm ref="refForm" />
+            <relationshipForm ref="refForm" />
           </b-card-body>
         </b-card>
-        <pre>{{ formData }}</pre>
       </b-col>
       <b-col cols="12" xl="3" md="4">
         <b-card>
@@ -22,19 +21,18 @@
 <script>
 import { provide, ref } from '@vue/composition-api'
 
-import SpecialtiesForm from './components/SpecialtiesForm'
+import relationshipForm from './components/relationshipForm.vue'
 import { TypesResource } from '@/network/lib/types'
 import ToastificationContent from '@core/components/toastification/ToastificationContent'
 
 export default {
-  name: 'specialtiesCreate',
+  name: 'relationshipEdit',
   components: {
-    SpecialtiesForm,
+    relationshipForm,
   },
   setup() {
     const formData = ref({
       name: '',
-      type: 'specialty',
     })
 
     provide('formData', formData)
@@ -43,16 +41,19 @@ export default {
       formData,
     }
   },
+  created() {
+    this.getResourceData()
+  },
   methods: {
     async handleSubmit() {
       const isValid = await this.$refs.refForm.validate()
 
       if (!isValid) return
+    
+      const { data } = await TypesResource.update(this.$route.params.id, this.formData)
 
-      const { data } = await TypesResource.store(this.formData)
-
-      if (data.types) {
-        this.$router.push({ name: 'specialties-list' }).then(() => {
+      if (data) {
+        this.$router.push({ name: 'relationship-list' }).then(() => {
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -65,7 +66,11 @@ export default {
       }
     },
     handleCancel() {
-      this.$router.push({ name: 'medical-center-list' })
+      this.$router.push({ name: 'relationship-list' })
+    },
+    async getResourceData() {      
+      const { data } = await TypesResource.getById(this.$route.params.id)      
+      this.formData = data.types
     },
   },
 }

@@ -16,7 +16,13 @@ export default [
     action: 'read',
     resource: 'Centros',
   },
-
+  {
+    title: 'Turnos',
+    route: 'service-hour-list',
+    icon: 'UserIcon',
+    action: 'read',
+    resource: 'Horarios',
+  },
   {
     title: 'Especialidades',
     route: 'specialties-list',
@@ -24,19 +30,18 @@ export default [
     action: 'read',
     resource: 'Especialidades',
   },
-
   {
-    title: 'Turnos',
-    route: null,
+    title: 'Parentescos',
+    route: 'relationship-list',
     icon: 'UserIcon',
     action: 'read',
     resource: 'Home',
-  },
+  },  
   {
-    title: 'Horarios',
-    route: null,
+    title: 'Tipos de Consultorio',
+    route: 'medical-unit-type-list',
     icon: 'UserIcon',
     action: 'read',
-    resource: 'Home',
+    resource: 'Horarios',
   },
 ]

@@ -4,10 +4,9 @@
       <b-col cols="12" xl="9" md="8">
         <b-card no-body>
           <b-card-body>
-            <SpecialtiesForm ref="refForm" />
+            <ServiceHourForm ref="refForm" />
           </b-card-body>
         </b-card>
-        <pre>{{ formData }}</pre>
       </b-col>
       <b-col cols="12" xl="3" md="4">
         <b-card>
@@ -22,19 +21,21 @@
 <script>
 import { provide, ref } from '@vue/composition-api'
 
-import SpecialtiesForm from './components/SpecialtiesForm'
-import { TypesResource } from '@/network/lib/types'
+import ServiceHourForm from './components/ServiceHourForm'
+import { ServiceHourResource } from '@/network/lib/serviceHours'
 import ToastificationContent from '@core/components/toastification/ToastificationContent'
 
 export default {
-  name: 'specialtiesCreate',
+  name: 'ServiceHourCreate',
   components: {
-    SpecialtiesForm,
+    ServiceHourForm,
   },
   setup() {
     const formData = ref({
       name: '',
-      type: 'specialty',
+      duration: 15,
+      startTime: '00:00:00',
+      endTime: '00:00:00',
     })
 
     provide('formData', formData)
@@ -44,15 +45,15 @@ export default {
     }
   },
   methods: {
-    async handleSubmit() {
+    async handleSubmit() {      
       const isValid = await this.$refs.refForm.validate()
 
       if (!isValid) return
-
-      const { data } = await TypesResource.store(this.formData)
-
-      if (data.types) {
-        this.$router.push({ name: 'specialties-list' }).then(() => {
+      
+      const { data } = await ServiceHourResource.store(this.formData)
+      
+      if (data) {
+        this.$router.push({ name: 'service-hour-list' }).then(() => {
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -65,7 +66,7 @@ export default {
       }
     },
     handleCancel() {
-      this.$router.push({ name: 'medical-center-list' })
+      this.$router.push({ name: 'service-hour-list' })
     },
   },
 }

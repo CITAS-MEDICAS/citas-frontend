@@ -2,8 +2,8 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <b-button variant="primary" :to="{ name: 'specialties-create' }">
-          Crear Especialidad
+        <b-button variant="primary" :to="{ name: 'relationship-create' }">
+          Crear Parentesco
         </b-button>
       </template>
     </table-header>
@@ -27,7 +27,7 @@
             variant="flat-success"
             class="btn-icon rounded-circle"
             :to="{
-              name: 'specialties-edit',
+              name: 'relationship-edit',
               params: { id: data.item.id },
             }"
           >
@@ -46,7 +46,7 @@
 
       <template #cell(name)="data">
         <b-link
-          :to="{ name: 'specialties-edit', params: { id: data.item.id } }"
+          :to="{ name: 'relationship-edit', params: { id: data.item.id } }"
           class="font-weight-bold"
         >
           {{ data.value }}
@@ -87,7 +87,7 @@ export default {
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
-      const { data } = await TypesResource.getSpecialties({
+      const { data } = await TypesResource.getRelationships({
         q: searchQuery.value,
         limit: perPage.value,
         page: currentPage.value,
@@ -101,8 +101,7 @@ export default {
     const tableColumns = [
       { key: 'actions', label: 'Acciones', thStyle: { width: '100px' } },
       { key: 'id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
-      { key: 'name', label: 'Especialidad', sortable: true },
-      { key: 'is_general', label: 'Es General', sortable: true },
+      { key: 'name', label: 'Parentesco', sortable: true },
     ]
 
     return {

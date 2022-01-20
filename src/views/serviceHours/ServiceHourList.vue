@@ -1,10 +1,9 @@
 <template>
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
+      
       <template #button>
-        <b-button variant="primary" :to="{ name: 'specialties-create' }">
-          Crear Especialidad
-        </b-button>
+        <b-button variant="primary" :to="{ name: 'service-hour-create' }"> Crear Horario</b-button>
       </template>
     </table-header>
 
@@ -23,18 +22,18 @@
       <template #cell(actions)="data">
         <div class="text-nowrap">
           <b-button
-            v-b-tooltip.hover.top="'Editar Especialidad'"
+            v-b-tooltip.hover.top="'Editar Horario'"
             variant="flat-success"
             class="btn-icon rounded-circle"
             :to="{
-              name: 'specialties-edit',
+              name: 'service-hour-edit',
               params: { id: data.item.id },
             }"
           >
             <feather-icon icon="EditIcon" />
           </b-button>
           <b-button
-            v-b-tooltip.hover.top="'Eliminar Especialidad'"
+            v-b-tooltip.hover.top="'Eliminar Horario'"
             variant="flat-danger"
             class="btn-icon rounded-circle"
             @click="handleDelete(data.item.id)"
@@ -46,7 +45,7 @@
 
       <template #cell(name)="data">
         <b-link
-          :to="{ name: 'specialties-edit', params: { id: data.item.id } }"
+          :to="{ name: 'service-hour-edit', params: { id: data.item.id } }"
           class="font-weight-bold"
         >
           {{ data.value }}
@@ -59,11 +58,11 @@
 </template>
 
 <script>
-import useList from '../../custom/libs/useList'
+import useList from '@/custom/libs/useList'
 
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
-import { TypesResource } from '@/network/lib/types'
+import { ServiceHourResource } from '@/network/lib/serviceHours'
 
 export default {
   components: {
@@ -87,7 +86,7 @@ export default {
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
-      const { data } = await TypesResource.getSpecialties({
+      const { data } = await ServiceHourResource.getAll({
         q: searchQuery.value,
         limit: perPage.value,
         page: currentPage.value,
@@ -101,8 +100,10 @@ export default {
     const tableColumns = [
       { key: 'actions', label: 'Acciones', thStyle: { width: '100px' } },
       { key: 'id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
-      { key: 'name', label: 'Especialidad', sortable: true },
-      { key: 'is_general', label: 'Es General', sortable: true },
+      { key: 'name', label: 'Centro de Salud', sortable: true },
+      { key: 'duration', label: 'Duración', sortable: true },
+      { key: 'startTime', label: 'Desde', sortable: true },
+      { key: 'endTime', label: 'Hasta', sortable: true },
     ]
 
     return {
@@ -122,7 +123,7 @@ export default {
   },
   methods: {
     async handleDelete(resourceId) {
-      const isDeleted = await this.deleteResource(resourceId, TypesResource)
+      const isDeleted = await this.deleteResource(resourceId, ServiceHourResource)
       if (isDeleted) {
         this.refetchData()
       }
