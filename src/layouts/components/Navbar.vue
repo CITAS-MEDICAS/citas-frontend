@@ -22,8 +22,10 @@
       >
         <template #button-content>
           <div class="d-sm-flex d-none user-nav">
-            <p class="user-name font-weight-bolder mb-0">{{ getUser.fullname }}</p>
-            <span class="user-status">Admin</span>
+            <p class="user-name font-weight-bolder mb-0">{{ user.fullname }}</p>
+            <span class="user-status text-uppercase">
+              {{ activeRole ? activeRole.display_name : '' }}</span
+            >
           </div>
           <b-avatar
             size="40"
@@ -35,16 +37,22 @@
           />
         </template>
 
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon size="16" icon="UserIcon" class="mr-50" />
-          <span>Profile</span>
-        </b-dropdown-item>
-
-        <b-dropdown-divider />
+        <template v-if="roles && roles.length > 1">
+          <b-dropdown-item
+            v-for="role in roles"
+            :key="role.role"
+            link-class="d-flex align-items-center"
+            @click="changeRole(role.role)"
+          >
+            <feather-icon size="16" icon="RepeatIcon" class="mr-50" />
+            <span>{{ role.display_name }}</span>
+          </b-dropdown-item>
+          <b-dropdown-divider />
+        </template>
 
         <b-dropdown-item link-class="d-flex align-items-center" @click="handleLogout">
           <feather-icon size="16" icon="LogOutIcon" class="mr-50" />
-          <span>Logouts</span>
+          <span>Logout</span>
         </b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
@@ -57,6 +65,7 @@ import { mapGetters } from 'vuex'
 import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue'
 import { AUTH_LOGOUT } from '@/store/modules/auth'
 import { initialAbility } from '@/libs/acl/config'
+import { USER_ROLES, USER_PERMISSIONS } from '@/store/modules/user'
 
 export default {
   components: {
@@ -70,17 +79,29 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getUser']),
+    ...mapGetters({
+      user: 'getUser',
+      activeRole: 'getActiveRole',
+      roles: 'getRoles',
+    }),
+  },
+
+  created() {
+    this.getPermissions()
   },
   methods: {
     handleLogout() {
       this.$store.dispatch(AUTH_LOGOUT).then(() => {
         this.$router.push({ name: 'auth-login' })
       })
-      // Reset ability
       this.$ability.update(initialAbility)
-
-      // Redirect to login page
+    },
+    getPermissions() {
+      this.$store.dispatch(USER_ROLES)
+    },
+    changeRole(role) {
+      console.log('-> role', role)
+      this.$store.dispatch(USER_PERMISSIONS, role)
     },
   },
 }

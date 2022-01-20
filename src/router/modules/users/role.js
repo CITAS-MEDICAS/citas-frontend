@@ -11,6 +11,8 @@ export default [
           active: true,
         },
       ],
+      resource: 'roles',
+      action: 'read',
     },
   },
 ]

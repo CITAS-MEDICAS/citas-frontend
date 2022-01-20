@@ -4,6 +4,6 @@ export default [
     route: 'home',
     icon: 'HomeIcon',
     action: 'read',
-    resource: 'Home',
+    resource: 'dashboard',
   },
 ]

@@ -42,7 +42,10 @@ export const canViewVerticalNavMenuGroup = item => {
  * Based on item's action and resource
  * @param {Object} item navigation object item
  */
-export const canViewVerticalNavMenuHeader = item => can(item.action, item.resource)
+export const canViewVerticalNavMenuHeader = item =>
+  Array.isArray(item.resource)
+    ? item.resource.some(i => can(item.action, i))
+    : can(item.action, item.resource)
 
 /**
  * Check if user can view item based on it's ability

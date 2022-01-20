@@ -45,7 +45,8 @@ const actions = {
 
           commit(AUTH_SUCCESS, data)
           commit(USER_DATA, data.user_data)
-          dispatch(USER_ROLES, data.user_data.id)
+
+          // dispatch(USER_ROLES)
 
           resolve(data.user_data)
         })
@@ -57,12 +58,16 @@ const actions = {
   },
   [AUTH_LOGOUT]: ({ commit }) => {
     return new Promise(resolve => {
-      useJwt.logout().then(() => {
-        useJwt.clearStorage()
-        commit(AUTH_LOGOUT)
-        commit(USER_LOGOUT)
-        resolve()
-      })
+      useJwt
+        .logout()
+        .then(() => {
+          commit(AUTH_LOGOUT)
+          commit(USER_LOGOUT)
+          resolve()
+        })
+        .finally(() => {
+          useJwt.clearStorage()
+        })
     })
   },
 }

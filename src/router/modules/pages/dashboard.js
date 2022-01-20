@@ -11,7 +11,8 @@ export default [
           active: true,
         },
       ],
-      resource: 'Guest',
+      resource: 'dashboard',
+      action: 'read',
     },
   },
 ]

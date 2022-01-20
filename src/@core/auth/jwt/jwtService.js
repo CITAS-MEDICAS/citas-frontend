@@ -49,7 +49,7 @@ export default class JwtService {
 
           const retryOriginalRequest = new Promise(resolve => {
             this.addSubscriber(accessToken => {
-              console.log('-> accessToken', accessToken)
+              console.log('retryOriginalRequest -> accessToken', accessToken)
               // Make sure to assign accessToken according to your response.
               // Check: https://pixinvent.ticksy.com/ticket/2413870
               // Change Authorization header
@@ -68,17 +68,24 @@ export default class JwtService {
     if (this.isAlreadyFetchingAccessToken) return
 
     this.isAlreadyFetchingAccessToken = true
-    this.refreshToken().then(({ data }) => {
-      console.log('-> data', data)
-      this.isAlreadyFetchingAccessToken = false
+    this.refreshToken()
+      .then(({ data }) => {
+        this.isAlreadyFetchingAccessToken = false
 
-      if (data.access_token && data.refresh_token) {
-        this.setToken(data.access_token)
-        this.setRefreshToken(data.refresh_token)
-      }
+        if (data.access_token && data.refresh_token) {
+          this.setToken(data.access_token)
+          this.setRefreshToken(data.refresh_token)
+        }
 
-      this.onAccessTokenFetched(data.access_token)
-    })
+        this.onAccessTokenFetched(data.access_token)
+      })
+      .catch(error => {
+        console.log('refreshToken -> error', error.response)
+        if (error.response.data.message === 'The refresh token is invalid.') {
+          this.clearStorage()
+          window.location = '/login'
+        }
+      })
   }
 
   onAccessTokenFetched(accessToken) {
@@ -116,7 +123,8 @@ export default class JwtService {
   clearStorage() {
     localStorage.removeItem(this.jwtConfig.storageTokenKeyName)
     localStorage.removeItem(this.jwtConfig.storageRefreshTokenKeyName)
-    localStorage.removeItem(this.jwtConfig.storageUserDataKeyName)
+    localStorage.removeItem('userRoles')
+    localStorage.removeItem('userRole')
   }
 
   login(...args) {
@@ -135,5 +143,21 @@ export default class JwtService {
     return this.axiosIns.post(this.jwtConfig.refreshEndpoint, {
       refresh_token: this.getRefreshToken(),
     })
+  }
+
+  setUserRoles(permissions) {
+    localStorage.setItem('userRoles', JSON.stringify(permissions))
+  }
+
+  getUserRoles() {
+    return JSON.parse(localStorage.getItem('userRoles'))
+  }
+
+  setActiveRole(role) {
+    localStorage.setItem('userRole', JSON.stringify(role))
+  }
+
+  getActiveRole() {
+    return JSON.parse(localStorage.getItem('userRole'))
   }
 }

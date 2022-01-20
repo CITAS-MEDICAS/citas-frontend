@@ -1,20 +1,22 @@
 export default [
   {
     header: 'Administración',
+    action: 'read',
+    resource: ['centro', 'consultorio', 'especialidad', 'turnos'],
   },
   {
     title: 'Centros',
     route: 'medical-center-list',
     icon: 'UserIcon',
     action: 'read',
-    resource: 'Centros',
+    resource: 'centro',
   },
   {
     title: 'Consultorios',
     route: 'medical-unit-list',
     icon: 'UserIcon',
     action: 'read',
-    resource: 'Centros',
+    resource: 'consultorio',
   },
 
   {
@@ -22,7 +24,7 @@ export default [
     route: 'specialties-list',
     icon: 'UserIcon',
     action: 'read',
-    resource: 'Especialidades',
+    resource: 'especialidad',
   },
 
   {
@@ -30,13 +32,13 @@ export default [
     route: null,
     icon: 'UserIcon',
     action: 'read',
-    resource: 'Home',
+    resource: 'turnos',
   },
   {
     title: 'Horarios',
     route: null,
     icon: 'UserIcon',
     action: 'read',
-    resource: 'Home',
+    resource: 'calendario',
   },
 ]

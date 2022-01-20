@@ -25,6 +25,7 @@ export default {
     LayoutVertical,
     Navbar,
   },
+
   data() {
     return {
       // showCustomizer: $themeConfig.layout.customizer,

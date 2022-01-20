@@ -20,15 +20,15 @@
       <b-col lg="4" class="d-flex align-items-center auth-bg px-2 p-lg-5">
         <b-col sm="8" md="6" lg="12" class="px-xl-2 mx-auto">
           <b-card-title title-tag="h2" class="font-weight-bold mb-1">
-            Welcome to Vuexy! 👋
+            Inicio de Sesión
           </b-card-title>
           <b-card-text class="mb-2">
-            Please sign-in to your account and start the adventure
+            Para obtener las credenciales, debe aceptar términos y registrarse.
           </b-card-text>
 
           <!-- form -->
-          <validation-observer ref="loginForm">
-            <b-form class="auth-login-form mt-2" @submit.prevent>
+          <validation-observer ref="loginForm" #default="{ invalid }">
+            <b-form class="auth-login-form mt-2" @submit.prevent="handleLogin">
               <!-- email -->
               <b-form-group label="Email" label-for="login-email">
                 <validation-provider #default="{ errors }" name="Email" rules="required|email">
@@ -46,9 +46,9 @@
               <!-- forgot password -->
               <b-form-group>
                 <div class="d-flex justify-content-between">
-                  <label for="login-password">Password</label>
-                  <b-link :to="{ name: 'auth-forgot-password-v2' }">
-                    <small>Forgot Password?</small>
+                  <label>Contraseña</label>
+                  <b-link to="#">
+                    <small>Olvide mi contraseña</small>
                   </b-link>
                 </div>
                 <validation-provider #default="{ errors }" name="Password" rules="required">
@@ -78,23 +78,23 @@
               </b-form-group>
 
               <!-- checkbox -->
-              <b-form-group>
-                <b-form-checkbox id="remember-me" v-model="status" name="checkbox-1">
-                  Remember Me
-                </b-form-checkbox>
-              </b-form-group>
+              <!--              <b-form-group>-->
+              <!--                <b-form-checkbox id="remember-me" v-model="status" name="checkbox-1">-->
+              <!--                  Remember Me-->
+              <!--                </b-form-checkbox>-->
+              <!--              </b-form-group>-->
 
               <!-- submit buttons -->
-              <b-button type="submit" variant="primary" block @click="handleLogin">
+              <b-button type="submit" variant="primary" block :disabled="invalid">
                 Sign in
               </b-button>
             </b-form>
           </validation-observer>
 
           <b-card-text class="text-center mt-2">
-            <span>New on our platform? </span>
-            <b-link :to="{ name: 'page-auth-register-v2' }">
-              <span>&nbsp;Create an account</span>
+            <span>Si aún no se registro, haga click </span>
+            <b-link to="#">
+              <span>aquí.</span>
             </b-link>
           </b-card-text>
         </b-col>
@@ -152,25 +152,37 @@ export default {
     async handleLogin() {
       const isValid = await this.$refs.loginForm.validate()
 
-      if (isValid) {
-        this.$store
-          .dispatch(AUTH_REQUEST, {
-            email: this.userEmail,
-            password: this.password,
-          })
-          .then(user => {
-            this.$router.replace('/').then(() => {
-              this.$toast({
-                component: ToastificationContent,
-                props: {
-                  title: `Bienvenido ${user?.fullname || ''}`,
-                  icon: 'CoffeeIcon',
-                  variant: 'success',
-                },
-              })
+      if (!isValid) return
+
+      this.$store
+        .dispatch(AUTH_REQUEST, {
+          email: this.userEmail,
+          password: this.password,
+        })
+        .then(user => {
+          this.$ability.update([{ resource: 'dashboard', action: 'read' }])
+          this.$router.push('/').then(() => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: `Bienvenido ${user?.fullname || ''}`,
+                icon: 'UserCheckIcon',
+                variant: 'success',
+              },
             })
           })
-      }
+        })
+        .catch(error => {
+          console.error('Message:', error.response.data.message)
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Credenciales Invalidos',
+              icon: 'AlertCircleIcon',
+              variant: 'danger',
+            },
+          })
+        })
     },
   },
 }

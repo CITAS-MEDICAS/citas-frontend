@@ -11,6 +11,8 @@ export default [
           active: true,
         },
       ],
+      action: 'read',
+      resource: 'especialidad',
     },
   },
   {

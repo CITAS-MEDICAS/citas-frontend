@@ -11,6 +11,8 @@ export default [
           active: true,
         },
       ],
+      resource: 'personal',
+      action: 'read',
     },
   },
   {
@@ -29,6 +31,8 @@ export default [
           active: true,
         },
       ],
+      resource: 'personal',
+      action: 'create',
     },
   },
   {
@@ -47,6 +51,8 @@ export default [
           active: true,
         },
       ],
+      resource: 'personal',
+      action: 'update',
     },
   },
 ]
