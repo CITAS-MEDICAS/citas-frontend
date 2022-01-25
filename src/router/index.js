@@ -8,6 +8,7 @@ import specialities from '@/router/modules/administration/specialities'
 import medicalUnit from './modules/administration/medicalUnit'
 import user from './modules/users/user'
 import role from './modules/users/role'
+import insured from './modules/users/insured'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,7 @@ const router = new VueRouter({
     // Users
     ...user,
     ...role,
+    ...insured,
   ],
 })
 

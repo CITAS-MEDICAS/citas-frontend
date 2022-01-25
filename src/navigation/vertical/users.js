@@ -27,7 +27,7 @@ export default [
   // },
   {
     title: 'Asegurados',
-    route: null,
+    route: 'insured-list',
     icon: 'UserIcon',
     action: 'read',
     resource: 'asegurados',
