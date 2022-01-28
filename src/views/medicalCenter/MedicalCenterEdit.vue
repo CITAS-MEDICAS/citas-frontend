@@ -52,7 +52,6 @@ export default {
       const isValid = await this.$refs.refForm.validate()
 
       if (!isValid) return
-
       const { data } = await MedicalCenterResource.update(this.$route.params.id, this.formData)
 
       if (data.medicalCenter) {

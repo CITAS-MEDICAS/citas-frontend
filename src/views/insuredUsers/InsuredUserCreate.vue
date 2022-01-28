@@ -34,6 +34,14 @@ export default {
   },
   setup() {
     const formData = ref({
+      insuredType: '',
+      relationship_code: '',
+      registration_code: '',
+      affiliation_date: '',
+      medical_center_id: null,
+      medical_unit_id: null,
+      beneficiary_code: '',
+
       employer_code: '',
       employer_name: '',
       employer_date: '',
@@ -49,14 +57,10 @@ export default {
       phone_number: '',
       staff_registration_code: '',
 
+      user_titular_id: null,
       email: '',
       password: '',
       password_confirmation: '',
-
-      registration_code: '',
-      affiliation_date: '',
-      medical_center_id: null,
-      medical_unit_id: null,
 
       region: '',
       address_zone: '',
@@ -77,20 +81,19 @@ export default {
       if (!isValid) return
 
       const { data } = await InsuredResource.store(this.formData)
-      console.log('-> data', data)
 
-      // if (data.user) {
-      //   this.$router.push({ name: 'user-list' }).then(() => {
-      //     this.$toast({
-      //       component: ToastificationContent,
-      //       props: {
-      //         title: `Creado Exitosamente!`,
-      //         icon: 'CheckIcon',
-      //         variant: 'success',
-      //       },
-      //     })
-      //   })
-      // }
+      if (data.insured) {
+        this.$router.push({ name: 'insured-list' }).then(() => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Creado Exitosamente!`,
+              icon: 'CheckIcon',
+              variant: 'success',
+            },
+          })
+        })
+      }
     },
     handleCancel() {
       this.$router.push({ name: 'insured-list' })

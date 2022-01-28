@@ -18,7 +18,6 @@ export default [
     action: 'read',
     resource: 'consultorio',
   },
-
   {
     title: 'Especialidades',
     route: 'specialties-list',
@@ -26,13 +25,26 @@ export default [
     action: 'read',
     resource: 'especialidad',
   },
-
   {
     title: 'Turnos',
-    route: null,
+    route: 'service-hour-list',
     icon: 'UserIcon',
     action: 'read',
     resource: 'turnos',
+  },
+  {
+    title: 'Parentescos',
+    route: 'relationship-list',
+    icon: 'UserIcon',
+    action: 'read',
+    resource: 'parantescos',
+  },
+  {
+    title: 'Tipos de Consultorio',
+    route: 'medical-unit-type-list',
+    icon: 'UserIcon',
+    action: 'read',
+    resource: 'tipos-consultorio',
   },
   {
     title: 'Horarios',

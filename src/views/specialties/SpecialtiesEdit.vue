@@ -23,7 +23,7 @@
 import { provide, ref } from '@vue/composition-api'
 
 import SpecialtiesForm from './components/SpecialtiesForm'
-import { SpecialtiesResource } from '@/network/lib/specialties'
+import { TypesResource } from '@/network/lib/types'
 import ToastificationContent from '@core/components/toastification/ToastificationContent'
 
 export default {
@@ -34,7 +34,6 @@ export default {
   setup() {
     const formData = ref({
       name: '',
-      is_general: false,
     })
 
     provide('formData', formData)
@@ -43,7 +42,7 @@ export default {
       formData,
     }
   },
-  mounted() {
+  created() {
     this.getResourceData()
   },
   methods: {
@@ -52,14 +51,14 @@ export default {
 
       if (!isValid) return
 
-      const { data } = await SpecialtiesResource.update(this.$route.params.id, this.formData)
+      const { data } = await TypesResource.update(this.$route.params.id, this.formData)
 
-      if (data.specialties) {
+      if (data.types) {
         this.$router.push({ name: 'specialties-list' }).then(() => {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: `Creado Exitosamente!`,
+              title: `Especialidad Registrada Exitosamente!`,
               icon: 'CheckIcon',
               variant: 'success',
             },
@@ -68,11 +67,11 @@ export default {
       }
     },
     handleCancel() {
-      this.$router.push({ name: 'medical-center-list' })
+      this.$router.push({ name: 'specialties-list' })
     },
-    async getResourceData() {
-      const { data } = await SpecialtiesResource.getById(this.$route.params.id)
-      this.formData = data.specialties
+    async getResourceData() {      
+      const { data } = await TypesResource.getById(this.$route.params.id)      
+      this.formData = data.types
     },
   },
 }

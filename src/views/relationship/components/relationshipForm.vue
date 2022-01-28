@@ -1,7 +1,7 @@
 <template>
   <validation-observer ref="refFormObserver">
-    <b-form-group label="Nombre Especialidad">
-      <validation-provider v-slot="{ errors }" name="Nombre de la Especialidad" rules="required">
+    <b-form-group label="Nombre del Parentesco">
+      <validation-provider v-slot="{ errors }" name="Nombre del Tipo de Parentesco" rules="required">
         <b-form-input v-model="formData.name" :state="errors.length ? false : null" size="lg" />
         <small class="text-danger">{{ errors[0] }}</small>
       </validation-provider>
@@ -15,7 +15,7 @@ import { inject, ref } from '@vue/composition-api'
 import { required } from '@validations'
 
 export default {
-  name: 'SpecialtiesForm',
+  name: 'RelationshipForm',
   components: {
     ValidationObserver,
     ValidationProvider,

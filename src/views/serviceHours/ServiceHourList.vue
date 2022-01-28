@@ -2,7 +2,7 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <b-button variant="primary" :to="{ name: 'medical-center-create' }"> Crear Rol</b-button>
+        <b-button variant="primary" :to="{ name: 'service-hour-create' }"> Crear Horario</b-button>
       </template>
     </table-header>
 
@@ -22,12 +22,12 @@
         <div class="text-nowrap">
           <router-link
             :to="{
-              name: 'medical-center-edit',
+              name: 'service-hour-edit',
               params: { id: data.item.id },
             }"
           >
             <b-button
-              v-b-tooltip.hover.top="'Editar Rol'"
+              v-b-tooltip.hover.top="'Editar Horario'"
               variant="flat-success"
               class="btn-icon rounded-circle"
             >
@@ -35,7 +35,7 @@
             </b-button>
           </router-link>
           <b-button
-            v-b-tooltip.hover.top="'Eliminar Rol'"
+            v-b-tooltip.hover.top="'Eliminar Horario'"
             variant="flat-danger"
             class="btn-icon rounded-circle"
             @click="handleDelete(data.item.id)"
@@ -47,7 +47,7 @@
 
       <template #cell(name)="data">
         <b-link
-          :to="{ name: 'medical-center-edit', params: { id: data.item.id } }"
+          :to="{ name: 'service-hour-edit', params: { id: data.item.id } }"
           class="font-weight-bold"
         >
           {{ data.value }}
@@ -64,10 +64,9 @@ import useList from '@/custom/libs/useList'
 
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
-import { RoleResource } from '@/network/lib/role'
+import { ServiceHoursResource } from '@/network/lib/serviceHours'
 
 export default {
-  name: 'RoleList',
   components: {
     TableHeader,
     TablePagination,
@@ -89,7 +88,7 @@ export default {
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
-      const { data } = await RoleResource.getAll({
+      const { data } = await ServiceHoursResource.getAll({
         q: searchQuery.value,
         limit: perPage.value,
         page: currentPage.value,
@@ -103,9 +102,10 @@ export default {
     const tableColumns = [
       { key: 'actions', label: 'Acciones', thStyle: { width: '100px' } },
       { key: 'id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
-      { key: 'name', label: 'Rol', sortable: true },
-      { key: 'display_name', label: 'Nombre', sortable: true },
-      { key: 'description', label: 'Descripción', sortable: true },
+      { key: 'name', label: 'Centro de Salud', sortable: true },
+      { key: 'duration', label: 'Duración', sortable: true },
+      { key: 'startTime', label: 'Desde', sortable: true },
+      { key: 'endTime', label: 'Hasta', sortable: true },
     ]
 
     return {
@@ -125,7 +125,7 @@ export default {
   },
   methods: {
     async handleDelete(resourceId) {
-      const isDeleted = await this.deleteResource(resourceId, RoleResource)
+      const isDeleted = await this.deleteResource(resourceId, ServiceHoursResource)
       if (isDeleted) {
         this.refetchData()
       }
@@ -133,5 +133,3 @@ export default {
   },
 }
 </script>
-
-<style scoped></style>

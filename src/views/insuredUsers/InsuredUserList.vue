@@ -20,17 +20,21 @@
     >
       <template #cell(actions)="data">
         <div class="text-nowrap">
-          <b-button
-            v-b-tooltip.hover.top="'Editar Asegurado'"
-            variant="flat-success"
-            class="btn-icon rounded-circle"
+          <router-link
             :to="{
               name: 'insured-edit',
               params: { id: data.item.id },
             }"
           >
-            <feather-icon icon="EditIcon" />
-          </b-button>
+            <b-button
+              v-b-tooltip.hover.top="'Editar Asegurado'"
+              variant="flat-success"
+              class="btn-icon rounded-circle"
+            >
+              <feather-icon icon="EditIcon" />
+            </b-button>
+          </router-link>
+
           <b-button
             v-b-tooltip.hover.top="'Eliminar Asegurado'"
             variant="flat-danger"
@@ -42,13 +46,8 @@
         </div>
       </template>
 
-      <template #cell(name)="data">
-        <b-link
-          :to="{ name: 'insured-edit', params: { id: data.item.id } }"
-          class="font-weight-bold"
-        >
-          {{ data.value }}
-        </b-link>
+      <template #cell(relationship)="data">
+        {{ data.item.key }}
       </template>
     </b-table>
 
@@ -91,6 +90,7 @@ export default {
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
+        include: 'user;unit.center',
       })
 
       totalRows.value = data.total_data
@@ -100,9 +100,12 @@ export default {
     const tableColumns = [
       { key: 'actions', label: 'Acciones', thStyle: { width: '100px' } },
       { key: 'id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
-      { key: 'name', label: 'Centro de Salud', sortable: true },
-      { key: 'institution_code', label: 'Código de Establecimiento', sortable: true },
-      { key: 'institution_network', label: 'Red de Salud', sortable: true },
+      { key: 'user.name', label: 'Nombre', sortable: false },
+      { key: 'user.paternal_surname', label: 'Paterno', sortable: false },
+      { key: 'user.maternal_surname', label: 'Materno', sortable: false },
+      { key: 'unit.center.name', label: 'Centro de Salud', sortable: false },
+      { key: 'registration_code', label: 'Numero Asegurado', sortable: false },
+      { key: 'relationship', label: 'Parentesco', sortable: false },
     ]
 
     return {

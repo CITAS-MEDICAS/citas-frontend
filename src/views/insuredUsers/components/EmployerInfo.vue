@@ -37,9 +37,13 @@
         </b-form-group>
         <b-row>
           <b-col sm="6">
-            <b-form-group label="Salario Actual">
+            <b-form-group label="Salario Actual (Bs.)">
               <validation-provider v-slot="{ errors }" name="Salario" rules="required">
-                <b-form-input v-model="formData.salary" :state="errors.length ? false : null" />
+                <b-form-input
+                  v-model="formData.salary"
+                  type="number"
+                  :state="errors.length ? false : null"
+                />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>

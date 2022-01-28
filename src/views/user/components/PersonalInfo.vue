@@ -108,6 +108,7 @@
                     { text: 'Femenino', value: 'F' },
                   ]"
                   name="radio-inline"
+                  class="mt-1"
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>

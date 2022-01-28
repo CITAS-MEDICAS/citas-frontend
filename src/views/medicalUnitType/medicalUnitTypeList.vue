@@ -2,7 +2,9 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <b-button variant="primary" :to="{ name: 'medical-center-create' }"> Crear Rol</b-button>
+        <b-button variant="primary" :to="{ name: 'medical-unit-type-create' }">
+          Crear Tipo de Consultorio
+        </b-button>
       </template>
     </table-header>
 
@@ -22,20 +24,21 @@
         <div class="text-nowrap">
           <router-link
             :to="{
-              name: 'medical-center-edit',
+              name: 'medical-unit-type-edit',
               params: { id: data.item.id },
             }"
           >
             <b-button
-              v-b-tooltip.hover.top="'Editar Rol'"
+              v-b-tooltip.hover.top="'Editar Especialidad'"
               variant="flat-success"
               class="btn-icon rounded-circle"
             >
               <feather-icon icon="EditIcon" />
             </b-button>
           </router-link>
+
           <b-button
-            v-b-tooltip.hover.top="'Eliminar Rol'"
+            v-b-tooltip.hover.top="'Eliminar Especialidad'"
             variant="flat-danger"
             class="btn-icon rounded-circle"
             @click="handleDelete(data.item.id)"
@@ -47,7 +50,7 @@
 
       <template #cell(name)="data">
         <b-link
-          :to="{ name: 'medical-center-edit', params: { id: data.item.id } }"
+          :to="{ name: 'medical-unit-type-edit', params: { id: data.item.id } }"
           class="font-weight-bold"
         >
           {{ data.value }}
@@ -60,14 +63,13 @@
 </template>
 
 <script>
-import useList from '@/custom/libs/useList'
+import useList from '../../custom/libs/useList'
 
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
-import { RoleResource } from '@/network/lib/role'
+import { TypesResource } from '@/network/lib/types'
 
 export default {
-  name: 'RoleList',
   components: {
     TableHeader,
     TablePagination,
@@ -89,7 +91,7 @@ export default {
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
-      const { data } = await RoleResource.getAll({
+      const { data } = await TypesResource.getUnitTypes({
         q: searchQuery.value,
         limit: perPage.value,
         page: currentPage.value,
@@ -103,9 +105,7 @@ export default {
     const tableColumns = [
       { key: 'actions', label: 'Acciones', thStyle: { width: '100px' } },
       { key: 'id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
-      { key: 'name', label: 'Rol', sortable: true },
-      { key: 'display_name', label: 'Nombre', sortable: true },
-      { key: 'description', label: 'Descripción', sortable: true },
+      { key: 'name', label: 'Tipo Consultorio', sortable: true },
     ]
 
     return {
@@ -125,7 +125,7 @@ export default {
   },
   methods: {
     async handleDelete(resourceId) {
-      const isDeleted = await this.deleteResource(resourceId, RoleResource)
+      const isDeleted = await this.deleteResource(resourceId, TypesResource)
       if (isDeleted) {
         this.refetchData()
       }
@@ -133,5 +133,3 @@ export default {
   },
 }
 </script>
-
-<style scoped></style>

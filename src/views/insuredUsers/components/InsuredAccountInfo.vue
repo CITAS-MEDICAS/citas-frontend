@@ -6,6 +6,49 @@
       </b-col>
       <b-col lg="7">
         <b-row>
+          <b-col :sm="6">
+            <b-form-group label="Tipo de Cuenta *">
+              <validation-provider v-slot="{ errors }" name="Tipo de Cuenta" rules="required">
+                <b-form-radio-group
+                  v-model="accountType"
+                  :options="[
+                    { text: 'Nueva', value: 'N' },
+                    { text: 'Existente', value: 'E' },
+                  ]"
+                  name="radio-inline"
+                  class="mt-1"
+                />
+                <small class="text-danger">{{ errors[0] }}</small>
+              </validation-provider>
+            </b-form-group>
+          </b-col>
+        </b-row>
+        <hr />
+
+        <b-form-group v-if="accountType === 'E'" label=" Usuario *">
+          <validation-provider v-slot="{ errors }" name="Usuario" rules="required">
+            <v-select
+              v-model="formData.user_titular_id"
+              :options="users"
+              :reduce="item => item.id"
+              label="name"
+              :clearable="false"
+              placeholder="Buscar..."
+            >
+              <template #search="{ attributes, events }">
+                <input
+                  class="vs__search"
+                  :required="errors.length ? false : null"
+                  v-bind="attributes"
+                  v-on="events"
+                />
+              </template>
+            </v-select>
+            <small class="text-danger">{{ errors[0] }}</small>
+          </validation-provider>
+        </b-form-group>
+
+        <b-row v-if="accountType === 'N'">
           <b-col cols="12">
             <b-form-group label="Correo Electronico *">
               <validation-provider
@@ -63,13 +106,15 @@ import { inject, ref } from '@vue/composition-api'
 import { required, confirmed, min, email } from '@validations'
 
 export default {
-  name: 'AccountInfo',
+  name: 'InsuredAccountInfo',
   components: {
     ValidationObserver,
     ValidationProvider,
   },
   data() {
-    return {}
+    return {
+      accountType: null,
+    }
   },
   setup() {
     const formData = inject('formData')

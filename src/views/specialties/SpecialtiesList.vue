@@ -22,17 +22,20 @@
     >
       <template #cell(actions)="data">
         <div class="text-nowrap">
-          <b-button
-            v-b-tooltip.hover.top="'Editar Especialidad'"
-            variant="flat-success"
-            class="btn-icon rounded-circle"
+          <router-link
             :to="{
               name: 'specialties-edit',
               params: { id: data.item.id },
             }"
           >
-            <feather-icon icon="EditIcon" />
-          </b-button>
+            <b-button
+              v-b-tooltip.hover.top="'Editar Especialidad'"
+              variant="flat-success"
+              class="btn-icon rounded-circle"
+            >
+              <feather-icon icon="EditIcon" />
+            </b-button>
+          </router-link>
           <b-button
             v-b-tooltip.hover.top="'Eliminar Especialidad'"
             variant="flat-danger"
@@ -63,7 +66,7 @@ import useList from '../../custom/libs/useList'
 
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
-import { SpecialtiesResource } from '@/network/lib/specialties'
+import { TypesResource } from '@/network/lib/types'
 
 export default {
   components: {
@@ -87,7 +90,7 @@ export default {
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
-      const { data } = await SpecialtiesResource.getAll({
+      const { data } = await TypesResource.getSpecialties({
         q: searchQuery.value,
         limit: perPage.value,
         page: currentPage.value,
@@ -122,7 +125,7 @@ export default {
   },
   methods: {
     async handleDelete(resourceId) {
-      const isDeleted = await this.deleteResource(resourceId, SpecialtiesResource)
+      const isDeleted = await this.deleteResource(resourceId, TypesResource)
       if (isDeleted) {
         this.refetchData()
       }

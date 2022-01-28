@@ -20,17 +20,21 @@
     >
       <template #cell(actions)="data">
         <div class="text-nowrap">
-          <b-button
-            v-b-tooltip.hover.top="'Editar Centro'"
-            variant="flat-success"
-            class="btn-icon rounded-circle"
+          <router-link
             :to="{
               name: 'medical-center-edit',
               params: { id: data.item.id },
             }"
           >
-            <feather-icon icon="EditIcon" />
-          </b-button>
+            <b-button
+              v-b-tooltip.hover.top="'Editar Centro'"
+              variant="flat-success"
+              class="btn-icon rounded-circle"
+            >
+              <feather-icon icon="EditIcon" />
+            </b-button>
+          </router-link>
+
           <b-button
             v-b-tooltip.hover.top="'Eliminar Centro'"
             variant="flat-danger"
