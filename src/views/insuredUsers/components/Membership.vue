@@ -10,39 +10,40 @@
             <b-form-group label="Titularidad *">
               <validation-provider v-slot="{ errors }" name="Titularidad" rules="required">
                 <b-form-radio-group
-                  v-model="formData.insuredType"
+                  v-model="formData.insuredIsTitular"
                   :options="[
-                    { text: 'Titular', value: 'T' },
-                    { text: 'Dependiente', value: 'D' },
+                    { text: 'Titular', value: true },
+                    { text: 'Dependiente', value: false },
                   ]"
-                  name="radio-inline"
+                  name="insuredType"
                   class="mt-1"
+                  @change="handleInsuredType"
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
           </b-col>
         </b-row>
-        <b-row v-if="formData.insuredType === 'D'">
 
-          <b-col :sm="6">
-            <b-form-group label="CI Titular *">
+        <b-row v-if="!formData.insuredIsTitular">
+          <b-col sm="12">
+            <b-form-group label="Nro. Documento/CI Titular *">
               <validation-provider v-slot="{ errors }" name="CI Titular" rules="required">
                 <b-form-input
-                  v-model="formData.registration_code"
+                  v-model="formData.user_titular_id"
                   :state="errors.length ? false : null"
-                  placeholder="123456ABC"
+                  placeholder="ej. 1234567-1K"
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
           </b-col>
-          <b-col sm="6">
+          <b-col sm="12">
             <b-form-group label="Parentesco *">
               <validation-provider v-slot="{ errors }" name="Codigo Beneficiario" rules="required">
                 <v-select
-                  v-model="formData.relationship_code"
-                  :options="relationships"
+                  v-model="formData.relationship_type_id"
+                  :options="filterRelationships"
                   :reduce="item => item.id"
                   label="name"
                   :clearable="false"
@@ -62,7 +63,7 @@
           </b-col>
         </b-row>
 
-        <b-row v-if="formData.insuredType === 'T'">
+        <b-row v-if="formData.insuredIsTitular">
           <b-col :sm="6">
             <b-form-group label="Número de Asegurado *">
               <validation-provider v-slot="{ errors }" name="Número de Asegurado" rules="required">
@@ -127,6 +128,11 @@ export default {
       validate,
     }
   },
+  computed: {
+    filterRelationships() {
+      return this.relationships.filter(item => !item.name.includes('ID - Titular'))
+    },
+  },
   mounted() {
     this.getRelationships()
   },
@@ -134,6 +140,29 @@ export default {
     async getRelationships() {
       const { data } = await TypesResource.getAll({ scope: 'relationship', sortByAsc: 'id' })
       this.relationships = data.rows
+    },
+    handleInsuredType() {
+      this.formData.relationship_type_id = null
+      if (this.isTitular()) {
+        const relationship = this.getIDTitular()
+        this.formData.relationship_type_id = relationship.id
+      }
+
+      this.formData.isNewAccount = null
+      this.formData.employer_code = null
+      this.formData.employer_name = null
+      this.formData.employer_date = null
+      this.formData.salary = null
+      this.formData.email = null
+      this.formData.password = null
+      this.formData.password_confirmation = null
+      this.formData.isNewAccount = true
+    },
+    getIDTitular() {
+      return this.relationships.find(item => item.name.includes('ID - Titular'))
+    },
+    isTitular() {
+      return this.formData.insuredIsTitular
     },
   },
 }

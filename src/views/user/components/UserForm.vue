@@ -2,6 +2,8 @@
   <section>
     <PersonalInfo ref="refPersonalInfo" />
     <hr />
+    <MedicalRegistration ref="refMedicalRegistration" />
+    <hr />
     <AccountInfo ref="refAccountInfo" />
     <hr />
     <UserRoleList ref="refUserRoleList" />
@@ -18,6 +20,7 @@ import AccountInfo from './AccountInfo'
 import PersonalInfo from './PersonalInfo'
 import UserRoleList from './UserRoleList'
 import UserCenterList from './UserCenterList'
+import MedicalRegistration from './MedicalRegistration'
 
 export default {
   name: 'UserForm',
@@ -26,6 +29,7 @@ export default {
     AccountInfo,
     UserRoleList,
     UserCenterList,
+    MedicalRegistration,
   },
 
   setup() {
@@ -34,19 +38,22 @@ export default {
     const refAccountInfo = ref(null)
     const refUserRoleList = ref(null)
     const refUserCenterList = ref(null)
+    const refMedicalRegistration = ref(null)
 
     const validate = async () => {
       const personal = await refPersonalInfo.value.validate()
+      const registration = await refMedicalRegistration.value.validate()
       const account = await refAccountInfo.value.validate()
-      const list = await refUserRoleList.value.validate()
-      const list2 = await refUserCenterList.value.validate()
-      return personal && account && list && list2
+      const roleList = await refUserRoleList.value.validate()
+      const centerList = await refUserCenterList.value.validate()
+      return personal && registration && account && roleList && centerList
     }
 
     return {
       formData,
-      refAccountInfo,
       refPersonalInfo,
+      refMedicalRegistration,
+      refAccountInfo,
       refUserRoleList,
       refUserCenterList,
       required,

@@ -5,16 +5,26 @@
     <MedicalUnit ref="refMedicalUnit" />
     <hr />
 
-    <template v-if="formData.insuredType === 'T'">
-      <EmployerInfo ref="refEmployerInfo" />
-      <hr />
-    </template>
-    <template v-if="formData.insuredType === 'T'">
-      <InsuredAccountInfo ref="refAccountInfo" />
-      <hr />
-    </template>
-    <PersonalInfo ref="refPersonalInfo" />
-    <hr />
+    <EmployerInfo
+      v-show="formData.insuredIsTitular"
+      ref="refEmployerInfo"
+      :validate-form="formData.insuredIsTitular"
+    />
+    <hr v-show="formData.insuredIsTitular" />
+
+    <InsuredAccountInfo
+      v-show="formData.insuredIsTitular"
+      ref="refAccountInfo"
+      :validate-form="formData.insuredIsTitular"
+    />
+    <hr v-show="formData.insuredIsTitular" />
+
+    <PersonalInfo
+      v-show="formData.isNewAccount"
+      ref="refPersonalInfo"
+      :validate-form="formData.isNewAccount"
+    />
+    <hr v-show="formData.isNewAccount" />
     <Contact ref="refContact" />
   </div>
 </template>
@@ -52,13 +62,19 @@ export default {
 
     const validate = async () => {
       const membership = await refMembership.value.validate()
+      console.log('-> membership', membership)
       const medicalUnit = await refMedicalUnit.value.validate()
+      console.log('-> medicalUnit', medicalUnit)
       const employer = await refEmployerInfo.value.validate()
+      console.log('-> employer', employer)
       const account = await refAccountInfo.value.validate()
+      console.log('-> account', account)
       const personal = await refPersonalInfo.value.validate()
+      console.log('-> personal', personal)
       const contact = await refContact.value.validate()
+      console.log('-> contact', contact)
 
-      return membership && employer && personal && account && medicalUnit && contact
+      return membership && medicalUnit && employer && personal && account && contact
     }
 
     return {

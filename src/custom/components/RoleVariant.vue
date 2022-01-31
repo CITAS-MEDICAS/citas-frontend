@@ -7,7 +7,12 @@
 <script>
 export default {
   name: 'RoleVariant',
-  props: ['role'],
+  props: {
+    role: {
+      type: string,
+      required: true,
+    },
+  },
   data() {
     return {
       roleVariant: {

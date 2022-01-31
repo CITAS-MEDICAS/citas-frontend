@@ -68,7 +68,7 @@
 
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { inject, ref } from '@vue/composition-api'
+import { toRefs, inject, ref } from '@vue/composition-api'
 import Cleave from 'vue-cleave-component'
 import { required } from '@core/utils/validations/validations'
 
@@ -78,6 +78,13 @@ export default {
     ValidationObserver,
     ValidationProvider,
     Cleave,
+  },
+  props: {
+    validateForm: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   data() {
     return {
@@ -90,12 +97,15 @@ export default {
       },
     }
   },
-  setup() {
+  setup(props) {
+    const { validateForm } = toRefs(props)
+
     const formData = inject('formData')
     const refFormObserver = ref(null)
 
     const validate = async () => {
-      return await refFormObserver.value.validate()
+      const isValid = await refFormObserver.value.validate()
+      return validateForm.value ? isValid : true
     }
 
     return {

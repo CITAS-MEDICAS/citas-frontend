@@ -115,16 +115,6 @@
             </b-form-group>
           </b-col>
         </b-row>
-        <hr />
-        <b-form-group label="Código/Matricula">
-          <validation-provider v-slot="{ errors }" name="Código/Matricula">
-            <b-form-input
-              v-model="formData.staff_registration_code"
-              :state="errors.length ? false : null"
-            />
-            <small class="text-danger">{{ errors[0] }}</small>
-          </validation-provider>
-        </b-form-group>
       </b-col>
     </b-row>
   </validation-observer>
@@ -132,7 +122,7 @@
 
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { inject, ref } from '@vue/composition-api'
+import { inject, ref, toRefs } from '@vue/composition-api'
 
 import { required } from '@core/utils/validations/validations'
 
@@ -142,17 +132,27 @@ export default {
     ValidationObserver,
     ValidationProvider,
   },
+  props: {
+    validateForm: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+  },
   data() {
     return {
       ciOptions: ['CH', 'LP', 'CB', 'OR', 'PT', 'TJ', 'SC', 'BE', 'PD'],
     }
   },
-  setup() {
+  setup(props) {
+    const { validateForm } = toRefs(props)
+
     const formData = inject('formData')
     const refFormObserver = ref(null)
 
     const validate = async () => {
-      return await refFormObserver.value.validate()
+      const isValid = await refFormObserver.value.validate()
+      return validateForm.value ? isValid : true
     }
 
     return {

@@ -90,7 +90,7 @@ export default {
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
-        include: 'user;unit.center',
+        include: 'user;unit.center;relationship',
       })
 
       totalRows.value = data.total_data
@@ -104,8 +104,8 @@ export default {
       { key: 'user.paternal_surname', label: 'Paterno', sortable: false },
       { key: 'user.maternal_surname', label: 'Materno', sortable: false },
       { key: 'unit.center.name', label: 'Centro de Salud', sortable: false },
-      { key: 'registration_code', label: 'Numero Asegurado', sortable: false },
-      { key: 'relationship', label: 'Parentesco', sortable: false },
+      { key: 'user.registration_code', label: 'Numero Asegurado', sortable: false },
+      { key: 'relationship.name', label: 'Parentesco', sortable: false },
     ]
 
     return {
