@@ -88,6 +88,14 @@ export default {
       validate,
     }
   },
+  watch: {
+    'formData.medical_center_id': {
+      handler: function (after, before) {
+        this.getMedicalUnits()
+      },
+      deep: true,
+    },
+  },
   mounted() {
     this.getMedicalCenters()
   },
@@ -104,7 +112,6 @@ export default {
     },
     handleMedicalCenter() {
       this.formData.medical_unit_id = ''
-      this.getMedicalUnits()
     },
   },
 }

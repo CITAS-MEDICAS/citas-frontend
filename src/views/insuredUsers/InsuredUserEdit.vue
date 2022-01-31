@@ -1,102 +1,67 @@
 <template>
   <div class="page-wrapper">
-    <b-row>
-      <b-col cols="12" xl="9" lg="8">
-        <b-card no-body>
-          <b-card-body>
-            <InsuredUserForm ref="refForm" />
-          </b-card-body>
-        </b-card>
-
-        <pre>{{ formData }}</pre>
-      </b-col>
-      <b-col cols="12" xl="3" lg="4">
-        <b-card>
-          <b-button variant="primary" block @click="handleSubmit()">Guardar</b-button>
-          <b-button variant="outline-secondary" block @click="handleCancel()">Cancelar</b-button>
-        </b-card>
-      </b-col>
-    </b-row>
+    <EditUserForm />
+    <hr />
+    <EditInsuredForm />
   </div>
 </template>
 
 <script>
-import { provide, ref } from '@vue/composition-api'
-
-import ToastificationContent from '@core/components/toastification/ToastificationContent'
-import InsuredUserForm from './components/InsuredUserForm'
+import EditUserForm from '@/views/insuredUsers/components/EditUserForm'
+import EditInsuredForm from '@/views/insuredUsers/components/EditInsuredForm'
 import { InsuredResource } from '@/network/lib/insured'
+import { ref, provide } from '@vue/composition-api'
 
 export default {
   name: 'InsuredUserEdit',
   components: {
-    InsuredUserForm,
+    EditUserForm,
+    EditInsuredForm,
   },
   setup() {
-    const formData = ref({
-      insuredType: '',
-      relationship_code: '',
-      registration_code: '',
-      affiliation_date: '',
-      medical_center_id: null,
-      medical_unit_id: null,
-      beneficiary_code: '',
+    const userData = ref({})
+    const insuredData = ref({})
 
-      employer_code: '',
-      employer_name: '',
-      employer_date: '',
-      salary: '',
-
-      name: '',
-      paternal_surname: '',
-      maternal_surname: '',
-      ci: '',
-      ci_exp: '',
-      birth_date: '',
-      gender: '',
-      phone_number: '',
-      staff_registration_code: '',
-
-      email: '',
-      password: '',
-      password_confirmation: '',
-
-      region: '',
-      address_zone: '',
-      address: '',
-      reference_phone_number: '',
-    })
-
-    provide('formData', formData)
+    provide('userData', userData)
+    provide('insuredData', insuredData)
 
     return {
-      formData,
+      userData,
+      insuredData,
     }
   },
+  data() {
+    return {
+      insuredId: this.$route.params.id,
+    }
+  },
+  mounted() {
+    this.getResourceData()
+  },
   methods: {
-    async handleSubmit() {
-      const isValid = await this.$refs.refForm.validate()
+    async getResourceData() {
+      const { data } = await InsuredResource.getById(this.insuredId, {
+        include: 'user;unit',
+      })
 
-      if (!isValid) return
+      const userData = data.insured.user
+      delete data.insured.user
 
-      const { data } = await InsuredResource.store(this.formData)
-      console.log('-> data', data)
+      const insuredData = data.insured
 
-      // if (data.user) {
-      //   this.$router.push({ name: 'user-list' }).then(() => {
-      //     this.$toast({
-      //       component: ToastificationContent,
-      //       props: {
-      //         title: `Creado Exitosamente!`,
-      //         icon: 'CheckIcon',
-      //         variant: 'success',
-      //       },
-      //     })
-      //   })
-      // }
+      this.userData = userData
+
+      this.insuredData = this.initInsuredVariables(insuredData)
     },
-    handleCancel() {
-      this.$router.push({ name: 'insured-list' })
+    initInsuredVariables(insuredData) {
+      const medicalUnit = insuredData.unit
+      delete insuredData.unit
+      const data = {
+        insuredIsTitular: insuredData.user_titular_id ? false : true,
+        registration_code: this.userData.registration_code,
+        medical_center_id: medicalUnit.medical_center_id,
+      }
+      return { ...insuredData, ...data }
     },
   },
 }

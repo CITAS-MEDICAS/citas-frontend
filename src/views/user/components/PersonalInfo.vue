@@ -89,10 +89,15 @@
           </b-col>
           <b-col md="6">
             <b-form-group label="Telefono/Celular *">
-              <validation-provider v-slot="{ errors }" name="Telefono/Celular" rules="required">
+              <validation-provider
+                v-slot="{ errors }"
+                name="Telefono/Celular"
+                rules="required|length:8"
+              >
                 <b-form-input
                   v-model="formData.phone_number"
                   :state="errors.length ? false : null"
+                  type="number"
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -124,7 +129,7 @@
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { inject, ref, toRefs } from '@vue/composition-api'
 
-import { required } from '@core/utils/validations/validations'
+import { required, length } from '@core/utils/validations/validations'
 
 export default {
   name: 'PersonalInfo',
@@ -159,6 +164,7 @@ export default {
       formData,
       refFormObserver,
       required,
+      length,
       validate,
     }
   },

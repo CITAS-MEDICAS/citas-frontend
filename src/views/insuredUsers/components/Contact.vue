@@ -34,11 +34,12 @@
           <validation-provider
             v-slot="{ errors }"
             name="Telefono/Celular de Referencia"
-            rules="required"
+            rules="required|length:8"
           >
             <b-form-input
               v-model="formData.reference_phone_number"
               :state="errors.length ? false : null"
+              type="number"
             />
             <small class="text-danger">{{ errors[0] }}</small>
           </validation-provider>
@@ -52,7 +53,7 @@
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { inject, ref } from '@vue/composition-api'
 
-import { required } from '@core/utils/validations/validations'
+import { required, length } from '@core/utils/validations/validations'
 
 export default {
   name: 'Contact',
@@ -75,6 +76,7 @@ export default {
       formData,
       refFormObserver,
       required,
+      length,
       validate,
     }
   },

@@ -4,7 +4,7 @@
       <b-col cols="12" xl="9" lg="8">
         <b-card no-body>
           <b-card-body>
-            <InsuredUserForm ref="refForm" />
+            <CreateInsuredForm ref="refForm" />
           </b-card-body>
         </b-card>
       </b-col>
@@ -13,8 +13,6 @@
           <b-button variant="primary" block @click="handleSubmit()">Guardar</b-button>
           <b-button variant="outline-secondary" block @click="handleCancel()">Cancelar</b-button>
         </b-card>
-
-        <pre>{{ formData }}</pre>
       </b-col>
     </b-row>
   </div>
@@ -24,13 +22,13 @@
 import { provide, ref } from '@vue/composition-api'
 
 import ToastificationContent from '@core/components/toastification/ToastificationContent'
-import InsuredUserForm from './components/InsuredUserForm'
+import CreateInsuredForm from './components/CreateInsuredForm'
 import { InsuredResource } from '@/network/lib/insured'
 
 export default {
   name: 'InsuredUserCreate',
   components: {
-    InsuredUserForm,
+    CreateInsuredForm,
   },
   setup() {
     const formData = ref({
@@ -82,20 +80,19 @@ export default {
       if (!isValid) return
 
       const { data } = await InsuredResource.store(this.formData)
-      console.log('-> data', data)
 
-      // if (data.insured) {
-      //   this.$router.push({ name: 'insured-list' }).then(() => {
-      //     this.$toast({
-      //       component: ToastificationContent,
-      //       props: {
-      //         title: `Creado Exitosamente!`,
-      //         icon: 'CheckIcon',
-      //         variant: 'success',
-      //       },
-      //     })
-      //   })
-      // }
+      if (data.insured) {
+        this.$router.push({ name: 'insured-list' }).then(() => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: `Creado Exitosamente!`,
+              icon: 'CheckIcon',
+              variant: 'success',
+            },
+          })
+        })
+      }
     },
     handleCancel() {
       this.$router.push({ name: 'insured-list' })
