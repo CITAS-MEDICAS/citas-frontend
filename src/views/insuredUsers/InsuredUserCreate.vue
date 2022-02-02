@@ -13,6 +13,7 @@
           <b-button variant="primary" block @click="handleSubmit()">Guardar</b-button>
           <b-button variant="outline-secondary" block @click="handleCancel()">Cancelar</b-button>
         </b-card>
+        <pre>{{ formData }}</pre>
       </b-col>
     </b-row>
   </div>

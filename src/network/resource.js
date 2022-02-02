@@ -1,6 +1,6 @@
 import { useJwt } from '@/auth/jwt/useJwt'
 
-const request = useJwt.axiosIns
+export const request = useJwt.axiosIns
 
 export class Resource {
   constructor(uri) {

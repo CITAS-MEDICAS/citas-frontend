@@ -27,24 +27,26 @@
 
         <b-form-group v-if="!formData.isNewAccount" label=" Usuario *">
           <validation-provider v-slot="{ errors }" name="Usuario" rules="required">
-            <!--            <v-select-->
-            <!--              v-model="formData.user_id"-->
-            <!--              :options="users"-->
-            <!--              :reduce="item => item.id"-->
-            <!--              label="name"-->
-            <!--              :clearable="false"-->
-            <!--              placeholder="Buscar..."-->
-            <!--            >-->
-            <!--              <template #search="{ attributes, events }">-->
-            <!--                <input-->
-            <!--                  class="vs__search"-->
-            <!--                  :required="errors.length ? false : null"-->
-            <!--                  v-bind="attributes"-->
-            <!--                  v-on="events"-->
-            <!--                />-->
-            <!--              </template>-->
-            <!--            </v-select>-->
-            <b-form-input v-model="formData.user_id" :state="errors.length ? false : null" />
+            <v-select
+              v-model="formData.user_id"
+              label="fullname"
+              :filterable="false"
+              :options="users"
+              :reduce="item => item.id"
+              placeholder="Buscar CI..."
+              @search="onSearchUser"
+            >
+              <template slot="no-options">No se encontraron resultados...</template>
+              <template slot="option" slot-scope="option">
+                {{ option.fullname }}
+              </template>
+              <template slot="selected-option" slot-scope="option">
+                {{ option.fullname }}
+                <code class="ml-1">
+                  <small>CI: {{ option.ci }}</small>
+                </code>
+              </template>
+            </v-select>
             <small class="text-danger">{{ errors[0] }}</small>
           </validation-provider>
         </b-form-group>
@@ -106,6 +108,9 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { toRefs, inject, ref } from '@vue/composition-api'
 import { required, confirmed, min, email } from '@validations'
 
+import { debounce } from '@/libs/utils'
+import { UserResource } from '@/network/lib/users'
+
 export default {
   name: 'InsuredAccountInfo',
   components: {
@@ -160,6 +165,20 @@ export default {
       this.formData.gender = null
       this.formData.phone_number = null
     },
+    onSearchUser(term, loading) {
+      if (term.length > 5) {
+        loading(true)
+        this.searchUser(loading, term, this)
+      }
+    },
+    searchUser: debounce(async (loading, term, vm) => {
+      const { data } = await UserResource.getAll({
+        'filter[ci][eq]': term,
+        scope: 'isNotInsured',
+      })
+      loading(false)
+      vm.users = data.rows
+    }, 500),
   },
 }
 </script>

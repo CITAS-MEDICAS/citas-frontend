@@ -9,7 +9,7 @@ export default {
   name: 'RoleVariant',
   props: {
     role: {
-      type: string,
+      type: Object,
       required: true,
     },
   },
@@ -20,6 +20,7 @@ export default {
         administrador: 'danger',
         medico: 'info',
         asegurado: 'warning',
+        default: 'secondary',
       },
     }
   },

@@ -27,13 +27,28 @@
 
         <b-row v-if="!formData.insuredIsTitular">
           <b-col sm="12">
-            <b-form-group label="Nro. Documento/CI Titular *">
-              <validation-provider v-slot="{ errors }" name="CI Titular" rules="required">
-                <b-form-input
+            <b-form-group label="Titular *">
+              <validation-provider v-slot="{ errors }" name="Titular" rules="required">
+                <v-select
                   v-model="formData.user_titular_id"
-                  :state="errors.length ? false : null"
-                  placeholder="ej. 1234567-1K"
-                />
+                  label="fullname"
+                  :filterable="false"
+                  :options="titularOptions"
+                  :reduce="item => item.id"
+                  placeholder="Escribe el CI del Titular ej. 1234567-1K"
+                  @search="onSearchTitular"
+                >
+                  <template slot="no-options"> Escribe el CI del Titular ej. 1234567-1K..</template>
+                  <template slot="option" slot-scope="option">
+                    {{ option.fullname }}
+                  </template>
+                  <template slot="selected-option" slot-scope="option">
+                    {{ option.fullname }}
+                    <code class="ml-1">
+                      <small>CI: {{ option.ci }}</small>
+                    </code>
+                  </template>
+                </v-select>
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
@@ -101,6 +116,8 @@ import { inject, ref } from '@vue/composition-api'
 
 import { required } from '@core/utils/validations/validations'
 import { TypesResource } from '@/network/lib/types'
+import { UserResource } from '@/network/lib/users'
+import { debounce } from '@/libs/utils'
 
 export default {
   name: 'Membership',
@@ -111,6 +128,7 @@ export default {
   data() {
     return {
       relationships: [],
+      titularOptions: [],
     }
   },
   setup() {
@@ -131,6 +149,18 @@ export default {
   computed: {
     filterRelationships() {
       return this.relationships.filter(item => !item.name.includes('ID - Titular'))
+    },
+  },
+  watch: {
+    'formData.user_titular_id': {
+      handler: function (after, before) {
+        console.log('-> before', before)
+        console.log('-> after', after)
+        if (!this.insuredIsTitular && after) {
+          this.setTitularOption(after)
+        }
+      },
+      deep: true,
     },
   },
   mounted() {
@@ -163,6 +193,25 @@ export default {
     },
     isTitular() {
       return this.formData.insuredIsTitular
+    },
+    onSearchTitular(term, loading) {
+      if (term.length > 5) {
+        loading(true)
+        this.searchTitular(loading, term, this)
+      }
+    },
+    searchTitular: debounce(async (loading, term, vm) => {
+      const { data } = await UserResource.getAll({
+        'filter[ci][eq]': term,
+        scope: 'IsTitular',
+      })
+      loading(false)
+      vm.titularOptions = data.rows
+    }, 500),
+
+    async setTitularOption(id) {
+      const { data } = await UserResource.getById(id)
+      this.titularOptions = [data.user]
     },
   },
 }

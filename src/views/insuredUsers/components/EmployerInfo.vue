@@ -17,21 +17,37 @@
       <b-col lg="7">
         <b-form-group label="Código Patronal" label-for="employer_code">
           <validation-provider v-slot="{ errors }" name="Código Patronal" rules="required">
-            <cleave
-              id="employer_code"
+            <v-select
               v-model="formData.employer_code"
-              class="form-control form-control-lg w-75"
-              placeholder="11-222-1234567"
-              :options="mask.employer_code"
-              :raw="false"
-              :state="errors.length ? false : null"
-            />
+              label="code"
+              :filterable="false"
+              :options="employers"
+              :reduce="item => item.code"
+              placeholder="ej. 11-222-1234567"
+              @search="onSearchEmployer"
+              @input="handleSelectEmployer"
+            >
+              <template slot="no-options">No se encontraron resultados...</template>
+
+              <template slot="option" slot-scope="option">
+                {{ option.name }}
+              </template>
+              <template slot="selected-option" slot-scope="option">
+                <code>
+                  {{ option.code }}
+                </code>
+              </template>
+            </v-select>
             <small class="text-danger">{{ errors[0] }}</small>
           </validation-provider>
         </b-form-group>
         <b-form-group label="Empleador">
           <validation-provider v-slot="{ errors }" name="Empleador" rules="required">
-            <b-form-input v-model="formData.employer_name" :state="errors.length ? false : null" />
+            <b-form-input
+              v-model="formData.employer_name"
+              :state="errors.length ? false : null"
+              readonly
+            />
             <small class="text-danger">{{ errors[0] }}</small>
           </validation-provider>
         </b-form-group>
@@ -69,15 +85,16 @@
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { toRefs, inject, ref } from '@vue/composition-api'
-import Cleave from 'vue-cleave-component'
+
 import { required } from '@core/utils/validations/validations'
+import { debounce } from '@/libs/utils'
+import { InsuranceApi } from '@/network/lib/insuranceApi'
 
 export default {
   name: 'EmployerInfo',
   components: {
     ValidationObserver,
     ValidationProvider,
-    Cleave,
   },
   props: {
     validateForm: {
@@ -95,6 +112,7 @@ export default {
           blocks: [2, 3, 7],
         },
       },
+      employers: [],
     }
   },
   setup(props) {
@@ -114,6 +132,26 @@ export default {
       required,
       validate,
     }
+  },
+  methods: {
+    onSearchEmployer(term, loading) {
+      if (term.length > 5) {
+        loading(true)
+        this.searchEmployer(loading, term, this)
+      }
+    },
+    searchEmployer: debounce(async (loading, term, vm) => {
+      const { data } = await InsuranceApi.search({ code: term })
+      loading(false)
+      vm.employers = data.rows
+    }, 500),
+
+    handleSelectEmployer() {
+      this.formData.employer_name = ''
+      this.formData.employer_name = this.employers.find(
+        item => item.code === this.formData.employer_code
+      )?.name
+    },
   },
 }
 </script>

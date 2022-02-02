@@ -121,6 +121,7 @@ export default {
       { key: 'name', label: 'Nombre', sortable: true },
       { key: 'paternal_surname', label: 'Ap. Paterno', sortable: true },
       { key: 'maternal_surname', label: 'Ap. Materno', sortable: true },
+      { key: 'ci', label: 'CI', sortable: true },
       { key: 'roles', label: 'Roles', sortable: false },
     ]
 
