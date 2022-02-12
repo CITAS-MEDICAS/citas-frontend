@@ -7,9 +7,12 @@ import medicalCenter from './modules/administration/medicalCenter'
 import specialities from '@/router/modules/administration/specialities'
 import medicalUnit from './modules/administration/medicalUnit'
 import medicalUnitType from './modules/administration/medicalUnitType'
+import calendar from './modules/administration/calendar'
+
 import user from './modules/users/user'
 import role from './modules/users/role'
 import insured from './modules/users/insured'
+
 import serviceHours from './modules/administration/service_hours'
 import relationship from './modules/administration/relationship'
 
@@ -31,6 +34,7 @@ const router = new VueRouter({
     ...serviceHours,
     ...relationship,
     ...medicalUnitType,
+    ...calendar,
     // Users
     ...user,
     ...role,

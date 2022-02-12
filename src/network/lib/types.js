@@ -16,6 +16,10 @@ class TypesResource extends Resource {
   getRelationships(query) {
     return this.getAll({ scope: 'relationship', ...query })
   }
+
+  getAttentionTypes(query) {
+    return this.getAll({ scope: 'attentionType', ...query })
+  }
 }
 
 const resource = new TypesResource()
