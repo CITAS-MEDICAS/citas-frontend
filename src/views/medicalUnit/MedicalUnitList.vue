@@ -45,6 +45,20 @@
           >
             <feather-icon icon="TrashIcon" />
           </b-button>
+          <router-link
+            :to="{
+              name: 'medical-unit-calendar',
+              params: { id: data.item.id },
+            }"
+          >
+            <b-button
+              v-b-tooltip.hover.top="'Calendario'"
+              variant="flat-warning"
+              class="btn-icon rounded-circle"
+            >
+              <feather-icon icon="CalendarIcon" />
+            </b-button>
+          </router-link>
         </div>
       </template>
 

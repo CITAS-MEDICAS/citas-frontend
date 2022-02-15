@@ -5,3 +5,7 @@ export const debounce = (fn, ms = 0) => {
     timeoutId = setTimeout(() => fn.apply(this, args), ms)
   }
 }
+
+export const dateISO = (date, separator) => {
+  return date.toLocaleDateString('en-GB').split('/').reverse().join('-')
+}

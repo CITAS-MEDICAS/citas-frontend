@@ -7,14 +7,14 @@ export default [
   {
     title: 'Personal',
     route: 'user-list',
-    icon: 'UserIcon',
+    icon: 'UserCheckIcon',
     action: 'read',
     resource: 'personal',
   },
   {
     title: 'Roles',
     route: 'role-list',
-    icon: 'UserIcon',
+    icon: 'LockIcon',
     action: 'read',
     resource: 'roles',
   },
@@ -28,7 +28,7 @@ export default [
   {
     title: 'Asegurados',
     route: 'insured-list',
-    icon: 'UserIcon',
+    icon: 'UsersIcon',
     action: 'read',
     resource: 'asegurados',
   },

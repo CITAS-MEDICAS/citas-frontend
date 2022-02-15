@@ -22,13 +22,6 @@
         >Please read our JWT Documentation to get more out of JWT authentication.
       </b-card-text>
     </b-card>
-
-    <b-card>
-      <b-button variant="flat-success" class="btn-icon rounded-circle">
-        <feather-icon icon="EditIcon" />
-        flat-success
-      </b-button>
-    </b-card>
   </div>
 </template>
 
@@ -40,7 +33,7 @@ export default {
     BCard,
     BCardText,
     BLink,
-  },
+  }
 }
 </script>
 
