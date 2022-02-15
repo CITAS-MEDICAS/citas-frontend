@@ -37,5 +37,6 @@ const generateTimeInterval = options => {
 export const useTimeSelect = () => {
   return {
     generateTimeInterval,
+    timeToInt,
   }
 }

@@ -8,12 +8,12 @@
       :disabled="disabled"
       :class="[sizeClass]"
       @input="handleInput"
+      :selectable="handleSelectable"
     />
   </div>
 </template>
 
 <script>
-import { ref, toRefs } from '@vue/composition-api'
 import { useTimeSelect } from './useTimeSelect'
 
 export default {
@@ -22,7 +22,7 @@ export default {
     value: {
       type: String,
       required: false,
-      default: null,
+      default: null
     },
     pickerOptions: {
       type: Object,
@@ -31,45 +31,79 @@ export default {
           start: '06:00',
           end: '18:00',
           step: '00:30',
-          minTime: '06:00',
+          minTime: null
         }
-      },
+      }
     },
     placeholder: {
       type: String,
-      default: '',
+      default: ''
     },
     disabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     size: {
       type: String,
-      default: '',
-    },
+      default: ''
+    }
   },
   computed: {
     sizeClass() {
       if (this.size === 'sm') return 'select-size-sm'
       return ''
-    },
-  },
-  setup(props, { emit }) {
-    const { pickerOptions } = toRefs(props)
-    const { generateTimeInterval } = useTimeSelect()
-    const options = ref(generateTimeInterval(pickerOptions.value))
-
-    const handleInput = value => {
-      emit('input', value)
-      emit('change', value)
     }
-
+  },
+  setup() {
+    const { generateTimeInterval, timeToInt } = useTimeSelect()
     return {
-      options,
-      handleInput,
+      generateTimeInterval,
+      timeToInt
+    }
+  },
+  data() {
+    return {
+      options: []
+    }
+  },
+  methods: {
+    stepIsValid(step) {
+      return step.split(':')[1] > 0
+    },
+    handleInput(value){
+      this.$emit('input', value)
+      this.$emit('change', value)
+    },
+    handleSelectable(value) {
+      const minTime = this.pickerOptions.minTime
+      if(!minTime) return true
+      return this.timeToInt(value) > this.timeToInt(minTime)
+    }
+  },
+  watch: {
+    'pickerOptions.step': {
+      handler(newStep, oldStep) {
+        clearTimeout(this.timer)
+        const stepIsValid = (step) => step.split(':')[1] > 0
+        if (stepIsValid(newStep)) {
+          this.timer = setTimeout(() => {
+            this.options = this.generateTimeInterval(this.pickerOptions)
+            this.$emit('input', null)
+          }, 500)
+        }
+      }
+    },
+    'pickerOptions.minTime': {
+      handler(minTime) {
+        if(!minTime || !this.value) return
+
+        if(this.timeToInt(this.value) < this.timeToInt(minTime)) {
+          this.$emit('input', null)
+        }
+
+      }
     }
   },
 }
 </script>
 
-<style scoped></style>

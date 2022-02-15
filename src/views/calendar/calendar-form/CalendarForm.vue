@@ -53,6 +53,20 @@
           </b-row>
 
           <b-row>
+            <b-col>
+              <b-form-group>
+                <validation-provider v-slot="{ errors }" name="Duración Consulta" rules="required">
+                  <label class="col-form-label">Duración Consulta</label>
+                  <small class="ml-1 text-muted">(minutos)</small>
+
+                  <v-select v-model="form.duration" :options="[10,15,20,25,30,35,40,45,50,55]" @input="handlePickerOptions" />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+            </b-col>
+          </b-row>
+
+          <b-row>
             <b-col sm="12">
               <div class="col-form-label">Horario de Atención</div>
             </b-col>
@@ -76,7 +90,7 @@
                   <small>Hasta</small>
                   <time-select
                     v-model="form.endTime"
-                    :picker-options="pickerOptions"
+                    :picker-options="{...pickerOptions, minTime: form.startTime}"
                     placeholder="hh:mm"
                     @change="handleTimeChange"
                   />
@@ -86,24 +100,7 @@
             </b-col>
           </b-row>
 
-          <b-row>
-            <b-col>
-              <b-form-group>
-                <validation-provider v-slot="{ errors }" name="Duración Consulta" rules="required">
-                  <label class="col-form-label">Duración Consulta</label>
-                  <small class="ml-1 text-muted">(minutos)</small>
-                  <b-form-input
-                    v-model="form.duration"
-                    type="number"
-                    min="0"
-                    max="60"
-                    :state="errors.length ? false : null"
-                  />
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
-              </b-form-group>
-            </b-col>
-          </b-row>
+
         </b-col>
 
         <b-col md="6">
@@ -129,7 +126,7 @@
             <b-col>
               <time-select
                 v-model="day.endTime"
-                :picker-options="pickerOptions"
+                :picker-options="{...pickerOptions, minTime: day.startTime}"
                 placeholder="Hasta"
                 :disabled="!day.checked"
               />
@@ -177,7 +174,7 @@ export default {
         start: '06:00',
         end: '23:00',
         step: '00:20',
-        minTime: '09:00',
+        minTime: '05:30',
       },
     }
   },
@@ -229,6 +226,9 @@ export default {
     closeForm() {
       this.showForm = false
     },
+    handlePickerOptions() {
+      this.pickerOptions.step = '00:' + `0${this.form.duration}`.slice(-2)
+    }
   },
 }
 </script>
