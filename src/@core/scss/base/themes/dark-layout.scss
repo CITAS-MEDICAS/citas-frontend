@@ -119,10 +119,10 @@
   // main navbar and header navbar shadow(generic navbar)
   .header-navbar-shadow {
     background: linear-gradient(
-        180deg,
-        rgba(22, 29, 49, 0.9) 44%,
-        rgba(22, 29, 49, 0.43) 73%,
-        rgba(22, 29, 49, 0)
+                    180deg,
+                    rgba(22, 29, 49, 0.9) 44%,
+                    rgba(22, 29, 49, 0.43) 73%,
+                    rgba(22, 29, 49, 0)
     );
   }
 
@@ -337,10 +337,10 @@
 
     .shadow-bottom {
       background: linear-gradient(
-          180deg,
-          $theme-dark-card-bg 44%,
-          rgba($theme-dark-card-bg, 0.51) 73%,
-          rgba($theme-dark-card-bg, 0)
+                      180deg,
+                      $theme-dark-card-bg 44%,
+                      rgba($theme-dark-card-bg, 0.51) 73%,
+                      rgba($theme-dark-card-bg, 0)
       );
     }
 
@@ -529,9 +529,9 @@
       .breadcrumb-item + .breadcrumb-item {
         &:before {
           background-image: url(str-replace(
-              str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
-              '#',
-              '%23'
+                          str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
+                          '#',
+                          '%23'
           ));
         }
       }
@@ -543,9 +543,9 @@
     &.breadcrumb {
       .breadcrumb-item + .breadcrumb-item:before {
         background-image: url(str-replace(
-            str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
-            '#',
-            '%23'
+                        str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
+                        '#',
+                        '%23'
         ));
       }
     }
@@ -587,17 +587,17 @@
     [data-toggle='collapse'] {
       &:after {
         background-image: url(str-replace(
-            str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
-            '#',
-            '%23'
+                        str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
+                        '#',
+                        '%23'
         ));
       }
 
       &:before {
         background-image: url(str-replace(
-            str-replace($chevron-up, 'currentColor', $theme-dark-body-color),
-            '#',
-            '%23'
+                        str-replace($chevron-up, 'currentColor', $theme-dark-body-color),
+                        '#',
+                        '%23'
         ));
       }
     }
@@ -767,9 +767,9 @@
       &.prev {
         .page-link:before {
           background-image: url(str-replace(
-              str-replace($chevron-left, 'currentColor', $theme-dark-body-color),
-              '#',
-              '%23'
+                          str-replace($chevron-left, 'currentColor', $theme-dark-body-color),
+                          '#',
+                          '%23'
           ));
         }
 
@@ -777,9 +777,9 @@
           .page-link {
             &:before {
               background-image: url(str-replace(
-                  str-replace($chevron-left, 'currentColor', $theme-dark-text-muted-color),
-                  '#',
-                  '%23'
+                              str-replace($chevron-left, 'currentColor', $theme-dark-text-muted-color),
+                              '#',
+                              '%23'
               ));
             }
           }
@@ -790,9 +790,9 @@
       &.next {
         .page-link::after {
           background-image: url(str-replace(
-              str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
-              '#',
-              '%23'
+                          str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
+                          '#',
+                          '%23'
           ));
         }
 
@@ -800,9 +800,9 @@
           .page-link {
             &:after {
               background-image: url(str-replace(
-                  str-replace($chevron-right, 'currentColor', $theme-dark-text-muted-color),
-                  '#',
-                  '%23'
+                              str-replace($chevron-right, 'currentColor', $theme-dark-text-muted-color),
+                              '#',
+                              '%23'
               ));
             }
           }
@@ -963,9 +963,9 @@
 
     &.list-group-circle .list-group-item:after {
       background-image: url(str-replace(
-          str-replace($circle, 'currentColor', $theme-dark-body-color),
-          '#',
-          '%23'
+                      str-replace($circle, 'currentColor', $theme-dark-body-color),
+                      '#',
+                      '%23'
       ));
     }
   }
@@ -1239,9 +1239,9 @@
   select.form-control {
     &:not([multiple='multiple']) {
       background-image: url(str-replace(
-          str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
-          '#',
-          '%23'
+                      str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
+                      '#',
+                      '%23'
       ));
     }
   }
@@ -1491,17 +1491,17 @@
         .sorting_desc {
           &:before {
             background-image: url(str-replace(
-                str-replace($chevron-up, 'currentColor', $theme-dark-body-color),
-                '#',
-                '%23'
+                            str-replace($chevron-up, 'currentColor', $theme-dark-body-color),
+                            '#',
+                            '%23'
             ));
           }
 
           &:after {
             background-image: url(str-replace(
-                str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
-                '#',
-                '%23'
+                            str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
+                            '#',
+                            '%23'
             ));
           }
         }
@@ -1768,9 +1768,9 @@
         .email-info-dropup {
           .dropdown-toggle::after {
             background-image: url(str-replace(
-                str-replace($chevron-down, 'currentColor', $theme-dark-text-muted-color),
-                '#',
-                '%23'
+                            str-replace($chevron-down, 'currentColor', $theme-dark-text-muted-color),
+                            '#',
+                            '%23'
             ));
           }
         }
@@ -2259,7 +2259,7 @@
     }
   }
 
-  // calendar
+  // appointment-calendar
   .app-calendar {
     .app-calendar-sidebar {
       background-color: $theme-dark-card-bg;
@@ -2430,10 +2430,10 @@
 
     .horizontal-menu-wrapper {
       background: linear-gradient(
-          to bottom,
-          rgba(37, 43, 71, 0.76) 44%,
-          rgba(56, 53, 53, 0.46) 73%,
-          rgba($white, 0) 100%
+                      to bottom,
+                      rgba(37, 43, 71, 0.76) 44%,
+                      rgba(56, 53, 53, 0.46) 73%,
+                      rgba($white, 0) 100%
       ) !important;
 
       .header-navbar {
@@ -2452,9 +2452,9 @@
             .nav-link {
               &.dropdown-toggle::after {
                 background-image: url(str-replace(
-                    str-replace($chevron-down, 'currentColor', $white),
-                    '#',
-                    '%23'
+                                str-replace($chevron-down, 'currentColor', $white),
+                                '#',
+                                '%23'
                 ));
               }
             }
@@ -2463,9 +2463,9 @@
           .nav-link {
             &.dropdown-toggle::after {
               background-image: url(str-replace(
-                  str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
-                  '#',
-                  '%23'
+                              str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
+                              '#',
+                              '%23'
               ));
             }
           }
@@ -2500,9 +2500,9 @@
           .dropdown-toggle {
             &::after {
               background-image: url(str-replace(
-                  str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
-                  '#',
-                  '%23'
+                              str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
+                              '#',
+                              '%23'
               ));
             }
 
@@ -2510,9 +2510,9 @@
             &:active {
               &::after {
                 background-image: url(str-replace(
-                    str-replace($chevron-right, 'currentColor', $white),
-                    '#',
-                    '%23'
+                                str-replace($chevron-right, 'currentColor', $white),
+                                '#',
+                                '%23'
                 ));
               }
             }

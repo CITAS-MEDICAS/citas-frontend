@@ -2,14 +2,14 @@ import { Resource } from '@/network/resource'
 
 class CalendarResource extends Resource {
   constructor() {
-    super('api/calendar')
+    super('api/appointment-calendar')
   }
 
   getCalendar(medicalUnitId, query) {
     return this.request({
       url: `/api/medical-unit/${medicalUnitId}/calendar`,
       method: 'get',
-      params: query,
+      params: query
     })
   }
 
@@ -17,7 +17,15 @@ class CalendarResource extends Resource {
     return this.request({
       url: `/api/medical-unit/${medicalUnitId}/calendar`,
       method: 'post',
-      data: resource,
+      data: resource
+    })
+  }
+
+  availability(medicalUnitId, query) {
+    return this.request({
+      url: `/api/medical-unit/${medicalUnitId}/calendar/availability`,
+      method: 'get',
+      params: query
     })
   }
 }

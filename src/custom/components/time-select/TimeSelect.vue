@@ -100,7 +100,6 @@ export default {
         if(this.timeToInt(this.value) < this.timeToInt(minTime)) {
           this.$emit('input', null)
         }
-
       }
     }
   },

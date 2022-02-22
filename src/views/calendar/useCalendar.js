@@ -46,7 +46,7 @@ export const useCalendar = () => {
     store.dispatch('calendar/CALENDAR_EVENTS', { medicalUnitId, query }).then(({ data }) => {
       const events = data.calendar.rows.map(item => {
         return {
-          title: item.attention_type.name,
+          title: `${item.attention_type.name} (${item.duration}m)`,
           date: item.date,
           type: item.attention_type.name,
           start: new Date(`${item.date} ${item.start_time}`),

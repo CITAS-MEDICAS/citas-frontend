@@ -3,9 +3,12 @@ import VueRouter from 'vue-router'
 
 import dashboard from './modules/pages/dashboard'
 import pages from './modules/pages/pages'
+
 import medicalCenter from './modules/administration/medicalCenter'
-import specialities from '@/router/modules/administration/specialities'
 import medicalUnit from './modules/administration/medicalUnit'
+import specialities from '@/router/modules/administration/specialities'
+import serviceHours from './modules/administration/service_hours'
+import relationship from './modules/administration/relationship'
 import medicalUnitType from './modules/administration/medicalUnitType'
 import calendar from './modules/administration/calendar'
 
@@ -13,8 +16,8 @@ import user from './modules/users/user'
 import role from './modules/users/role'
 import insured from './modules/users/insured'
 
-import serviceHours from './modules/administration/service_hours'
-import relationship from './modules/administration/relationship'
+import dependent from './modules/insured/dependent'
+import appointment from './modules/insured/appointment'
 
 Vue.use(VueRouter)
 
@@ -39,6 +42,9 @@ const router = new VueRouter({
     ...user,
     ...role,
     ...insured,
+    // Insured
+    ...dependent,
+    ...appointment,
   ],
 })
 

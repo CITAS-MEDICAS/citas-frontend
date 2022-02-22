@@ -16,18 +16,9 @@
               v-model="formData.medical_center_id"
               :options="medicalCenters"
               :clearable="true"
-              :reduce="item => item.value"
-              label="label"
-            >
-              <template #search="{ attributes, events }">
-                <input
-                  class="vs__search"
-                  :required="errors.length ? false : null"
-                  v-bind="attributes"
-                  v-on="events"
-                />
-              </template>
-            </v-select>
+              :reduce="item => item.id"
+              label="name"
+            />
             <small class="text-danger">{{ errors[0] }}</small>
           </validation-provider>
         </b-form-group>
@@ -59,19 +50,9 @@
               v-model="formData.unit_type_id"
               :options="unitTypes"
               :clearable="true"
-              :reduce="item => item.value"
-              label="label"
-              @input="changeUnitType"
-            >
-              <template #search="{ attributes, events }">
-                <input
-                  class="vs__search"
-                  :required="errors.length ? false : null"
-                  v-bind="attributes"
-                  v-on="events"
-                />
-              </template>
-            </v-select>
+              :reduce="item => item.id"
+              label="name"
+            />
             <small class="text-danger">{{ errors[0] }}</small>
           </validation-provider>
         </b-form-group>
@@ -82,18 +63,9 @@
               v-model="formData.specialty_type_id"
               :options="filterSpecialties"
               :clearable="true"
-              :reduce="item => item.value"
-              label="label"
-            >
-              <template #search="{ attributes, events }">
-                <input
-                  class="vs__search"
-                  :required="errors.length ? false : null"
-                  v-bind="attributes"
-                  v-on="events"
-                />
-              </template>
-            </v-select>
+              :reduce="item => item.id"
+              label="name"
+            />
             <small class="text-danger">{{ errors[0] }}</small>
           </validation-provider>
         </b-form-group>
@@ -106,16 +78,22 @@
                   v-model="formData.service_hour_id"
                   :options="serviceHour"
                   :clearable="true"
-                  :reduce="item => item.value"
-                  label="label"
-                >
-                  <template #search="{ attributes, events }">
-                    <input
-                      class="vs__search"
-                      :required="errors.length ? false : null"
-                      v-bind="attributes"
-                      v-on="events"
-                    />
+                  :reduce="item => item.id"
+                  label="name"
+                />
+                <small class="text-danger">{{ errors[0] }}</small>
+              </validation-provider>
+            </b-form-group>
+          </b-col>
+          <b-col sm="6">
+            <b-form-group label="Duración consulta">
+              <validation-provider v-slot="{ errors }" name="Duración" rules="required">
+                <v-select v-model="formData.duration_time" :options="[10,15,20,25,30,35,40,45,50,55]">
+                  <template v-slot:selected-option="option">
+                    {{ option.label }} minutos
+                  </template>
+                  <template v-slot:option="option">
+                    {{ option.label }} minutos
                   </template>
                 </v-select>
                 <small class="text-danger">{{ errors[0] }}</small>
@@ -123,13 +101,16 @@
             </b-form-group>
           </b-col>
           <b-col sm="6">
-            <b-form-group label="Duración(min)">
-              <validation-provider v-slot="{ errors }" name="Duración" rules="required">
-                <b-form-input
-                  v-model="formData.duration_time"
-                  :state="errors.length ? false : null"
-                  type="number"
-                />
+            <b-form-group label="Reservar con anticipación de">
+              <validation-provider v-slot="{ errors }" name="Reservacion" rules="required">
+                <v-select v-model="formData.advance_booking_days" :options="[10,20,30,40, 60]">
+                  <template v-slot:selected-option="option">
+                    {{ option.label }} dias
+                  </template>
+                  <template v-slot:option="option">
+                    {{ option.label }} dias
+                  </template>
+                </v-select>
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
@@ -157,18 +138,17 @@ export default {
   components: {
     ValidationObserver,
     ValidationProvider,
-    MedicalUnitUsersList,
+    MedicalUnitUsersList
   },
   data() {
     return {
       medicalCenters: [],
       serviceHour: [],
       unitTypes: [],
-      specialties: [],
-      filterSpecialties: [],
+      specialties: []
     }
   },
-  created() {
+  mounted() {
     this.fetchResources()
   },
   setup() {
@@ -187,25 +167,39 @@ export default {
       refFormObserver,
       refUsersList,
       required,
-      validate,
+      validate
+    }
+  },
+  computed: {
+    filterSpecialties() {
+      const unitType = this.unitTypes.find(item => this.formData.unit_type_id == item.id)
+      if (unitType) {
+        const specialties = this.specialties.filter(item => item.filter === unitType.filter)
+        const findSpecialty = specialties.filter(item => item.id === this.formData.specialty_type_id)
+        if(findSpecialty.length === 0) {
+          this.formData.specialty_type_id = null
+        }
+        return specialties
+      }
+      return []
     }
   },
   methods: {
     async fetchMedicalCenter() {
       const { data } = await MedicalCenterResource.getAll({ sortByAsc: 'name' })
-      return this.mapItems(data.rows)
+      return data.rows
     },
     async fetchUnitTypes() {
       const { data } = await TypesResource.getUnitTypes({ sortByAsc: 'name' })
-      return this.mapItems(data.rows)
+      return data.rows
     },
     async fetchServiceHours() {
-      const { data } = await ServiceHoursResource.getAll()
-      return this.mapItems(data.rows)
+      const { data } = await ServiceHoursResource.getAll({ sortByAsc: 'id' })
+      return data.rows
     },
     async fetchSpecialties() {
       const { data } = await TypesResource.getSpecialties({ sortByAsc: 'name' })
-      return this.mapItems(data.rows)
+      return data.rows
     },
 
     async fetchResources() {
@@ -213,53 +207,15 @@ export default {
         this.fetchMedicalCenter(),
         this.fetchServiceHours(),
         this.fetchUnitTypes(),
-        this.fetchSpecialties(),
+        this.fetchSpecialties()
       ])
 
       this.medicalCenters = medicalCenters
       this.serviceHour = serviceHours
       this.unitTypes = unitTypes
       this.specialties = specialties
-      this.filterSpecialties = specialties
-    },
-
-    mapItems(items, value, label) {
-      value = value || 'id'
-      label = label || 'name'
-
-      return items.map(item => {
-        return {
-          value: item[value],
-          label: item[label],
-        }
-      })
-    },
-
-    changeUnitType() {
-      const unitType = this.unitTypes.find(item => this.formData.unit_type_id == item.value)
-      this.formData.specialty_type_id = null
-
-      switch (unitType.label) {
-        case 'Consultorio Familiar':
-          const specialties = this.specialties.filter(item =>
-            item.label.toLowerCase().includes('familiar')
-          )
-          this.formData.specialty_type_id = specialties ? specialties[0].value : ''
-          this.filterSpecialties = specialties
-          break
-        case 'Atención de Emergencia':
-          const emergencies = this.specialties.filter(item =>
-            item.label.toLowerCase().includes('emergencia')
-          )
-          this.formData.specialty_type_id = emergencies ? emergencies[0].value : ''
-          this.filterSpecialties = emergencies
-          break
-        default:
-          this.filterSpecialties = this.specialties
-          break
-      }
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -13,8 +13,8 @@ export default function useAutoSuggest(props) {
    *      title: 'Template', img: 'otherImage.png',
    *    ]
    * }
-   * @param {Object} grp Group object to perform filter on
-   * @param {String} query Query string to filter
+   * @param {Object} grp Group object to perform filters on
+   * @param {String} query Query string to filters
    */
   const filterGrp = (grp, query) => {
     const exactEle = grp.data.filter(item =>
@@ -52,6 +52,6 @@ export default function useAutoSuggest(props) {
   return {
     searchQuery,
     resetsearchQuery,
-    filteredData,
+    filteredData
   }
 }
