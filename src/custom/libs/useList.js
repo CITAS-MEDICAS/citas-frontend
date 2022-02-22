@@ -79,6 +79,7 @@ const useList = function () {
   }
 
   return {
+    app,
     refTable,
     perPage,
     perPageOptions,

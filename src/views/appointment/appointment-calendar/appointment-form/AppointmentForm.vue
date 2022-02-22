@@ -113,9 +113,6 @@
 
           <b-button variant="primary" block class="mt-2" @click="handleSubmit">Guardar</b-button>
         </validation-observer>
-
-        <pre class="mt-5">{{ formData }}</pre>
-
       </div>
     </div>
   </div>
@@ -132,7 +129,7 @@ export default {
     ValidationObserver,
     ValidationProvider
   },
-  setup() {
+  setup(props, { emit }) {
     const {
       treatmentTypes,
       formData,
@@ -149,7 +146,7 @@ export default {
       handleAvailability,
       handleTimes,
       handleSubmit
-    } = useAppointmentForm()
+    } = useAppointmentForm(emit)
 
     return {
       formData,

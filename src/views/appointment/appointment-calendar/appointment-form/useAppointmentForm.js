@@ -7,9 +7,8 @@ import { useRouter } from '@core/utils/utils'
 import { AppointmentResource } from '@/network/lib/appointment'
 
 
-export const useAppointmentForm = () => {
+export const useAppointmentForm = (emit) => {
   const { route, router } = useRouter()
-  console.log('-> router', router)
 
   const formData = ref({
     user_patient_id: route.value.params.id,
@@ -111,6 +110,8 @@ export const useAppointmentForm = () => {
           calendar_id, date, duration, status
         }
       })
+
+      emit('update-calendar', data)
     }
   }
 

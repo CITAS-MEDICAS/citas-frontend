@@ -7,7 +7,7 @@
         class="col app-calendar-sidebar flex-grow-0 overflow-hidden d-flex flex-column"
         :class="{ show: isCalendarSidebarActive }"
       >
-        <AppointmentForm />
+        <AppointmentForm @update-calendar="updateCalendar" />
       </div>
 
       <!-- Calendar-->
@@ -43,15 +43,22 @@ export default {
   },
 
   setup() {
-    const { refCalendar, calendarOptions, isCalendarSidebarActive, refetchEvents } = useAppointmentCalendar()
+    const {
+      refCalendar,
+      calendarOptions,
+      isCalendarSidebarActive,
+      refetchEvents,
+      updateCalendar,
+    } = useAppointmentCalendar()
 
     return {
       refCalendar,
       calendarOptions,
       isCalendarSidebarActive,
-      refetchEvents
+      refetchEvents,
+      updateCalendar
     }
-  }
+  },
 }
 </script>
 
@@ -61,7 +68,7 @@ export default {
 @import '~@core/scss/base/components/include';
 // Components includes
 
-@import 'appointment-calendar';
+@import './appointment-calendar';
 
 // Color palettes
 @import '~@core/scss/base/core/colors/palette-variables.scss';

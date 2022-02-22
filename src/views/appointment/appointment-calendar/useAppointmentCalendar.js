@@ -6,56 +6,18 @@ import interactionPlugin from '@fullcalendar/interaction'
 import esLocale from '@fullcalendar/core/locales/es'
 import { useRouter } from '@core/utils/utils'
 
-import store from '@/store'
-
 export const useAppointmentCalendar = () => {
   const { route } = useRouter()
-  const medicalUnitId = route.value.params.id
 
   const refCalendar = ref(null)
 
-  let calendarApi = null
+  const calendarEvents = ref([])
 
-  onMounted(() => {
-    calendarApi = refCalendar.value.getApi()
-    store.dispatch('calendar/ATTENTION_TYPES')
-  })
-
-  const refetchEvents = () => {
-    calendarApi.refetchEvents()
+  const eventColor = {
+    'available': 'success',
+    'reserved': 'warning'
   }
 
-  const attentionTypeColor = computed(() => store.state.calendar.attentionTypeColor)
-
-  const attentionSelected = computed(() => store.state.calendar.attentionSelected)
-  watch(attentionSelected, () => {
-    refetchEvents()
-  })
-
-  const fetchEvents = (info, successCallback) => {
-    if (!info) return
-
-    const { startStr, endStr } = info
-
-    const query = {
-      startDate: startStr.split('T')[0],
-      endDate: endStr.split('T')[0],
-      attentionSelected: attentionSelected.value
-    }
-
-    store.dispatch('calendar/CALENDAR_EVENTS', { medicalUnitId, query }).then(({ data }) => {
-      const events = data.calendar.rows.map(item => {
-        return {
-          title: `${item.attention_type.name} (${item.duration}m)`,
-          date: item.date,
-          type: item.attention_type.name,
-          start: new Date(`${item.date} ${item.start_time}`),
-          end: new Date(`${item.date} ${item.end_time}`)
-        }
-      })
-      successCallback(events)
-    })
-  }
 
   const calendarOptions = ref({
     plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin, listPlugin],
@@ -73,10 +35,10 @@ export const useAppointmentCalendar = () => {
         }
       }
     },
-    events: fetchEvents,
+    events: calendarEvents,
     dayMaxEvents: 3,
     eventClassNames({ event: calendarEvent }) {
-      const variant = attentionTypeColor.value[calendarEvent._def.extendedProps.type]
+      const variant = eventColor[calendarEvent._def.extendedProps.status]
       return [`bg-light-${variant}`]
     }
   })
@@ -84,12 +46,36 @@ export const useAppointmentCalendar = () => {
   const isCalendarSidebarActive = ref(false)
   const isCalendarFormActive = ref(false)
 
+  const mapEvents = (items) => {
+    return items.map(item => {
+      const { time, startTime, endTime, status } = item
+      return {
+        title: time,
+        start: new Date(startTime),
+        end: new Date(endTime),
+        status: status
+      }
+    })
+  }
+
+  const updateCalendar = (data) => {
+    // console.log(data)
+    const result = data.map(item => {
+      const { available, reserved } = item
+      const availableDates = mapEvents(available)
+      const reservedDates = mapEvents(reserved)
+      return [availableDates, reservedDates].flat()
+    })
+
+    calendarEvents.value = result.flat()
+  }
+
   return {
     refCalendar,
     calendarOptions,
     isCalendarSidebarActive,
     isCalendarFormActive,
-    calendarsColor: attentionTypeColor,
-    refetchEvents
+    // calendarsColor: attentionTypeColor,
+    updateCalendar
   }
 }
