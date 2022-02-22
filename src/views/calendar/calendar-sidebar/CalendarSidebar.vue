@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { useCalendarSidebar } from '@/views/calendar/calendar-sidebar/useCalendarSidebar'
+import { useCalendarSidebar } from './useCalendarSidebar'
 
 export default {
   name: 'CalendarSidebar',
@@ -45,9 +45,9 @@ export default {
       attentionTypes,
       attentionSelected,
       checkAll,
-      attentionTypeColor,
+      attentionTypeColor
     }
-  },
+  }
 }
 </script>
 

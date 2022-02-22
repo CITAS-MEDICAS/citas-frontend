@@ -57,9 +57,15 @@
               <b-form-group>
                 <validation-provider v-slot="{ errors }" name="Duración Consulta" rules="required">
                   <label class="col-form-label">Duración Consulta</label>
-                  <small class="ml-1 text-muted">(minutos)</small>
-
-                  <v-select v-model="form.duration" :options="[10,15,20,25,30,35,40,45,50,55]" @input="handlePickerOptions" />
+                  <v-select v-model="form.duration" :options="[10,15,20,25,30,35,40,45,50,55]"
+                            @input="handlePickerOptions">
+                    <template v-slot:selected-option="option">
+                      {{ option.label }} minutos
+                    </template>
+                    <template v-slot:option="option">
+                      {{ option.label }} minutos
+                    </template>
+                  </v-select>
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
@@ -153,7 +159,7 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { required } from '@validations'
 import { ref } from '@vue/composition-api'
 
-import { useCalendarForm } from '@/views/calendar/calendar-form/useCalendarForm'
+import { useCalendarForm } from './useCalendarForm'
 import { dateISO } from '@/libs/utils'
 import TimeSelect from '@/custom/components/time-select/TimeSelect'
 import { CalendarResource } from '@/network/lib/calendar'
@@ -174,8 +180,8 @@ export default {
         start: '06:00',
         end: '23:00',
         step: '00:20',
-        minTime: '05:30',
-      },
+        minTime: '05:30'
+      }
     }
   },
 
@@ -189,7 +195,7 @@ export default {
       startTime: null,
       endTime: null,
       duration: null,
-      calendarDays,
+      calendarDays
     })
 
     return { refFormObserver, form, calendarDays, required, attentionTypes }
@@ -229,7 +235,7 @@ export default {
     handlePickerOptions() {
       this.pickerOptions.step = '00:' + `0${this.form.duration}`.slice(-2)
     }
-  },
+  }
 }
 </script>
 

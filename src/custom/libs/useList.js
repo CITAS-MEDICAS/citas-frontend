@@ -1,7 +1,10 @@
 import { ref, provide, watch } from '@vue/composition-api'
 import { app } from '@/main'
+import { useRouter } from '@core/utils/utils'
 
 const useList = function () {
+  const { route } = useRouter()
+
   const refTable = ref(null)
   const perPage = ref(10)
   const perPageOptions = [10, 25, 50, 100]
@@ -85,6 +88,7 @@ const useList = function () {
     sortBy,
     isSortDirDesc,
     isBusy,
+    route,
     deleteResource,
     refetchData,
   }

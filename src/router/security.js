@@ -17,7 +17,7 @@ router.beforeEach((to, _, next) => {
 
   // Redirect if logged in
   if (to.meta.redirectIfLoggedIn && isLoggedIn) {
-    console.log('LOGGED_IN')
+    // console.log('LOGGED_IN')
     const userData = getUserData()
     // TODO: logica para hacer redireccion si el usuario esta autenticado
     return next('/')

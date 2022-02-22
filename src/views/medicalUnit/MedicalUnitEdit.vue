@@ -41,6 +41,7 @@ export default {
       service_hour_id: null,
       specialty_type_id: null,
       unit_type_id: null,
+      advance_booking_days: null,
       users: [],
     })
 

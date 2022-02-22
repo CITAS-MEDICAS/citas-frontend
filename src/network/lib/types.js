@@ -20,6 +20,18 @@ class TypesResource extends Resource {
   getAttentionTypes(query) {
     return this.getAll({ scope: 'attentionType', ...query })
   }
+
+  getTreatmentTypes(query) {
+    return this.getAll({ scope: 'treatment', ...query })
+  }
+
+  getAppointmentTypes(query) {
+    return this.getAll({ scope: 'appointmentType', ...query })
+  }
+
+  getAppointmentStatuses(query) {
+    return this.getAll({ scope: 'appointmentStatus', ...query })
+  }
 }
 
 const resource = new TypesResource()

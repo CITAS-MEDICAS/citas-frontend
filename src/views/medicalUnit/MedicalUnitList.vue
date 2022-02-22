@@ -70,6 +70,14 @@
           {{ data.value }}
         </b-link>
       </template>
+      <template #cell(is_enabled)="data">
+        <b-avatar v-if="data.value" size="32" variant="light-success">
+          <feather-icon icon="CheckCircleIcon" />
+        </b-avatar>
+        <b-avatar v-else size="32" variant="light-secondary">
+          <feather-icon icon="AlertCircleIcon" />
+        </b-avatar>
+      </template>
       <template #table-busy>
         <div class="text-center text-primary my-2">
           <b-spinner class="align-middle mr-2" />
@@ -92,7 +100,7 @@ import { MedicalUnitResource } from '@/network/lib/medicalUnit'
 export default {
   components: {
     TableHeader,
-    TablePagination,
+    TablePagination
   },
   setup() {
     let {
@@ -106,10 +114,12 @@ export default {
       isSortDirDesc,
       isBusy,
       deleteResource,
-      refetchData,
+      refetchData
     } = useList()
 
     const fetchItems = async () => {
+      // TODO: Calendar Icon Color -> Unit has scheduled dates
+
       isBusy.value = true
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
@@ -118,7 +128,7 @@ export default {
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
-        include: 'center;specialty;type;serviceHour',
+        include: 'center;specialty;type;serviceHour'
       })
 
       isBusy.value = false
@@ -131,10 +141,10 @@ export default {
       { key: 'id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
       { key: 'name', label: 'Consultorio', sortable: true },
       { key: 'code', label: 'Código', sortable: true },
-      { key: 'is_general', label: 'Es General', sortable: true },
+      { key: 'is_enabled', label: 'Habilitado', sortable: true },
       { key: 'center', label: 'Centro', sortable: false },
       { key: 'specialty', label: 'Especialidad', sortable: false },
-      { key: 'type', label: 'Tipo Consultorio', sortable: false },
+      { key: 'type', label: 'Tipo Consultorio', sortable: false }
     ]
 
     return {
@@ -150,7 +160,7 @@ export default {
       isBusy,
       fetchItems,
       deleteResource,
-      refetchData,
+      refetchData
     }
   },
   methods: {
@@ -159,7 +169,7 @@ export default {
       if (isDeleted) {
         this.refetchData()
       }
-    },
-  },
+    }
+  }
 }
 </script>

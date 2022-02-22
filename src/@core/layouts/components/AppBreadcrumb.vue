@@ -13,7 +13,7 @@
                 <feather-icon icon="HomeIcon" size="16" class="align-text-top" />
               </b-breadcrumb-item>
               <b-breadcrumb-item
-                v-for="item in $route.meta.breadcrumb"
+                v-for="item in breadcrumb"
                 :key="item.text"
                 :active="item.active"
                 :to="item.to"
@@ -50,7 +50,7 @@
     <!--          <span class="align-middle ml-50">Email</span>-->
     <!--        </b-dropdown-item>-->
 
-    <!--        <b-dropdown-item :to="{ name: 'apps-calendar' }">-->
+    <!--        <b-dropdown-item :to="{ name: 'apps-appointment-calendar' }">-->
     <!--          <feather-icon icon="CalendarIcon" size="16" />-->
     <!--          <span class="align-middle ml-50">Calendar</span>-->
     <!--        </b-dropdown-item>-->
@@ -64,7 +64,22 @@ import Ripple from 'vue-ripple-directive'
 
 export default {
   directives: {
-    Ripple,
+    Ripple
   },
+  computed: {
+    breadcrumb() {
+      const items = []
+      const breadcrumb = this.$route.meta.breadcrumb
+      breadcrumb.forEach(item => {
+        if (typeof item.to === 'function') {
+          const to = item.to()
+          item.to = to
+          item.to.params = Object.fromEntries(to.params.map(key => [key, this.$route.params[key]]))
+        }
+        items.push(item)
+      })
+      return items
+    }
+  }
 }
 </script>

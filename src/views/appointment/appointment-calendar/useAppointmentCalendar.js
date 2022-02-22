@@ -8,7 +8,7 @@ import { useRouter } from '@core/utils/utils'
 
 import store from '@/store'
 
-export const useCalendar = () => {
+export const useAppointmentCalendar = () => {
   const { route } = useRouter()
   const medicalUnitId = route.value.params.id
 
@@ -40,7 +40,7 @@ export const useCalendar = () => {
     const query = {
       startDate: startStr.split('T')[0],
       endDate: endStr.split('T')[0],
-      attentionSelected: attentionSelected.value,
+      attentionSelected: attentionSelected.value
     }
 
     store.dispatch('calendar/CALENDAR_EVENTS', { medicalUnitId, query }).then(({ data }) => {
@@ -50,7 +50,7 @@ export const useCalendar = () => {
           date: item.date,
           type: item.attention_type.name,
           start: new Date(`${item.date} ${item.start_time}`),
-          end: new Date(`${item.date} ${item.end_time}`),
+          end: new Date(`${item.date} ${item.end_time}`)
         }
       })
       successCallback(events)
@@ -62,7 +62,7 @@ export const useCalendar = () => {
     initialView: 'dayGridMonth',
     headerToolbar: {
       start: 'sidebarToggle, prev,next, title',
-      end: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth',
+      end: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
     },
     locale: esLocale,
     editable: false,
@@ -70,15 +70,15 @@ export const useCalendar = () => {
       sidebarToggle: {
         click() {
           isCalendarSidebarActive.value = !isCalendarSidebarActive.value
-        },
-      },
+        }
+      }
     },
     events: fetchEvents,
     dayMaxEvents: 3,
     eventClassNames({ event: calendarEvent }) {
       const variant = attentionTypeColor.value[calendarEvent._def.extendedProps.type]
       return [`bg-light-${variant}`]
-    },
+    }
   })
 
   const isCalendarSidebarActive = ref(false)
@@ -90,6 +90,6 @@ export const useCalendar = () => {
     isCalendarSidebarActive,
     isCalendarFormActive,
     calendarsColor: attentionTypeColor,
-    refetchEvents,
+    refetchEvents
   }
 }

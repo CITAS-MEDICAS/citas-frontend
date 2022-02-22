@@ -1,26 +1,26 @@
 export default [
   {
-    header: 'Asegurado',
+    header: 'Citas Médicas',
   },
+  // {
+  //   title: 'Información',
+  //   route: null,
+  //   icon: 'UserIcon',
+  //   action: 'read',
+  //   resource: 'Home',
+  // },
   {
-    title: 'Información',
-    route: null,
+    title: 'Asegurado',
+    route: 'dependent-list',
     icon: 'UserIcon',
     action: 'read',
     resource: 'Home',
   },
-  {
-    title: 'Dependientes',
-    route: null,
-    icon: 'UserIcon',
-    action: 'read',
-    resource: 'Home',
-  },
-  {
-    title: 'Citas Médicas',
-    route: null,
-    icon: 'UserIcon',
-    action: 'read',
-    resource: 'Home',
-  },
+  // {
+  //   title: 'Citas Médicas',
+  //   route: null,
+  //   icon: 'UserIcon',
+  //   action: 'read',
+  //   resource: 'Home',
+  // },
 ]
