@@ -18,10 +18,9 @@ export const useAppointmentCalendar = () => {
     'reserved': 'warning'
   }
 
-
   const calendarOptions = ref({
-    plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin, listPlugin],
-    initialView: 'dayGridMonth',
+    plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
+    initialView: 'timeGridWeek',
     headerToolbar: {
       start: 'sidebarToggle, prev,next, title',
       end: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
@@ -40,6 +39,13 @@ export const useAppointmentCalendar = () => {
     eventClassNames({ event: calendarEvent }) {
       const variant = eventColor[calendarEvent._def.extendedProps.status]
       return [`bg-light-${variant}`]
+    },
+    displayEventTime: true,
+    displayEventEnd: true,
+    eventTimeFormat: {
+      hour: 'numeric',
+      minute: '2-digit',
+      meridiem: 'short'
     }
   })
 
@@ -50,7 +56,7 @@ export const useAppointmentCalendar = () => {
     return items.map(item => {
       const { time, startTime, endTime, status } = item
       return {
-        title: time,
+        title: status == 'available' ? 'Disponible' : 'Reservado',
         start: new Date(startTime),
         end: new Date(endTime),
         status: status
