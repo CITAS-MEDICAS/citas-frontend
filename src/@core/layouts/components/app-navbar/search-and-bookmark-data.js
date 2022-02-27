@@ -38,10 +38,15 @@ export default {
       { title: 'Button Group', route: { name: 'components-button-group' }, icon: 'BoldIcon', isBookmarked: false },
       { title: 'Button Toolbar', route: { name: 'components-button-toolbar' }, icon: 'BoldIcon', isBookmarked: false },
       { title: 'Button', route: { name: 'components-button' }, icon: 'BoldIcon', isBookmarked: false },
-      { title: 'Calendar App', route: { name: 'apps-appointment-calendar' }, icon: 'CalendarIcon', isBookmarked: true },
+      {
+        title: 'Calendar App',
+        route: { name: 'apps-insuredAppointment-calendar' },
+        icon: 'CalendarIcon',
+        isBookmarked: true
+      },
       {
         title: 'Calendar Component',
-        route: { name: 'components-appointment-calendar' },
+        route: { name: 'components-insuredAppointment-calendar' },
         icon: 'CalendarIcon',
         isBookmarked: false
       },

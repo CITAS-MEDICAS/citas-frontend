@@ -1,14 +1,7 @@
 export default [
   {
-    header: 'Citas Médicas',
+    header: 'Beneficiarios',
   },
-  // {
-  //   title: 'Información',
-  //   route: null,
-  //   icon: 'UserIcon',
-  //   action: 'read',
-  //   resource: 'Home',
-  // },
   {
     title: 'Asegurado',
     route: 'dependent-list',
@@ -16,11 +9,4 @@ export default [
     action: 'read',
     resource: 'Home',
   },
-  // {
-  //   title: 'Citas Médicas',
-  //   route: null,
-  //   icon: 'UserIcon',
-  //   action: 'read',
-  //   resource: 'Home',
-  // },
 ]

@@ -33,7 +33,7 @@
 import FullCalendar from '@fullcalendar/vue'
 
 import { useAppointmentCalendar } from './useAppointmentCalendar'
-import AppointmentForm from './appointment-form/AppointmentForm'
+import AppointmentForm from '../appointment-form/AppointmentForm'
 
 export default {
   name: 'Calendar',

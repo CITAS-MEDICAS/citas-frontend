@@ -110,7 +110,6 @@ export const useAppointmentForm = (emit) => {
           calendar_id, date, duration, status
         }
       })
-
       emit('update-calendar', data)
     }
   }
@@ -125,7 +124,6 @@ export const useAppointmentForm = (emit) => {
     }
 
     const { data } = await AppointmentResource.store(formData.value)
-    console.log('-> data', data)
     if (data.appointment) {
       router.push({ name: 'insured-appointment-list', params: { id: route.value.params.id } })
     }

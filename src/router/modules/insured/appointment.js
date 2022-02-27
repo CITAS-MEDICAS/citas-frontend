@@ -2,50 +2,50 @@ export default [
   {
     path: '/asegurado/:id/citas-medicas',
     name: 'insured-appointment-list',
-    component: () => import('@/views/appointment/AppointmentList'),
+    component: () => import('@/views/insuredAppointment/AppointmentList'),
     meta: {
       pageTitle: 'Citas Médicas',
       breadcrumb: [
         {
           text: 'Asegurado',
-          to : { name: 'dependent-list' }
+          to: { name: 'dependent-list' }
         },
         {
           text: 'Citas Médicas',
-          active: true,
-        },
+          active: true
+        }
       ],
       resource: 'citas-medicas',
-      action: 'read',
-    },
+      action: 'read'
+    }
   },
   {
     path: '/asegurado/:id/citas-medicas/crear',
     name: 'insured-appointment-create',
-    component: () => import('@/views/appointment/AppointmentCreate'),
+    component: () => import('@/views/insuredAppointment/AppointmentCreate'),
     meta: {
       pageTitle: 'Crear Cita Médica',
       breadcrumb: [
         {
           text: 'Asegurado',
-          to : { name: 'dependent-list' }
+          to: { name: 'dependent-list' }
         },
         {
           text: 'Citas Médicas',
-          to : function() {
+          to: function() {
             return {
               name: 'insured-appointment-list',
               params: ['id']
             }
-          },
+          }
         },
         {
           text: 'Crear',
-          active: true,
-        },
+          active: true
+        }
       ],
       resource: 'citas-medicas',
-      action: 'create',
-    },
-  },
+      action: 'create'
+    }
+  }
 ]

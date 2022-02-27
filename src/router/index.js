@@ -12,6 +12,8 @@ import relationship from './modules/administration/relationship'
 import medicalUnitType from './modules/administration/medicalUnitType'
 import calendar from './modules/administration/calendar'
 
+import medicalAppointment from './modules/appointments/medicalAppointments'
+
 import user from './modules/users/user'
 import role from './modules/users/role'
 import insured from './modules/users/insured'
@@ -38,6 +40,8 @@ const router = new VueRouter({
     ...relationship,
     ...medicalUnitType,
     ...calendar,
+    // Reservations
+    ...medicalAppointment,
     // Users
     ...user,
     ...role,

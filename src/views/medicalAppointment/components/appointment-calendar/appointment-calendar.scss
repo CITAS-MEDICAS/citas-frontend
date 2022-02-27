@@ -1,11 +1,11 @@
 // Core variables and mixins
 
-@import '../bootstrap-extended/include';
+@import '~@core/scss/base/bootstrap-extended/include';
 // Bootstrap includes
-@import '../components/include'; // Components includes
+@import '~@core/scss/base/components/include'; // Components includes
 
 $fc-calendar-height: 650px;
-$fc-sidebar-width: 18rem;
+$fc-sidebar-width: 30rem;
 $fc-event-font-weight: 600;
 $fc-event-font-size: 0.8rem;
 $fc-event-padding-x: 0.5rem;
@@ -460,4 +460,8 @@ $fc-day-toggle-btn-padding: 0.55rem 1.5rem;
       }
     }
   }
+}
+
+.fc-timegrid-event {
+  box-shadow: none !important;
 }

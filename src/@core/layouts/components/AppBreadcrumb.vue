@@ -50,7 +50,7 @@
     <!--          <span class="align-middle ml-50">Email</span>-->
     <!--        </b-dropdown-item>-->
 
-    <!--        <b-dropdown-item :to="{ name: 'apps-appointment-calendar' }">-->
+    <!--        <b-dropdown-item :to="{ name: 'apps-insuredAppointment-calendar' }">-->
     <!--          <feather-icon icon="CalendarIcon" size="16" />-->
     <!--          <span class="align-middle ml-50">Calendar</span>-->
     <!--        </b-dropdown-item>-->

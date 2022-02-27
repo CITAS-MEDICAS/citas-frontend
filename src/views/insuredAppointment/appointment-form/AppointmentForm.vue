@@ -7,7 +7,6 @@
         </h5>
 
         <validation-observer ref="refFormObserver">
-
           <b-form-group v-show="false" label="Atención">
             <validation-provider v-slot="{ errors }" name="Atención">
               <v-select
@@ -22,7 +21,6 @@
               />
             </validation-provider>
           </b-form-group>
-
           <b-form-group label="Tipo de Consulta">
             <validation-provider v-slot="{ errors }" name="Tipo de Consulta">
               <v-select

@@ -1,0 +1,149 @@
+<template>
+  <b-card no-body>
+    <table-header :per-page-options="perPageOptions">
+      <template #button>
+        <v-select style="width: 150px"
+                  :clearable="false"
+                  :options="['Atendidos', 'Reservados']" placeholder="Mostrar" />
+
+        <router-link :to="{
+            name: 'appointment-reconsult-form',
+            params: {treatmentId: $route.params.treatmentId}
+        }">
+          <b-button class="ml-1" variant="outline-success">Reconsulta</b-button>
+        </router-link>
+
+        <router-link :to="{
+            name: 'appointment-transfer-form',
+            params: {treatmentId: $route.params.treatmentId
+           }}">
+          <b-button class="ml-1" variant="outline-warning">Transferencia</b-button>
+        </router-link>
+      </template>
+    </table-header>
+
+    <b-table
+      ref="refTable"
+      :items="fetchItems"
+      :fields="tableColumns"
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="isSortDirDesc"
+      show-empty
+      empty-text="No se encontraron resultados"
+      responsive
+      primary-key="id"
+      class="position-relative"
+    >
+      <template #cell(actions)="data">
+        <b-button
+          v-if="data.item.id == $route.query.activo"
+          class="ml-1" variant="outline-info" size="sm">
+          Atender
+        </b-button>
+      </template>
+      <template #cell(date_reservation)="data">
+        {{ data.value | getDate }}
+      </template>
+      <template #cell(date)="data">
+        <strong>{{ data.item.start_time | formatDate }}</strong>
+      </template>
+      <template #cell(status.name)="data">
+        <b-badge pill :variant="`light-${statusVariant[data.value]}`">
+          <small>{{ data.value.toLowerCase() }}</small>
+        </b-badge>
+      </template>
+    </b-table>
+
+    <table-pagination :total-rows="totalRows" :per-page="perPage" />
+  </b-card>
+</template>
+
+<script>
+import useList from '@/custom/libs/useList'
+
+import TableHeader from '@/custom/components/Tables/TableHeader'
+import TablePagination from '@/custom/components/Tables/TablePagination'
+import { AppointmentResource } from '@/network/lib/appointment'
+import { getDate, getTime, formatDate } from '@/custom/filters'
+
+export default {
+  name: 'InsuredTreatmentList',
+  components: {
+    TableHeader,
+    TablePagination
+  },
+  filters: {
+    getDate,
+    getTime,
+    formatDate
+  },
+  setup() {
+    let {
+      refTable,
+      perPage,
+      perPageOptions,
+      currentPage,
+      totalRows,
+      searchQuery,
+      sortBy,
+      isSortDirDesc,
+      route,
+      deleteResource,
+      refetchData
+    } = useList()
+
+    const fetchItems = async () => {
+      const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
+
+      const { data } = await AppointmentResource.getAll({
+        q: searchQuery.value,
+        limit: perPage.value,
+        page: currentPage.value,
+        [sortOption]: sortBy.value,
+        include: 'center;unit;specialty;type;status;treatment.patient',
+        scope: `treatment:${route.value.params.treatmentId}`
+      })
+
+      totalRows.value = data.total_data
+      return data.rows
+    }
+
+    const statusVariant = {
+      'RESERVADO': 'success',
+      'SOLICITADO': 'warning',
+      'NO SE PRESENTO': 'secondary',
+      'CANCELADO': 'danger',
+      'ATENDIDO': 'info'
+    }
+
+    const tableColumns = [
+      { key: 'actions', label: 'Acciones', thStyle: { width: '150px' } },
+      { key: 'center.name', label: 'Centro', sortable: false },
+      { key: 'specialty.name', label: 'Especialidad', sortable: false },
+      { key: 'treatment.patient.fullname', label: 'Asegurado', sortable: false },
+      { key: 'date_reservation', label: 'Reservado', sortable: false },
+      { key: 'date', label: 'Fecha Cita', sortable: true },
+      { key: 'status.name', label: 'Estado', sortable: false },
+      { key: 'type.name', label: 'Tipo', sortable: false }
+    ]
+
+    return {
+      refTable,
+      perPage,
+      perPageOptions,
+      currentPage,
+      totalRows,
+      searchQuery,
+      tableColumns,
+      sortBy,
+      isSortDirDesc,
+      statusVariant,
+      fetchItems,
+      deleteResource,
+      refetchData
+    }
+  }
+}
+</script>
+
+<style scoped></style>

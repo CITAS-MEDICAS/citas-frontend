@@ -53,7 +53,8 @@
               variant="flat-warning"
               class="btn-icon "
             >
-              <feather-icon icon="CalendarIcon" /> <small>Citas Médicas</small>
+              <feather-icon icon="CalendarIcon" />
+              <small> Citas Médicas</small>
             </b-button>
           </router-link>
         </div>
@@ -79,7 +80,7 @@ export default {
   name: 'DependentList',
   components: {
     TableHeader,
-    TablePagination,
+    TablePagination
   },
   setup() {
     let {
@@ -92,7 +93,7 @@ export default {
       sortBy,
       isSortDirDesc,
       deleteResource,
-      refetchData,
+      refetchData
     } = useList()
 
     const fetchItems = async () => {
@@ -103,7 +104,7 @@ export default {
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
-        include: 'user;unit.center;relationship',
+        include: 'user;unit.center;relationship'
       })
 
       totalRows.value = data.total_data
@@ -118,7 +119,7 @@ export default {
       { key: 'user.maternal_surname', label: 'Materno', sortable: false },
       { key: 'unit.center.name', label: 'Centro de Salud', sortable: false },
       { key: 'user.registration_code', label: 'Numero Asegurado', sortable: false },
-      { key: 'relationship.name', label: 'Parentesco', sortable: false },
+      { key: 'relationship.name', label: 'Parentesco', sortable: false }
     ]
 
     return {
@@ -133,7 +134,7 @@ export default {
       isSortDirDesc,
       fetchItems,
       deleteResource,
-      refetchData,
+      refetchData
     }
   },
 
@@ -143,8 +144,8 @@ export default {
       if (isDeleted) {
         this.refetchData()
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -9,13 +9,14 @@
           class="per-page-selector d-inline-block ml-50 mr-1"
           :clearable="false"
         />
-
         <slot name="button" />
       </b-col>
       <b-col cols="12" md="6">
-        <div class="d-flex align-items-center justify-content-end">
-          <b-form-input v-model="searchQuery" class="d-inline-block" placeholder="Buscar..." />
-        </div>
+        <slot name="search-bar">
+          <div class="d-flex align-items-center justify-content-end">
+            <b-form-input v-model="searchQuery" class="d-inline-block" placeholder="Buscar..." />
+          </div>
+        </slot>
       </b-col>
     </b-row>
   </div>
@@ -28,15 +29,15 @@ import { inject } from '@vue/composition-api'
 export default {
   name: 'TableHeader',
   components: {
-    vSelect,
+    vSelect
   },
   props: { perPageOptions: { required: true, type: Array } },
   setup() {
     return {
       perPage: inject('perPage'),
-      searchQuery: inject('searchQuery'),
+      searchQuery: inject('searchQuery')
     }
-  },
+  }
 }
 </script>
 

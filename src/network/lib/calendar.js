@@ -2,7 +2,7 @@ import { Resource } from '@/network/resource'
 
 class CalendarResource extends Resource {
   constructor() {
-    super('api/appointment-calendar')
+    super('api/insuredAppointment-calendar')
   }
 
   getCalendar(medicalUnitId, query) {

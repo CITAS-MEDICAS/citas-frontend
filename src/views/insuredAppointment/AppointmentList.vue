@@ -2,7 +2,8 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <b-button variant="primary" :to="{ name: 'insured-appointment-create', params: { id: $route.params.id } }">Crear
+        <b-button variant="primary"
+                  :to="{ name: 'insured-appointment-create', params: { id: $route.params.id } }">Crear
           Cita Médica
         </b-button>
       </template>
