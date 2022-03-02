@@ -86,7 +86,7 @@ export default {
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
-        include: 'type;status;treatment.patient'
+        include: 'status;treatment.patient'
       })
 
       totalRows.value = data.total_data
@@ -107,7 +107,6 @@ export default {
       { key: 'date_reservation', label: 'Reservado', sortable: false },
       { key: 'date', label: 'Fecha Cita', sortable: false },
       { key: 'status.name', label: 'Estado', sortable: false },
-      { key: 'type.name', label: 'Tipo', sortable: false }
     ]
 
     return {

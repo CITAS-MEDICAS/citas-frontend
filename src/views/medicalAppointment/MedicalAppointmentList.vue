@@ -13,9 +13,9 @@ export default {
   },
   computed: {
     appointmentList() {
-      return 'PersonalList'
-      // const activeRole = this.$store.state.user.activeRole.role
-      // return this.resolveComponent(activeRole)
+      return 'DoctorList'
+      const activeRole = this.$store.state.user.activeRole.role
+      return this.resolveComponent(activeRole)
     }
   },
   data() {

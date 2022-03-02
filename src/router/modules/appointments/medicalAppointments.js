@@ -51,12 +51,22 @@ export default [
           }
         },
         {
+          text: 'Historial',
+          resolve: function() {
+            return {
+              name: 'insured-treatment-history',
+              params: ['treatmentId']
+            }
+          }
+        },
+        {
           text: 'Reconsulta',
           active: true
         }
       ],
       resource: 'citas-personal',
-      action: 'read'
+      action: 'read',
+      attentionType: 'RECONSULTA'
     }
   },
   {
@@ -73,12 +83,22 @@ export default [
           }
         },
         {
+          text: 'Historial',
+          resolve: function() {
+            return {
+              name: 'insured-treatment-history',
+              params: ['treatmentId']
+            }
+          }
+        },
+        {
           text: 'Reconsulta',
           active: true
         }
       ],
       resource: 'citas-personal',
-      action: 'read'
+      action: 'read',
+      attentionType: 'NUEVO'
     }
   }
 ]

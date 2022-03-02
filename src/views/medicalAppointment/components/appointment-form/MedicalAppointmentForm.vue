@@ -3,7 +3,7 @@
     <div class="p-2">
       <div>
         <h5 class="app-label section-label mb-1">
-          CREAR CITA MÉDICA
+          CREAR CITA MÉDICA {{ $route.params.treatmentId }}
         </h5>
 
         <validation-observer ref="refFormObserver">
@@ -124,7 +124,7 @@
 
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { useAppointmentForm } from './useAppointmentForm'
+import { useMedicalAppointmentForm } from './useMedicalAppointmentForm'
 import { required } from '@validations'
 
 export default {
@@ -150,7 +150,7 @@ export default {
       handleAvailability,
       handleTimes,
       handleSubmit
-    } = useAppointmentForm(emit)
+    } = useMedicalAppointmentForm(emit)
 
     return {
       formData,

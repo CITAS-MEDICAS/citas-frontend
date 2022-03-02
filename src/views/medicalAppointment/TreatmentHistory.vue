@@ -13,10 +13,7 @@
           <b-button class="ml-1" variant="outline-success">Reconsulta</b-button>
         </router-link>
 
-        <router-link :to="{
-            name: 'appointment-transfer-form',
-            params: {treatmentId: $route.params.treatmentId
-           }}">
+        <router-link :to="{ name: 'appointment-transfer-form', params: {treatmentId: $route.params.treatmentId }}">
           <b-button class="ml-1" variant="outline-warning">Transferencia</b-button>
         </router-link>
       </template>
@@ -36,8 +33,10 @@
     >
       <template #cell(actions)="data">
         <b-button
-          v-if="data.item.id == $route.query.activo"
-          class="ml-1" variant="outline-info" size="sm">
+          v-if="data.item.id == $route.query.cita && data.item.status.name != 'CANCELADO'"
+          class="ml-1" variant="outline-info" size="sm"
+          @click="showForm(data.item.id)"
+        >
           Atender
         </b-button>
       </template>
@@ -55,6 +54,8 @@
     </b-table>
 
     <table-pagination :total-rows="totalRows" :per-page="perPage" />
+
+    <AttendAppointmentForm ref="appointmentForm" @update-list="refetchData" />
   </b-card>
 </template>
 
@@ -63,6 +64,7 @@ import useList from '@/custom/libs/useList'
 
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
+import AttendAppointmentForm from './components/AttendAppointmentForm'
 import { AppointmentResource } from '@/network/lib/appointment'
 import { getDate, getTime, formatDate } from '@/custom/filters'
 
@@ -70,7 +72,8 @@ export default {
   name: 'InsuredTreatmentList',
   components: {
     TableHeader,
-    TablePagination
+    TablePagination,
+    AttendAppointmentForm
   },
   filters: {
     getDate,
@@ -100,7 +103,7 @@ export default {
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
-        include: 'center;unit;specialty;type;status;treatment.patient',
+        include: 'center;unit;specialty;status;treatment.patient',
         scope: `treatment:${route.value.params.treatmentId}`
       })
 
@@ -123,8 +126,7 @@ export default {
       { key: 'treatment.patient.fullname', label: 'Asegurado', sortable: false },
       { key: 'date_reservation', label: 'Reservado', sortable: false },
       { key: 'date', label: 'Fecha Cita', sortable: true },
-      { key: 'status.name', label: 'Estado', sortable: false },
-      { key: 'type.name', label: 'Tipo', sortable: false }
+      { key: 'status.name', label: 'Estado', sortable: false }
     ]
 
     return {
@@ -141,6 +143,12 @@ export default {
       fetchItems,
       deleteResource,
       refetchData
+    }
+  },
+  methods: {
+    showForm(appointmentId) {
+      this.$refs.appointmentForm.setAppointment(appointmentId)
+      this.$bvModal.show('attend-appointment-form')
     }
   }
 }

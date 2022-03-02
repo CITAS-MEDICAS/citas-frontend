@@ -7,11 +7,12 @@ import { useRouter } from '@core/utils/utils'
 import { AppointmentResource } from '@/network/lib/appointment'
 
 
-export const useAppointmentForm = (emit) => {
+export const useMedicalAppointmentForm = (emit) => {
   const { route, router } = useRouter()
+  const treatmentId = route.value.params.treatmentId
 
   const formData = ref({
-    user_patient_id: route.value.params.id,
+    treatment_id: treatmentId,
     attention_type_id: null,
     treatment_type_id: null,
     specialty: null,
@@ -46,7 +47,7 @@ export const useAppointmentForm = (emit) => {
     const attention = store.state.types.attentionTypes
     if (attention.length) {
       // TODO: Changes depending on the role
-      formData.value.attention_type_id = attention.find(item => item.name === 'NUEVO').id
+      formData.value.attention_type_id = attention.find(item => item.name === route.value.meta.attentionType).id
     }
     return attention
   })
@@ -125,7 +126,7 @@ export const useAppointmentForm = (emit) => {
 
     const { data } = await AppointmentResource.store(formData.value)
     if (data.appointment) {
-      router.push({ name: 'insured-appointment-list', params: { id: route.value.params.id } })
+      router.push({ name: 'insured-treatment-history', params: { id: route.value.params.treatmentId } })
     }
   }
 

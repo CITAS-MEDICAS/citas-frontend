@@ -25,10 +25,6 @@ class TypesResource extends Resource {
     return this.getAll({ scope: 'treatment', ...query })
   }
 
-  getAppointmentTypes(query) {
-    return this.getAll({ scope: 'appointmentType', ...query })
-  }
-
   getAppointmentStatuses(query) {
     return this.getAll({ scope: 'appointmentStatus', ...query })
   }

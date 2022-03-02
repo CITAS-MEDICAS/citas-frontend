@@ -7,7 +7,7 @@
         class="col app-calendar-sidebar flex-grow-0 overflow-hidden d-flex flex-column"
         :class="{ show: isCalendarSidebarActive }"
       >
-        <AppointmentForm @update-calendar="updateCalendar" />
+        <medical-appointment-form @update-calendar="updateCalendar" />
       </div>
 
       <!-- Calendar-->
@@ -33,13 +33,13 @@
 import FullCalendar from '@fullcalendar/vue'
 
 import { useAppointmentCalendar } from './useAppointmentCalendar'
-import AppointmentForm from '../appointment-form/AppointmentForm'
+import MedicalAppointmentForm from '../appointment-form/MedicalAppointmentForm'
 
 export default {
   name: 'Calendar',
   components: {
     FullCalendar,
-    AppointmentForm
+    MedicalAppointmentForm
   },
 
   setup() {

@@ -119,16 +119,17 @@ import { TypesResource } from '@/network/lib/types'
 import { UserResource } from '@/network/lib/users'
 import { debounce } from '@/libs/utils'
 
+// TODO: Error in v-on handler: "TypeError: Cannot read properties of undefined (reading 'id')"
 export default {
   name: 'Membership',
   components: {
     ValidationObserver,
-    ValidationProvider,
+    ValidationProvider
   },
   data() {
     return {
       relationships: [],
-      titularOptions: [],
+      titularOptions: []
     }
   },
   setup() {
@@ -143,25 +144,25 @@ export default {
       formData,
       refFormObserver,
       required,
-      validate,
+      validate
     }
   },
   computed: {
     filterRelationships() {
       return this.relationships.filter(item => !item.name.includes('ID - Titular'))
-    },
+    }
   },
   watch: {
     'formData.user_titular_id': {
-      handler: function (after, before) {
+      handler: function(after, before) {
         console.log('-> before', before)
         console.log('-> after', after)
         if (!this.insuredIsTitular && after) {
           this.setTitularOption(after)
         }
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
   mounted() {
     this.getRelationships()
@@ -203,7 +204,7 @@ export default {
     searchTitular: debounce(async (loading, term, vm) => {
       const { data } = await UserResource.getAll({
         'filter[ci][eq]': term,
-        scope: 'IsTitular',
+        scope: 'IsTitular'
       })
       loading(false)
       vm.titularOptions = data.rows
@@ -212,8 +213,8 @@ export default {
     async setTitularOption(id) {
       const { data } = await UserResource.getById(id)
       this.titularOptions = [data.user]
-    },
-  },
+    }
+  }
 }
 </script>
 

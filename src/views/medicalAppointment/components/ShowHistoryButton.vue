@@ -2,7 +2,7 @@
   <router-link :to="{
             name: 'insured-treatment-history',
             params: { treatmentId: item.treatment.id, },
-            query: { activo: item.id }
+            query: { cita: item.id }
           }">
     <b-button
       v-b-tooltip.hover.top="'Mostrar Historial de Citas Médicas'"
@@ -21,7 +21,7 @@ export default {
   props: {
     item: {
       type: Object,
-      required: true,
+      required: true
     }
   }
 }

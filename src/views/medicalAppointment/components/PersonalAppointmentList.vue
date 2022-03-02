@@ -84,7 +84,7 @@ export default {
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
-        include: 'center;unit;specialty;type;status;treatment.patient'
+        include: 'center;unit;specialty;status;treatment.patient'
 
       })
 
@@ -108,8 +108,7 @@ export default {
       { key: 'date_reservation', label: 'Reservado', sortable: false },
       { key: 'treatment.patient.fullname', label: 'Asegurado', sortable: false },
       { key: 'date', label: 'Fecha Cita', sortable: false },
-      { key: 'status.name', label: 'Estado', sortable: false },
-      { key: 'type.name', label: 'Tipo', sortable: false }
+      { key: 'status.name', label: 'Estado', sortable: false }
     ]
 
     return {

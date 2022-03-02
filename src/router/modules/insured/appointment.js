@@ -1,6 +1,6 @@
 export default [
   {
-    path: '/asegurado/:id/citas-medicas',
+    path: '/asegurado/:userId/citas-medicas',
     name: 'insured-appointment-list',
     component: () => import('@/views/insuredAppointment/AppointmentList'),
     meta: {
@@ -20,7 +20,7 @@ export default [
     }
   },
   {
-    path: '/asegurado/:id/citas-medicas/crear',
+    path: '/asegurado/:userId/citas-medicas/crear',
     name: 'insured-appointment-create',
     component: () => import('@/views/insuredAppointment/AppointmentCreate'),
     meta: {
@@ -32,10 +32,10 @@ export default [
         },
         {
           text: 'Citas Médicas',
-          to: function() {
+          resolve: function () {
             return {
               name: 'insured-appointment-list',
-              params: ['id']
+              params: ['userId']
             }
           }
         },

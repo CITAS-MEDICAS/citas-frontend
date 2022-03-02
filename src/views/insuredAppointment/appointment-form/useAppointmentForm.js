@@ -11,7 +11,7 @@ export const useAppointmentForm = (emit) => {
   const { route, router } = useRouter()
 
   const formData = ref({
-    user_patient_id: route.value.params.id,
+    user_patient_id: route.value.params.userId,
     attention_type_id: null,
     treatment_type_id: null,
     specialty: null,
