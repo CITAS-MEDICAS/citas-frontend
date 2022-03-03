@@ -9,7 +9,7 @@
           <b-col cols="12">
             <b-form-group label="Nombre *">
               <validation-provider v-slot="{ errors }" name="Nombre" rules="required|min:3">
-                <b-form-input v-model="formData.name" :state="errors.length ? false : null" />
+                <b-form-input v-model="formData.name" :state="errors.length ? false : null" v-uppercase />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
@@ -20,6 +20,7 @@
                 <b-form-input
                   v-model="formData.paternal_surname"
                   :state="errors.length ? false : null"
+                  v-uppercase
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -35,6 +36,7 @@
                 <b-form-input
                   v-model="formData.maternal_surname"
                   :state="errors.length ? false : null"
+                  v-uppercase
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -47,8 +49,8 @@
         <b-row>
           <b-col sm="9" lg="8">
             <b-form-group label="CI *">
-              <validation-provider v-slot="{ errors }" name="CI" rules="required|min:5">
-                <b-form-input v-model="formData.ci" :state="errors.length ? false : null" />
+              <validation-provider v-slot="{ errors }" name="CI" rules="required|min:5|max:12">
+                <b-form-input v-model="formData.ci" :state="errors.length ? false : null" v-uppercase />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
@@ -137,6 +139,13 @@ export default {
     ValidationObserver,
     ValidationProvider,
   },
+  directives: {
+    uppercase: {
+      update: (el) => {
+        el.value = el.value.toUpperCase()
+      }
+    }
+  },
   props: {
     validateForm: {
       type: Boolean,
@@ -146,7 +155,7 @@ export default {
   },
   data() {
     return {
-      ciOptions: ['CH', 'LP', 'CB', 'OR', 'PT', 'TJ', 'SC', 'BE', 'PD'],
+      ciOptions: ['CH', 'LP', 'CB', 'OR', 'PT', 'TJ', 'SC', 'BE', 'PD', 'EXT'],
     }
   },
   setup(props) {

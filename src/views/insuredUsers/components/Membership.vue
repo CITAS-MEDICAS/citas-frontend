@@ -86,6 +86,7 @@
                   v-model="formData.registration_code"
                   :state="errors.length ? false : null"
                   placeholder="123456ABC"
+                  v-uppercase
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -119,12 +120,21 @@ import { TypesResource } from '@/network/lib/types'
 import { UserResource } from '@/network/lib/users'
 import { debounce } from '@/libs/utils'
 
+const titularID = 'ID'
+
 // TODO: Error in v-on handler: "TypeError: Cannot read properties of undefined (reading 'id')"
 export default {
   name: 'Membership',
   components: {
     ValidationObserver,
     ValidationProvider
+  },
+  directives: {
+    uppercase: {
+      update: (el) => {
+        el.value = el.value.toUpperCase()
+      }
+    }
   },
   data() {
     return {
@@ -149,14 +159,12 @@ export default {
   },
   computed: {
     filterRelationships() {
-      return this.relationships.filter(item => !item.name.includes('ID - Titular'))
+      return this.relationships.filter(item => !item.name.includes(titularID))
     }
   },
   watch: {
     'formData.user_titular_id': {
       handler: function(after, before) {
-        console.log('-> before', before)
-        console.log('-> after', after)
         if (!this.insuredIsTitular && after) {
           this.setTitularOption(after)
         }
@@ -173,11 +181,7 @@ export default {
       this.relationships = data.rows
     },
     handleInsuredType() {
-      this.formData.relationship_type_id = null
-      if (this.isTitular()) {
-        const relationship = this.getIDTitular()
-        this.formData.relationship_type_id = relationship.id
-      }
+      this.resolveTitularID()
 
       this.formData.isNewAccount = null
       this.formData.employer_code = null
@@ -189,8 +193,12 @@ export default {
       this.formData.password_confirmation = null
       this.formData.isNewAccount = true
     },
-    getIDTitular() {
-      return this.relationships.find(item => item.name.includes('ID - Titular'))
+    resolveTitularID() {
+      this.formData.relationship_type_id = null
+      if (this.isTitular()) {
+        const relationship = this.relationships.find(item => item.name.includes(titularID))
+        this.formData.relationship_type_id = relationship?.id
+      }
     },
     isTitular() {
       return this.formData.insuredIsTitular

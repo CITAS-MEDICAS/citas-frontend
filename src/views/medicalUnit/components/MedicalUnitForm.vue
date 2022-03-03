@@ -103,7 +103,7 @@
           <b-col sm="6">
             <b-form-group label="Reservar con anticipación de">
               <validation-provider v-slot="{ errors }" name="Reservacion" rules="required">
-                <v-select v-model="formData.advance_booking_days" :options="[10,20,30,40, 60]">
+                <v-select v-model="formData.advance_booking_days" :options="[10,20,30,60,90]">
                   <template v-slot:selected-option="option">
                     {{ option.label }} dias
                   </template>
