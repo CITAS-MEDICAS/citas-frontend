@@ -85,7 +85,6 @@ export default {
         page: currentPage.value,
         [sortOption]: sortBy.value,
         include: 'center;unit;specialty;status;treatment.patient'
-
       })
 
       totalRows.value = data.total_data

@@ -1,3 +1,5 @@
+import { PERMISSION_MEDICAL_UNIT } from '@/permissions'
+
 export default [
   {
     path: '/consultorios',
@@ -11,7 +13,7 @@ export default [
           active: true,
         },
       ],
-      resource: 'consultorio',
+      resource: PERMISSION_MEDICAL_UNIT,
       action: 'read',
     },
   },
@@ -31,7 +33,7 @@ export default [
           active: true,
         },
       ],
-      resource: 'consultorio',
+      resource: PERMISSION_MEDICAL_UNIT,
       action: 'create',
     },
   },
@@ -51,7 +53,7 @@ export default [
           active: true,
         },
       ],
-      resource: 'consultorio',
+      resource: PERMISSION_MEDICAL_UNIT,
       action: 'update',
     },
   },

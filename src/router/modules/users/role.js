@@ -1,3 +1,5 @@
+import { PERMISSION_ROLES } from '@/permissions'
+
 export default [
   {
     path: '/roles-de-usuario',
@@ -8,11 +10,11 @@ export default [
       breadcrumb: [
         {
           text: 'Roles de Usuario',
-          active: true,
-        },
+          active: true
+        }
       ],
-      resource: 'roles',
-      action: 'read',
-    },
-  },
+      resource: PERMISSION_ROLES,
+      action: 'read'
+    }
+  }
 ]

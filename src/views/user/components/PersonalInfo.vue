@@ -49,7 +49,7 @@
         <b-row>
           <b-col sm="9" lg="8">
             <b-form-group label="CI *">
-              <validation-provider v-slot="{ errors }" name="CI" rules="required|min:5|max:12">
+              <validation-provider v-slot="{ errors }" name="CI" rules="required|min:5">
                 <b-form-input v-model="formData.ci" :state="errors.length ? false : null" v-uppercase />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>

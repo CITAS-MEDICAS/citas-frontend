@@ -100,7 +100,6 @@ export default {
       this.$store.dispatch(USER_ROLES)
     },
     changeRole(role) {
-      console.log('-> role', role)
       this.$store.dispatch(USER_PERMISSIONS, role)
     },
   },

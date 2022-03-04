@@ -1,3 +1,5 @@
+import { PERMISSION_MEDICAL_APPOINTMENTS } from '@/permissions'
+
 export default [
   {
     path: '/citas-medicas',
@@ -11,7 +13,7 @@ export default [
           active: true
         }
       ],
-      resource: 'citas-personal',
+      resource: PERMISSION_MEDICAL_APPOINTMENTS,
       action: 'read'
     }
   },
@@ -33,7 +35,7 @@ export default [
           active: true
         }
       ],
-      resource: 'citas-personal',
+      resource: PERMISSION_MEDICAL_APPOINTMENTS,
       action: 'read'
     }
   },
@@ -64,8 +66,8 @@ export default [
           active: true
         }
       ],
-      resource: 'citas-personal',
-      action: 'read',
+      resource: PERMISSION_MEDICAL_APPOINTMENTS,
+      action: 'create',
       attentionType: 'RECONSULTA'
     }
   },
@@ -96,8 +98,8 @@ export default [
           active: true
         }
       ],
-      resource: 'citas-personal',
-      action: 'read',
+      resource: PERMISSION_MEDICAL_APPOINTMENTS,
+      action: 'create',
       attentionType: 'NUEVO'
     }
   }

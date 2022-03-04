@@ -1,12 +1,14 @@
+import { PERMISSION_DEPENDENT_USERS } from '@/permissions'
+
 export default [
   {
-    header: 'Beneficiarios',
+    header: 'Beneficiarios'
   },
   {
     title: 'Asegurado',
     route: 'dependent-list',
     icon: 'UserIcon',
     action: 'read',
-    resource: 'Home',
-  },
+    resource: PERMISSION_DEPENDENT_USERS
+  }
 ]

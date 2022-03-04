@@ -1,3 +1,5 @@
+import { PERMISSION_MEDICAL_CENTER } from '@/permissions'
+
 export default [
   {
     path: '/centros-de-salud',
@@ -11,7 +13,7 @@ export default [
           active: true,
         },
       ],
-      resource: 'centro',
+      resource: PERMISSION_MEDICAL_CENTER,
       action: 'read',
     },
   },
@@ -31,7 +33,7 @@ export default [
           active: true,
         },
       ],
-      resource: 'centro',
+      resource: PERMISSION_MEDICAL_CENTER,
       action: 'create',
     },
   },
@@ -51,7 +53,7 @@ export default [
           active: true,
         },
       ],
-      resource: 'centro',
+      resource: PERMISSION_MEDICAL_CENTER,
       action: 'update',
     },
   },

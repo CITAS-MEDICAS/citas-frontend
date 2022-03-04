@@ -1,3 +1,5 @@
+import { PERMISSION_DEPENDENT_APPOINTMENTS } from '@/permissions'
+
 export default [
   {
     path: '/asegurado/:userId/citas-medicas',
@@ -15,7 +17,7 @@ export default [
           active: true
         }
       ],
-      resource: 'citas-medicas',
+      resource: PERMISSION_DEPENDENT_APPOINTMENTS,
       action: 'read'
     }
   },
@@ -44,7 +46,7 @@ export default [
           active: true
         }
       ],
-      resource: 'citas-medicas',
+      resource: PERMISSION_DEPENDENT_APPOINTMENTS,
       action: 'create'
     }
   }

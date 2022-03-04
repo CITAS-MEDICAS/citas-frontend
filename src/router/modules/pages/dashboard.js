@@ -1,3 +1,5 @@
+import { PERMISSION_DASHBOARD } from '@/permissions'
+
 export default [
   {
     path: '/',
@@ -8,11 +10,11 @@ export default [
       breadcrumb: [
         {
           text: 'Home',
-          active: true,
-        },
+          active: true
+        }
       ],
-      resource: 'dashboard',
-      action: 'read',
-    },
-  },
+      resource: PERMISSION_DASHBOARD,
+      action: 'read'
+    }
+  }
 ]

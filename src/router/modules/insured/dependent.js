@@ -1,3 +1,5 @@
+import { PERMISSION_DEPENDENT_USERS } from '@/permissions'
+
 export default [
   {
     path: '/asegurado',
@@ -11,7 +13,7 @@ export default [
           active: true,
         },
       ],
-      resource: 'dependientes',
+      resource: PERMISSION_DEPENDENT_USERS,
       action: 'read',
     },
   },
@@ -32,7 +34,7 @@ export default [
         },
       ],
     },
-    resource: 'dependientes',
+    resource: PERMISSION_DEPENDENT_USERS,
     action: 'create',
   },
 ]

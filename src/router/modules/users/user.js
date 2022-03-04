@@ -1,3 +1,5 @@
+import { PERMISSION_STAFF_USERS } from '@/permissions'
+
 export default [
   {
     path: '/personal',
@@ -11,7 +13,7 @@ export default [
           active: true,
         },
       ],
-      resource: 'personal',
+      resource: PERMISSION_STAFF_USERS,
       action: 'read',
     },
   },
@@ -31,7 +33,7 @@ export default [
           active: true,
         },
       ],
-      resource: 'personal',
+      resource: PERMISSION_STAFF_USERS,
       action: 'create',
     },
   },
@@ -51,7 +53,7 @@ export default [
           active: true,
         },
       ],
-      resource: 'personal',
+      resource: PERMISSION_STAFF_USERS,
       action: 'update',
     },
   },
