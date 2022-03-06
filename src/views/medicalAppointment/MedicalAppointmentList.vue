@@ -13,7 +13,6 @@ export default {
   },
   computed: {
     appointmentList() {
-      return 'DoctorList'
       const activeRole = this.$store.state.user.activeRole.role
       return this.resolveComponent(activeRole)
     }

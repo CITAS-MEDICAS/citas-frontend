@@ -22,12 +22,19 @@ export default class JwtService {
       config => {
         // Get token from localStorage
         const accessToken = this.getToken()
+        const activeRole = this.getActiveRole()
 
         // If token is present add it to request's Authorization Header
         if (accessToken) {
           // eslint-disable-next-line no-param-reassign
           config.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`
         }
+
+        if (activeRole) {
+          config.headers['Request-Role'] = activeRole.role
+        }
+
+
         return config
       },
       error => Promise.reject(error)
@@ -141,7 +148,7 @@ export default class JwtService {
 
   refreshToken() {
     return this.axiosIns.post(this.jwtConfig.refreshEndpoint, {
-      refresh_token: this.getRefreshToken(),
+      refresh_token: this.getRefreshToken()
     })
   }
 

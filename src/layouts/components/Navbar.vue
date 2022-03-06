@@ -70,20 +70,21 @@ import { USER_ROLES, USER_PERMISSIONS } from '@/store/modules/user'
 export default {
   components: {
     // Navbar Components
-    DarkToggler,
+    DarkToggler
   },
   props: {
     toggleVerticalMenuActive: {
       type: Function,
-      default: () => {},
-    },
+      default: () => {
+      }
+    }
   },
   computed: {
     ...mapGetters({
       user: 'getUser',
       activeRole: 'getActiveRole',
-      roles: 'getRoles',
-    }),
+      roles: 'getRoles'
+    })
   },
 
   created() {
@@ -99,9 +100,10 @@ export default {
     getPermissions() {
       this.$store.dispatch(USER_ROLES)
     },
-    changeRole(role) {
-      this.$store.dispatch(USER_PERMISSIONS, role)
-    },
-  },
+    async changeRole(role) {
+      await this.$store.dispatch(USER_PERMISSIONS, role)
+      this.$router.push({name: 'home'})
+    }
+  }
 }
 </script>
