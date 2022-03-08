@@ -63,25 +63,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@core/scss/base/bootstrap-extended/include';
-// Bootstrap includes
-@import '~@core/scss/base/components/include';
-// Components includes
-
-@import './appointment-calendar';
-
-// Color palettes
-@import '~@core/scss/base/core/colors/palette-variables.scss';
-
-.fc-sidebarToggle-button {
-  // content: '';
-  background-image: url(str-replace(str-replace($menu, 'currentColor', $body-color), '#', '%23'));
-  width: 25px;
-  height: 25px;
-  margin-right: 0.7rem !important;
-  display: block;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
+@import '@core/scss/vue/apps/calendar.scss';
 </style>

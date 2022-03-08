@@ -3,7 +3,7 @@
     <div class="p-2">
       <div>
         <h5 class="app-label section-label mb-1">
-          CREAR CITA MÉDICA {{ $route.params.treatmentId }}
+          CREAR CITA MÉDICA
         </h5>
 
         <validation-observer ref="refFormObserver">

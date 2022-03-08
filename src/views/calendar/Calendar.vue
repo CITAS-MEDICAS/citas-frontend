@@ -43,7 +43,7 @@ export default {
   components: {
     FullCalendar,
     CalendarSidebar,
-    CalendarForm,
+    CalendarForm
   },
 
   setup() {
@@ -53,15 +53,12 @@ export default {
       refCalendar,
       calendarOptions,
       isCalendarSidebarActive,
-      refetchEvents,
+      refetchEvents
     }
-  },
+  }
 }
 </script>
 
 <style lang="scss">
 @import '@core/scss/vue/apps/calendar.scss';
-.fc-timegrid-event {
-  box-shadow: none !important;
-}
 </style>

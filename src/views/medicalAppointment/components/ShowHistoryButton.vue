@@ -5,7 +5,6 @@
             query: { cita: item.id }
           }">
     <b-button
-      v-b-tooltip.hover.top="'Mostrar Historial de Citas Médicas'"
       variant="flat-success"
       class="btn-icon "
     >

@@ -1,4 +1,8 @@
-import { PERMISSION_MEDICAL_APPOINTMENTS } from '@/permissions'
+import {
+  PERMISSION_MEDICAL_APPOINTMENTS,
+  PERMISSION_RECONSULT_APPOINTMENTS,
+  PERMISSION_TRANSFER_APPOINTMENTS
+} from '@/permissions'
 
 export default [
   {
@@ -66,7 +70,7 @@ export default [
           active: true
         }
       ],
-      resource: PERMISSION_MEDICAL_APPOINTMENTS,
+      resource: PERMISSION_RECONSULT_APPOINTMENTS,
       action: 'create',
       attentionType: 'RECONSULTA'
     }
@@ -94,11 +98,11 @@ export default [
           }
         },
         {
-          text: 'Reconsulta',
+          text: 'Transferencia',
           active: true
         }
       ],
-      resource: PERMISSION_MEDICAL_APPOINTMENTS,
+      resource: PERMISSION_TRANSFER_APPOINTMENTS,
       action: 'create',
       attentionType: 'NUEVO'
     }

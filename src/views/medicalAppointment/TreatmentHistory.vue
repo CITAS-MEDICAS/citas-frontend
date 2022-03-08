@@ -104,7 +104,8 @@ export default {
         page: currentPage.value,
         [sortOption]: sortBy.value,
         include: 'center;unit;specialty;status;treatment.patient',
-        scope: `treatment:${route.value.params.treatmentId}`
+        scope: `treatment:${route.value.params.treatmentId}`,
+        getAll: '1'
       })
 
       totalRows.value = data.total_data
