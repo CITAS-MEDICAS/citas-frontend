@@ -69,7 +69,8 @@ export const useMedicalAppointmentForm = (emit) => {
 
     const { data } = await MedicalCenterResource.getAll({
       scope: `hasSpecialty:${formData.value.specialty.id}`,
-      sortByAsc: 'name'
+      sortByAsc: 'name',
+      getAll: '1'
     })
 
     if (data.total_data) {
@@ -82,6 +83,7 @@ export const useMedicalAppointmentForm = (emit) => {
   const fetchMedicalUnit = async () => {
     formData.value.medical_unit_id = null
     const { data } = await MedicalUnitResource.getAll({
+      getAll: '1',
       scope: [
         `hasCenter:${formData.value.medical_center_id}`,
         `hasSpecialty:${formData.value.specialty.id}`,

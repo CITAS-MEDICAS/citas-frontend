@@ -80,7 +80,7 @@ export default {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
       const { data } = await AppointmentResource.getAll({
-        q: searchQuery.value,
+        scope: `search:${searchQuery.value}`,
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,

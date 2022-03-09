@@ -2,6 +2,7 @@
   <div class="sidebar-wrapper d-flex justify-content-between flex-column flex-grow-1">
     <div class="p-2">
       <b-button
+        v-if="$can('update', PERMISSION_MEDICAL_UNIT_CALENDAR)"
         v-b-modal.calendar-form
         aria-controls="sidebar-add-new-event"
         variant="primary"
@@ -35,6 +36,7 @@
 
 <script>
 import { useCalendarSidebar } from './useCalendarSidebar'
+import { PERMISSION_MEDICAL_UNIT_CALENDAR } from '@/permissions'
 
 export default {
   name: 'CalendarSidebar',
@@ -45,7 +47,8 @@ export default {
       attentionTypes,
       attentionSelected,
       checkAll,
-      attentionTypeColor
+      attentionTypeColor,
+      PERMISSION_MEDICAL_UNIT_CALENDAR,
     }
   }
 }

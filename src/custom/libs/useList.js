@@ -6,7 +6,7 @@ const useList = function () {
   const { route } = useRouter()
 
   const refTable = ref(null)
-  const perPage = ref(10)
+  const perPage = ref(25)
   const perPageOptions = [10, 25, 50, 100]
   const currentPage = ref(1)
   const totalRows = ref(0)

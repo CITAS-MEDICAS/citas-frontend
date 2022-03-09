@@ -2,7 +2,7 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <b-button variant="primary" :to="{ name: 'medical-unit-type-create' }">
+        <b-button v-if="$can('create', PERMISSION_UNIT_TYPES)" variant="primary" :to="{ name: 'medical-unit-type-create' }">
           Crear Tipo de Consultorio
         </b-button>
       </template>
@@ -23,6 +23,7 @@
       <template #cell(actions)="data">
         <div class="text-nowrap">
           <router-link
+            v-if="$can('update', PERMISSION_UNIT_TYPES)"
             :to="{
               name: 'medical-unit-type-edit',
               params: { id: data.item.id },
@@ -38,6 +39,7 @@
           </router-link>
 
           <b-button
+            v-if="$can('delete', PERMISSION_UNIT_TYPES)"
             v-b-tooltip.hover.top="'Eliminar Especialidad'"
             variant="flat-danger"
             class="btn-icon rounded-circle"
@@ -50,11 +52,15 @@
 
       <template #cell(name)="data">
         <b-link
+          v-if="$can('update', PERMISSION_UNIT_TYPES)"
           :to="{ name: 'medical-unit-type-edit', params: { id: data.item.id } }"
           class="font-weight-bold"
         >
           {{ data.value }}
         </b-link>
+        <template v-else>
+          {{ data.value }}
+        </template>
       </template>
     </b-table>
 
@@ -68,11 +74,12 @@ import useList from '../../custom/libs/useList'
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
 import { TypesResource } from '@/network/lib/types'
+import { PERMISSION_UNIT_TYPES } from '@/permissions'
 
 export default {
   components: {
     TableHeader,
-    TablePagination,
+    TablePagination
   },
   setup() {
     let {
@@ -85,17 +92,17 @@ export default {
       sortBy,
       isSortDirDesc,
       deleteResource,
-      refetchData,
+      refetchData
     } = useList()
 
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
       const { data } = await TypesResource.getUnitTypes({
-        q: searchQuery.value,
+        scope: `search:${searchQuery.value}`,
         limit: perPage.value,
         page: currentPage.value,
-        [sortOption]: sortBy.value,
+        [sortOption]: sortBy.value
       })
 
       totalRows.value = data.total_data
@@ -105,7 +112,7 @@ export default {
     const tableColumns = [
       { key: 'actions', label: 'Acciones', thStyle: { width: '100px' } },
       { key: 'id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
-      { key: 'name', label: 'Tipo Consultorio', sortable: true },
+      { key: 'name', label: 'Tipo Consultorio', sortable: true }
     ]
 
     return {
@@ -121,6 +128,7 @@ export default {
       fetchItems,
       deleteResource,
       refetchData,
+      PERMISSION_UNIT_TYPES
     }
   },
   methods: {
@@ -129,7 +137,7 @@ export default {
       if (isDeleted) {
         this.refetchData()
       }
-    },
-  },
+    }
+  }
 }
 </script>

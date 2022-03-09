@@ -2,7 +2,7 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <b-button variant="primary" :to="{ name: 'medical-unit-create' }">
+        <b-button v-if="$can('create', PERMISSION_MEDICAL_UNIT)" variant="primary" :to="{ name: 'medical-unit-create' }">
           Crear Consultorio
         </b-button>
       </template>
@@ -24,6 +24,7 @@
       <template #cell(actions)="data">
         <div class="text-nowrap">
           <router-link
+            v-if="$can('update', PERMISSION_MEDICAL_UNIT)"
             :to="{
               name: 'medical-unit-edit',
               params: { id: data.item.id },
@@ -38,6 +39,7 @@
             </b-button>
           </router-link>
           <b-button
+            v-if="$can('delete', PERMISSION_MEDICAL_UNIT)"
             v-b-tooltip.hover.top="'Eliminar Consultorio'"
             variant="flat-danger"
             class="btn-icon rounded-circle"
@@ -46,6 +48,7 @@
             <feather-icon icon="TrashIcon" />
           </b-button>
           <router-link
+            v-if="$can('read', PERMISSION_MEDICAL_UNIT_CALENDAR)"
             :to="{
               name: 'medical-unit-calendar',
               params: { id: data.item.id },
@@ -64,11 +67,15 @@
 
       <template #cell(name)="data">
         <b-link
+          v-if="$can('update', PERMISSION_MEDICAL_UNIT)"
           :to="{ name: 'medical-unit-edit', params: { id: data.item.id } }"
           class="font-weight-bold"
         >
           {{ data.value }}
         </b-link>
+        <template v-else>
+          {{ data.value }}
+        </template>
       </template>
       <template #cell(is_enabled)="data">
         <b-avatar v-if="data.value" size="32" variant="light-success">
@@ -96,6 +103,7 @@ import useList from '@/custom/libs/useList'
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
 import { MedicalUnitResource } from '@/network/lib/medicalUnit'
+import { PERMISSION_MEDICAL_UNIT, PERMISSION_MEDICAL_UNIT_CALENDAR } from '@/permissions'
 
 export default {
   components: {
@@ -124,7 +132,7 @@ export default {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
       const { data } = await MedicalUnitResource.getAll({
-        q: searchQuery.value,
+        scope: `search:${searchQuery.value}`,
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
@@ -160,7 +168,9 @@ export default {
       isBusy,
       fetchItems,
       deleteResource,
-      refetchData
+      refetchData,
+      PERMISSION_MEDICAL_UNIT,
+      PERMISSION_MEDICAL_UNIT_CALENDAR,
     }
   },
   methods: {

@@ -56,7 +56,7 @@ export default {
   components: {
     TableHeader,
     TablePagination,
-    ShowHistoryButton,
+    ShowHistoryButton
   },
   filters: {
     getDate,
@@ -82,7 +82,7 @@ export default {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
       const { data } = await AppointmentResource.getAll({
-        q: searchQuery.value,
+        scope: `search:${searchQuery.value}`,
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
@@ -106,7 +106,7 @@ export default {
       { key: 'treatment.patient.fullname', label: 'Asegurado', sortable: false },
       { key: 'date_reservation', label: 'Reservado', sortable: false },
       { key: 'date', label: 'Fecha Cita', sortable: false },
-      { key: 'status.name', label: 'Estado', sortable: false },
+      { key: 'status.name', label: 'Estado', sortable: false }
     ]
 
     return {
