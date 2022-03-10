@@ -11,6 +11,7 @@ import user from './modules/users/user'
 import role from './modules/users/role'
 import service_hours from './modules/administration/service_hours'
 import relationship from './modules/administration/relationship'
+import registration from './modules/administration/registration'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,7 @@ const router = new VueRouter({
     // Users
     ...user,
     ...role,
+    ...registration,
   ],
 })
 

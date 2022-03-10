@@ -3,7 +3,7 @@ const path = require('path')
 module.exports = {
   publicPath: '/',
   devServer: {
-    port: 8095,
+    port: 80,
   },
   lintOnSave: false,
   css: {

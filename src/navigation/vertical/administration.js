@@ -44,4 +44,11 @@ export default [
     action: 'read',
     resource: 'Horarios',
   },
+  {
+    title: 'Registro',
+    route: 'registration-list',
+    icon: 'UserIcon',
+    action: 'read',
+    resource: 'registration',
+  },
 ]
