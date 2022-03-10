@@ -2,7 +2,9 @@ import { PERMISSION_DEPENDENT_USERS } from '@/permissions'
 
 export default [
   {
-    header: 'Beneficiarios'
+    header: 'Beneficiarios',
+    action: 'read',
+    resource: [PERMISSION_DEPENDENT_USERS]
   },
   {
     title: 'Asegurado',

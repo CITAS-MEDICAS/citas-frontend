@@ -10,12 +10,12 @@ export default [
       breadcrumb: [
         {
           text: 'Personal',
-          active: true,
-        },
+          active: true
+        }
       ],
       resource: PERMISSION_STAFF_USERS,
-      action: 'read',
-    },
+      action: 'read'
+    }
   },
   {
     path: '/personal/crear',
@@ -26,16 +26,16 @@ export default [
       breadcrumb: [
         {
           text: 'Personal',
-          to: { name: 'user-list' },
+          to: { name: 'user-list' }
         },
         {
           text: 'Crear',
-          active: true,
-        },
+          active: true
+        }
       ],
       resource: PERMISSION_STAFF_USERS,
-      action: 'create',
-    },
+      action: 'create'
+    }
   },
   {
     path: '/personal/editar/:id',
@@ -46,15 +46,30 @@ export default [
       breadcrumb: [
         {
           text: 'Personal',
-          to: { name: 'user-list' },
+          to: { name: 'user-list' }
         },
         {
           text: 'Editar',
-          active: true,
-        },
+          active: true
+        }
       ],
       resource: PERMISSION_STAFF_USERS,
-      action: 'update',
-    },
+      action: 'update'
+    }
   },
+  {
+    path: '/perfil/:id',
+    name: 'user-profile',
+    component: () => import('@/views/user/UserProfile.vue'),
+    meta: {
+      pageTitle: 'Perfil de Usuario',
+      breadcrumb: [
+        {
+          text: 'Perfil',
+          active: true
+        }
+      ]
+    }
+  }
+
 ]

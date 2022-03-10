@@ -1,5 +1,9 @@
 import jwtDefaultConfig from './jwtDefaultConfig'
 
+import { app } from '@/main'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+
+
 export default class JwtService {
   // Will be used by this service for making API calls
   axiosIns = null
@@ -47,8 +51,29 @@ export default class JwtService {
         const { config, response } = error
         const originalRequest = config
 
+        // console.log('-> response', response)
+
         if (originalRequest.url.includes('api/auth/login')) {
+          app.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Error',
+              text: 'Credenciales invalidos.',
+              icon: 'AlertCircleIcon',
+              variant: 'danger'
+            }
+          })
           return Promise.reject(error)
+        } else {
+          app.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Error',
+              text: response.data?.message || 'Ocurrio un error, contacte con el Administrador del Sistema!',
+              icon: 'AlertCircleIcon',
+              variant: 'danger'
+            }
+          })
         }
 
         if (response && response.status === 401) {
@@ -66,9 +91,11 @@ export default class JwtService {
           })
           return retryOriginalRequest
         }
+
         return Promise.reject(error)
       }
     )
+
   }
 
   fetchRefreshToken() {

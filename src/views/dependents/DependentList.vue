@@ -22,27 +22,17 @@
         <div class="text-nowrap">
           <router-link
             :to="{
-              name: 'insured-edit',
+              name: 'dependent-show',
               params: { id: data.item.id },
             }"
           >
             <b-button
-              v-b-tooltip.hover.top="'Editar Asegurado'"
               variant="flat-success"
               class="btn-icon rounded-circle"
             >
-              <feather-icon icon="EditIcon" />
+              <feather-icon icon="EyeIcon" />
             </b-button>
           </router-link>
-
-          <b-button
-            v-b-tooltip.hover.top="'Eliminar Asegurado'"
-            variant="flat-danger"
-            class="btn-icon rounded-circle"
-            @click="handleDelete(data.item.id)"
-          >
-            <feather-icon icon="TrashIcon" />
-          </b-button>
 
           <router-link :to="{
             name: 'insured-appointment-list',

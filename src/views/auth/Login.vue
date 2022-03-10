@@ -121,18 +121,18 @@ export default {
   components: {
     VuexyLogo,
     ValidationProvider,
-    ValidationObserver,
+    ValidationObserver
   },
   mixins: [togglePasswordVisibility],
   data() {
     return {
       status: '',
-      userEmail: 'administrador@app.com',
-      password: 'password',
+      userEmail: '',
+      password: '',
       sideImg: require('@/assets/images/pages/login-v2.svg'),
       // validation rulesimport store from '@/store/index'
       required,
-      email,
+      email
     }
   },
   computed: {
@@ -146,7 +146,7 @@ export default {
         return this.sideImg
       }
       return this.sideImg
-    },
+    }
   },
   methods: {
     async handleLogin() {
@@ -157,7 +157,7 @@ export default {
       this.$store
         .dispatch(AUTH_REQUEST, {
           email: this.userEmail,
-          password: this.password,
+          password: this.password
         })
         .then(user => {
           this.$ability.update([{ resource: 'dashboard', action: 'read' }])
@@ -167,24 +167,23 @@ export default {
               props: {
                 title: `Bienvenido ${user?.fullname || ''}`,
                 icon: 'UserCheckIcon',
-                variant: 'success',
-              },
+                variant: 'success'
+              }
             })
           })
         })
-        .catch(error => {
-          console.error('Message:', error.response.data.message)
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'Credenciales Invalidos',
-              icon: 'AlertCircleIcon',
-              variant: 'danger',
-            },
-          })
-        })
-    },
-  },
+        // .catch(error => {
+        //   this.$toast({
+        //     component: ToastificationContent,
+        //     props: {
+        //       title: 'Credenciales Invalidos',
+        //       icon: 'AlertCircleIcon',
+        //       variant: 'danger'
+        //     }
+        //   })
+        // })
+    }
+  }
 }
 </script>
 
