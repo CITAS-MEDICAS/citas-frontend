@@ -1,7 +1,7 @@
-FROM node:16.3.0-alpine
+FROM tangramor/nginx-php8-fpm
 RUN apt-get update && apt-get install -y curl
 RUN yarn
-RUN export NODE_OPTIONS=--openssl-legacy-provider
+# RUN export NODE_OPTIONS=--openssl-legacy-provider
 RUN yarn run build
 
 #Preferentemente isntalar node -v 16
