@@ -37,7 +37,7 @@
           />
         </template>
 
-        <b-dropdown-item link-class="d-flex align-items-center" :to="{name:'user-profile', params: { id: user.id}}" >
+        <b-dropdown-item link-class="d-flex align-items-center" :to="{name:'user-profile'}" >
           <feather-icon size="16" icon="UserIcon" class="mr-50" />
           <span>Perfil</span>
         </b-dropdown-item>

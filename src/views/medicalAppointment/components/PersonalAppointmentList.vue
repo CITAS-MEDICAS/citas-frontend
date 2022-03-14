@@ -21,7 +21,7 @@
       class="position-relative"
     >
       <template #cell(actions)="data">
-        <ShowHistoryButton :item="data.item" />
+        <ActionButtons :item="data.item" />
       </template>
       <template #cell(date_reservation)="data">
         {{ data.value | getDate }}
@@ -47,14 +47,14 @@ import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
 import { AppointmentResource } from '@/network/lib/appointment'
 import { getDate, getTime, formatDate } from '@/custom/filters'
-import ShowHistoryButton from './ShowHistoryButton'
+import ActionButtons from './ActionButtons'
 
 export default {
   name: 'PersonalAppointmentList',
   components: {
     TableHeader,
     TablePagination,
-    ShowHistoryButton
+    ActionButtons
   },
   filters: {
     getDate,
@@ -124,6 +124,7 @@ export default {
       fetchItems,
       deleteResource,
       refetchData
+
     }
   }
 }

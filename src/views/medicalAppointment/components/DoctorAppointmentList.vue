@@ -49,7 +49,7 @@ import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
 import { AppointmentResource } from '@/network/lib/appointment'
 import { getDate, getTime, formatDate } from '@/custom/filters'
-import ShowHistoryButton from './ShowHistoryButton'
+import ShowHistoryButton from './ActionButtons'
 
 export default {
   name: 'DoctorAppointmentList',

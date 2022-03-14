@@ -6,10 +6,10 @@ export default [
     name: 'home',
     component: () => import('@/views/Home.vue'),
     meta: {
-      pageTitle: 'Home',
+      pageTitle: 'Inicio',
       breadcrumb: [
         {
-          text: 'Home',
+          text: 'Página de Inicio',
           active: true
         }
       ],

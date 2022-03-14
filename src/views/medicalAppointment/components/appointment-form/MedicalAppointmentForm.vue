@@ -90,7 +90,7 @@
                     label="date"
                     placeholder="Selecciona..."
                     :clearable="true"
-                    @input="handleTimes"
+                    @input="goToDate"
                   />
                 </validation-provider>
               </b-form-group>
@@ -148,8 +148,8 @@ export default {
       handleMedicalCenter,
       handleMedicalUnit,
       handleAvailability,
-      handleTimes,
-      handleSubmit
+      handleSubmit,
+      goToDate,
     } = useMedicalAppointmentForm(emit)
 
     return {
@@ -167,8 +167,8 @@ export default {
       handleMedicalCenter,
       handleMedicalUnit,
       handleAvailability,
-      handleTimes,
-      handleSubmit
+      handleSubmit,
+      goToDate,
     }
   }
 }

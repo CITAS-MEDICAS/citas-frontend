@@ -20,20 +20,6 @@
     >
       <template #cell(actions)="data">
         <div class="text-nowrap">
-          <router-link
-            :to="{
-              name: 'dependent-show',
-              params: { id: data.item.id },
-            }"
-          >
-            <b-button
-              variant="flat-success"
-              class="btn-icon rounded-circle"
-            >
-              <feather-icon icon="EyeIcon" />
-            </b-button>
-          </router-link>
-
           <router-link :to="{
             name: 'insured-appointment-list',
             params: { userId: data.item.user_id}
@@ -108,6 +94,7 @@ export default {
       { key: 'user.paternal_surname', label: 'Paterno', sortable: false },
       { key: 'user.maternal_surname', label: 'Materno', sortable: false },
       { key: 'unit.center.name', label: 'Centro de Salud', sortable: false },
+      { key: 'unit.name', label: 'Consultorio', sortable: false },
       { key: 'user.registration_code', label: 'Numero Asegurado', sortable: false },
       { key: 'relationship.name', label: 'Parentesco', sortable: false }
     ]

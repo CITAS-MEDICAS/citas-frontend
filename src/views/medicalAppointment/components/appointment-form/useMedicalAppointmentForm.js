@@ -33,7 +33,7 @@ export const useMedicalAppointmentForm = (emit) => {
     store.dispatch('types/TREATMENT_TYPE')
     store.dispatch('types/ATTENTION_TYPE')
     store.dispatch('types/SPECIALTIES', {
-      scope: 'specialties,hasUnit'
+      scope: 'hasUnit'
     })
   })
 
@@ -117,9 +117,6 @@ export const useMedicalAppointmentForm = (emit) => {
     }
   }
 
-  const handleTimes = () => {
-  }
-
   const handleSubmit = async () => {
     const isValid = await refFormObserver.value.validate()
     if (!isValid) {
@@ -130,6 +127,10 @@ export const useMedicalAppointmentForm = (emit) => {
     if (data.appointment) {
       router.push({ name: 'insured-treatment-history', params: { id: route.value.params.treatmentId } })
     }
+  }
+
+  const goToDate = () => {
+    emit('go-to-date', formData.value.calendar.date)
   }
 
   return {
@@ -146,7 +147,7 @@ export const useMedicalAppointmentForm = (emit) => {
     handleMedicalCenter,
     handleMedicalUnit,
     handleAvailability,
-    handleTimes,
-    handleSubmit
+    handleSubmit,
+    goToDate
   }
 }

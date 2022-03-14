@@ -1,4 +1,4 @@
-import { PERMISSION_STAFF_USERS } from '@/permissions'
+import { PERMISSION_DASHBOARD, PERMISSION_STAFF_USERS } from '@/permissions'
 
 export default [
   {
@@ -58,7 +58,7 @@ export default [
     }
   },
   {
-    path: '/perfil/:id',
+    path: '/perfil/',
     name: 'user-profile',
     component: () => import('@/views/user/UserProfile.vue'),
     meta: {
@@ -68,7 +68,9 @@ export default [
           text: 'Perfil',
           active: true
         }
-      ]
+      ],
+      resource: PERMISSION_DASHBOARD,
+      action: 'read'
     }
   }
 
