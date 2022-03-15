@@ -65,7 +65,14 @@
                     placeholder="Selecciona..."
                     :clearable="true"
                     @input="goToDate"
-                  />
+                  >
+                    <template #option="option">
+                      {{ option.date | getDate }}
+                    </template>
+                    <template #selected-option="option">
+                      {{ option.date | getDate }}
+                    </template>
+                  </v-select>
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
@@ -93,6 +100,7 @@
 
           <b-button variant="primary" block class="mt-2" @click="handleSubmit">Guardar</b-button>
         </validation-observer>
+        <pre>{{ formData }}</pre>
       </div>
     </div>
   </div>
@@ -102,12 +110,16 @@
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { useEditAppointmentForm } from './useEditAppointmentForm'
 import { required } from '@validations'
+import { getDate } from '@/custom/filters'
 
 export default {
   name: 'CalendarSidebar',
   components: {
     ValidationObserver,
     ValidationProvider
+  },
+  filters: {
+    getDate
   },
   setup(props, { emit }) {
     const {

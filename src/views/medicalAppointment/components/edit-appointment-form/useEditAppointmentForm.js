@@ -119,7 +119,7 @@ export const useEditAppointmentForm = (emit) => {
     const { data } = await AppointmentResource.update(appointmentId, formData.value)
 
     if (data.appointment) {
-      router.push({ name: 'insured-treatment-history', params: { id: data.appointment.treatment_id } })
+      router.push({ name: 'insured-treatment-history', params: { treatmentId: data.appointment.treatment_id } })
     }
   }
 
@@ -131,17 +131,20 @@ export const useEditAppointmentForm = (emit) => {
     const { data: { appointment } } = await AppointmentResource.getById(appointmentId, {
       include: 'treatment.patient;calendar'
     })
+
     patientName.value = appointment.treatment.patient.fullname
-    attentionId.value = appointment.calendar.attention_type_id
+    attentionId.value = appointment?.calendar?.attention_type_id || appointment.attention_type_id
     formData.value.specialty = specialties.value.find(item => item.id === appointment.specialty_id)
-    formData.value.medical_center_id = appointment.medical_center_id
-    formData.value.medical_unit_id = appointment.medical_unit_id
     await handleMedicalCenter()
+    formData.value.medical_center_id = appointment.medical_center_id
+
+    if(!appointment.medical_unit_id) return
+
     await handleMedicalUnit(appointment.medical_unit_id)
+    formData.value.medical_unit_id = appointment.medical_unit_id
     await handleAvailability()
     formData.value.calendar = availableDatesMap.value.find(item => item.calendar_id === appointment.calendar_id)
     formData.value.reason = appointment.reason
-
     goToDate()
   }
 
