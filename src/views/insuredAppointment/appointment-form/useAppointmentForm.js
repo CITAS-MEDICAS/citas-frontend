@@ -23,7 +23,7 @@ export const useAppointmentForm = (emit) => {
     medical_unit_id: null,
     calendar: null,
     time: null,
-    comment: ''
+    reason: ''
   })
 
   const refFormObserver = ref(null)
@@ -90,7 +90,7 @@ export const useAppointmentForm = (emit) => {
 
   const fetchMedicalUnit = async () => {
     formData.value.medical_unit_id = null
-    if(!formData.value.medical_center_id || !formData.value.specialty.id) {
+    if (!formData.value.medical_center_id || !formData.value.specialty.id) {
       return []
     }
 

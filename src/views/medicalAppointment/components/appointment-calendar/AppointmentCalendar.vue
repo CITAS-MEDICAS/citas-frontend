@@ -7,7 +7,7 @@
         class="col app-calendar-sidebar flex-grow-0 overflow-hidden d-flex flex-column"
         :class="{ show: isCalendarSidebarActive }"
       >
-        <medical-appointment-form @update-calendar="updateCalendar" />
+        <medical-appointment-form @update-calendar="updateCalendar" @go-to-date="goToDate" />
       </div>
 
       <!-- Calendar-->
@@ -49,6 +49,7 @@ export default {
       isCalendarSidebarActive,
       refetchEvents,
       updateCalendar,
+      goToDate
     } = useAppointmentCalendar()
 
     return {
@@ -56,7 +57,8 @@ export default {
       calendarOptions,
       isCalendarSidebarActive,
       refetchEvents,
-      updateCalendar
+      updateCalendar,
+      goToDate
     }
   },
 }

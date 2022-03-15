@@ -9,23 +9,8 @@
         <validation-observer ref="refFormObserver">
           <fieldset class="form-group">
             <legend class="col-form-label">Asegurado</legend>
-            <input class="form-control" readonly />
+            <input class="form-control" :value="insuredName" readonly />
           </fieldset>
-
-          <b-form-group v-show="false" label="Atención">
-            <validation-provider v-slot="{ errors }" name="Atención">
-              <v-select
-                v-model="formData.attention_type_id"
-                :options="attentionTypes"
-                label="name"
-                :reduce="item => item.id"
-                placeholder="Selecciona..."
-                :clearable="false"
-                :disabled="true"
-                @input="handleAvailability"
-              />
-            </validation-provider>
-          </b-form-group>
 
           <b-form-group label="Tipo de Consulta">
             <validation-provider v-slot="{ errors }" name="Tipo de Consulta">
@@ -35,11 +20,12 @@
                 label="name"
                 :reduce="item => item.id"
                 :clearable="false"
+                :disabled="true"
               />
             </validation-provider>
           </b-form-group>
 
-          <b-form-group label="Especialidad">
+          <b-form-group label="Especialidad *">
             <validation-provider v-slot="{ errors }" name="Especialidad" rules="required">
               <v-select
                 v-model="formData.specialty"
@@ -48,12 +34,13 @@
                 :clearable="false"
                 @input="handleMedicalCenter"
                 placeholder="Selecciona..."
+                :disabled="isReconsult"
               />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
 
-          <b-form-group label="Centro de Salud">
+          <b-form-group label="Centro de Salud *">
             <validation-provider v-slot="{ errors }" name="Centro de Salud" rules="required">
               <v-select
                 v-model="formData.medical_center_id"
@@ -62,13 +49,14 @@
                 :reduce="item => item.id"
                 @input="handleMedicalUnit"
                 placeholder="Selecciona..."
+                :disabled="isReconsult"
               />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
 
-          <b-form-group label="Consultorio">
-            <validation-provider v-slot="{ errors }" name="Consultorio">
+          <b-form-group v-if="isReconsult"  label="Consultorio *">
+            <validation-provider v-slot="{ errors }" name="Consultorio" rules="required">
               <v-select
                 v-model="formData.medical_unit_id"
                 :options="medicalUnits"
@@ -76,41 +64,53 @@
                 :reduce="item => item.id"
                 placeholder="Selecciona..."
                 @input="handleAvailability"
+                :disabled="isReconsult"
               />
+              <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
 
-          <b-row>
+          <b-row v-if="isReconsult">
             <b-col>
-              <b-form-group label="Fecha">
-                <validation-provider v-slot="{ errors }" name="Fecha">
+              <b-form-group label="Fecha *">
+                <validation-provider v-slot="{ errors }" name="Fecha" rules="required">
                   <v-select
                     v-model="formData.calendar"
                     :options="availableDatesMap"
                     label="date"
                     placeholder="Selecciona..."
-                    :clearable="true"
+                    :clearable="false"
                     @input="goToDate"
-                  />
+                  >
+                    <template #option="option">
+                      {{ option.date | getDate }}
+                    </template>
+                    <template #selected-option="option">
+                      {{ option.date | getDate }}
+                    </template>
+                  </v-select>
+                  <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
             </b-col>
             <b-col>
-              <b-form-group label="Hora">
-                <validation-provider v-slot="{ errors }" name="Hora">
+              <b-form-group label="Hora *">
+                <validation-provider v-slot="{ errors }" name="Hora" rules="required">
                   <v-select
                     v-model="formData.time"
                     :options="availableTimes"
                     label="time"
+                    :clearable="false"
                   />
+                  <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
             </b-col>
           </b-row>
 
-          <b-form-group label="Motivo de la Consulta">
+          <b-form-group label="Motivo de la Consulta *">
             <validation-provider v-slot="{ errors }" name="Motivo de la Consulta" rules="required">
-              <b-form-textarea v-model="formData.comment" />
+              <b-form-textarea v-model="formData.reason" />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
@@ -126,12 +126,16 @@
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { useMedicalAppointmentForm } from './useMedicalAppointmentForm'
 import { required } from '@validations'
+import { getDate } from '@/custom/filters'
 
 export default {
   name: 'CalendarSidebar',
   components: {
     ValidationObserver,
     ValidationProvider
+  },
+  filters: {
+    getDate
   },
   setup(props, { emit }) {
     const {
@@ -141,7 +145,6 @@ export default {
       specialties,
       medicalCenters,
       medicalUnits,
-      attentionTypes,
       availableDates,
       availableDatesMap,
       availableTimes,
@@ -150,6 +153,8 @@ export default {
       handleAvailability,
       handleSubmit,
       goToDate,
+      isReconsult,
+      insuredName
     } = useMedicalAppointmentForm(emit)
 
     return {
@@ -160,7 +165,6 @@ export default {
       specialties,
       medicalCenters,
       medicalUnits,
-      attentionTypes,
       availableDates,
       availableDatesMap,
       availableTimes,
@@ -169,6 +173,8 @@ export default {
       handleAvailability,
       handleSubmit,
       goToDate,
+      isReconsult,
+      insuredName
     }
   }
 }

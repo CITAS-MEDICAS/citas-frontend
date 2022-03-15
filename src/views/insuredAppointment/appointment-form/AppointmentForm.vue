@@ -105,7 +105,7 @@
 
           <b-form-group label="Motivo de la Consulta *">
             <validation-provider v-slot="{ errors }" name="Motivo de la Consulta" rules="required">
-              <b-form-textarea v-model="formData.comment" />
+              <b-form-textarea v-model="formData.reason" />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>

@@ -2,18 +2,25 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <v-select style="width: 150px"
-                  :clearable="false"
-                  :options="['Atendidos', 'Reservados']" placeholder="Mostrar" />
+        <v-select
+          style="width: 150px"
+          :clearable="false"
+          :options="['Atendidos', 'Reservados']" placeholder="Mostrar"
+        />
 
-        <router-link :to="{
-            name: 'appointment-reconsult-form',
-            params: {treatmentId: $route.params.treatmentId}
+        <router-link v-if="$can('create', PERMISSION_RECONSULT_APPOINTMENTS)  && $route.query.cita" :to="{
+          name: 'appointment-reconsult-form',
+          params: {treatmentId: $route.params.treatmentId},
+          query: { cita: $route.query.cita }
         }">
           <b-button class="ml-1" variant="outline-success">Reconsulta</b-button>
         </router-link>
 
-        <router-link :to="{ name: 'appointment-transfer-form', params: {treatmentId: $route.params.treatmentId }}">
+        <router-link v-if="$can('create', PERMISSION_TRANSFER_APPOINTMENTS)  && $route.query.cita" :to="{
+          name: 'appointment-transfer-form',
+          params: {treatmentId: $route.params.treatmentId },
+          query: { cita: $route.query.cita }
+        }">
           <b-button class="ml-1" variant="outline-warning">Transferencia</b-button>
         </router-link>
       </template>
@@ -33,7 +40,7 @@
     >
       <template #cell(actions)="data">
         <b-button
-          v-if="data.item.id == $route.query.cita && data.item.status.name != 'CANCELADO'"
+          v-if="$can('create', PERMISSION_ATTEND_APPOINTMENTS) && resolveShowAttendButton(data.item)"
           class="ml-1" variant="outline-info" size="sm"
           @click="showForm(data.item.id)"
         >
@@ -60,6 +67,12 @@
 </template>
 
 <script>
+import {
+  PERMISSION_ATTEND_APPOINTMENTS,
+  PERMISSION_RECONSULT_APPOINTMENTS,
+  PERMISSION_TRANSFER_APPOINTMENTS
+} from '@/permissions'
+
 import useList from '@/custom/libs/useList'
 
 import TableHeader from '@/custom/components/Tables/TableHeader'
@@ -142,13 +155,19 @@ export default {
       statusVariant,
       fetchItems,
       deleteResource,
-      refetchData
+      refetchData,
+      PERMISSION_ATTEND_APPOINTMENTS,
+      PERMISSION_RECONSULT_APPOINTMENTS,
+      PERMISSION_TRANSFER_APPOINTMENTS
     }
   },
   methods: {
     showForm(appointmentId) {
       this.$refs.appointmentForm.setAppointment(appointmentId)
       this.$bvModal.show('attend-appointment-form')
+    },
+    resolveShowAttendButton(item) {
+      return item.id == this.$route.query.cita && item.status.name != 'CANCELADO'
     }
   }
 }
