@@ -100,7 +100,6 @@
 
           <b-button variant="primary" block class="mt-2" @click="handleSubmit">Guardar</b-button>
         </validation-observer>
-        <pre>{{ formData }}</pre>
       </div>
     </div>
   </div>

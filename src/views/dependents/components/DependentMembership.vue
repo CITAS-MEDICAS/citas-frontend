@@ -6,53 +6,6 @@
       </b-col>
       <b-col lg="7">
         <b-row>
-          <b-col :sm="6">
-            <b-form-group label="Titularidad *">
-              <validation-provider v-slot="{ errors }" name="Titularidad" rules="required">
-                <b-form-radio-group
-                  v-model="formData.insuredIsTitular"
-                  :options="[
-                    { text: 'Titular', value: true },
-                    { text: 'Dependiente', value: false },
-                  ]"
-                  name="insuredType"
-                  class="mt-1"
-                  @change="handleInsuredType"
-                />
-                <small class="text-danger">{{ errors[0] }}</small>
-              </validation-provider>
-            </b-form-group>
-          </b-col>
-        </b-row>
-
-        <b-row v-if="!formData.insuredIsTitular">
-          <b-col sm="12">
-            <b-form-group label="Titular *">
-              <validation-provider v-slot="{ errors }" name="Titular" rules="required">
-                <v-select
-                  v-model="formData.user_titular_id"
-                  label="fullname"
-                  :filterable="false"
-                  :options="titularOptions"
-                  :reduce="item => item.id"
-                  placeholder="Escribe el CI del Titular ej. 1234567-1K"
-                  @search="onSearchTitular"
-                >
-                  <template slot="no-options"> Escribe el CI del Titular ej. 1234567-1K..</template>
-                  <template slot="option" slot-scope="option">
-                    {{ option.fullname }}
-                  </template>
-                  <template slot="selected-option" slot-scope="option">
-                    {{ option.fullname }}
-                    <code class="ml-1">
-                      <small>CI: {{ option.ci }}</small>
-                    </code>
-                  </template>
-                </v-select>
-                <small class="text-danger">{{ errors[0] }}</small>
-              </validation-provider>
-            </b-form-group>
-          </b-col>
           <b-col sm="12">
             <b-form-group label="Parentesco *">
               <validation-provider v-slot="{ errors }" name="Codigo Beneficiario" rules="required">
@@ -77,35 +30,6 @@
             </b-form-group>
           </b-col>
         </b-row>
-
-        <b-row v-if="formData.insuredIsTitular">
-          <b-col :sm="6">
-            <b-form-group label="Número de Asegurado *">
-              <validation-provider v-slot="{ errors }" name="Número de Asegurado" rules="required">
-                <b-form-input
-                  v-model="formData.registration_code"
-                  :state="errors.length ? false : null"
-                  placeholder="123456ABC"
-                  v-uppercase
-                />
-                <small class="text-danger">{{ errors[0] }}</small>
-              </validation-provider>
-            </b-form-group>
-          </b-col>
-          <b-col :sm="6">
-            <b-form-group label="Fecha de Afiliación *">
-              <validation-provider v-slot="{ errors }" name="Fecha de Afiliación" rules="required">
-                <b-form-input
-                  v-model="formData.affiliation_date"
-                  :state="errors.length ? false : null"
-                  placeholder="123456ABC"
-                  type="date"
-                />
-                <small class="text-danger">{{ errors[0] }}</small>
-              </validation-provider>
-            </b-form-group>
-          </b-col>
-        </b-row>
       </b-col>
     </b-row>
   </validation-observer>
@@ -122,8 +46,9 @@ import { debounce } from '@/libs/utils'
 
 const titularID = 'ID'
 
+// TODO: Error in v-on handler: "TypeError: Cannot read properties of undefined (reading 'id')"
 export default {
-  name: 'Membership',
+  name: 'DependentMembership',
   components: {
     ValidationObserver,
     ValidationProvider
@@ -187,7 +112,7 @@ export default {
       this.formData.employer_name = null
       this.formData.employer_date = null
       this.formData.salary = null
-      this.formData.email = null,
+      this.formData.email = null
       this.formData.password = null
       this.formData.password_confirmation = null
       this.formData.isNewAccount = true

@@ -137,6 +137,7 @@ export const useEditAppointmentForm = (emit) => {
     formData.value.specialty = specialties.value.find(item => item.id === appointment.specialty_id)
     await handleMedicalCenter()
     formData.value.medical_center_id = appointment.medical_center_id
+    formData.value.reason = appointment.reason
 
     if(!appointment.medical_unit_id) return
 
@@ -144,7 +145,6 @@ export const useEditAppointmentForm = (emit) => {
     formData.value.medical_unit_id = appointment.medical_unit_id
     await handleAvailability()
     formData.value.calendar = availableDatesMap.value.find(item => item.calendar_id === appointment.calendar_id)
-    formData.value.reason = appointment.reason
     goToDate()
   }
 
