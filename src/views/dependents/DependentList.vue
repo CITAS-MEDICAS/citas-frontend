@@ -2,7 +2,7 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <b-button variant="primary" :to="{ name: 'dependent-create' }">Crear Dependiente</b-button>
+        <b-button v-if="$can('create', PERMISSION_DEPENDENT_USERS)" variant="primary" :to="{ name: 'dependent-create' }">Crear Dependiente</b-button>
       </template>
     </table-header>
 
@@ -47,10 +47,10 @@
 
 <script>
 import useList from '@/custom/libs/useList'
-
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
 import { InsuredResource } from '@/network/lib/insured'
+import { PERMISSION_DEPENDENT_USERS } from '@/permissions'
 
 export default {
   name: 'DependentList',
@@ -111,7 +111,8 @@ export default {
       isSortDirDesc,
       fetchItems,
       deleteResource,
-      refetchData
+      refetchData,
+      PERMISSION_DEPENDENT_USERS
     }
   },
 

@@ -24,6 +24,7 @@ import { provide, ref } from '@vue/composition-api'
 import ToastificationContent from '@core/components/toastification/ToastificationContent'
 import DependentForm from './components/DependentForm'
 import { InsuredResource } from '@/network/lib/insured'
+import store from '@/store'
 
 export default {
   name: 'DependentCreate',
@@ -39,7 +40,7 @@ export default {
       medical_center_id: null,
       medical_unit_id: null,
       beneficiary_code: '',
-      user_titular_id: null,
+      user_titular_id: store.state.user.userData.id,
 
       employer_code: '',
       employer_name: '',
@@ -86,20 +87,20 @@ export default {
       const { data } = await InsuredResource.store(this.formData)
 
       if (data.insured) {
-        this.$router.push({ name: 'insured-list' }).then(() => {
+        this.$router.push({ name: 'dependent-list' }).then(() => {
           this.$toast({
             component: ToastificationContent,
             props: {
               title: `Creado Exitosamente!`,
               icon: 'CheckIcon',
-              variant: 'success',
-            },
+              variant: 'success'
+            }
           })
         })
       }
     },
     handleCancel() {
-      this.$router.push({ name: 'insured-list' })
+      this.$router.push({ name: 'dependent-list' })
     }
   }
 }
