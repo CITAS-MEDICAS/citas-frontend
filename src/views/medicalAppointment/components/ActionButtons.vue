@@ -1,5 +1,6 @@
 <template>
   <div class="text-nowrap">
+    <slot name="control" />
     <router-link
       v-if="$can('update', PERMISSION_MEDICAL_APPOINTMENTS) && resolveEditButton(item.status.name)"
       :to="{ name: 'medical-appointments-edit', params: { appointmentId: item.id }
