@@ -5,6 +5,15 @@
         <v-select style="width: 150px"
                   :clearable="false"
                   :options="['Atendidos', 'Reservados']" placeholder="Mostrar" />
+
+        <b-button
+          v-if="selectedAppointments.length"
+          variant="outline-info"
+          class="ml-1"
+          v-b-modal.transfer-appointment-form
+        >
+          Transferir Citas
+        </b-button>
       </template>
     </table-header>
 
@@ -20,8 +29,25 @@
       primary-key="id"
       class="position-relative"
     >
+      <template #head(actions)="data">
+        <b-form-checkbox
+          v-model="selectAll"
+          style="display: inline-block"
+          class="mr-1"
+        />
+        ACCIONES
+      </template>
       <template #cell(actions)="data">
-        <ShowHistoryButton :item="data.item" />
+        <ActionButtons :item="data.item">
+          <template #control>
+            <b-form-checkbox
+              v-model="selectedAppointments"
+              :value="data.item"
+              style="display: inline-block"
+              class="mr-1"
+            />
+          </template>
+        </ActionButtons>
       </template>
       <template #cell(date_reservation)="data">
         {{ data.value | getDate }}
@@ -37,24 +63,29 @@
     </b-table>
 
     <table-pagination :total-rows="totalRows" :per-page="perPage" />
+
+    <TransferAppointmentForm />
   </b-card>
 </template>
 
 <script>
+import { ref, computed, provide } from '@vue/composition-api'
 import useList from '@/custom/libs/useList'
+import { AppointmentResource } from '@/network/lib/appointment'
+import { getDate, getTime, formatDate } from '@/custom/filters'
 
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
-import { AppointmentResource } from '@/network/lib/appointment'
-import { getDate, getTime, formatDate } from '@/custom/filters'
-import ShowHistoryButton from './ShowHistoryButton'
+import ActionButtons from './ActionButtons'
+import TransferAppointmentForm from './transfer-appointment-form/TransferAppointmentForm'
 
 export default {
   name: 'PersonalAppointmentList',
   components: {
     TableHeader,
     TablePagination,
-    ShowHistoryButton
+    ActionButtons,
+    TransferAppointmentForm
   },
   filters: {
     getDate,
@@ -75,6 +106,10 @@ export default {
       deleteResource,
       refetchData
     } = useList()
+
+    const selectedAppointments = ref([])
+
+    provide('selectedAppointments', selectedAppointments)
 
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
@@ -110,6 +145,17 @@ export default {
       { key: 'status.name', label: 'Estado', sortable: false }
     ]
 
+    const selectAll = computed({
+      get: () => selectedAppointments.value.length === refTable.value?.localItems.length,
+      set: val => {
+        if (val) {
+          selectedAppointments.value = refTable.value.localItems
+        } else if (selectedAppointments.value.length === refTable.value.localItems.length) {
+          selectedAppointments.value = []
+        }
+      }
+    })
+
     return {
       refTable,
       perPage,
@@ -121,11 +167,15 @@ export default {
       sortBy,
       isSortDirDesc,
       statusVariant,
+      selectedAppointments,
+      selectAll,
       fetchItems,
       deleteResource,
       refetchData
     }
-  }
+  },
+
+  methods: {}
 }
 </script>
 

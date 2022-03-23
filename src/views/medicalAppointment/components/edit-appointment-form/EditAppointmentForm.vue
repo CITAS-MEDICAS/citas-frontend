@@ -3,27 +3,14 @@
     <div class="p-2">
       <div>
         <h5 class="app-label section-label mb-1">
-          CREAR CITA MÉDICA
+          EDITAR CITA MÉDICA
         </h5>
 
         <validation-observer ref="refFormObserver">
           <fieldset class="form-group">
             <legend class="col-form-label">Asegurado</legend>
-            <input class="form-control" :value="insuredName" readonly />
+            <input class="form-control" :value="patientName" readonly />
           </fieldset>
-
-          <b-form-group label="Tipo de Consulta">
-            <validation-provider v-slot="{ errors }" name="Tipo de Consulta">
-              <v-select
-                v-model="formData.treatment_type_id"
-                :options="treatmentTypes"
-                label="name"
-                :reduce="item => item.id"
-                :clearable="false"
-                :disabled="true"
-              />
-            </validation-provider>
-          </b-form-group>
 
           <b-form-group label="Especialidad *">
             <validation-provider v-slot="{ errors }" name="Especialidad" rules="required">
@@ -34,7 +21,6 @@
                 :clearable="false"
                 @input="handleMedicalCenter"
                 placeholder="Selecciona..."
-                :disabled="isReconsult"
               />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
@@ -49,14 +35,13 @@
                 :reduce="item => item.id"
                 @input="handleMedicalUnit"
                 placeholder="Selecciona..."
-                :disabled="isReconsult"
               />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
 
-          <b-form-group v-if="isReconsult"  label="Consultorio *">
-            <validation-provider v-slot="{ errors }" name="Consultorio" rules="required">
+          <b-form-group label="Consultorio *">
+            <validation-provider v-slot="{ errors }" name="Consultorio"  rules="required">
               <v-select
                 v-model="formData.medical_unit_id"
                 :options="medicalUnits"
@@ -64,13 +49,12 @@
                 :reduce="item => item.id"
                 placeholder="Selecciona..."
                 @input="handleAvailability"
-                :disabled="isReconsult"
               />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
 
-          <b-row v-if="isReconsult">
+          <b-row>
             <b-col>
               <b-form-group label="Fecha *">
                 <validation-provider v-slot="{ errors }" name="Fecha" rules="required">
@@ -79,7 +63,7 @@
                     :options="availableDatesMap"
                     label="date"
                     placeholder="Selecciona..."
-                    :clearable="false"
+                    :clearable="true"
                     @input="goToDate"
                   >
                     <template #option="option">
@@ -100,7 +84,6 @@
                     v-model="formData.time"
                     :options="availableTimes"
                     label="time"
-                    :clearable="false"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
@@ -124,7 +107,7 @@
 
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { useMedicalAppointmentForm } from './useMedicalAppointmentForm'
+import { useEditAppointmentForm } from './useEditAppointmentForm'
 import { required } from '@validations'
 import { getDate } from '@/custom/filters'
 
@@ -139,7 +122,7 @@ export default {
   },
   setup(props, { emit }) {
     const {
-      treatmentTypes,
+      patientName,
       formData,
       refFormObserver,
       specialties,
@@ -152,16 +135,14 @@ export default {
       handleMedicalUnit,
       handleAvailability,
       handleSubmit,
-      goToDate,
-      isReconsult,
-      insuredName
-    } = useMedicalAppointmentForm(emit)
+      goToDate
+    } = useEditAppointmentForm(emit)
 
     return {
+      patientName,
       formData,
       refFormObserver,
       required,
-      treatmentTypes,
       specialties,
       medicalCenters,
       medicalUnits,
@@ -172,9 +153,7 @@ export default {
       handleMedicalUnit,
       handleAvailability,
       handleSubmit,
-      goToDate,
-      isReconsult,
-      insuredName
+      goToDate
     }
   }
 }

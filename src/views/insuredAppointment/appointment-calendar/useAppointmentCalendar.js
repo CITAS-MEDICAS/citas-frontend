@@ -1,8 +1,7 @@
-import { ref, onMounted, computed, watch } from '@vue/composition-api'
+import { ref, onMounted } from '@vue/composition-api'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
-import interactionPlugin from '@fullcalendar/interaction'
 import esLocale from '@fullcalendar/core/locales/es'
 import { useRouter } from '@core/utils/utils'
 
@@ -10,6 +9,12 @@ export const useAppointmentCalendar = () => {
   const { route } = useRouter()
 
   const refCalendar = ref(null)
+
+  let calendarApi = null
+
+  onMounted(() => {
+    calendarApi = refCalendar.value.getApi()
+  })
 
   const calendarEvents = ref([])
 
@@ -34,6 +39,7 @@ export const useAppointmentCalendar = () => {
         }
       }
     },
+    allDaySlot: false,
     events: calendarEvents,
     dayMaxEvents: 3,
     eventClassNames({ event: calendarEvent }) {
@@ -76,12 +82,17 @@ export const useAppointmentCalendar = () => {
     calendarEvents.value = result.flat()
   }
 
+  const goToDate = (dateStr) => {
+    calendarApi.gotoDate(new Date(dateStr))
+  }
+
   return {
     refCalendar,
     calendarOptions,
     isCalendarSidebarActive,
     isCalendarFormActive,
     // calendarsColor: attentionTypeColor,
-    updateCalendar
+    updateCalendar,
+    goToDate
   }
 }

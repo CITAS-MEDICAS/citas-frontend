@@ -22,6 +22,28 @@ export default [
     }
   },
   {
+    path: '/citas-medicas/:appointmentId/editar',
+    name: 'medical-appointments-edit',
+    component: () => import('@/views/medicalAppointment/MedicalAppointmentEdit'),
+    meta: {
+      pageTitle: 'Citas Medicas',
+      breadcrumb: [
+        {
+          text: 'Citas Médicas',
+          to: {
+            name: 'medical-appointments-list'
+          }
+        },
+        {
+          text: 'Editar',
+          active: true
+        }
+      ],
+      resource: PERMISSION_MEDICAL_APPOINTMENTS,
+      action: 'read'
+    }
+  },
+  {
     path: '/citas-medicas/:treatmentId/historial',
     name: 'insured-treatment-history',
     component: () => import('@/views/medicalAppointment/TreatmentHistory'),

@@ -2,7 +2,7 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <b-button variant="primary" :to="{ name: 'dependent-create' }">Crear Dependiente</b-button>
+        <b-button v-if="$can('create', PERMISSION_DEPENDENT_USERS)" variant="primary" :to="{ name: 'dependent-create' }">Crear Dependiente</b-button>
       </template>
     </table-header>
 
@@ -20,30 +20,6 @@
     >
       <template #cell(actions)="data">
         <div class="text-nowrap">
-          <router-link
-            :to="{
-              name: 'insured-edit',
-              params: { id: data.item.id },
-            }"
-          >
-            <b-button
-              v-b-tooltip.hover.top="'Editar Asegurado'"
-              variant="flat-success"
-              class="btn-icon rounded-circle"
-            >
-              <feather-icon icon="EditIcon" />
-            </b-button>
-          </router-link>
-
-          <b-button
-            v-b-tooltip.hover.top="'Eliminar Asegurado'"
-            variant="flat-danger"
-            class="btn-icon rounded-circle"
-            @click="handleDelete(data.item.id)"
-          >
-            <feather-icon icon="TrashIcon" />
-          </b-button>
-
           <router-link :to="{
             name: 'insured-appointment-list',
             params: { userId: data.item.user_id}
@@ -71,10 +47,10 @@
 
 <script>
 import useList from '@/custom/libs/useList'
-
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
 import { InsuredResource } from '@/network/lib/insured'
+import { PERMISSION_DEPENDENT_USERS } from '@/permissions'
 
 export default {
   name: 'DependentList',
@@ -118,6 +94,7 @@ export default {
       { key: 'user.paternal_surname', label: 'Paterno', sortable: false },
       { key: 'user.maternal_surname', label: 'Materno', sortable: false },
       { key: 'unit.center.name', label: 'Centro de Salud', sortable: false },
+      { key: 'unit.name', label: 'Consultorio', sortable: false },
       { key: 'user.registration_code', label: 'Numero Asegurado', sortable: false },
       { key: 'relationship.name', label: 'Parentesco', sortable: false }
     ]
@@ -134,7 +111,8 @@ export default {
       isSortDirDesc,
       fetchItems,
       deleteResource,
-      refetchData
+      refetchData,
+      PERMISSION_DEPENDENT_USERS
     }
   },
 

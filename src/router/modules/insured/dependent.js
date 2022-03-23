@@ -33,8 +33,28 @@ export default [
           active: true,
         },
       ],
+      resource: PERMISSION_DEPENDENT_USERS,
+      action: 'create',
     },
-    resource: PERMISSION_DEPENDENT_USERS,
-    action: 'create',
   },
+  // {
+  //   path: '/asegurado/:id',
+  //   name: 'dependent-show',
+  //   component: () => import('@/views/dependents/DependentShow'),
+  //   meta: {
+  //     pageTitle: 'Asegurado',
+  //     breadcrumb: [
+  //       {
+  //         text: 'Asegurado',
+  //         to: { name: 'dependent-list' },
+  //       },
+  //       {
+  //         text: 'Perfil',
+  //         active: true,
+  //       },
+  //     ],
+  //   },
+  //   resource: PERMISSION_DEPENDENT_USERS,
+  //   action: 'create',
+  // },
 ]

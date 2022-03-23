@@ -1,7 +1,7 @@
 export const getDate = (value) => {
   if (!value) return value
 
-  const [date, time] = value.split(' ')
+  const [date, time = ''] = value.split(' ')
   return date.split('-').reverse().join('/')
 }
 

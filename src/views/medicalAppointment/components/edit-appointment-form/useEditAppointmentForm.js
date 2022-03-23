@@ -1,23 +1,20 @@
 import { computed, onMounted, ref } from '@vue/composition-api'
-
 import store from '@/store'
 import { MedicalCenterResource } from '@/network/lib/medicalCenter'
 import { MedicalUnitResource } from '@/network/lib/medicalUnit'
 import { CalendarResource } from '@/network/lib/calendar'
-import { AppointmentResource } from '@/network/lib/appointment'
-import { UserResource } from '@/network/lib/users'
-
 import { useRouter } from '@core/utils/utils'
+import { AppointmentResource } from '@/network/lib/appointment'
 
-export const useAppointmentForm = (emit) => {
+
+export const useEditAppointmentForm = (emit) => {
   const { route, router } = useRouter()
+  const appointmentId = route.value.params.appointmentId
 
-  const insuredUser = ref(null)
+  const patientName = ref(null)
+  const attentionId = ref(null)
 
   const formData = ref({
-    user_patient_id: route.value.params.userId,
-    attention_type_id: null,
-    treatment_type_id: null,
     specialty: null,
     medical_center_id: null,
     medical_unit_id: null,
@@ -38,36 +35,15 @@ export const useAppointmentForm = (emit) => {
     await store.dispatch('types/SPECIALTIES', {
       scope: 'hasUnit'
     })
-    setAttentionType()
-    await fetchInsured()
-  })
 
-  const fetchInsured = async () => {
-    const { data: { user } } = await UserResource.getById(route.value.params.userId, {
-      include: 'latestInsured.unit'
-    })
-    insuredUser.value = user
-  }
+    await fetchAppointment()
+  })
 
   const treatmentTypes = computed(() => {
     const data = store.state.types.treatmentTypes
     formData.value.treatment_type_id = data.length ? data[0].id : null
     return data
   })
-
-  const isFamiliar = computed(() => {
-    const specialty = formData.value.specialty
-    if (specialty) {
-      return specialty.filter === 'familiar'
-    }
-
-    return false
-  })
-
-  const setAttentionType = () => {
-    const attention = store.state.types.attentionTypes
-    formData.value.attention_type_id = attention.find(item => item.name === 'NUEVO').id
-  }
 
   const specialties = computed(() => {
     return store.state.types.specialties
@@ -81,20 +57,26 @@ export const useAppointmentForm = (emit) => {
   })
 
   const fetchMedicalCenter = async () => {
+    formData.value.medical_center_id = null
+    formData.value.medical_unit_id = null
+
     const { data } = await MedicalCenterResource.getAll({
       scope: `hasSpecialty:${formData.value.specialty.id}`,
-      sortByAsc: 'name'
+      sortByAsc: 'name',
+      getAll: '1'
     })
+
+    if (data.total_data) {
+      formData.value.medical_center_id = data.rows[0].id
+      await handleMedicalUnit()
+    }
     return data.rows
   }
 
-  const fetchMedicalUnit = async () => {
-    formData.value.medical_unit_id = null
-    if (!formData.value.medical_center_id || !formData.value.specialty.id) {
-      return []
-    }
-
+  const fetchMedicalUnit = async (unitId) => {
+    formData.value.medical_unit_id = unitId || null
     const { data } = await MedicalUnitResource.getAll({
+      getAll: '1',
       scope: [
         `hasCenter:${formData.value.medical_center_id}`,
         `hasSpecialty:${formData.value.specialty.id}`,
@@ -105,39 +87,16 @@ export const useAppointmentForm = (emit) => {
   }
 
   const handleMedicalCenter = async () => {
-    formData.value.medical_center_id = null
-    formData.value.medical_unit_id = null
-    formData.value.calendar = null
-    formData.value.time = null
-
-    let result = await fetchMedicalCenter()
-
-    if (isFamiliar.value) {
-      result = result.filter(
-        item => item.id === insuredUser.value.latest_insured.unit.medical_center_id
-      )
-    }
-
-    if (result.length && isFamiliar.value) {
-      formData.value.medical_center_id = result[0].id
-      await handleMedicalUnit()
-    }
-
-    medicalCenters.value = result
+    medicalCenters.value = await fetchMedicalCenter()
   }
 
-  const handleMedicalUnit = async () => {
-    formData.value.calendar = null
-    formData.value.time = null
-
-    medicalUnits.value = await fetchMedicalUnit()
+  const handleMedicalUnit = async (unitId) => {
+    medicalUnits.value = await fetchMedicalUnit(unitId)
   }
 
   const handleAvailability = async () => {
-    formData.value.calendar = null
-    formData.value.time = null
     const medicalUnitId = formData.value.medical_unit_id
-    const attentionTypeId = formData.value.attention_type_id
+    const attentionTypeId = attentionId.value
     if (medicalUnitId && attentionTypeId) {
       const { data } = await CalendarResource.availability(medicalUnitId, { attentionTypeId })
       availableDates.value = data
@@ -153,14 +112,14 @@ export const useAppointmentForm = (emit) => {
 
   const handleSubmit = async () => {
     const isValid = await refFormObserver.value.validate()
-
     if (!isValid) {
       return false
     }
 
-    const { data } = await AppointmentResource.store(formData.value)
+    const { data } = await AppointmentResource.update(appointmentId, formData.value)
+
     if (data.appointment) {
-      router.push({ name: 'insured-appointment-list', params: { id: route.value.params.id } })
+      router.push({ name: 'insured-treatment-history', params: { treatmentId: data.appointment.treatment_id } })
     }
   }
 
@@ -168,8 +127,29 @@ export const useAppointmentForm = (emit) => {
     emit('go-to-date', formData.value.calendar.date)
   }
 
+  const fetchAppointment = async () => {
+    const { data: { appointment } } = await AppointmentResource.getById(appointmentId, {
+      include: 'treatment.patient;calendar'
+    })
+
+    patientName.value = appointment.treatment.patient.fullname
+    attentionId.value = appointment?.calendar?.attention_type_id || appointment.attention_type_id
+    formData.value.specialty = specialties.value.find(item => item.id === appointment.specialty_id)
+    await handleMedicalCenter()
+    formData.value.medical_center_id = appointment.medical_center_id
+    formData.value.reason = appointment.reason
+
+    if(!appointment.medical_unit_id) return
+
+    await handleMedicalUnit(appointment.medical_unit_id)
+    formData.value.medical_unit_id = appointment.medical_unit_id
+    await handleAvailability()
+    formData.value.calendar = availableDatesMap.value.find(item => item.calendar_id === appointment.calendar_id)
+    goToDate()
+  }
+
   return {
-    insuredUser,
+    patientName,
     treatmentTypes,
     formData,
     refFormObserver,
@@ -179,7 +159,6 @@ export const useAppointmentForm = (emit) => {
     availableDates,
     availableDatesMap,
     availableTimes,
-    isFamiliar,
     handleMedicalCenter,
     handleMedicalUnit,
     handleAvailability,
