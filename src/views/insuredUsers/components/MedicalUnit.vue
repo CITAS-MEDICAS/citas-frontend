@@ -101,7 +101,7 @@ export default {
   },
   methods: {
     async getMedicalCenters() {
-      const { data } = await MedicalCenterResource.getAll({ has: 'units' })
+      const { data } = await MedicalCenterResource.getAll({ has: 'units', getAll: '1' })
       this.medicalCenters = data.rows
     },
     async getMedicalUnits() {
