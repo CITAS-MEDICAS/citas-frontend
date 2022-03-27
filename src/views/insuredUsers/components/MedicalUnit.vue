@@ -107,6 +107,7 @@ export default {
     async getMedicalUnits() {
       const { data } = await MedicalUnitResource.getAll({
         'filter[medical_center_id]': this.formData.medical_center_id,
+        scope: 'isFamiliar'
       })
       this.medicalUnits = data.rows
     },
