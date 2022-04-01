@@ -3,15 +3,15 @@
     <b-row class="auth-inner m-0">
       <!-- Brand logo-->
       <b-link class="brand-logo">
-        <vuexy-logo />
-        <h2 class="brand-text text-primary ml-1">Vuexy</h2>
+        <!-- <vuexy-logo /> -->
+        <!-- <h2 class="brand-text text-primary ml-1">CNS - Regional La Paz</h2> -->
       </b-link>
       <!-- /Brand logo-->
 
       <!-- Left Text-->
       <b-col lg="8" class="d-none d-lg-flex align-items-center p-5">
         <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
-          <b-img fluid :src="imgUrl" alt="Login V2" />
+          <!-- <b-img fluid :src="imgUrl" alt="Login V2" /> -->
         </div>
       </b-col>
       <!-- /Left Text-->
@@ -19,6 +19,13 @@
       <!-- Login-->
       <b-col lg="4" class="d-flex align-items-center auth-bg px-2 p-lg-5">
         <b-col sm="8" md="6" lg="12" class="px-xl-2 mx-auto">
+          <b-img
+          :src="require('@/assets/images/logo/logo_cns1.png')"
+          center
+          class="mb-1 mb-sm-0"
+          height="150"
+          />
+          <br>
           <b-card-title title-tag="h2" class="font-weight-bold mb-1">
             Inicio de Sesión
           </b-card-title>
