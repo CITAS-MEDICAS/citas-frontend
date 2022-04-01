@@ -196,7 +196,11 @@ export default {
       this.formData.relationship_type_id = null
       if (this.isTitular()) {
         const relationship = this.relationships.find(item => item.name.includes(titularID))
-        this.formData.relationship_type_id = relationship?.id
+        if(relationship) {
+          this.formData.relationship_type_id = relationship?.id
+        } else {
+          this.formData.insuredIsTitular = null
+        }
       }
     },
     isTitular() {
