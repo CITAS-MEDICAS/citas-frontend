@@ -88,7 +88,7 @@ export default {
       const valid = await this.$refs.refFormObserver.validate()
       if (!valid) return false
 
-      const { data } = await AppointmentResource.update(this.appointmentId, this.form)
+      const { data } = await AppointmentResource.updateStatus(this.appointmentId, this.form)
       if (data.appointment) {
         this.$emit('update-list')
         this.closeForm()
