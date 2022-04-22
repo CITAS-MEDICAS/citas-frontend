@@ -74,6 +74,9 @@ export const useAppointmentForm = (emit) => {
   })
 
   const availableTimes = computed(() => {
+    console.log('prueba')
+    console.log(availableDates.value.length)
+    console.log(formData.value.calendar)
     if (availableDates.value.length && formData.value.calendar) {
       return availableDates.value.find(item => item.calendar_id === formData.value.calendar.calendar_id).available
     }

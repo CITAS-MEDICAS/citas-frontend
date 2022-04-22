@@ -34,13 +34,12 @@ export default {
   setup() {
     const formData = ref({
       insuredIsTitular: false,
-      relationship_type_id: '',
       registration_code: '',
       affiliation_date: '',
       medical_center_id: null,
       medical_unit_id: null,
       beneficiary_code: '',
-      user_titular_id: store.state.user.userData.id,
+      user_titular_id: store.state.user.userData.id ,
 
       employer_code: '',
       employer_name: '',
@@ -67,9 +66,7 @@ export default {
       address: '',
       reference_phone_number: ''
     })
-
     provide('formData', formData)
-
     return {
       formData
     }
@@ -81,13 +78,17 @@ export default {
       if (!isValid) return
 
       if (!this.formData.email) {
-        this.formData.email = Date.now() + '@cnslpz.com'
+        this.formData.email = Date.now() + '@cnslpz.bo'
       }
 
+      if (this.$route.params.id) {
+        this.formData.user_titular_id = this.$route.params.id
+      }
+      console.log(this.formData)
       const { data } = await InsuredResource.store(this.formData)
 
       if (data.insured) {
-        this.$router.push({ name: 'dependent-list' }).then(() => {
+        this.$router.push(this.$route.params.id?{ name: 'insured-list' }:{ name: 'dependent-list' }).then(() => {
           this.$toast({
             component: ToastificationContent,
             props: {

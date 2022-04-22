@@ -2,7 +2,8 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <b-button v-if="$can('create', PERMISSION_DEPENDENT_USERS)" variant="primary" :to="{ name: 'dependent-create' }">Crear Dependiente</b-button>
+        <b-button v-if="$can('create', PERMISSION_DEPENDENT_USERS)"
+                  variant="primary" :to="{ name: 'dependent-create' }">Crear Dependiente</b-button>
       </template>
     </table-header>
 
@@ -30,7 +31,7 @@
               class="btn-icon "
             >
               <feather-icon icon="CalendarIcon" />
-              <small> Citas Médicas </small>
+              <small> Citas </small>
             </b-button>
           </router-link>
         </div>
@@ -76,7 +77,7 @@ export default {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
       const { data } = await InsuredResource.getAll({
-        scope: `search:${searchQuery.value}`,
+        scope: `search:${searchQuery.value},OnlyInsuredRoles`,
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,

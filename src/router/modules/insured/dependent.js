@@ -37,6 +37,27 @@ export default [
       action: 'create',
     },
   },
+  {
+    path: '/asegurado/:id/crear-dependiente-admin',
+    name: 'dependent-create-admin',
+    component: () => import('@/views/dependents/DependentCreate'),
+    props : true,
+    meta: {
+      pageTitle: 'Crear Dependiente por el personal',
+      breadcrumb: [
+        {
+          text: 'Asegurado',
+          to: { name: 'dependent-list' },
+        },
+        {
+          text: 'Crear Dependiente por administrador',
+          active: true,
+        },
+      ],
+      resource: PERMISSION_DEPENDENT_USERS,
+      action: 'create',
+    },
+  },
   // {
   //   path: '/asegurado/:id',
   //   name: 'dependent-show',
