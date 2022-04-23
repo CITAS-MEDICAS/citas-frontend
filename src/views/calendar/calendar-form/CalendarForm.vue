@@ -4,6 +4,8 @@
     v-model="showForm"
     centered
     no-close-on-backdrop
+    hide-header-close
+    no-close-on-esc
     size="lg"
     title="Generar Calendario"
   >
@@ -163,6 +165,7 @@ import { useCalendarForm } from './useCalendarForm'
 import { dateISO } from '@/libs/utils'
 import TimeSelect from '@/custom/components/time-select/TimeSelect'
 import { CalendarResource } from '@/network/lib/calendar'
+import { MedicalUnitResource } from '@/network/lib/medicalUnit'
 
 const now = new Date()
 const today = dateISO(now)
@@ -176,15 +179,18 @@ export default {
       selectedDays: [],
       today: today,
       showForm: false,
-      pickerOptions: {
-        start: '06:00',
-        end: '23:00',
-        step: '00:20',
-        minTime: '05:30'
-      }
+      // pickerOptions: {
+      //   start: '08:00',
+      //   end: '12:00',
+      //   step: '00:20',
+      //   minTime: '05:30'
+      // }
+      pickerOptions: {}
     }
   },
-
+  mounted() {
+    this.initPickerOptions()
+  },
   setup() {
     const { calendarDays, attentionTypes } = useCalendarForm()
     const refFormObserver = ref(null)
@@ -201,6 +207,20 @@ export default {
     return { refFormObserver, form, calendarDays, required, attentionTypes }
   },
   methods: {
+    async fetchMedicalUnit() {
+      const { data: { medicalUnit } } = await MedicalUnitResource.getById(this.medicalUnitId, {
+        include: 'serviceHour'
+      })
+      return medicalUnit
+    },
+    async initPickerOptions() {
+      const medicalUnit = await this.fetchMedicalUnit()
+      this.pickerOptions = {
+        start: medicalUnit.service_hour.startTime.substr(0, 5),
+        end: medicalUnit.service_hour.endTime.substr(0, 5),
+        step: '00:59'
+      }
+    },
     handleTimeChange(value) {
       this.calendarDays.forEach(item => {
         if (item.checked) {
@@ -229,10 +249,19 @@ export default {
         this.closeForm()
       }
     },
+    resetForm() {
+      this.form.attentionType = null
+      this.form.duration = null
+      this.form.startTime = null
+      this.form.endTime = null
+    },
     closeForm() {
+      this.resetForm()
       this.showForm = false
     },
     handlePickerOptions() {
+      this.form.startTime = null
+      this.form.endTime = null
       this.pickerOptions.step = '00:' + `0${this.form.duration}`.slice(-2)
     }
   }

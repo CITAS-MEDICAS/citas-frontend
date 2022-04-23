@@ -1,18 +1,20 @@
+import { PERMISSION_DASHBOARD } from '@/permissions'
+
 export default [
   {
     path: '/',
     name: 'home',
     component: () => import('@/views/Home.vue'),
     meta: {
-      pageTitle: 'Home',
+      pageTitle: 'Inicio',
       breadcrumb: [
         {
-          text: 'Home',
-          active: true,
-        },
+          text: 'Página de Inicio',
+          active: true
+        }
       ],
-      resource: 'dashboard',
-      action: 'read',
-    },
-  },
+      resource: PERMISSION_DASHBOARD,
+      action: 'read'
+    }
+  }
 ]

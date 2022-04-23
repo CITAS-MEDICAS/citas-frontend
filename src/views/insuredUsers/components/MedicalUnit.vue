@@ -101,12 +101,13 @@ export default {
   },
   methods: {
     async getMedicalCenters() {
-      const { data } = await MedicalCenterResource.getAll({ has: 'units' })
+      const { data } = await MedicalCenterResource.getAll({ has: 'units', getAll: '1' })
       this.medicalCenters = data.rows
     },
     async getMedicalUnits() {
       const { data } = await MedicalUnitResource.getAll({
         'filter[medical_center_id]': this.formData.medical_center_id,
+        scope: 'isFamiliar'
       })
       this.medicalUnits = data.rows
     },

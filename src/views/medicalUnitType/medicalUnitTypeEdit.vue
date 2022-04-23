@@ -11,7 +11,9 @@
       </b-col>
       <b-col cols="12" xl="3" md="4">
         <b-card>
-          <b-button variant="primary" block @click="handleSubmit()">Guardar</b-button>
+          <b-button v-if="$can('update', PERMISSION_UNIT_TYPES)" variant="primary" block @click="handleSubmit()">
+            Guardar
+          </b-button>
           <b-button variant="outline-secondary" block @click="handleCancel()">Cancelar</b-button>
         </b-card>
       </b-col>
@@ -25,21 +27,23 @@ import { provide, ref } from '@vue/composition-api'
 import medicalUnitTypeForm from './components/medicalUnitTypeForm'
 import { TypesResource } from '@/network/lib/types'
 import ToastificationContent from '@core/components/toastification/ToastificationContent'
+import { PERMISSION_UNIT_TYPES } from '@/permissions'
 
 export default {
   name: 'MedicalUnitTypeEdit',
   components: {
-    medicalUnitTypeForm,
+    medicalUnitTypeForm
   },
   setup() {
     const formData = ref({
-      name: '',
+      name: ''
     })
 
     provide('formData', formData)
 
     return {
       formData,
+      PERMISSION_UNIT_TYPES
     }
   },
   created() {
@@ -60,8 +64,8 @@ export default {
             props: {
               title: `Especialidad Registrada Exitosamente!`,
               icon: 'CheckIcon',
-              variant: 'success',
-            },
+              variant: 'success'
+            }
           })
         })
       }
@@ -69,11 +73,11 @@ export default {
     handleCancel() {
       this.$router.push({ name: 'specialties-list' })
     },
-    async getResourceData() {      
-      const { data } = await TypesResource.getById(this.$route.params.id)      
+    async getResourceData() {
+      const { data } = await TypesResource.getById(this.$route.params.id)
       this.formData = data.types
-    },
-  },
+    }
+  }
 }
 </script>
 

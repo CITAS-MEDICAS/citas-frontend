@@ -28,14 +28,11 @@
               @input="handleSelectEmployer"
             >
               <template slot="no-options">No se encontraron resultados...</template>
-
               <template slot="option" slot-scope="option">
                 {{ option.name }}
               </template>
               <template slot="selected-option" slot-scope="option">
-                <code>
-                  {{ option.code }}
-                </code>
+                <code>{{ option.code }}</code>
               </template>
             </v-select>
             <small class="text-danger">{{ errors[0] }}</small>
@@ -65,8 +62,8 @@
             </b-form-group>
           </b-col>
           <b-col sm="6">
-            <b-form-group label="Inicio de Contrato *">
-              <validation-provider v-slot="{ errors }" name="Inicio de Contrato" rules="required">
+            <b-form-group label="Inicio de Relacion Laboral *">
+              <validation-provider v-slot="{ errors }" name="Inicio de Relacion Laboral" rules="required">
                 <b-form-input
                   v-model="formData.employer_date"
                   type="date"

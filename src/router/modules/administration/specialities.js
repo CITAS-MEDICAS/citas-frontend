@@ -1,3 +1,5 @@
+import { PERMISSION_SPECIALTIES } from '@/permissions'
+
 export default [
   {
     path: '/especialidades',
@@ -8,12 +10,12 @@ export default [
       breadcrumb: [
         {
           text: 'Especialidades',
-          active: true,
-        },
+          active: true
+        }
       ],
       action: 'read',
-      resource: 'especialidad',
-    },
+      resource: PERMISSION_SPECIALTIES
+    }
   },
   {
     path: '/especialidades/crear',
@@ -24,14 +26,16 @@ export default [
       breadcrumb: [
         {
           text: 'Especialidades',
-          to: { name: 'specialties-list' },
+          to: { name: 'specialties-list' }
         },
         {
           text: 'Crear',
-          active: true,
-        },
+          active: true
+        }
       ],
-    },
+      action: 'create',
+      resource: PERMISSION_SPECIALTIES
+    }
   },
 
   {
@@ -43,13 +47,15 @@ export default [
       breadcrumb: [
         {
           text: 'Especialidades',
-          to: { name: 'specialties-list' },
+          to: { name: 'specialties-list' }
         },
         {
           text: 'Editar',
-          active: true,
-        },
+          active: true
+        }
       ],
-    },
-  },
+      action: 'update',
+      resource: PERMISSION_SPECIALTIES
+    }
+  }
 ]

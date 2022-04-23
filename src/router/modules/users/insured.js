@@ -1,3 +1,5 @@
+import { PERMISSION_INSURED_USERS } from '@/permissions'
+
 export default [
   {
     path: '/asegurados',
@@ -8,12 +10,12 @@ export default [
       breadcrumb: [
         {
           text: 'Asegurados',
-          active: true,
-        },
+          active: true
+        }
       ],
-      resource: 'asegurados',
-      action: 'read',
-    },
+      resource: PERMISSION_INSURED_USERS,
+      action: 'read'
+    }
   },
   {
     path: '/asegurados/crear',
@@ -24,16 +26,16 @@ export default [
       breadcrumb: [
         {
           text: 'Asegurados',
-          to: { name: 'insured-list' },
+          to: { name: 'insured-list' }
         },
         {
           text: 'Crear',
-          active: true,
-        },
+          active: true
+        }
       ],
-      resource: 'asegurados',
-      action: 'create',
-    },
+      resource: PERMISSION_INSURED_USERS,
+      action: 'create'
+    }
   },
   {
     path: '/asegurados/editar/:id',
@@ -44,15 +46,15 @@ export default [
       breadcrumb: [
         {
           text: 'Asegurados',
-          to: { name: 'insured-list' },
+          to: { name: 'insured-list' }
         },
         {
           text: 'Editar',
-          active: true,
-        },
+          active: true
+        }
       ],
-      resource: 'asegurados',
-      action: 'update',
-    },
-  },
+      resource: PERMISSION_INSURED_USERS,
+      action: 'update'
+    }
+  }
 ]

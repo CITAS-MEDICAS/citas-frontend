@@ -1,35 +1,34 @@
+import {
+  PERMISSION_INSURED_USERS,
+  PERMISSION_ROLES,
+  PERMISSION_STAFF_USERS
+} from '@/permissions'
+
 export default [
   {
     header: 'Usuarios',
     action: 'read',
-    resource: ['personal', 'roles', 'asegurados'],
+    resource: [PERMISSION_STAFF_USERS, PERMISSION_ROLES, PERMISSION_INSURED_USERS],
   },
   {
     title: 'Personal',
     route: 'user-list',
     icon: 'UserCheckIcon',
     action: 'read',
-    resource: 'personal',
+    resource: PERMISSION_STAFF_USERS,
   },
   {
     title: 'Roles',
     route: 'role-list',
     icon: 'LockIcon',
     action: 'read',
-    resource: 'roles',
+    resource: PERMISSION_ROLES,
   },
-  // {
-  //   title: 'Permisos',
-  //   route: null,
-  //   icon: 'UserIcon',
-  //   action: 'read',
-  //   resource: 'Home',
-  // },
   {
     title: 'Asegurados',
     route: 'insured-list',
     icon: 'UsersIcon',
     action: 'read',
-    resource: 'asegurados',
+    resource: PERMISSION_INSURED_USERS,
   },
 ]

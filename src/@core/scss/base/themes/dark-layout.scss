@@ -609,6 +609,10 @@
       color: $theme-dark-body-color;
     }
 
+    &.btn-flat-primary {
+      color: $primary-dark;
+    }
+
     &.btn-dark,
     &.btn-outline-dark,
     &.btn-flat-dark {
@@ -638,7 +642,7 @@
 
   .btn-group-toggle {
     label[class*='btn-outline-'] {
-      color: $primary !important;
+      color: $primary-dark !important;
     }
   }
 
@@ -657,7 +661,8 @@
       &:hover,
       &:focus {
         background: $dropdown-link-hover-bg;
-        color: $dropdown-link-hover-color;
+        //color: $dropdown-link-hover-color;
+        color: $primary-dark;
       }
 
       &:active,
@@ -710,7 +715,7 @@
           background-color: $theme-dark-pagination-bg;
 
           .page-link {
-            background-color: $primary;
+            background-color: $primary-dark;
 
             &:hover {
               color: $white;
@@ -723,7 +728,7 @@
           color: $theme-dark-body-color;
 
           &:hover {
-            color: $primary;
+            color: $primary-dark;
           }
         }
 
@@ -827,7 +832,7 @@
 
         &.active {
           background-color: $theme-dark-card-bg;
-          color: $primary;
+          color: $primary-dark;
         }
 
         &.disabled {
@@ -848,7 +853,7 @@
       .nav-link {
         &.active {
           color: $white;
-          background-color: $primary;
+          background-color: $primary-dark;
         }
       }
     }
@@ -944,7 +949,7 @@
 
         &.active,
         &:active {
-          background-color: $primary;
+          background-color: $primary-dark;
           color: $white;
         }
       }
@@ -1232,7 +1237,7 @@
     }
 
     &:focus {
-      border-color: $primary;
+      border-color: $primary-dark;
     }
   }
 
@@ -1291,7 +1296,7 @@
     &:focus-within {
       .form-control,
       .input-group-text {
-        border-color: $primary;
+        border-color: $primary-dark;
         box-shadow: none;
       }
     }
@@ -1462,7 +1467,7 @@
         background-color: $theme-dark-body-bg !important;
 
         &:active {
-          background-color: $primary !important;
+          background-color: $primary-dark !important;
           color: $white;
         }
       }
@@ -1608,7 +1613,7 @@
     }
 
     ::-webkit-scrollbar-thumb {
-      background: $primary;
+      background: $primary-dark;
     }
   }
 
@@ -1722,7 +1727,7 @@
             }
 
             &.selected-row-bg {
-              background-color: rgba($primary, 0.06);
+              background-color: rgba($primary-dark, 0.06);
               border-color: $theme-dark-border-color;
             }
           }
@@ -2259,7 +2264,7 @@
     }
   }
 
-  // appointment-calendar
+  // insuredAppointment-calendar
   .app-calendar {
     .app-calendar-sidebar {
       background-color: $theme-dark-card-bg;
@@ -2393,7 +2398,7 @@
   // Users Application
   .app-user-view {
     .plan-card {
-      border-color: $primary !important;
+      border-color: $primary-dark !important;
     }
   }
 
@@ -2533,7 +2538,7 @@
               color: $theme-dark-body-color;
 
               &:hover {
-                color: $primary !important;
+                color: $primary-dark !important;
               }
             }
           }

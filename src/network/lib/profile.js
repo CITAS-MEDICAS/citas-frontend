@@ -14,6 +14,14 @@ class ProfileResource {
       method: 'get',
     })
   }
+
+  changePassword(resource) {
+    return this.request({
+      url: '/' + this.uri + '/change-password',
+      method: 'post',
+      data: resource
+    })
+  }
 }
 
 const resource = new ProfileResource()

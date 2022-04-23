@@ -86,6 +86,7 @@
                   v-model="formData.registration_code"
                   :state="errors.length ? false : null"
                   placeholder="123456ABC"
+                  v-uppercase
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -119,16 +120,25 @@ import { TypesResource } from '@/network/lib/types'
 import { UserResource } from '@/network/lib/users'
 import { debounce } from '@/libs/utils'
 
+const titularID = 'ID'
+
 export default {
   name: 'Membership',
   components: {
     ValidationObserver,
-    ValidationProvider,
+    ValidationProvider
+  },
+  directives: {
+    uppercase: {
+      update: (el) => {
+        el.value = el.value.toUpperCase()
+      }
+    }
   },
   data() {
     return {
       relationships: [],
-      titularOptions: [],
+      titularOptions: []
     }
   },
   setup() {
@@ -143,25 +153,23 @@ export default {
       formData,
       refFormObserver,
       required,
-      validate,
+      validate
     }
   },
   computed: {
     filterRelationships() {
-      return this.relationships.filter(item => !item.name.includes('ID - Titular'))
-    },
+      return this.relationships.filter(item => !item.name.includes(titularID))
+    }
   },
   watch: {
     'formData.user_titular_id': {
-      handler: function (after, before) {
-        console.log('-> before', before)
-        console.log('-> after', after)
+      handler: function(after, before) {
         if (!this.insuredIsTitular && after) {
           this.setTitularOption(after)
         }
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
   mounted() {
     this.getRelationships()
@@ -172,24 +180,28 @@ export default {
       this.relationships = data.rows
     },
     handleInsuredType() {
-      this.formData.relationship_type_id = null
-      if (this.isTitular()) {
-        const relationship = this.getIDTitular()
-        this.formData.relationship_type_id = relationship.id
-      }
+      this.resolveTitularID()
 
       this.formData.isNewAccount = null
       this.formData.employer_code = null
       this.formData.employer_name = null
       this.formData.employer_date = null
       this.formData.salary = null
-      this.formData.email = null
+      this.formData.email = null,
       this.formData.password = null
       this.formData.password_confirmation = null
       this.formData.isNewAccount = true
     },
-    getIDTitular() {
-      return this.relationships.find(item => item.name.includes('ID - Titular'))
+    resolveTitularID() {
+      this.formData.relationship_type_id = null
+      if (this.isTitular()) {
+        const relationship = this.relationships.find(item => item.name.includes(titularID))
+        if(relationship) {
+          this.formData.relationship_type_id = relationship?.id
+        } else {
+          this.formData.insuredIsTitular = null
+        }
+      }
     },
     isTitular() {
       return this.formData.insuredIsTitular
@@ -203,7 +215,7 @@ export default {
     searchTitular: debounce(async (loading, term, vm) => {
       const { data } = await UserResource.getAll({
         'filter[ci][eq]': term,
-        scope: 'IsTitular',
+        scope: 'IsTitular'
       })
       loading(false)
       vm.titularOptions = data.rows
@@ -212,8 +224,8 @@ export default {
     async setTitularOption(id) {
       const { data } = await UserResource.getById(id)
       this.titularOptions = [data.user]
-    },
-  },
+    }
+  }
 }
 </script>
 

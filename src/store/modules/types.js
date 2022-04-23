@@ -6,7 +6,6 @@ export const MEDICAL_UNIT_TYPE = 'MEDICAL_UNIT_TYPE'
 export const RELATIONSHIP_TYPE = 'RELATIONSHIP_TYPE'
 export const ATTENTION_TYPE = 'ATTENTION_TYPE'
 export const TREATMENT_TYPE = 'TREATMENT_TYPE'
-export const APPOINTMENT_TYPE = 'APPOINTMENT_TYPE'
 export const APPOINTMENT_STATUS = 'APPOINTMENT_STATUS'
 
 const state = {
@@ -30,9 +29,6 @@ const mutations = {
   },
   [TREATMENT_TYPE]: (state, payload) => {
     state.treatmentTypes = payload
-  },
-  [APPOINTMENT_TYPE]: (state, payload) => {
-    state.appointmentTypes = payload
   },
   [APPOINTMENT_STATUS]: (state, payload) => {
     state.appointmentStatuses = payload
@@ -69,16 +65,6 @@ const actions = {
       items = data.rows
     }
     commit(TREATMENT_TYPE, items)
-  },
-  [APPOINTMENT_TYPE]: async ({ commit }, payload) => {
-    let items = []
-    if (state.appointmentTypes.length) {
-      items = state.appointmentTypes
-    } else {
-      const { data } = await TypesResource.getAppointmentTypes({ sortByAsc: 'id' })
-      items = data.rows
-    }
-    commit(APPOINTMENT_TYPE, items)
   },
   [APPOINTMENT_STATUS]: async ({ commit }, payload) => {
     let items = []

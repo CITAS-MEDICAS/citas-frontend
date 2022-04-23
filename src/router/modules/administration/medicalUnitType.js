@@ -1,6 +1,8 @@
+import { PERMISSION_UNIT_TYPES } from '@/permissions'
+
 export default [
   {
-    path: '/tipodeconsultorio',
+    path: '/tipo-de-consultorio',
     name: 'medical-unit-type-list',
     component: () => import('@/views/medicalUnitType/medicalUnitTypeList'),
     meta: {
@@ -11,10 +13,12 @@ export default [
           active: true,
         },
       ],
+      resource: PERMISSION_UNIT_TYPES,
+      action: 'read',
     },
   },
   {
-    path: '/tipodeconsultorio/crear',
+    path: '/tipo-de-consultorio/crear',
     name: 'medical-unit-type-create',
     component: () => import('@/views/medicalUnitType/medicalUnitTypeCreate'),
     meta: {
@@ -29,11 +33,12 @@ export default [
           active: true,
         },
       ],
+      resource: PERMISSION_UNIT_TYPES,
+      action: 'create',
     },
   },
-
   {
-    path: '/tipodeconsultorio/editar/:id',
+    path: '/tipo-de-consultorio/editar/:id',
     name: 'medical-unit-type-edit',
     component: () => import('@/views/medicalUnitType/medicalUnitTypeEdit'),
     meta: {
@@ -48,6 +53,8 @@ export default [
           active: true,
         },
       ],
+      resource: PERMISSION_UNIT_TYPES,
+      action: 'update',
     },
   },
 ]

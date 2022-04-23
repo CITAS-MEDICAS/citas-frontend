@@ -1,3 +1,5 @@
+import { PERMISSION_SERVICE_HOURS } from '@/permissions'
+
 export default [
   {
     path: '/horarios',
@@ -8,10 +10,12 @@ export default [
       breadcrumb: [
         {
           text: 'Horarios',
-          active: true,
-        },
+          active: true
+        }
       ],
-    },
+      resource: PERMISSION_SERVICE_HOURS,
+      action: 'read'
+    }
   },
   {
     path: '/horarios/crear',
@@ -22,14 +26,16 @@ export default [
       breadcrumb: [
         {
           text: 'Horarios',
-          to: { name: 'service-hour-list' },
+          to: { name: 'service-hour-list' }
         },
         {
           text: 'Crear',
-          active: true,
-        },
+          active: true
+        }
       ],
-    },
+      resource: PERMISSION_SERVICE_HOURS,
+      action: 'create'
+    }
   },
   {
     path: '/horarios/editar/:id',
@@ -40,13 +46,15 @@ export default [
       breadcrumb: [
         {
           text: 'Horarios',
-          to: { name: 'medical-center-list' },
+          to: { name: 'medical-center-list' }
         },
         {
           text: 'Editar',
-          active: true,
-        },
+          active: true
+        }
       ],
-    },
-  },
+      resource: PERMISSION_SERVICE_HOURS,
+      action: 'update'
+    }
+  }
 ]

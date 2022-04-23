@@ -43,7 +43,7 @@ export default {
   components: {
     FullCalendar,
     CalendarSidebar,
-    CalendarForm,
+    CalendarForm
   },
 
   setup() {
@@ -53,9 +53,9 @@ export default {
       refCalendar,
       calendarOptions,
       isCalendarSidebarActive,
-      refetchEvents,
+      refetchEvents
     }
-  },
+  }
 }
 </script>
 

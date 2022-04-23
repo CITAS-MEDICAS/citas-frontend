@@ -1,3 +1,5 @@
+import { PERMISSION_MEDICAL_UNIT_CALENDAR } from '@/permissions'
+
 export default [
   {
     path: '/consultorios/:id/calendario',
@@ -15,7 +17,7 @@ export default [
           active: true,
         },
       ],
-      resource: 'calendario',
+      resource: PERMISSION_MEDICAL_UNIT_CALENDAR,
       action: 'read',
     },
   },

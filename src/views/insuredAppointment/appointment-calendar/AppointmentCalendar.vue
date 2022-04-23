@@ -7,7 +7,7 @@
         class="col app-calendar-sidebar flex-grow-0 overflow-hidden d-flex flex-column"
         :class="{ show: isCalendarSidebarActive }"
       >
-        <AppointmentForm @update-calendar="updateCalendar" />
+        <AppointmentForm @update-calendar="updateCalendar" @go-to-date="goToDate" />
       </div>
 
       <!-- Calendar-->
@@ -33,7 +33,7 @@
 import FullCalendar from '@fullcalendar/vue'
 
 import { useAppointmentCalendar } from './useAppointmentCalendar'
-import AppointmentForm from './appointment-form/AppointmentForm'
+import AppointmentForm from '../appointment-form/AppointmentForm'
 
 export default {
   name: 'Calendar',
@@ -49,6 +49,7 @@ export default {
       isCalendarSidebarActive,
       refetchEvents,
       updateCalendar,
+      goToDate
     } = useAppointmentCalendar()
 
     return {
@@ -56,32 +57,13 @@ export default {
       calendarOptions,
       isCalendarSidebarActive,
       refetchEvents,
-      updateCalendar
+      updateCalendar,
+      goToDate
     }
   },
 }
 </script>
 
 <style lang="scss">
-@import '~@core/scss/base/bootstrap-extended/include';
-// Bootstrap includes
-@import '~@core/scss/base/components/include';
-// Components includes
-
-@import './appointment-calendar';
-
-// Color palettes
-@import '~@core/scss/base/core/colors/palette-variables.scss';
-
-.fc-sidebarToggle-button {
-  // content: '';
-  background-image: url(str-replace(str-replace($menu, 'currentColor', $body-color), '#', '%23'));
-  width: 25px;
-  height: 25px;
-  margin-right: 0.7rem !important;
-  display: block;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
+@import '@core/scss/vue/apps/calendar.scss';
 </style>

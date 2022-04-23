@@ -7,19 +7,20 @@ import { useRouter } from '@core/utils/utils'
 import { AppointmentResource } from '@/network/lib/appointment'
 
 
-export const useAppointmentForm = (emit) => {
+export const useEditAppointmentForm = (emit) => {
   const { route, router } = useRouter()
+  const appointmentId = route.value.params.appointmentId
+
+  const patientName = ref(null)
+  const attentionId = ref(null)
 
   const formData = ref({
-    user_patient_id: route.value.params.id,
-    attention_type_id: null,
-    treatment_type_id: null,
     specialty: null,
     medical_center_id: null,
     medical_unit_id: null,
     calendar: null,
     time: null,
-    comment: ''
+    reason: ''
   })
 
   const refFormObserver = ref(null)
@@ -28,27 +29,20 @@ export const useAppointmentForm = (emit) => {
   const availableDates = ref([])
   const availableDatesMap = ref([])
 
-  onMounted(() => {
-    store.dispatch('types/TREATMENT_TYPE')
-    store.dispatch('types/ATTENTION_TYPE')
-    store.dispatch('types/SPECIALTIES', {
-      scope: 'specialties,hasUnit'
+  onMounted(async () => {
+    await store.dispatch('types/TREATMENT_TYPE')
+    await store.dispatch('types/ATTENTION_TYPE')
+    await store.dispatch('types/SPECIALTIES', {
+      scope: 'hasUnit'
     })
+
+    await fetchAppointment()
   })
 
   const treatmentTypes = computed(() => {
     const data = store.state.types.treatmentTypes
     formData.value.treatment_type_id = data.length ? data[0].id : null
     return data
-  })
-
-  const attentionTypes = computed(() => {
-    const attention = store.state.types.attentionTypes
-    if (attention.length) {
-      // TODO: Changes depending on the role
-      formData.value.attention_type_id = attention.find(item => item.name === 'NUEVO').id
-    }
-    return attention
   })
 
   const specialties = computed(() => {
@@ -68,7 +62,8 @@ export const useAppointmentForm = (emit) => {
 
     const { data } = await MedicalCenterResource.getAll({
       scope: `hasSpecialty:${formData.value.specialty.id}`,
-      sortByAsc: 'name'
+      sortByAsc: 'name',
+      getAll: '1'
     })
 
     if (data.total_data) {
@@ -78,9 +73,10 @@ export const useAppointmentForm = (emit) => {
     return data.rows
   }
 
-  const fetchMedicalUnit = async () => {
-    formData.value.medical_unit_id = null
+  const fetchMedicalUnit = async (unitId) => {
+    formData.value.medical_unit_id = unitId || null
     const { data } = await MedicalUnitResource.getAll({
+      getAll: '1',
       scope: [
         `hasCenter:${formData.value.medical_center_id}`,
         `hasSpecialty:${formData.value.specialty.id}`,
@@ -94,13 +90,13 @@ export const useAppointmentForm = (emit) => {
     medicalCenters.value = await fetchMedicalCenter()
   }
 
-  const handleMedicalUnit = async () => {
-    medicalUnits.value = await fetchMedicalUnit()
+  const handleMedicalUnit = async (unitId) => {
+    medicalUnits.value = await fetchMedicalUnit(unitId)
   }
 
   const handleAvailability = async () => {
     const medicalUnitId = formData.value.medical_unit_id
-    const attentionTypeId = formData.value.attention_type_id
+    const attentionTypeId = attentionId.value
     if (medicalUnitId && attentionTypeId) {
       const { data } = await CalendarResource.availability(medicalUnitId, { attentionTypeId })
       availableDates.value = data
@@ -110,12 +106,8 @@ export const useAppointmentForm = (emit) => {
           calendar_id, date, duration, status
         }
       })
-
       emit('update-calendar', data)
     }
-  }
-
-  const handleTimes = () => {
   }
 
   const handleSubmit = async () => {
@@ -124,28 +116,53 @@ export const useAppointmentForm = (emit) => {
       return false
     }
 
-    const { data } = await AppointmentResource.store(formData.value)
-    console.log('-> data', data)
+    const { data } = await AppointmentResource.update(appointmentId, formData.value)
+
     if (data.appointment) {
-      router.push({ name: 'insured-appointment-list', params: { id: route.value.params.id } })
+      router.push({ name: 'insured-treatment-history', params: { treatmentId: data.appointment.treatment_id } })
     }
   }
 
+  const goToDate = () => {
+    emit('go-to-date', formData.value.calendar.date)
+  }
+
+  const fetchAppointment = async () => {
+    const { data: { appointment } } = await AppointmentResource.getById(appointmentId, {
+      include: 'treatment.patient;calendar'
+    })
+
+    patientName.value = appointment.treatment.patient.fullname
+    attentionId.value = appointment?.calendar?.attention_type_id || appointment.attention_type_id
+    formData.value.specialty = specialties.value.find(item => item.id === appointment.specialty_id)
+    await handleMedicalCenter()
+    formData.value.medical_center_id = appointment.medical_center_id
+    formData.value.reason = appointment.reason
+
+    if(!appointment.medical_unit_id) return
+
+    await handleMedicalUnit(appointment.medical_unit_id)
+    formData.value.medical_unit_id = appointment.medical_unit_id
+    await handleAvailability()
+    formData.value.calendar = availableDatesMap.value.find(item => item.calendar_id === appointment.calendar_id)
+    goToDate()
+  }
+
   return {
+    patientName,
     treatmentTypes,
     formData,
     refFormObserver,
     specialties,
     medicalCenters,
     medicalUnits,
-    attentionTypes,
     availableDates,
     availableDatesMap,
     availableTimes,
     handleMedicalCenter,
     handleMedicalUnit,
     handleAvailability,
-    handleTimes,
-    handleSubmit
+    handleSubmit,
+    goToDate
   }
 }

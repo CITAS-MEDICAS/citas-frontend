@@ -31,11 +31,17 @@
             size="40"
             variant="light-primary"
             badge
-            :src="require('@/assets/images/avatars/13-small.png')"
+            :src="`https://ui-avatars.com/api/?name=${user.fullname}`"
             class="badge-minimal"
             badge-variant="success"
           />
         </template>
+
+        <b-dropdown-item link-class="d-flex align-items-center" :to="{name:'user-profile'}" >
+          <feather-icon size="16" icon="UserIcon" class="mr-50" />
+          <span>Perfil</span>
+        </b-dropdown-item>
+        <b-dropdown-divider />
 
         <template v-if="roles && roles.length > 1">
           <b-dropdown-item
@@ -49,6 +55,7 @@
           </b-dropdown-item>
           <b-dropdown-divider />
         </template>
+
 
         <b-dropdown-item link-class="d-flex align-items-center" @click="handleLogout">
           <feather-icon size="16" icon="LogOutIcon" class="mr-50" />
@@ -70,20 +77,21 @@ import { USER_ROLES, USER_PERMISSIONS } from '@/store/modules/user'
 export default {
   components: {
     // Navbar Components
-    DarkToggler,
+    DarkToggler
   },
   props: {
     toggleVerticalMenuActive: {
       type: Function,
-      default: () => {},
-    },
+      default: () => {
+      }
+    }
   },
   computed: {
     ...mapGetters({
       user: 'getUser',
       activeRole: 'getActiveRole',
-      roles: 'getRoles',
-    }),
+      roles: 'getRoles'
+    })
   },
 
   created() {
@@ -99,10 +107,10 @@ export default {
     getPermissions() {
       this.$store.dispatch(USER_ROLES)
     },
-    changeRole(role) {
-      console.log('-> role', role)
-      this.$store.dispatch(USER_PERMISSIONS, role)
-    },
-  },
+    async changeRole(role) {
+      await this.$store.dispatch(USER_PERMISSIONS, role)
+      this.$router.push({ name: 'home' })
+    }
+  }
 }
 </script>

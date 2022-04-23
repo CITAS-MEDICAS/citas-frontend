@@ -2,7 +2,7 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <b-button variant="primary" :to="{ name: 'relationship-create' }">
+        <b-button v-if="$can('create', PERMISSION_RELATIONSHIPS)" variant="primary" :to="{ name: 'relationship-create' }">
           Crear Parentesco
         </b-button>
       </template>
@@ -23,6 +23,7 @@
       <template #cell(actions)="data">
         <div class="text-nowrap">
           <router-link
+            v-if="$can('update', PERMISSION_RELATIONSHIPS)"
             :to="{
               name: 'relationship-edit',
               params: { id: data.item.id },
@@ -37,6 +38,7 @@
             </b-button>
           </router-link>
           <b-button
+            v-if="$can('delete', PERMISSION_RELATIONSHIPS)"
             v-b-tooltip.hover.top="'Eliminar Especialidad'"
             variant="flat-danger"
             class="btn-icon rounded-circle"
@@ -49,11 +51,15 @@
 
       <template #cell(name)="data">
         <b-link
+          v-if="$can('update', PERMISSION_RELATIONSHIPS)"
           :to="{ name: 'relationship-edit', params: { id: data.item.id } }"
           class="font-weight-bold"
         >
           {{ data.value }}
         </b-link>
+        <template v-else>
+          {{ data.value }}
+        </template>
       </template>
     </b-table>
 
@@ -67,6 +73,7 @@ import useList from '../../custom/libs/useList'
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
 import { TypesResource } from '@/network/lib/types'
+import { PERMISSION_RELATIONSHIPS } from '@/permissions'
 
 export default {
   components: {
@@ -91,7 +98,7 @@ export default {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
       const { data } = await TypesResource.getRelationships({
-        q: searchQuery.value,
+        scope: `search:${searchQuery.value}`,
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
@@ -120,6 +127,7 @@ export default {
       fetchItems,
       deleteResource,
       refetchData,
+      PERMISSION_RELATIONSHIPS,
     }
   },
   methods: {

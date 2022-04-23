@@ -6,32 +6,42 @@ class TypesResource extends Resource {
   }
 
   getSpecialties(query) {
-    return this.getAll({ scope: 'specialties', ...query })
+    const scope = this.resolveScope(query, 'specialties')
+    return this.getAll({ ...query, scope })
   }
 
   getUnitTypes(query) {
-    return this.getAll({ scope: 'medicalUnit', ...query })
+    const scope = this.resolveScope(query, 'medicalUnit')
+    return this.getAll({ ...query, scope })
   }
 
   getRelationships(query) {
-    return this.getAll({ scope: 'relationship', ...query })
+    const scope = this.resolveScope(query, 'relationship')
+    return this.getAll({ ...query, scope })
   }
 
   getAttentionTypes(query) {
-    return this.getAll({ scope: 'attentionType', ...query })
+    const scope = this.resolveScope(query, 'attentionType')
+    return this.getAll({ ...query, scope })
   }
 
   getTreatmentTypes(query) {
-    return this.getAll({ scope: 'treatment', ...query })
-  }
-
-  getAppointmentTypes(query) {
-    return this.getAll({ scope: 'appointmentType', ...query })
+    const scope = this.resolveScope(query, 'treatment')
+    return this.getAll({ ...query, scope })
   }
 
   getAppointmentStatuses(query) {
-    return this.getAll({ scope: 'appointmentStatus', ...query })
+    const scope = this.resolveScope(query, 'appointmentStatus')
+    return this.getAll({ ...query, scope })
   }
+
+  resolveScope(query, scope) {
+    if (query.scope) {
+      scope = `${scope},${query.scope}`
+    }
+    return scope
+  }
+
 }
 
 const resource = new TypesResource()

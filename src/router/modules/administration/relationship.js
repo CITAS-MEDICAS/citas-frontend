@@ -1,3 +1,5 @@
+import { PERMISSION_RELATIONSHIPS } from '@/permissions'
+
 export default [
   {
     path: '/parentescos',
@@ -11,6 +13,8 @@ export default [
           active: true,
         },
       ],
+      resource: PERMISSION_RELATIONSHIPS,
+      action: 'read',
     },
   },
   {
@@ -29,9 +33,10 @@ export default [
           active: true,
         },
       ],
+      resource: PERMISSION_RELATIONSHIPS,
+      action: 'create',
     },
   },
-
   {
     path: '/parentescos/editar/:id',
     name: 'relationship-edit',
@@ -48,6 +53,8 @@ export default [
           active: true,
         },
       ],
+      resource: PERMISSION_RELATIONSHIPS,
+      action: 'update',
     },
   },
 ]

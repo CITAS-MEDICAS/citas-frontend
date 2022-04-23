@@ -10,7 +10,7 @@
       </b-col>
       <b-col cols="12" xl="3" lg="4">
         <b-card>
-          <b-button variant="primary" block @click="handleSubmit()">Guardar</b-button>
+          <b-button v-if="$can('create', PERMISSION_MEDICAL_UNIT)" variant="primary" block @click="handleSubmit()">Guardar</b-button>
           <b-button variant="outline-secondary" block @click="handleCancel()">Cancelar</b-button>
         </b-card>
       </b-col>
@@ -24,6 +24,7 @@ import { provide, ref } from '@vue/composition-api'
 import MedicalUnitForm from './components/MedicalUnitForm'
 import { MedicalUnitResource } from '@/network/lib/medicalUnit'
 import ToastificationContent from '@core/components/toastification/ToastificationContent'
+import { PERMISSION_MEDICAL_UNIT } from '@/permissions'
 
 export default {
   name: 'MedicalUnitCreate',
@@ -48,6 +49,7 @@ export default {
 
     return {
       formData,
+      PERMISSION_MEDICAL_UNIT,
     }
   },
   methods: {

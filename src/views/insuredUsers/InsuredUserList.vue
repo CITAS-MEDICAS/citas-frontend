@@ -43,6 +43,32 @@
           >
             <feather-icon icon="TrashIcon" />
           </b-button>
+          <router-link :to="{
+            name: 'dependent-create-admin',
+            params: { id: data.item.user_id, registration_code: 'herni101'},
+
+          }">
+            <b-button v-b-tooltip.hover.top="'Crear Dependiente'"
+                      variant="flat-danger"
+                      class="btn-icon rounded-circle"
+            >
+              <feather-icon icon="UserIcon" />
+            </b-button>
+          </router-link>
+          <router-link :to="{
+            name: 'insured-appointment-list',
+            params: { userId: data.item.user_id}
+          }">
+            <b-button
+              v-b-tooltip.hover.top="'Citas Medicas'"
+              variant="flat-warning"
+              class="btn-icon "
+            >
+              <feather-icon icon="CalendarIcon" />
+              <small> Citas </small>
+            </b-button>
+          </router-link>
+
         </div>
       </template>
 
@@ -86,11 +112,11 @@ export default {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
       const { data } = await InsuredResource.getAll({
-        q: searchQuery.value,
+        scope: `search:${searchQuery.value},OnlyInsuredRoles`,
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
-        include: 'user;unit.center;relationship',
+        include: 'user;unit.center;relationship;user.roles',
       })
 
       totalRows.value = data.total_data
@@ -99,7 +125,8 @@ export default {
 
     const tableColumns = [
       { key: 'actions', label: 'Acciones', thStyle: { width: '100px' } },
-      { key: 'id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
+      //user_id replace for id
+      { key: 'user_id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
       { key: 'user.name', label: 'Nombre', sortable: false },
       { key: 'user.paternal_surname', label: 'Paterno', sortable: false },
       { key: 'user.maternal_surname', label: 'Materno', sortable: false },

@@ -10,7 +10,7 @@
       </b-col>
       <b-col cols="12" xl="3" md="4">
         <b-card>
-          <b-button variant="primary" block @click="handleSubmit()">Guardar</b-button>
+          <b-button v-if="$can('update', PERMISSION_SERVICE_HOURS)" variant="primary" block @click="handleSubmit()">Guardar</b-button>
           <b-button variant="outline-secondary" block @click="handleCancel()">Cancelar</b-button>
         </b-card>
       </b-col>
@@ -24,6 +24,7 @@ import { provide, ref } from '@vue/composition-api'
 import ServiceHourForm from './components/ServiceHourForm.vue'
 import { ServiceHoursResource } from '@/network/lib/serviceHours'
 import ToastificationContent from '@core/components/toastification/ToastificationContent'
+import { PERMISSION_SERVICE_HOURS } from '@/permissions'
 
 export default {
   name: 'ServiceHoursEdit',
@@ -42,6 +43,7 @@ export default {
 
     return {
       formData,
+      PERMISSION_SERVICE_HOURS
     }
   },
   created() {

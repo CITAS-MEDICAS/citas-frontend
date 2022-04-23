@@ -8,18 +8,19 @@
         <b-row>
           <b-col cols="12">
             <b-form-group label="Nombre *">
-              <validation-provider v-slot="{ errors }" name="Nombre" rules="required|min:3">
-                <b-form-input v-model="formData.name" :state="errors.length ? false : null" />
+              <validation-provider v-slot="{ errors }" name="Nombre" rules="required|min:2">
+                <b-form-input v-model="formData.name" :state="errors.length ? false : null" v-uppercase />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
           </b-col>
           <b-col sm="6">
             <b-form-group label="Apellido Paterno">
-              <validation-provider v-slot="{ errors }" name="Apellido Paterno" rules="min:3">
+              <validation-provider v-slot="{ errors }" name="Apellido Paterno" rules="min:2">
                 <b-form-input
                   v-model="formData.paternal_surname"
                   :state="errors.length ? false : null"
+                  v-uppercase
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -30,11 +31,12 @@
               <validation-provider
                 v-slot="{ errors }"
                 name="Apellido Materno"
-                rules="required|min:3"
+                rules="required|min:2"
               >
                 <b-form-input
                   v-model="formData.maternal_surname"
                   :state="errors.length ? false : null"
+                  v-uppercase
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -48,7 +50,7 @@
           <b-col sm="9" lg="8">
             <b-form-group label="CI *">
               <validation-provider v-slot="{ errors }" name="CI" rules="required|min:5">
-                <b-form-input v-model="formData.ci" :state="errors.length ? false : null" />
+                <b-form-input v-model="formData.ci" :state="errors.length ? false : null" v-uppercase />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
@@ -56,7 +58,7 @@
           <b-col sm="3" lg="4">
             <b-form-group label="CI Exp.">
               <validation-provider v-slot="{ errors }" name="CI Exp. *" rules="required">
-                <v-select v-model="formData.ci_exp" :options="ciOptions">
+                <v-select v-model="formData.ci_exp" :options="ciOptions" :clearable="false">
                   <template #search="{ attributes, events }">
                     <input
                       class="vs__search"
@@ -82,6 +84,7 @@
                   v-model="formData.birth_date"
                   :state="errors.length ? false : null"
                   type="date"
+                  :max="today"
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -130,12 +133,20 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { inject, ref, toRefs } from '@vue/composition-api'
 
 import { required, length } from '@core/utils/validations/validations'
+import { dateISO } from '@/libs/utils'
 
 export default {
   name: 'PersonalInfo',
   components: {
     ValidationObserver,
     ValidationProvider,
+  },
+  directives: {
+    uppercase: {
+      update: (el) => {
+        el.value = el.value.toUpperCase()
+      }
+    }
   },
   props: {
     validateForm: {
@@ -146,7 +157,8 @@ export default {
   },
   data() {
     return {
-      ciOptions: ['CH', 'LP', 'CB', 'OR', 'PT', 'TJ', 'SC', 'BE', 'PD'],
+      ciOptions: ['CH', 'LP', 'CB', 'OR', 'PT', 'TJ', 'SC', 'BE', 'PD', 'EXT'],
+      today: dateISO(new Date)
     }
   },
   setup(props) {

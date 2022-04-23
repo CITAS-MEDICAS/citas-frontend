@@ -79,6 +79,10 @@ export default {
 
       if (!isValid) return
 
+      if(!this.formData.email) {
+        this.formData.email = Date.now() + '@cnslpz.com'
+      }
+
       const { data } = await InsuredResource.store(this.formData)
 
       if (data.insured) {

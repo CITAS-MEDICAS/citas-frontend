@@ -2,8 +2,9 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <b-button variant="primary" :to="{ name: 'insured-appointment-create', params: { id: $route.params.id } }">Crear
-          Cita Médica
+        <b-button variant="primary"
+                  :to="{ name: 'insured-appointment-create', params: { id: $route.params.id } }">
+          Crear Cita Médica
         </b-button>
       </template>
     </table-header>
@@ -81,13 +82,11 @@ export default {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
       const { data } = await AppointmentResource.getAll({
-        q: searchQuery.value,
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
-        scope: `hasPatient:${route.value.params.id}`,
-        include: 'center;unit;specialty;type;status'
-
+        scope: `hasPatient:${route.value.params.userId},search:${searchQuery.value}`,
+        include: 'center;unit;specialty;status'
       })
 
       totalRows.value = data.total_data
@@ -96,7 +95,6 @@ export default {
 
     const tableColumns = [
       { key: 'actions', label: 'Acciones', thStyle: { width: '190px' } },
-      { key: 'id', label: '#', width: '10px', sortable: true, thStyle: { width: '10px' } },
       { key: 'specialty.name', label: 'Especialidad', sortable: false },
       { key: 'center.name', label: 'Centro', sortable: false },
       { key: 'unit.name', label: 'Consultorio', sortable: false },
@@ -104,7 +102,6 @@ export default {
       { key: 'date', label: 'Fecha Cita', sortable: false },
       { key: 'time', label: 'Hora Cita', sortable: false },
       { key: 'status.name', label: 'Estado', sortable: false },
-      { key: 'type.name', label: 'Tipo', sortable: false }
     ]
 
     return {

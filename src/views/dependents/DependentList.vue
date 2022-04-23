@@ -2,7 +2,8 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <b-button variant="primary" :to="{ name: 'dependent-create' }">Crear Dependiente</b-button>
+        <b-button v-if="$can('create', PERMISSION_DEPENDENT_USERS)"
+                  variant="primary" :to="{ name: 'dependent-create' }">Crear Dependiente</b-button>
       </template>
     </table-header>
 
@@ -20,40 +21,17 @@
     >
       <template #cell(actions)="data">
         <div class="text-nowrap">
-          <router-link
-            :to="{
-              name: 'insured-edit',
-              params: { id: data.item.id },
-            }"
-          >
-            <b-button
-              v-b-tooltip.hover.top="'Editar Asegurado'"
-              variant="flat-success"
-              class="btn-icon rounded-circle"
-            >
-              <feather-icon icon="EditIcon" />
-            </b-button>
-          </router-link>
-
-          <b-button
-            v-b-tooltip.hover.top="'Eliminar Asegurado'"
-            variant="flat-danger"
-            class="btn-icon rounded-circle"
-            @click="handleDelete(data.item.id)"
-          >
-            <feather-icon icon="TrashIcon" />
-          </b-button>
-
           <router-link :to="{
             name: 'insured-appointment-list',
-            params: { id: data.item.id}
+            params: { userId: data.item.user_id}
           }">
             <b-button
               v-b-tooltip.hover.top="'Citas Medicas'"
               variant="flat-warning"
               class="btn-icon "
             >
-              <feather-icon icon="CalendarIcon" /> <small>Citas Médicas</small>
+              <feather-icon icon="CalendarIcon" />
+              <small> Citas </small>
             </b-button>
           </router-link>
         </div>
@@ -70,16 +48,16 @@
 
 <script>
 import useList from '@/custom/libs/useList'
-
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
 import { InsuredResource } from '@/network/lib/insured'
+import { PERMISSION_DEPENDENT_USERS } from '@/permissions'
 
 export default {
   name: 'DependentList',
   components: {
     TableHeader,
-    TablePagination,
+    TablePagination
   },
   setup() {
     let {
@@ -92,18 +70,18 @@ export default {
       sortBy,
       isSortDirDesc,
       deleteResource,
-      refetchData,
+      refetchData
     } = useList()
 
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
       const { data } = await InsuredResource.getAll({
-        q: searchQuery.value,
+        scope: `search:${searchQuery.value},OnlyInsuredRoles`,
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
-        include: 'user;unit.center;relationship',
+        include: 'user;unit.center;relationship'
       })
 
       totalRows.value = data.total_data
@@ -112,13 +90,14 @@ export default {
 
     const tableColumns = [
       { key: 'actions', label: 'Acciones', thStyle: { width: '100px' } },
-      { key: 'id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
+      { key: 'user_id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
       { key: 'user.name', label: 'Nombre', sortable: false },
       { key: 'user.paternal_surname', label: 'Paterno', sortable: false },
       { key: 'user.maternal_surname', label: 'Materno', sortable: false },
       { key: 'unit.center.name', label: 'Centro de Salud', sortable: false },
+      { key: 'unit.name', label: 'Consultorio', sortable: false },
       { key: 'user.registration_code', label: 'Numero Asegurado', sortable: false },
-      { key: 'relationship.name', label: 'Parentesco', sortable: false },
+      { key: 'relationship.name', label: 'Parentesco', sortable: false }
     ]
 
     return {
@@ -134,6 +113,7 @@ export default {
       fetchItems,
       deleteResource,
       refetchData,
+      PERMISSION_DEPENDENT_USERS
     }
   },
 
@@ -143,8 +123,8 @@ export default {
       if (isDeleted) {
         this.refetchData()
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

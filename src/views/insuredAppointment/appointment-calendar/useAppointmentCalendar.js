@@ -1,8 +1,7 @@
-import { ref, onMounted, computed, watch } from '@vue/composition-api'
+import { ref, onMounted } from '@vue/composition-api'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
-import interactionPlugin from '@fullcalendar/interaction'
 import esLocale from '@fullcalendar/core/locales/es'
 import { useRouter } from '@core/utils/utils'
 
@@ -11,6 +10,12 @@ export const useAppointmentCalendar = () => {
 
   const refCalendar = ref(null)
 
+  let calendarApi = null
+
+  onMounted(() => {
+    calendarApi = refCalendar.value.getApi()
+  })
+
   const calendarEvents = ref([])
 
   const eventColor = {
@@ -18,10 +23,10 @@ export const useAppointmentCalendar = () => {
     'reserved': 'warning'
   }
 
-
   const calendarOptions = ref({
-    plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin, listPlugin],
-    initialView: 'dayGridMonth',
+    timeZone: 'America/La_Paz',
+    plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
+    initialView: 'timeGridWeek',
     headerToolbar: {
       start: 'sidebarToggle, prev,next, title',
       end: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
@@ -35,11 +40,19 @@ export const useAppointmentCalendar = () => {
         }
       }
     },
+    allDaySlot: false,
     events: calendarEvents,
     dayMaxEvents: 3,
     eventClassNames({ event: calendarEvent }) {
       const variant = eventColor[calendarEvent._def.extendedProps.status]
       return [`bg-light-${variant}`]
+    },
+    displayEventTime: true,
+    displayEventEnd: true,
+    eventTimeFormat: {
+      hour: 'numeric',
+      minute: '2-digit',
+      meridiem: 'short'
     }
   })
 
@@ -50,7 +63,7 @@ export const useAppointmentCalendar = () => {
     return items.map(item => {
       const { time, startTime, endTime, status } = item
       return {
-        title: time,
+        title: status == 'available' ? 'Disponible' : 'Reservado',
         start: new Date(startTime),
         end: new Date(endTime),
         status: status
@@ -70,12 +83,17 @@ export const useAppointmentCalendar = () => {
     calendarEvents.value = result.flat()
   }
 
+  const goToDate = (dateStr) => {
+    calendarApi.gotoDate(new Date(dateStr))
+  }
+
   return {
     refCalendar,
     calendarOptions,
     isCalendarSidebarActive,
     isCalendarFormActive,
     // calendarsColor: attentionTypeColor,
-    updateCalendar
+    updateCalendar,
+    goToDate
   }
 }

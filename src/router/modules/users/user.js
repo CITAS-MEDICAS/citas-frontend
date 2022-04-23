@@ -1,3 +1,5 @@
+import { PERMISSION_DASHBOARD, PERMISSION_STAFF_USERS } from '@/permissions'
+
 export default [
   {
     path: '/personal',
@@ -8,12 +10,12 @@ export default [
       breadcrumb: [
         {
           text: 'Personal',
-          active: true,
-        },
+          active: true
+        }
       ],
-      resource: 'personal',
-      action: 'read',
-    },
+      resource: PERMISSION_STAFF_USERS,
+      action: 'read'
+    }
   },
   {
     path: '/personal/crear',
@@ -24,16 +26,16 @@ export default [
       breadcrumb: [
         {
           text: 'Personal',
-          to: { name: 'user-list' },
+          to: { name: 'user-list' }
         },
         {
           text: 'Crear',
-          active: true,
-        },
+          active: true
+        }
       ],
-      resource: 'personal',
-      action: 'create',
-    },
+      resource: PERMISSION_STAFF_USERS,
+      action: 'create'
+    }
   },
   {
     path: '/personal/editar/:id',
@@ -44,15 +46,32 @@ export default [
       breadcrumb: [
         {
           text: 'Personal',
-          to: { name: 'user-list' },
+          to: { name: 'user-list' }
         },
         {
           text: 'Editar',
-          active: true,
-        },
+          active: true
+        }
       ],
-      resource: 'personal',
-      action: 'update',
-    },
+      resource: PERMISSION_STAFF_USERS,
+      action: 'update'
+    }
   },
+  {
+    path: '/perfil/',
+    name: 'user-profile',
+    component: () => import('@/views/user/UserProfile.vue'),
+    meta: {
+      pageTitle: 'Perfil de Usuario',
+      breadcrumb: [
+        {
+          text: 'Perfil',
+          active: true
+        }
+      ],
+      resource: PERMISSION_DASHBOARD,
+      action: 'read'
+    }
+  }
+
 ]
