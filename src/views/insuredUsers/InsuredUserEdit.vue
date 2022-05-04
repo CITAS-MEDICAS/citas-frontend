@@ -43,21 +43,17 @@ export default {
       const { data } = await InsuredResource.getById(this.insuredId, {
         include: 'user;unit',
       })
-
       const userData = data.insured.user
       delete data.insured.user
-
       const insuredData = data.insured
-
       this.userData = userData
-
       this.insuredData = this.initInsuredVariables(insuredData)
     },
     initInsuredVariables(insuredData) {
       const medicalUnit = insuredData.unit
       delete insuredData.unit
       const data = {
-        insuredIsTitular: insuredData.user_titular_id ? false : true,
+        insuredIsTitular: !insuredData.user_titular_id,
         registration_code: this.userData.registration_code,
         medical_center_id: medicalUnit.medical_center_id,
       }

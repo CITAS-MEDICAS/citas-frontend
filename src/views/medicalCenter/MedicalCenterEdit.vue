@@ -23,7 +23,6 @@ import { provide, ref } from '@vue/composition-api'
 
 import MedicalCenterForm from './components/MedicalCenterForm'
 import { MedicalCenterResource } from '@/network/lib/medicalCenter'
-import ToastificationContent from '@core/components/toastification/ToastificationContent'
 import { PERMISSION_MEDICAL_CENTER } from '@/permissions'
 
 export default {

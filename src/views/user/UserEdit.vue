@@ -108,7 +108,6 @@ export default {
 
       data.centers = undefined
       data.centers = centers
-
       return data
     },
   },

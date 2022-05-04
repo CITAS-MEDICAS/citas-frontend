@@ -60,4 +60,11 @@ export default [
     action: 'read',
     resource: PERMISSION_UNIT_TYPES,
   },
+  {
+    title: 'Registro',
+    route: 'registration-list',
+    icon: 'UserIcon',
+    action: 'read',
+    resource: 'registration',
+  },
 ]
