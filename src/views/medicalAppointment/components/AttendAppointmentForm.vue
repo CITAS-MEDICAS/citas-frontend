@@ -52,9 +52,6 @@ export default {
     ValidationObserver,
     ValidationProvider
   },
-  mounted() {
-    this.$store.dispatch('types/APPOINTMENT_STATUS')
-  },
   computed: {
     appointment_statuses() {
       const statuses = this.$store.state.types.appointmentStatuses
@@ -67,6 +64,9 @@ export default {
         }
       })
     }
+  },
+  mounted() {
+    this.$store.dispatch('types/APPOINTMENT_STATUS')
   },
   setup() {
     const refFormObserver = ref(null)

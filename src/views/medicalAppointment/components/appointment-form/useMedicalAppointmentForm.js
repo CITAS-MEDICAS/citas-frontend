@@ -7,7 +7,7 @@ import { useRouter } from '@core/utils/utils'
 import { AppointmentResource } from '@/network/lib/appointment'
 
 
-export const useMedicalAppointmentForm = (emit) => {
+export const useMedicalAppointmentForm = emit => {
   const { route, router } = useRouter()
   const treatmentId = route.value.params.treatmentId
   const appointmentId = route.value.query.cita
@@ -154,7 +154,7 @@ export const useMedicalAppointmentForm = (emit) => {
     emit('go-to-date', formData.value.calendar.date)
   }
 
-  const fetchAppointment = async (appointmentId) => {
+  const fetchAppointment = async appointmentId => {
     const { data: { appointment } } = await AppointmentResource.getById(appointmentId, {
       include: 'treatment.patient'
     })

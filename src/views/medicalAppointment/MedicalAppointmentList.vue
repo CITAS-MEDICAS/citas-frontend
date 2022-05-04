@@ -11,16 +11,16 @@ export default {
     DoctorList: () => import('./components/DoctorAppointmentList'),
     PersonalList: () => import('./components/PersonalAppointmentList'),
   },
-  computed: {
-    appointmentList() {
-      const activeRole = this.$store.state.user.activeRole.role
-      return this.resolveComponent(activeRole)
-    }
-  },
   data() {
     return {
       doctorRoles: ['medico', 'enfermera'],
       personalRoles: ['superadmin', 'administrador', 'estadistico']
+    }
+  },
+  computed: {
+    appointmentList() {
+      const activeRole = this.$store.state.user.activeRole.role
+      return this.resolveComponent(activeRole)
     }
   },
   methods: {

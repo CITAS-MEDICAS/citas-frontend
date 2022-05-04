@@ -54,9 +54,6 @@
               <b-form-group>
                 <div class="d-flex justify-content-between">
                   <label>Contraseña</label>
-                  <b-link to="#">
-                    <small>Olvide mi contraseña</small>
-                  </b-link>
                 </div>
                 <validation-provider #default="{ errors }" name="Password" rules="required">
                   <b-input-group
@@ -81,6 +78,9 @@
                     </b-input-group-append>
                   </b-input-group>
                   <small class="text-danger">{{ errors[0] }}</small>
+                  <b-link to="#" class="text-right">
+                    <small>Olvide mi contraseña</small>
+                  </b-link>
                 </validation-provider>
               </b-form-group>
 
@@ -93,7 +93,7 @@
 
               <!-- submit buttons -->
               <b-button type="submit" variant="primary" block :disabled="invalid">
-                Sign in
+                Iniciar Sesión
               </b-button>
             </b-form>
           </validation-observer>

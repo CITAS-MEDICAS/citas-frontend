@@ -1,3 +1,5 @@
+import { PERMISSION_TICKETS } from '@/permissions'
+
 export default [
   {
     path: '/login',
@@ -17,6 +19,16 @@ export default [
       layout: 'full',
       resource: 'Guest',
     },
+  },
+  {
+    path: '/tickets',
+    name: 'tickets',
+    component: () => import('@/views/tickets/Tickets.vue'),
+    meta: {
+      layout: 'full',
+      resource: PERMISSION_TICKETS,
+      action: 'read'
+    }
   },
   {
     path: '*',

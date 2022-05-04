@@ -8,9 +8,9 @@
 
         <b-button
           v-if="selectedAppointments.length"
+          v-b-modal.transfer-appointment-form
           variant="outline-info"
           class="ml-1"
-          v-b-modal.transfer-appointment-form
         >
           Transferir Citas
         </b-button>

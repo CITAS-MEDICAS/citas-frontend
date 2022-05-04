@@ -19,8 +19,8 @@
                 :options="specialties"
                 label="name"
                 :clearable="false"
-                @input="handleMedicalCenter"
                 placeholder="Selecciona..."
+                @input="handleMedicalCenter"
               />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
@@ -33,8 +33,8 @@
                 :options="medicalCenters"
                 label="name"
                 :reduce="item => item.id"
-                @input="handleMedicalUnit"
                 placeholder="Selecciona..."
+                @input="handleMedicalUnit"
               />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>

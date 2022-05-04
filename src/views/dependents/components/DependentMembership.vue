@@ -55,7 +55,7 @@ export default {
   },
   directives: {
     uppercase: {
-      update: (el) => {
+      update: el => {
         el.value = el.value.toUpperCase()
       }
     }

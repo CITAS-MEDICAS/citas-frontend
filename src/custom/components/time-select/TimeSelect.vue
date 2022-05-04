@@ -7,8 +7,8 @@
       :placeholder="placeholder"
       :disabled="disabled"
       :class="[sizeClass]"
-      @input="handleInput"
       :selectable="handleSelectable"
+      @input="handleInput"
     />
   </div>
 </template>
@@ -48,6 +48,11 @@ export default {
       default: ''
     }
   },
+  data() {
+    return {
+      options: []
+    }
+  },
   computed: {
     sizeClass() {
       if (this.size === 'sm') return 'select-size-sm'
@@ -61,30 +66,11 @@ export default {
       timeToInt
     }
   },
-  data() {
-    return {
-      options: []
-    }
-  },
-  methods: {
-    stepIsValid(step) {
-      return step.split(':')[1] > 0
-    },
-    handleInput(value){
-      this.$emit('input', value)
-      this.$emit('change', value)
-    },
-    handleSelectable(value) {
-      const minTime = this.pickerOptions.minTime
-      if(!minTime) return true
-      return this.timeToInt(value) > this.timeToInt(minTime)
-    }
-  },
   watch: {
     'pickerOptions.step': {
       handler(newStep, oldStep) {
         clearTimeout(this.timer)
-        const stepIsValid = (step) => step.split(':')[1] > 0
+        const stepIsValid = step => step.split(':')[1] > 0
         if (stepIsValid(newStep)) {
           this.timer = setTimeout(() => {
             this.options = this.generateTimeInterval(this.pickerOptions)
@@ -101,6 +87,20 @@ export default {
           this.$emit('input', null)
         }
       }
+    }
+  },
+  methods: {
+    stepIsValid(step) {
+      return step.split(':')[1] > 0
+    },
+    handleInput(value){
+      this.$emit('input', value)
+      this.$emit('change', value)
+    },
+    handleSelectable(value) {
+      const minTime = this.pickerOptions.minTime
+      if(!minTime) return true
+      return this.timeToInt(value) > this.timeToInt(minTime)
     }
   },
 }

@@ -59,7 +59,7 @@ export const useAppointmentCalendar = () => {
   const isCalendarSidebarActive = ref(false)
   const isCalendarFormActive = ref(false)
 
-  const mapEvents = (items) => {
+  const mapEvents = items => {
     return items.map(item => {
       const { time, startTime, endTime, status } = item
       return {
@@ -71,7 +71,7 @@ export const useAppointmentCalendar = () => {
     })
   }
 
-  const updateCalendar = (data) => {
+  const updateCalendar = data => {
     const result = data.map(item => {
       const { available, reserved } = item
       const availableDates = mapEvents(available)
@@ -82,7 +82,7 @@ export const useAppointmentCalendar = () => {
     calendarEvents.value = result.flat()
   }
 
-  const goToDate = (dateStr) => {
+  const goToDate = dateStr => {
     calendarApi.gotoDate(new Date(dateStr))
   }
 

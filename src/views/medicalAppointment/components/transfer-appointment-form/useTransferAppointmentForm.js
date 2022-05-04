@@ -48,7 +48,7 @@ export const useTransferAppointmentForm = () => {
 
   const destinationUnits = ref([])
 
-  const fetchMedicalUnit = async (medicalCenterId) => {
+  const fetchMedicalUnit = async medicalCenterId => {
     const { data } = await MedicalUnitResource.getAll({
       getAll: '1',
       scope: [

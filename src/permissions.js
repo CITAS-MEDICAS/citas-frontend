@@ -8,6 +8,7 @@ export const ROLE_STATIST = 'estadistico'
 export const ROLE_POLICE = 'policia'
 export const ROLE_SOCIAL = 'trabajo-social'
 export const ROLE_SUPPORT = 'soporte-informatico'
+export const ROLE_TICKET_TAKER = 'taquillero'
 
 // PERMISSIONS
 export const PERMISSION_MANAGE_ALL = 'all'
@@ -32,3 +33,5 @@ export const PERMISSION_INSURED_USERS = 'asegurados'
 
 export const PERMISSION_DEPENDENT_USERS = 'dependientes'
 export const PERMISSION_DEPENDENT_APPOINTMENTS = 'citas-asegurados'
+
+export const PERMISSION_TICKETS = 'tickets'
