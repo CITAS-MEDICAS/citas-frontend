@@ -9,6 +9,7 @@ import medicalUnit from './modules/administration/medicalUnit'
 import specialities from '@/router/modules/administration/specialities'
 import serviceHours from './modules/administration/service_hours'
 import relationship from './modules/administration/relationship'
+import registration from './modules/administration/registration'
 import medicalUnitType from './modules/administration/medicalUnitType'
 import calendar from './modules/administration/calendar'
 
@@ -49,6 +50,8 @@ const router = new VueRouter({
     // Insured
     ...dependent,
     ...appointment,
+    // registration
+    ...registration,
   ],
 })
 
