@@ -1,18 +1,22 @@
-import { computed, inject, ref, toRefs } from '@vue/composition-api'
+import { computed, inject, toRefs } from '@vue/composition-api'
+import { TicketResource } from '@/network/lib/ticket'
 
 export const useTicketHandler = (props, emit) => {
-
   const formData = inject('formData')
+
+  const { units } = toRefs(props)
 
   const closeForm = () => {
     props.clearSelectedEvent()
     emit('set-visible', false)
+    emit('clear-events', true)
+
     formData.value = {
-      treatment_type_id: null,
+      treatment_type_id: formData.value.treatment_type_id,
+      attention_type_id: formData.value.attention_type_id,
       user_patient_id: null,
       reason: '',
       calendar: null,
-      attention_type_id: null,
       medical_center_id: null,
       medical_unit_id: null,
       time: {
@@ -22,14 +26,22 @@ export const useTicketHandler = (props, emit) => {
     }
   }
 
+  const medicalUnit = computed(() => {
+    if (formData.value.medical_unit_id) {
+      return units.value.find(item => item.id === formData.value.medical_unit_id)?.name
+    }
+    return ''
+  })
 
+  const handleSubmit = async () => {
+    const data = await TicketResource.store(formData.value)
 
-  const handleSubmit = () => {
     closeForm()
   }
 
   return {
     formData,
+    medicalUnit,
     handleSubmit,
     closeForm,
   }

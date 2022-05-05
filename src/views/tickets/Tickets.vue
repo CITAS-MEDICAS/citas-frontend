@@ -99,7 +99,9 @@
       :is-ticket-handler-active="isTicketHandlerActive"
       :selected-event="selectedEvent"
       :clear-selected-event="clearSelectedEvent"
+      :units="units"
       @set-visible="setVisible"
+      @clear-events="clearEvents"
     />
   </section>
 </template>
@@ -143,7 +145,8 @@ export default {
       clearSelectedEvent,
       updateCalendar,
       grabEventDataFromEventApi,
-      goToDate
+      goToDate,
+      clearEvents
     } = useCalendar()
 
     const {
@@ -159,11 +162,19 @@ export default {
       if (selectedEvent.value.extendedProps.status === 'available') {
         const { start, end } = selectedEvent.value
         formData.value.time = {
-          startTime: start,
-          endTime: end
+          startTime: dateToISO(start),
+          endTime: dateToISO(end)
         }
         isTicketHandlerActive.value = true
       }
+    }
+
+    function dateToISO(date) {
+      const newDate = new Date(date).toLocaleString('en-GB', {
+        timeZone: 'America/La_Paz'
+      })
+
+      return newDate
     }
 
     return {
@@ -181,6 +192,7 @@ export default {
       clearSelectedEvent,
       updateCalendar,
       goToDate,
+      clearEvents,
 
       unitAvailability,
       availableDates,
@@ -188,9 +200,7 @@ export default {
       filterUnitAvailabilityByDate
     }
   },
-  mounted() {
-    this.fetchMedicalUnit()
-  },
+
   methods: {
     onSearchInsured(term, loading) {
       if (term.length > 5) {
@@ -208,12 +218,6 @@ export default {
     }, 500),
     handleSelect() {
 
-    },
-    async fetchMedicalUnit() {
-      const { data } = await MedicalUnitResource.getAll({
-        scope: 'authCenter'
-      })
-      this.units = data.rows
     },
     async handleAvailability() {
       if (!this.formData.medical_unit_id) {

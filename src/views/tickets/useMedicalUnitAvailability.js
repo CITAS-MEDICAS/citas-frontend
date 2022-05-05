@@ -7,16 +7,6 @@ export const useMedicalUnitAvailability = emit => {
 
   const fetchUnitAvailability = async (medicalUnitId, attentionTypeId) => {
     const { data } = await CalendarResource.availability(medicalUnitId, { attentionTypeId })
-    // availableDates.value = data
-    // availableDatesMap.value = data.map(item => {
-    //   const { calendar_id, date, duration, status } = item
-    //   return {
-    //     calendar_id,
-    //     date,
-    //     duration,
-    //     status,
-    //   }
-    // })
     unitAvailability.value = data
     mapAvailableDates(data)
   }
@@ -31,7 +21,7 @@ export const useMedicalUnitAvailability = emit => {
         calendar_id,
         date,
         duration,
-        status
+        status,
       }
     })
   }
@@ -40,6 +30,6 @@ export const useMedicalUnitAvailability = emit => {
     availableDates,
     fetchUnitAvailability,
     filterUnitAvailabilityByDate,
-    mapAvailableDates
+    mapAvailableDates,
   }
 }

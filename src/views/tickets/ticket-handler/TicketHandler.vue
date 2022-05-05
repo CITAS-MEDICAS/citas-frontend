@@ -6,16 +6,19 @@
     no-close-on-backdrop
     hide-header-close
     centered
+    title="Confirme los datos para su Reserva"
   >
     <section>
-      <b-form-group label="Fecha">
-        <b-form-input
-          :readonly="true"
-          :value="formData.calendar ? formData.calendar.date : null | getDate"
-          placeholder="dd/mm/yyy"
-          class="form-input"
-        />
-      </b-form-group>
+      <h1>
+        Fecha de Atención <br>
+        <code>{{ formData.time ? formData.time.startTime : null }}</code>
+      </h1>
+
+      <h1 class="mt-2">
+        Consultorio <br>
+        <code>{{ medicalUnit }}</code>
+      </h1>
+
     </section>
     <template #modal-footer>
       <b-button variant="outline-secondary" size="lg" @click="closeForm">Cancelar</b-button>
@@ -46,18 +49,24 @@ export default {
     clearSelectedEvent: {
       type: Function,
       required: true
+    },
+    units: {
+      type: Array,
+      required: true
     }
   },
   setup(props, { emit }) {
     const {
       formData,
+      medicalUnit,
       closeForm,
-      handleSubmit,
+      handleSubmit
     } = useTicketHandler(props, emit)
 
 
     return {
       formData,
+      medicalUnit,
       closeForm,
       handleSubmit
     }

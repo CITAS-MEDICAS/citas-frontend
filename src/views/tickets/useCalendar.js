@@ -97,6 +97,10 @@ export const useCalendar = () => {
     calendarEvents.value = result.flat()
   }
 
+  const clearEvents = () => {
+    calendarEvents.value = []
+  }
+
   const goToDate = dateStr => {
     calendarApi.gotoDate(new Date(dateStr))
   }
@@ -105,6 +109,7 @@ export const useCalendar = () => {
     refCalendar,
     calendarOptions,
     selectedEvent,
+    clearEvents,
     clearSelectedEvent,
     updateCalendar,
     goToDate,
