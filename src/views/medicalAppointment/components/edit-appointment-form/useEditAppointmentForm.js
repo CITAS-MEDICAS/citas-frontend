@@ -7,7 +7,7 @@ import { useRouter } from '@core/utils/utils'
 import { AppointmentResource } from '@/network/lib/appointment'
 
 
-export const useEditAppointmentForm = (emit) => {
+export const useEditAppointmentForm = emit => {
   const { route, router } = useRouter()
   const appointmentId = route.value.params.appointmentId
 
@@ -73,7 +73,7 @@ export const useEditAppointmentForm = (emit) => {
     return data.rows
   }
 
-  const fetchMedicalUnit = async (unitId) => {
+  const fetchMedicalUnit = async unitId => {
     formData.value.medical_unit_id = unitId || null
     const { data } = await MedicalUnitResource.getAll({
       getAll: '1',
@@ -90,7 +90,7 @@ export const useEditAppointmentForm = (emit) => {
     medicalCenters.value = await fetchMedicalCenter()
   }
 
-  const handleMedicalUnit = async (unitId) => {
+  const handleMedicalUnit = async unitId => {
     medicalUnits.value = await fetchMedicalUnit(unitId)
   }
 

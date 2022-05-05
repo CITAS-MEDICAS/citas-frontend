@@ -9,7 +9,7 @@
           <b-col cols="12">
             <b-form-group label="Nombre *">
               <validation-provider v-slot="{ errors }" name="Nombre" rules="required|min:2">
-                <b-form-input v-model="formData.name" :state="errors.length ? false : null" v-uppercase />
+                <b-form-input v-model="formData.name" v-uppercase :state="errors.length ? false : null" />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
@@ -19,8 +19,8 @@
               <validation-provider v-slot="{ errors }" name="Apellido Paterno" rules="min:2">
                 <b-form-input
                   v-model="formData.paternal_surname"
-                  :state="errors.length ? false : null"
                   v-uppercase
+                  :state="errors.length ? false : null"
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -35,8 +35,8 @@
               >
                 <b-form-input
                   v-model="formData.maternal_surname"
-                  :state="errors.length ? false : null"
                   v-uppercase
+                  :state="errors.length ? false : null"
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -50,7 +50,7 @@
           <b-col sm="9" lg="8">
             <b-form-group label="CI *">
               <validation-provider v-slot="{ errors }" name="CI" rules="required|min:5">
-                <b-form-input v-model="formData.ci" :state="errors.length ? false : null" v-uppercase />
+                <b-form-input v-model="formData.ci" v-uppercase :state="errors.length ? false : null" />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
             </b-form-group>
@@ -143,7 +143,7 @@ export default {
   },
   directives: {
     uppercase: {
-      update: (el) => {
+      update: el => {
         el.value = el.value.toUpperCase()
       }
     }

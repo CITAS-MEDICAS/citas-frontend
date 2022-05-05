@@ -84,9 +84,9 @@
               <validation-provider v-slot="{ errors }" name="Número de Asegurado" rules="required">
                 <b-form-input
                   v-model="formData.registration_code"
+                  v-uppercase
                   :state="errors.length ? false : null"
                   placeholder="123456ABC"
-                  v-uppercase
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -130,7 +130,7 @@ export default {
   },
   directives: {
     uppercase: {
-      update: (el) => {
+      update: el => {
         el.value = el.value.toUpperCase()
       }
     }

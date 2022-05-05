@@ -32,9 +32,9 @@
                 :options="specialties"
                 label="name"
                 :clearable="false"
-                @input="handleMedicalCenter"
                 placeholder="Selecciona..."
                 :disabled="isReconsult"
+                @input="handleMedicalCenter"
               />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
@@ -47,9 +47,9 @@
                 :options="medicalCenters"
                 label="name"
                 :reduce="item => item.id"
-                @input="handleMedicalUnit"
                 placeholder="Selecciona..."
                 :disabled="isReconsult"
+                @input="handleMedicalUnit"
               />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
@@ -63,8 +63,8 @@
                 label="name"
                 :reduce="item => item.id"
                 placeholder="Selecciona..."
-                @input="handleAvailability"
                 :disabled="isReconsult"
+                @input="handleAvailability"
               />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>

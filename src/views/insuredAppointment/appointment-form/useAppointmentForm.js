@@ -9,7 +9,7 @@ import { UserResource } from '@/network/lib/users'
 
 import { useRouter } from '@core/utils/utils'
 
-export const useAppointmentForm = (emit) => {
+export const useAppointmentForm = emit => {
   const { route, router } = useRouter()
 
   const insuredUser = ref(null)
@@ -23,7 +23,7 @@ export const useAppointmentForm = (emit) => {
     medical_unit_id: null,
     calendar: null,
     time: null,
-    reason: ''
+    reason: '',
   })
 
   const refFormObserver = ref(null)
@@ -36,15 +36,17 @@ export const useAppointmentForm = (emit) => {
     await store.dispatch('types/TREATMENT_TYPE')
     await store.dispatch('types/ATTENTION_TYPE')
     await store.dispatch('types/SPECIALTIES', {
-      scope: 'hasUnit'
+      scope: 'hasUnit',
     })
     setAttentionType()
     await fetchInsured()
   })
 
   const fetchInsured = async () => {
-    const { data: { user } } = await UserResource.getById(route.value.params.userId, {
-      include: 'latestInsured.unit'
+    const {
+      data: { user },
+    } = await UserResource.getById(route.value.params.userId, {
+      include: 'latestInsured.unit',
     })
     insuredUser.value = user
   }
@@ -78,7 +80,9 @@ export const useAppointmentForm = (emit) => {
     console.log(availableDates.value.length)
     console.log(formData.value.calendar)
     if (availableDates.value.length && formData.value.calendar) {
-      return availableDates.value.find(item => item.calendar_id === formData.value.calendar.calendar_id).available
+      return availableDates.value.find(
+        item => item.calendar_id === formData.value.calendar.calendar_id
+      ).available
     }
     return []
   })
@@ -86,7 +90,7 @@ export const useAppointmentForm = (emit) => {
   const fetchMedicalCenter = async () => {
     const { data } = await MedicalCenterResource.getAll({
       scope: `hasSpecialty:${formData.value.specialty.id}`,
-      sortByAsc: 'name'
+      sortByAsc: 'name',
     })
     return data.rows
   }
@@ -101,8 +105,8 @@ export const useAppointmentForm = (emit) => {
       scope: [
         `hasCenter:${formData.value.medical_center_id}`,
         `hasSpecialty:${formData.value.specialty.id}`,
-        'isEnabled'
-      ].join(',')
+        'isEnabled',
+      ].join(','),
     })
     return data.rows
   }
@@ -147,7 +151,10 @@ export const useAppointmentForm = (emit) => {
       availableDatesMap.value = data.map(item => {
         const { calendar_id, date, duration, status } = item
         return {
-          calendar_id, date, duration, status
+          calendar_id,
+          date,
+          duration,
+          status,
         }
       })
       emit('update-calendar', data)
@@ -187,6 +194,6 @@ export const useAppointmentForm = (emit) => {
     handleMedicalUnit,
     handleAvailability,
     handleSubmit,
-    goToDate
+    goToDate,
   }
 }
