@@ -174,7 +174,9 @@ export default {
         timeZone: 'America/La_Paz'
       })
 
-      return newDate
+      const [strDate, time] = newDate.split(',')
+
+      return strDate.split('/').reverse().join('-') + ' ' + time.trim()
     }
 
     return {

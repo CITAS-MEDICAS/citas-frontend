@@ -11,7 +11,7 @@
     <section>
       <h1>
         Fecha de Atención <br>
-        <code>{{ formData.time ? formData.time.startTime : null }}</code>
+        <code>{{ (formData.time ? formData.time.startTime : null) | formatStrDateTime }}</code>
       </h1>
 
       <h1 class="mt-2">
@@ -29,13 +29,12 @@
 
 <script>
 import { useTicketHandler } from './useTicketHandler'
-import { inject } from '@vue/composition-api'
-import { getDate } from '@/custom/filters'
+import { formatStrDateTime } from '@/custom/filters'
 
 export default {
   name: 'TicketHandler',
   filters: {
-    getDate
+    formatStrDateTime
   },
   props: {
     isTicketHandlerActive: {
@@ -60,7 +59,8 @@ export default {
       formData,
       medicalUnit,
       closeForm,
-      handleSubmit
+      handleSubmit,
+      printTicket
     } = useTicketHandler(props, emit)
 
 
@@ -68,7 +68,8 @@ export default {
       formData,
       medicalUnit,
       closeForm,
-      handleSubmit
+      handleSubmit,
+      printTicket
     }
   }
 }

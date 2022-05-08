@@ -12,6 +12,10 @@ export const getTime = value => {
   return time.slice(0, 5)
 }
 
+export const formatStrDateTime = value => {
+  return getDate(value) + ' ' + getTime(value)
+}
+
 export const formatDate = value => {
   if (!value) return value
 
@@ -22,6 +26,6 @@ export const formatDate = value => {
     month: '2-digit',
     day: '2-digit',
     hour: '2-digit',
-    minute: '2-digit'
+    minute: '2-digit',
   })
 }
