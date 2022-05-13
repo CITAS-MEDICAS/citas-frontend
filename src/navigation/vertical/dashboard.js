@@ -1,4 +1,4 @@
-import { PERMISSION_DASHBOARD } from '@/permissions'
+import {PERMISSION_DASHBOARD, PERMISSION_TICKETS} from '@/permissions'
 
 export default [
   {
@@ -7,5 +7,12 @@ export default [
     icon: 'HomeIcon',
     action: 'read',
     resource: PERMISSION_DASHBOARD,
+  },
+  {
+    title: 'Tickets',
+    route: 'tickets',
+    icon: 'HomeIcon',
+    action: 'read',
+    resource: PERMISSION_TICKETS,
   },
 ]

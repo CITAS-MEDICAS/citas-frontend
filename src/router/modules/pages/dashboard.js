@@ -16,5 +16,5 @@ export default [
       resource: PERMISSION_DASHBOARD,
       action: 'read'
     }
-  }
+  },
 ]
