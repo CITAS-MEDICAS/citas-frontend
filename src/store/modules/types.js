@@ -38,42 +38,34 @@ const mutations = {
 const actions = {
   [SPECIALTIES]: async ({ commit, state }, query) => {
     let items = []
-    if (state.specialties.length) {
-      items = state.specialties
-    } else {
-      const { data } = await TypesResource.getSpecialties({ sortByAsc: 'name', ...query })
-      items = data.rows
-    }
+
+    const { data } = await TypesResource.getSpecialties({ sortByAsc: 'name', ...query })
+    items = data.rows
+
     commit(SPECIALTIES, items)
   },
   [ATTENTION_TYPE]: async ({ commit, state }, query) => {
     let items = []
-    if (state.attentionTypes.length) {
-      items = state.attentionTypes
-    } else {
-      const { data } = await TypesResource.getAttentionTypes({ sortByAsc: 'id', ...query })
-      items = data.rows
-    }
+
+    const { data } = await TypesResource.getAttentionTypes({ sortByAsc: 'id', ...query })
+    items = data.rows
+
     commit(ATTENTION_TYPE, items)
   },
   [TREATMENT_TYPE]: async ({ commit, state }, payload) => {
     let items = []
-    if (state.treatmentTypes.length) {
-      items = state.treatmentTypes
-    } else {
-      const { data } = await TypesResource.getTreatmentTypes({ sortByAsc: 'id' })
-      items = data.rows
-    }
+
+    const { data } = await TypesResource.getTreatmentTypes({ sortByAsc: 'id' })
+    items = data.rows
+
     commit(TREATMENT_TYPE, items)
   },
   [APPOINTMENT_STATUS]: async ({ commit }, payload) => {
     let items = []
-    if (state.appointmentStatuses.length) {
-      items = state.appointmentStatuses
-    } else {
-      const { data } = await TypesResource.getAppointmentStatuses({ sortByAsc: 'id' })
-      items = data.rows
-    }
+
+    const { data } = await TypesResource.getAppointmentStatuses({ sortByAsc: 'id' })
+    items = data.rows
+
     commit(APPOINTMENT_STATUS, items)
   }
 }
