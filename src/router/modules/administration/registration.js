@@ -1,6 +1,16 @@
-import {PERMISSION_MEDICAL_CENTER} from "@/permissions";
+import { PERMISSION_MEDICAL_CENTER } from '@/permissions'
 
 export default [
+  {
+    path: '/registro-crear',
+    name: 'registration-form',
+    component: () => import('@/views/registration/RegistrationCreate.vue'),
+    meta: {
+      pageTitle: 'Registro',
+      layout: 'full',
+      resource: 'Guest'
+    }
+  },
   {
     path: '/registro',
     name: 'registration-list',
@@ -10,10 +20,10 @@ export default [
       breadcrumb: [
         {
           text: 'Registro Primera Vez',
-          active: true,
-        },
-      ],
-    },
+          active: true
+        }
+      ]
+    }
   },
   {
     path: '/registro/crear',
@@ -24,14 +34,14 @@ export default [
       breadcrumb: [
         {
           text: 'Registro',
-          to: { name: 'registration-list' },
+          to: { name: 'registration-list' }
         },
         {
           text: 'Crear',
-          active: true,
-        },
-      ],
-    },
+          active: true
+        }
+      ]
+    }
   },
   {
     path: '/registro/editar/:id',
@@ -42,14 +52,14 @@ export default [
       breadcrumb: [
         {
           text: 'Registro',
-          to: { name: 'registration-list' },
+          to: { name: 'registration-list' }
         },
         {
           text: 'Editar',
-          active: true,
-        },
+          active: true
+        }
       ],
-      action: 'update',
-    },
-  },
+      action: 'update'
+    }
+  }
 ]
