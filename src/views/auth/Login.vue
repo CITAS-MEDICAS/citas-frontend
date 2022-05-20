@@ -100,7 +100,7 @@
 
           <b-card-text class="text-center mt-2">
             <span>Si aún no se registro, haga click </span>
-            <b-link to="#">
+            <b-link to="/registro-crear">
               <span>aquí.</span>
             </b-link>
           </b-card-text>
