@@ -65,11 +65,21 @@ export default class JwtService {
           })
           return Promise.reject(error)
         } else {
+          const { data } = response
+          let title = 'Error'
+          let message =
+            data?.message || 'Ocurrio un error, contacte con el Administrador del Sistema!'
+
+          if(data?.errors.length) {
+            title = data.errors[0]?.title || title
+            message = data.errors[0]?.detail || message
+          }
+
           app.$toast({
             component: ToastificationContent,
             props: {
-              title: 'Error',
-              text: response.data?.message || 'Ocurrio un error, contacte con el Administrador del Sistema!',
+              title,
+              text: message,
               icon: 'AlertCircleIcon',
               variant: 'danger'
             }
