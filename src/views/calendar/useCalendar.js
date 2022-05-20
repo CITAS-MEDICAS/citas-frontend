@@ -58,7 +58,7 @@ export const useCalendar = () => {
   }
 
   const calendarOptions = ref({
-    timeZone: 'America/La_Paz',
+    // timeZone: 'America/La_Paz',
     plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin, listPlugin],
     initialView: 'dayGridMonth',
     headerToolbar: {

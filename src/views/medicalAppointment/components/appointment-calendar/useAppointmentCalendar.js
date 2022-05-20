@@ -24,7 +24,7 @@ export const useAppointmentCalendar = () => {
   }
 
   const calendarOptions = ref({
-    timeZone: 'America/La_Paz',
+    // timeZone: 'America/La_Paz',
     plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
     initialView: 'timeGridWeek',
     headerToolbar: {
