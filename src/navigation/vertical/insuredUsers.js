@@ -1,4 +1,4 @@
-import { PERMISSION_DEPENDENT_USERS } from '@/permissions'
+import {PERMISSION_DEPENDENT_USERS, PERMISSION_INSURED_USERS} from '@/permissions'
 
 export default [
   {
@@ -11,6 +11,6 @@ export default [
     route: 'dependent-list',
     icon: 'UserIcon',
     action: 'read',
-    resource: PERMISSION_DEPENDENT_USERS
+    resource: PERMISSION_INSURED_USERS
   }
 ]
