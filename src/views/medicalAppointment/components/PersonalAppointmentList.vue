@@ -2,11 +2,14 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <v-select v-model="staty"
-                  style="width: 150px"
+        <v-select v-model="status"
+                  style="width: 200px"
                   :clearable="false"
-                  :options="['Atendidos', 'Reservados']" placeholder="Mostrar"
+                  :options="['ATENDIDO', 'RESERVADO']" placeholder="Mostrar"
+                  @input="refetchData"
         />
+
+        {{ status }}
 
         <b-button
           v-if="selectedAppointments.length"
@@ -95,9 +98,7 @@ export default {
     formatDate
   },
   setup() {
-    // const staty = ''
     let {
-      staty = '',
       refTable,
       perPage,
       perPageOptions,
@@ -111,16 +112,17 @@ export default {
       refetchData
     } = useList()
 
+    const status = ref(null)
+
     const selectedAppointments = ref([])
 
     provide('selectedAppointments', selectedAppointments)
 
     const fetchItems = async () => {
-      console.log("fetchItems staty : "+staty)
+      // console.log('fetchItems staty : ' + staty)
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
       const { data } = await AppointmentResource.getAll({
-        // scope: `search:${searchQuery.value}`,
-        scope: `status:${searchQuery.value}`,
+        scope: `search:${searchQuery.value},status:${status.value}`,
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
@@ -161,7 +163,6 @@ export default {
     })
 
     return {
-      staty,
       refTable,
       perPage,
       perPageOptions,
@@ -174,20 +175,21 @@ export default {
       statusVariant,
       selectedAppointments,
       selectAll,
+      status,
       fetchItems,
       deleteResource,
       refetchData
     }
   },
-  watch: {
-    'staty': {
-      handler: function (after, before) {
-        console.log("staty : "+this.staty)
-        this.fetchItems()
-      },
-      deep: true,
-    },
-  },
+  // watch: {
+  //   'staty': {
+  //     handler: function(after, before) {
+  //       console.log('staty : ' + this.staty)
+  //       this.fetchItems()
+  //     },
+  //     deep: true
+  //   }
+  // },
   methods: {}
 }
 </script>
