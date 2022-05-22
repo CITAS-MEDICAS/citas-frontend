@@ -2,9 +2,11 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <v-select style="width: 150px"
+        <v-select v-model="staty"
+                  style="width: 150px"
                   :clearable="false"
-                  :options="['Atendidos', 'Reservados']" placeholder="Mostrar" />
+                  :options="['Atendidos', 'Reservados']" placeholder="Mostrar"
+        />
 
         <b-button
           v-if="selectedAppointments.length"
@@ -93,7 +95,9 @@ export default {
     formatDate
   },
   setup() {
+    // const staty = ''
     let {
+      staty = '',
       refTable,
       perPage,
       perPageOptions,
@@ -112,16 +116,16 @@ export default {
     provide('selectedAppointments', selectedAppointments)
 
     const fetchItems = async () => {
+      console.log("fetchItems staty : "+staty)
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
-
       const { data } = await AppointmentResource.getAll({
-        scope: `search:${searchQuery.value}`,
+        // scope: `search:${searchQuery.value}`,
+        scope: `status:${searchQuery.value}`,
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
         include: 'center;unit;specialty;status;treatment.patient'
       })
-
       totalRows.value = data.total_data
       return data.rows
     }
@@ -157,6 +161,7 @@ export default {
     })
 
     return {
+      staty,
       refTable,
       perPage,
       perPageOptions,
@@ -174,7 +179,15 @@ export default {
       refetchData
     }
   },
-
+  watch: {
+    'staty': {
+      handler: function (after, before) {
+        console.log("staty : "+this.staty)
+        this.fetchItems()
+      },
+      deep: true,
+    },
+  },
   methods: {}
 }
 </script>

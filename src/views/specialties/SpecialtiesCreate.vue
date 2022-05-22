@@ -35,6 +35,7 @@ export default {
     const formData = ref({
       name: '',
       type: 'specialty',
+      filter: 'specialty'
     })
 
     provide('formData', formData)
