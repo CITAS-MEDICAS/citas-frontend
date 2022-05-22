@@ -2,9 +2,12 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <v-select style="width: 150px"
+        <v-select v-model="status"
+                  style="width: 200px"
                   :clearable="false"
-                  :options="['Atendidos', 'Reservados']" placeholder="Mostrar" />
+                  :options="['RESERVADO','SOLICITADO','NO SE PRESENTO','CANCELADO','ATENDIDO']" placeholder="Mostrar"
+                  @input="refetchData"
+        />
       </template>
     </table-header>
 
@@ -50,6 +53,7 @@ import TablePagination from '@/custom/components/Tables/TablePagination'
 import { AppointmentResource } from '@/network/lib/appointment'
 import { getDate, getTime, formatDate } from '@/custom/filters'
 import ShowHistoryButton from './ActionButtons'
+import {ref} from "@vue/composition-api/dist/vue-composition-api";
 
 export default {
   name: 'DoctorAppointmentList',
@@ -77,12 +81,12 @@ export default {
       deleteResource,
       refetchData
     } = useList()
-
+    const status = ref('RESERVADO')
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
       const { data } = await AppointmentResource.getAll({
-        scope: `search:${searchQuery.value}`,
+        scope: `search:${searchQuery.value},status:${status.value}`,
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
@@ -120,6 +124,7 @@ export default {
       sortBy,
       isSortDirDesc,
       statusVariant,
+      status,
       fetchItems,
       deleteResource,
       refetchData

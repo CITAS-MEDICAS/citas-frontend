@@ -5,12 +5,9 @@
         <v-select v-model="status"
                   style="width: 200px"
                   :clearable="false"
-                  :options="['ATENDIDO', 'RESERVADO']" placeholder="Mostrar"
+                  :options="['RESERVADO','SOLICITADO','NO SE PRESENTO','CANCELADO','ATENDIDO']" placeholder="Mostrar"
                   @input="refetchData"
         />
-
-        {{ status }}
-
         <b-button
           v-if="selectedAppointments.length"
           v-b-modal.transfer-appointment-form
@@ -112,8 +109,7 @@ export default {
       refetchData
     } = useList()
 
-    const status = ref(null)
-
+    const status = ref('RESERVADO')
     const selectedAppointments = ref([])
 
     provide('selectedAppointments', selectedAppointments)
@@ -181,15 +177,6 @@ export default {
       refetchData
     }
   },
-  // watch: {
-  //   'staty': {
-  //     handler: function(after, before) {
-  //       console.log('staty : ' + this.staty)
-  //       this.fetchItems()
-  //     },
-  //     deep: true
-  //   }
-  // },
   methods: {}
 }
 </script>
