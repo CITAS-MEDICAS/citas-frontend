@@ -8,6 +8,16 @@
                   :options="['RESERVADO','SOLICITADO','NO SE PRESENTO','CANCELADO','ATENDIDO']" placeholder="Mostrar"
                   @input="refetchData"
         />
+        <b-col cols="6" md="4" class="d-flex align-items-center justify-content-start mb-1 mb-md-0">
+          <b-form-datepicker
+            v-model="starttime"
+            label-no-date-selected="Fecha"
+            locale="es"
+            :show-decade-nav="true"
+            :date-format-options="{day: 'numeric', month: 'numeric', year: 'numeric' }"
+            @input="refetchData"
+          />
+        </b-col>
       </template>
     </table-header>
 
@@ -82,11 +92,11 @@ export default {
       refetchData
     } = useList()
     const status = ref('RESERVADO')
+    const starttime = ref('')
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
-
       const { data } = await AppointmentResource.getAll({
-        scope: `search:${searchQuery.value},status:${status.value}`,
+        scope: `search:${searchQuery.value},status:${status.value},starttime:${starttime.value}`,
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
@@ -125,6 +135,7 @@ export default {
       isSortDirDesc,
       statusVariant,
       status,
+      starttime,
       fetchItems,
       deleteResource,
       refetchData

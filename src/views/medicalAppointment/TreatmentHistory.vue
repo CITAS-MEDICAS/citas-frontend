@@ -167,7 +167,7 @@ export default {
       this.$bvModal.show('attend-appointment-form')
     },
     resolveShowAttendButton(item) {
-      return item.id == this.$route.query.cita && item.status.name != 'CANCELADO'
+      return item.id == this.$route.query.cita && item.status.name == 'RESERVADO'
     }
   }
 }
