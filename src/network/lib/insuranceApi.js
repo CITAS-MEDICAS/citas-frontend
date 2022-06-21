@@ -5,7 +5,6 @@ class InsuranceApi {
     this.uri = 'api/external/insurance'
     this.request = request
   }
-
   search(query) {
     return this.request({
       url: `/${this.uri}/search`,

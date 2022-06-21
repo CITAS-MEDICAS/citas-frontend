@@ -2,7 +2,7 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <b-button variant="primary" :to="{ name: 'medical-center-create' }"> Crear Rol</b-button>
+<!--        <b-button variant="primary" :to="{ name: 'medical-center-create' }"> Crear Rol</b-button>-->
       </template>
     </table-header>
 
