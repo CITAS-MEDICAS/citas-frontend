@@ -150,9 +150,12 @@ export default {
   },
   computed: {
     filterSpecialties() {
+      console.log("xxxx")
       const unitType = this.unitTypes.find(item => this.formData.unit_type_id == item.id)
+      console.log(unitType)
       if (unitType) {
         const specialties = this.specialties.filter(item => item.filter === unitType.filter)
+        console.log(specialties)
         const findSpecialty = specialties.filter(item => item.id === this.formData.specialty_type_id)
         if(findSpecialty.length === 0) {
           this.formData.specialty_type_id = null
