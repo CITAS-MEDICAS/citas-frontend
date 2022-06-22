@@ -176,7 +176,7 @@ export default {
   },
   methods: {
     async getRelationships() {
-      const { data } = await TypesResource.getAll({ scope: 'relationship', sortByAsc: 'id' })
+      const { data } = await TypesResource.getAll({ scope: 'relationship', sortByAsc: 'name' })
       this.relationships = data.rows
     },
     handleInsuredType() {
