@@ -20,10 +20,10 @@
       <b-col lg="4" class="d-flex align-items-center auth-bg px-2 p-lg-5">
         <b-col sm="8" md="6" lg="12" class="px-xl-2 mx-auto">
           <b-img
-          :src="require('@/assets/images/logo/logo_cns1.png')"
-          center
-          class="mb-1 mb-sm-0"
-          height="150"
+            :src="require('@/assets/images/logo/logo_cns1.png')"
+            center
+            class="mb-1 mb-sm-0"
+            height="150"
           />
           <br>
           <b-card-title title-tag="h2" class="font-weight-bold mb-1">
@@ -100,7 +100,7 @@
 
           <b-card-text class="text-center mt-2">
             <span>Si aún no se registro, haga click </span>
-            <b-link to="/registro-crear">
+            <b-link :to="{ name: 'registration-form' }">
               <span>aquí.</span>
             </b-link>
           </b-card-text>
@@ -179,16 +179,16 @@ export default {
             })
           })
         })
-        // .catch(error => {
-        //   this.$toast({
-        //     component: ToastificationContent,
-        //     props: {
-        //       title: 'Credenciales Invalidos',
-        //       icon: 'AlertCircleIcon',
-        //       variant: 'danger'
-        //     }
-        //   })
-        // })
+      // .catch(error => {
+      //   this.$toast({
+      //     component: ToastificationContent,
+      //     props: {
+      //       title: 'Credenciales Invalidos',
+      //       icon: 'AlertCircleIcon',
+      //       variant: 'danger'
+      //     }
+      //   })
+      // })
     }
   }
 }
