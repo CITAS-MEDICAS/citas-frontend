@@ -136,6 +136,8 @@ export default {
 
     const tableColumns = [
       { key: 'actions', label: 'Acciones', thStyle: { width: '150px' } },
+      { key: 'center.name', label: 'Centro', sortable: false },
+      { key: 'unit.name', label: 'Consultorio', sortable: false },
       { key: 'treatment.patient.fullname', label: 'Asegurado', sortable: false },
       { key: 'date_reservation', label: 'Reservado', sortable: false },
       { key: 'date', label: 'Fecha Cita', sortable: false },
