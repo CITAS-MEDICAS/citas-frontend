@@ -104,6 +104,14 @@
               <span>aquí.</span>
             </b-link>
           </b-card-text>
+          <b-card-text class="text-center mt-2">
+            <b-link
+              class="alert-link"
+              href="manualregistro.pdf"
+              target="_blank"
+              >Manual de usuario
+            </b-link>
+          </b-card-text>
         </b-col>
       </b-col>
       <!-- /Login-->
