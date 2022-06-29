@@ -21,6 +21,7 @@ export const PERMISSION_SPECIALTIES = 'especialidad'
 export const PERMISSION_SERVICE_HOURS = 'horarios'
 export const PERMISSION_RELATIONSHIPS = 'parentesco'
 export const PERMISSION_UNIT_TYPES = 'tipos-consultorio'
+export const PERMISSION_REGISTRATION = 'registro-asegurados'
 
 export const PERMISSION_MEDICAL_APPOINTMENTS = 'citas-medicas'
 export const PERMISSION_ATTEND_APPOINTMENTS = 'atender-cita-medica'

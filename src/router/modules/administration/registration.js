@@ -1,4 +1,4 @@
-import { PERMISSION_MEDICAL_CENTER } from '@/permissions'
+import { PERMISSION_REGISTRATION } from '@/permissions'
 
 export default [
   {
@@ -20,10 +20,12 @@ export default [
       breadcrumb: [
         {
           text: 'Registro Primera Vez',
-          active: true
-        }
-      ]
-    }
+          active: true,
+        },
+      ],
+      resource: PERMISSION_REGISTRATION,
+      action: 'read',
+    },
   },
   {
     path: '/registro/crear',
@@ -38,10 +40,12 @@ export default [
         },
         {
           text: 'Crear',
-          active: true
-        }
-      ]
-    }
+          active: true,
+        },
+      ],
+      resource: PERMISSION_REGISTRATION,
+      action: 'create',
+    },
   },
   {
     path: '/registro/editar/:id',
@@ -59,7 +63,8 @@ export default [
           active: true
         }
       ],
-      action: 'update'
-    }
-  }
+      resource: PERMISSION_REGISTRATION,
+      action: 'update',
+    },
+  },
 ]

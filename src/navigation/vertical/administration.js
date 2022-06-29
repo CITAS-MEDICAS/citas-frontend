@@ -2,7 +2,8 @@ import {
   PERMISSION_MEDICAL_CENTER,
   PERMISSION_MEDICAL_UNIT, PERMISSION_RELATIONSHIPS,
   PERMISSION_SERVICE_HOURS,
-  PERMISSION_SPECIALTIES, PERMISSION_UNIT_TYPES
+  PERMISSION_SPECIALTIES, PERMISSION_UNIT_TYPES,
+  PERMISSION_REGISTRATION
 } from '@/permissions'
 
 export default [
@@ -15,7 +16,8 @@ export default [
       PERMISSION_SPECIALTIES,
       PERMISSION_SERVICE_HOURS,
       PERMISSION_RELATIONSHIPS,
-      PERMISSION_UNIT_TYPES
+      PERMISSION_UNIT_TYPES,
+      PERMISSION_REGISTRATION,
     ],
   },
   {
@@ -65,6 +67,6 @@ export default [
     route: 'registration-list',
     icon: 'UserIcon',
     action: 'read',
-    resource: 'registration',
+    resource: PERMISSION_REGISTRATION,
   },
 ]
