@@ -2,12 +2,12 @@ import { PERMISSION_DEPENDENT_APPOINTMENTS, PERMISSION_DEPENDENT_USERS } from '@
 
 export default [
   {
-    header: 'Beneficiarios',
+    header: 'Asegurados',
     action: 'read',
     resource: [PERMISSION_DEPENDENT_USERS],
   },
   {
-    title: 'Asegurado',
+    title: 'Beneficiarios',
     route: 'dependent-list',
     icon: 'UserIcon',
     action: 'read',

@@ -8,16 +8,20 @@
                   :options="['RESERVADO','SOLICITADO','NO SE PRESENTO','CANCELADO','ATENDIDO']" placeholder="Mostrar"
                   @input="refetchData"
         />
-        <b-col cols="6" md="4" class="d-flex align-items-center justify-content-start mb-1 mb-md-0">
-          <b-form-datepicker
-            v-model="starttime"
-            label-no-date-selected="Fecha"
-            locale="es"
-            :show-decade-nav="true"
-            :date-format-options="{day: 'numeric', month: 'numeric', year: 'numeric' }"
-            @input="refetchData"
-          />
-        </b-col>
+        <b-form-datepicker
+          v-model="starttime"
+          label-no-date-selected="Fecha"
+          locale="es"
+          :show-decade-nav="true"
+          :date-format-options="{day: 'numeric', month: 'numeric', year: 'numeric' }"
+          @input="refetchData"
+          class="ml-1"
+          style="width: 150px"
+        />
+        <b-button variant="primary" class="btn-icon ml-1" @click="downloadPdf">
+          <feather-icon icon="PrinterIcon" />
+        </b-button>
+
       </template>
     </table-header>
 
@@ -63,7 +67,7 @@ import TablePagination from '@/custom/components/Tables/TablePagination'
 import { AppointmentResource } from '@/network/lib/appointment'
 import { getDate, getTime, formatDate } from '@/custom/filters'
 import ShowHistoryButton from './ActionButtons'
-import {ref} from "@vue/composition-api/dist/vue-composition-api";
+import { ref } from '@vue/composition-api/dist/vue-composition-api'
 
 export default {
   name: 'DoctorAppointmentList',
@@ -107,6 +111,21 @@ export default {
       return data.rows
     }
 
+    const downloadPdf = async () => {
+      const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
+      const response = await AppointmentResource.download({
+        scope: `search:${searchQuery.value},status:${status.value},starttime:${starttime.value}`,
+        [sortOption]: sortBy.value,
+        include: 'status;treatment.patient;center;unit.specialty;unit.serviceHour;unit.staff.roles;attention',
+        date: starttime.value
+      })
+
+      const blob = new Blob([response.data], { type: 'application/pdf' })
+      const url = URL.createObjectURL(blob)
+      window.open(url)
+    }
+
+
     const statusVariant = {
       'RESERVADO': 'success',
       'SOLICITADO': 'warning',
@@ -117,6 +136,8 @@ export default {
 
     const tableColumns = [
       { key: 'actions', label: 'Acciones', thStyle: { width: '150px' } },
+      { key: 'center.name', label: 'Centro', sortable: false },
+      { key: 'unit.name', label: 'Consultorio', sortable: false },
       { key: 'treatment.patient.fullname', label: 'Asegurado', sortable: false },
       { key: 'date_reservation', label: 'Reservado', sortable: false },
       { key: 'date', label: 'Fecha Cita', sortable: false },
@@ -137,6 +158,7 @@ export default {
       status,
       starttime,
       fetchItems,
+      downloadPdf,
       deleteResource,
       refetchData
     }

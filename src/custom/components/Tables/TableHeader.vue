@@ -1,7 +1,7 @@
 <template>
   <div class="m-2">
     <b-row>
-      <b-col cols="12" md="6" class="d-flex align-items-center justify-content-start mb-1 mb-md-0">
+      <b-col cols="12" md="8" class="d-flex align-items-center justify-content-start mb-1 mb-md-0">
         <label>Entradas</label>
         <v-select
           v-model="perPage"
@@ -11,7 +11,7 @@
         />
         <slot name="button" />
       </b-col>
-      <b-col cols="12" md="6">
+      <b-col cols="12" md="4">
         <slot name="search-bar">
           <div class="d-flex align-items-center justify-content-end">
             <b-form-input v-model="searchQuery" class="d-inline-block" placeholder="Buscar..." />

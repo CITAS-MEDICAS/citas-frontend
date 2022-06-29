@@ -9,14 +9,23 @@ class AppointmentResource extends Resource {
     return this.request({
       url: `/${this.uri}/${id}/update-status`,
       method: 'put',
-      data: resource,
+      data: resource
     })
   }
 
   cancelAppointment(id) {
     return this.request({
-      url: `${this.uri}/${id}/cancel`,
+      url: `/${this.uri}/${id}/cancel`,
       method: 'post'
+    })
+  }
+
+  download(query) {
+    return this.request({
+      url: `/${this.uri}/download`,
+      method: 'get',
+      params: query,
+      responseType: 'blob'
     })
   }
 }

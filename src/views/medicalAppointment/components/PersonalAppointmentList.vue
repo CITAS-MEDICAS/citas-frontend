@@ -31,7 +31,7 @@
       primary-key="id"
       class="position-relative"
     >
-      <template #head(actions)="data">
+      <template #head(actions)="">
         <b-form-checkbox
           v-model="selectAll"
           style="display: inline-block"

@@ -1,12 +1,8 @@
 <template>
   <div class="page-wrapper">
     <b-row>
-      <b-col cols="12" xl="12" md="8">
-        <b-card no-body>
-          <b-card-body>
-            <RegistrationForm ref="refForm" />
-          </b-card-body>
-        </b-card>
+      <b-col cols="12" xl="12" md="8" class="p-3">
+        <RegistrationForm ref="refForm" />
       </b-col>
     </b-row>
   </div>
@@ -17,12 +13,13 @@ import { provide, ref } from '@vue/composition-api'
 import RegistrationForm from './components/RegistrationForm'
 import { RegistrationResource } from '@/network/lib/registration'
 import ToastificationContent from '@core/components/toastification/ToastificationContent'
-import {debounce} from "@/libs/utils";
-import {InsuranceApi} from "@/network/lib/insuranceApi";
+import { debounce } from '@/libs/utils'
+import { InsuranceApi } from '@/network/lib/insuranceApi'
+
 export default {
   name: 'MedicalCenterCreate',
   components: {
-    RegistrationForm,
+    RegistrationForm
   },
   setup() {
     const formData = ref({
@@ -45,11 +42,11 @@ export default {
       employer_date: '2010-10-01',
       employer_name: '',
       employer_code: '',
-      affiliation_date: '2000-01-01',
+      affiliation_date: '2000-01-01'
     })
     provide('formData', formData)
     return {
-      formData,
+      formData
     }
   },
   methods: {
@@ -57,8 +54,8 @@ export default {
       // const isValid = this.$refs.refForm.validate()
       // if (!isValid) return
       const { data } = await RegistrationResource.store(this.formData)
-      console.log(this.formData);
-      console.log(data);
+      console.log(this.formData)
+      console.log(data)
       if (data) {
         this.$router.push({ name: 'registration-list' }).then(() => {
           this.$toast({
@@ -66,16 +63,16 @@ export default {
             props: {
               title: `Creado Exitosamente!`,
               icon: 'CheckIcon',
-              variant: 'success',
-            },
+              variant: 'success'
+            }
           })
         })
       }
     },
     handleCancel() {
       this.$router.push({ name: 'medical-center-list' })
-    },
-  },
+    }
+  }
 }
 </script>
 
