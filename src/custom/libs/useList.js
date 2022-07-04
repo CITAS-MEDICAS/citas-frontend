@@ -14,6 +14,7 @@ const useList = function () {
   const sortBy = ref('updated_at')
   const isSortDirDesc = ref(true)
   const isBusy = ref(false)
+  const showSpinner = ref(false)
 
   let timer = null
 
@@ -90,6 +91,7 @@ const useList = function () {
     isSortDirDesc,
     isBusy,
     route,
+    showSpinner,
     deleteResource,
     refetchData,
   }

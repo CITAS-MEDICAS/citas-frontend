@@ -39,6 +39,16 @@
           >
             <feather-icon icon="TrashIcon" />
           </b-button>
+          <b-button
+            v-if="data.item.is_verified"
+            v-b-tooltip.hover.top="'Enviar credenciales'"
+            variant="flat-info"
+            class="btn-icon rounded-circle"
+            @click="handleVerificationEmail(data.item.id)"
+          >
+            <b-spinner v-if="showSpinner" small />
+            <feather-icon v-else icon="MailIcon" />
+          </b-button>
         </div>
       </template>
 
@@ -61,10 +71,12 @@ import useList from '@/custom/libs/useList'
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
 import { RegistrationResource } from '@/network/lib/registration'
+import ToastificationContent from '@core/components/toastification/ToastificationContent'
+
 export default {
   components: {
     TableHeader,
-    TablePagination,
+    TablePagination
   },
   setup() {
     let {
@@ -76,8 +88,9 @@ export default {
       searchQuery,
       sortBy,
       isSortDirDesc,
+      showSpinner,
       deleteResource,
-      refetchData,
+      refetchData
     } = useList()
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
@@ -85,9 +98,8 @@ export default {
         q: searchQuery.value,
         limit: perPage.value,
         page: currentPage.value,
-        [sortOption]: sortBy.value,
+        [sortOption]: sortBy.value
       })
-      console.log(data);
       totalRows.value = data.total_data
       return data.rows
     }
@@ -101,7 +113,7 @@ export default {
       { key: 'maternal_surname', label: 'Materno', sortable: true },
       { key: 'gender', label: 'Género', sortable: true },
       { key: 'employer_code', label: 'Patronal', sortable: true },
-      { key: 'employer_name', label: 'Empleador', sortable: true },
+      { key: 'employer_name', label: 'Empleador', sortable: true }
     ]
     return {
       refTable,
@@ -113,9 +125,10 @@ export default {
       tableColumns,
       sortBy,
       isSortDirDesc,
+      showSpinner,
       fetchItems,
       deleteResource,
-      refetchData,
+      refetchData
     }
   },
   methods: {
@@ -125,6 +138,22 @@ export default {
         this.refetchData()
       }
     },
-  },
+    async handleVerificationEmail(resourceId) {
+      this.showSpinner = true
+      const { data } = await RegistrationResource.verificationMail(resourceId)
+      if (data.status == 'success') {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `¡Credenciales enviadas!`,
+            icon: 'MailIcon',
+            variant: 'success'
+          }
+        })
+      }
+
+      this.showSpinner = false
+    }
+  }
 }
 </script>
