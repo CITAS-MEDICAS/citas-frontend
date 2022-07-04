@@ -45,7 +45,7 @@
           </b-button>
           <router-link :to="{
             name: 'dependent-create-admin',
-            params: { id: data.item.user_id, registration_code: 'herni101'},
+            params: { id: data.item.user_id},
 
           }">
             <b-button v-b-tooltip.hover.top="'Crear Dependiente'"

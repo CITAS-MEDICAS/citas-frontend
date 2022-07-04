@@ -1,4 +1,4 @@
-import { PERMISSION_MEDICAL_APPOINTMENTS } from '@/permissions'
+import {PERMISSION_MEDICAL_APPOINTMENTS, PERMISSION_MEDICAL_CENTER} from '@/permissions'
 
 export default [
   {
@@ -9,8 +9,9 @@ export default [
   {
     title: 'Citas Médicas',
     route: 'medical-appointments-list',
-    icon: 'ClipboardIcon',
+    icon: 'GridIcon',
     action: 'read',
-    resource: PERMISSION_MEDICAL_APPOINTMENTS
-  }
+    resource: PERMISSION_MEDICAL_APPOINTMENTS,
+  },
+
 ]

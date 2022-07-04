@@ -1,4 +1,5 @@
 import {
+  PERMISSION_INSURED_USERS,
   PERMISSION_MEDICAL_APPOINTMENTS,
   PERMISSION_RECONSULT_APPOINTMENTS,
   PERMISSION_TRANSFER_APPOINTMENTS
@@ -10,14 +11,16 @@ export default [
     name: 'medical-appointments-list',
     component: () => import('@/views/medicalAppointment/MedicalAppointmentList'),
     meta: {
-      pageTitle: 'Citas Medicas',
+      pageTitle: 'Citas Medicas2',
       breadcrumb: [
         {
-          text: 'Citas Médicas',
+          text: 'Citas Médicas2',
           active: true
         }
       ],
-      resource: PERMISSION_MEDICAL_APPOINTMENTS,
+      // resource: PERMISSION_MEDICAL_APPOINTMENTS,
+      // action: 'read'
+      resource: PERMISSION_INSURED_USERS,
       action: 'read'
     }
   },
