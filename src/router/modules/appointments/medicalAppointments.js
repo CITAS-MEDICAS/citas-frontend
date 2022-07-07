@@ -11,16 +11,16 @@ export default [
     name: 'medical-appointments-list',
     component: () => import('@/views/medicalAppointment/MedicalAppointmentList'),
     meta: {
-      pageTitle: 'Citas Medicas2',
+      pageTitle: 'Citas Medicas',
       breadcrumb: [
         {
-          text: 'Citas Médicas2',
+          text: 'Citas Médicas',
           active: true
         }
       ],
-      // resource: PERMISSION_MEDICAL_APPOINTMENTS,
+      // resource: ,PERMISSION_INSURED_USERS
       // action: 'read'
-      resource: PERMISSION_INSURED_USERS,
+      resource: PERMISSION_MEDICAL_APPOINTMENTS,
       action: 'read'
     }
   },

@@ -57,7 +57,18 @@ export default {
       const isValid = await this.$refs.refForm.validate()
 
       if (!isValid) return
-
+      if (this.formData.users.length === 0) {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `Debe asignar Personal`,
+            icon: 'BadIcon',
+            variant: 'warning',
+          },
+        })
+        console.log(this.formData)
+        return
+      }
       const { data } = await MedicalUnitResource.store(this.formData)
 
       if (data.medicalUnit) {

@@ -163,11 +163,11 @@ export const useAppointmentForm = emit => {
 
   const handleSubmit = async () => {
     const isValid = await refFormObserver.value.validate()
-
+    console.log("handleSubmit")
+    console.log(formData.value)
     if (!isValid) {
       return false
     }
-
     const { data } = await AppointmentResource.store(formData.value)
     if (data.appointment) {
       router.push({ name: 'insured-appointment-list', params: { id: route.value.params.id } })

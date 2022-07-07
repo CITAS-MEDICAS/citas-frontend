@@ -51,15 +51,6 @@
           </b-button>
         </div>
       </template>
-
-      <template #cell(name)="data">
-        <b-link
-          :to="{ name: 'registration-edit', params: { id: data.item.id } }"
-          class="font-weight-bold"
-        >
-          {{ data.value }}
-        </b-link>
-      </template>
     </b-table>
 
     <table-pagination :total-rows="totalRows" :per-page="perPage" />
@@ -92,10 +83,11 @@ export default {
       deleteResource,
       refetchData
     } = useList()
+
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
       const { data } = await RegistrationResource.getAll({
-        q: searchQuery.value,
+        scope: `search:${searchQuery.value}`,
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value
@@ -103,9 +95,10 @@ export default {
       totalRows.value = data.total_data
       return data.rows
     }
+
     const tableColumns = [
       { key: 'actions', label: 'Acciones', thStyle: { width: '100px' } },
-      { key: 'id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
+      // { key: 'id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
       { key: 'ci', label: 'Carnet', sortable: true },
       { key: 'code_affiliate', label: 'Matricula', sortable: true },
       { key: 'name', label: 'Nombre', sortable: true },

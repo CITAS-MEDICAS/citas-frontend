@@ -1,4 +1,9 @@
-import {PERMISSION_DEPENDENT_APPOINTMENTS, PERMISSION_MEDICAL_APPOINTMENTS} from '@/permissions'
+import {
+  PERMISSION_DEPENDENT_APPOINTMENTS,
+  PERMISSION_MEDICAL_APPOINTMENTS,
+  PERMISSION_MEDICAL_CENTER,
+  PERMISSION_SPECIALTIES
+} from '@/permissions'
 
 export default [
   {
@@ -17,9 +22,10 @@ export default [
           active: true
         }
       ],
-      // resource: PERMISSION_DEPENDENT_APPOINTMENTS,
-      resource: [PERMISSION_MEDICAL_APPOINTMENTS,PERMISSION_DEPENDENT_APPOINTMENTS],
-      action: 'read'
+      // funciona :
+      // resource: PERMISSION_MEDICAL_APPOINTMENTS,
+      resource: PERMISSION_MEDICAL_APPOINTMENTS,
+      action: 'list'
     }
   },
   {
@@ -47,7 +53,7 @@ export default [
           active: true
         }
       ],
-      resource: PERMISSION_DEPENDENT_APPOINTMENTS,
+      resource: PERMISSION_MEDICAL_APPOINTMENTS,
       action: 'create'
     }
   }

@@ -59,9 +59,20 @@ export default {
       const isValid = await this.$refs.refForm.validate()
 
       if (!isValid) return
+      if (this.formData.roles.length === 0 || this.formData.centers.length === 0) {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `Debe asignar Roles y Centros`,
+            icon: 'BadIcon',
+            variant: 'warning',
+          },
+        })
+        console.log(this.formData)
+        return
+      }
 
       const { data } = await UserResource.store(this.formData)
-
       if (data.user) {
         this.$router.push({ name: 'user-list' }).then(() => {
           this.$toast({

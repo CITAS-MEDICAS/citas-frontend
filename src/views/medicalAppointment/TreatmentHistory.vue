@@ -137,8 +137,10 @@ export default {
       { key: 'center.name', label: 'Centro', sortable: false },
       { key: 'specialty.name', label: 'Especialidad', sortable: false },
       { key: 'treatment.patient.fullname', label: 'Asegurado', sortable: false },
-      { key: 'date_reservation', label: 'Reservado', sortable: false },
-      { key: 'date', label: 'Fecha Cita', sortable: true },
+      { key: 'date_reservation', label: 'Reservado en fecha', sortable: false },
+      { key: 'date', label: 'Cita en fecha', sortable: true },
+      { key: 'updated_at', label: 'Atendido en fecha', sortable: false },
+      { key: 'diagnostic', label: 'Diagnostico', sortable: false },
       { key: 'status.name', label: 'Estado', sortable: false }
     ]
 

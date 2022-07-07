@@ -14,7 +14,7 @@ export default {
   data() {
     return {
       doctorRoles: ['medico', 'enfermera'],
-      personalRoles: ['superadmin', 'administrador', 'estadistico','trabajo-social']
+      personalRoles: ['superadmin', 'administrador', 'estadistico','trabajo-social','soporte-informatico','policia']
     }
   },
   computed: {

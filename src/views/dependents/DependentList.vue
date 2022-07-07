@@ -31,7 +31,6 @@
               class="btn-icon "
             >
               <feather-icon icon="CalendarIcon" />
-              <small> Citas </small>
             </b-button>
           </router-link>
         </div>
@@ -89,14 +88,15 @@ export default {
     }
 
     const tableColumns = [
-      { key: 'actions', label: 'Acciones', thStyle: { width: '100px' } },
-      { key: 'user_id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
+      { key: 'actions', label: 'Accion', thStyle: { width: '100px' } },
+      // { key: 'user_id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
       { key: 'user.name', label: 'Nombre', sortable: false },
       { key: 'user.paternal_surname', label: 'Paterno', sortable: false },
       { key: 'user.maternal_surname', label: 'Materno', sortable: false },
+      { key: 'user.ci', label: 'Carnet', sortable: false },
+      { key: 'user.registration_code', label: 'Numero Asegurado', sortable: false },
       { key: 'unit.center.name', label: 'Centro de Salud', sortable: false },
       { key: 'unit.name', label: 'Consultorio', sortable: false },
-      { key: 'user.registration_code', label: 'Numero Asegurado', sortable: false },
       { key: 'relationship.name', label: 'Parentesco', sortable: false }
     ]
 

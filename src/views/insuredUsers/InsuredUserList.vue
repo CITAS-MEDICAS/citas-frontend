@@ -2,7 +2,7 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <b-button variant="primary" :to="{ name: 'insured-create' }"> Crear Asegurado</b-button>
+        <b-button variant="primary" :to="{ name: 'insured-create' }">Crear Asegurado</b-button>
       </template>
     </table-header>
 
@@ -55,6 +55,8 @@
               <feather-icon icon="UserIcon" />
             </b-button>
           </router-link>
+
+          <!-- CITAS -->
           <router-link :to="{
             name: 'insured-appointment-list',
             params: { userId: data.item.user_id}
@@ -65,7 +67,6 @@
               class="btn-icon "
             >
               <feather-icon icon="CalendarIcon" />
-              <small> Citas </small>
             </b-button>
           </router-link>
 
@@ -126,11 +127,13 @@ export default {
     const tableColumns = [
       { key: 'actions', label: 'Acciones', thStyle: { width: '100px' } },
       //user_id replace for id
-      { key: 'user_id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
+      // { key: 'user_id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
       { key: 'user.name', label: 'Nombre', sortable: false },
       { key: 'user.paternal_surname', label: 'Paterno', sortable: false },
       { key: 'user.maternal_surname', label: 'Materno', sortable: false },
       { key: 'unit.center.name', label: 'Centro de Salud', sortable: false },
+      { key: 'user.ci', label: 'Carnet', sortable: false },
+      // { key: 'user.email', label: 'mail', sortable: false },
       { key: 'user.registration_code', label: 'Numero Asegurado', sortable: false },
       { key: 'relationship.name', label: 'Parentesco', sortable: false },
     ]
