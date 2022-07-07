@@ -5,7 +5,7 @@
         <v-select v-model="status"
                   style="width: 200px"
                   :clearable="false"
-                  :options="['RESERVADO','SOLICITADO','NO SE PRESENTO','CANCELADO','ATENDIDO']" placeholder="Mostrar"
+                  :options="['TODOS...','RESERVADO','SOLICITADO','NO SE PRESENTO','CANCELADO','ATENDIDO']" placeholder="TODOS"
                   @input="refetchData"
         />
         <b-button
@@ -115,6 +115,9 @@ export default {
     provide('selectedAppointments', selectedAppointments)
 
     const fetchItems = async () => {
+      if (status.value === 'TODOS...') {
+        status.value = ''
+      }
       // console.log('fetchItems staty : ' + staty)
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
       const { data } = await AppointmentResource.getAll({

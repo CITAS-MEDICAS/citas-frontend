@@ -4,8 +4,8 @@
       <template #button>
         <v-select v-model="status"
                   style="width: 200px"
-                  :clearable="false"
-                  :options="['RESERVADO','SOLICITADO','NO SE PRESENTO','CANCELADO','ATENDIDO']" placeholder="Mostrar"
+                  :clearable="true"
+                  :options="['TODOS...','RESERVADO','SOLICITADO','NO SE PRESENTO','CANCELADO','ATENDIDO']" placeholder="TODOS"
                   @input="refetchData"
         />
         <b-form-datepicker
@@ -98,6 +98,9 @@ export default {
     const status = ref('RESERVADO')
     const starttime = ref('')
     const fetchItems = async () => {
+      if (status.value === 'TODOS...') {
+        status.value = ''
+      }
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
       const { data } = await AppointmentResource.getAll({
         scope: `search:${searchQuery.value},status:${status.value},starttime:${starttime.value}`,
