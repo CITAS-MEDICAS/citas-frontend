@@ -91,7 +91,7 @@
         <b-row>
           <b-col cols="6" class="mb-2">
             <b-form-group label="Número de Asegurado o Matricula">
-              <validation-provider v-slot="{ errors }" name="Matricula" rules="minmax:9,10|required|regex:^([0-9a-zA-Z-]+)$">
+              <validation-provider v-slot="{ errors }" name="Matricula" rules="minmax:9,10|required|regex:^([0-9a-zñA-ZÑ-]+)$">
                 <b-form-input
                   v-model="formData.code_affiliate"
                   :state="errors.length > 0 ? false:null"
@@ -118,7 +118,7 @@
         <b-row>
           <b-col>
             <b-form-group label="Nombres">
-              <validation-provider v-slot="{ errors }" name="Nombres" rules="minmax:2,40|required|regex:^([A-Z ]+)$">
+              <validation-provider v-slot="{ errors }" name="Nombres" rules="minmax:2,40|required|regex:^([A-ZÑ ]+)$">
                 <b-form-input
                   v-model="formData.name"
                   class="form-control"
@@ -131,7 +131,7 @@
           </b-col>
           <b-col cols="6" class="mb-2">
             <b-form-group label="Paterno">
-              <validation-provider v-slot="{ errors }" name="Paterno" rules="minmax:2,40|required|regex:^([A-Z ]+)$">
+              <validation-provider v-slot="{ errors }" name="Paterno" rules="minmax:2,40|required|regex:^([A-ZÑ ]+)$">
                 <b-form-input
                   v-model="formData.paternal_surname"
                   class="form-control"
@@ -146,7 +146,7 @@
         <b-row>
           <b-col>
             <b-form-group label="Materno">
-              <validation-provider v-slot="{ errors }" name="Materno" rules="minmax:2,40|required|regex:^([A-Z ]+)$">
+              <validation-provider v-slot="{ errors }" name="Materno" rules="minmax:2,40|required|regex:^([A-ZÑ ]+)$">
                 <b-form-input
                   v-model="formData.maternal_surname"
                   class="form-control"
@@ -242,7 +242,7 @@
         </b-col>
         <b-col cols="6" class="mb-2">
           <b-form-group label="Ocupación">
-            <validation-provider #default="{ errors }" name="Ocupacion" rules="minmax:5,40|required|regex:^([A-Z ]+)$" >
+            <validation-provider #default="{ errors }" name="Ocupacion" rules="minmax:5,40|required|regex:^([A-ZÑ ]+)$" >
               <b-form-input
                 id="profession"
                 v-model="formData.profession"

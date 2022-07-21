@@ -78,8 +78,8 @@ import useList from '@/custom/libs/useList'
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
 import AttendAppointmentForm from './components/AttendAppointmentForm'
-import { AppointmentResource } from '@/network/lib/appointment'
-import { getDate, getTime, formatDate } from '@/custom/filters'
+import {AppointmentResource} from '@/network/lib/appointment'
+import {formatDate, getDate, getTime} from '@/custom/filters'
 
 export default {
   name: 'InsuredTreatmentList',
@@ -169,8 +169,27 @@ export default {
       this.$bvModal.show('attend-appointment-form')
     },
     resolveShowAttendButton(item) {
-      return item.id == this.$route.query.cita && item.status.name == 'RESERVADO'
+      let dataPermission = JSON.parse(localStorage.getItem('userRole'))
+      console.log(item.start_time)
+      console.log(this.resolveDifDate(item.start_time))
+      if (dataPermission["role"] === "medico"){
+        console.log("si medic")
+        if (this.resolveDifDate(item.start_time)>-0.5) {
+          return parseInt(item.id) === parseInt(this.$route.query.cita) && item.status.name === 'RESERVADO'
+        }
+      } else {
+        console.log("no medic")
+        return parseInt(item.id) === parseInt(this.$route.query.cita) && item.status.name === 'RESERVADO'
+      }
+
+    },
+    resolveDifDate(startTime){
+      let date1 = new Date(Date.now())
+      let date2 = new Date(startTime)
+      let difNumeric = date2.getTime() - date1.getTime()
+      return difNumeric / (1000 * 3600 * 24)
     }
+
   }
 }
 </script>

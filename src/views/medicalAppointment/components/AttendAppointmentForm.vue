@@ -17,7 +17,7 @@
         </validation-provider>
       </b-form-group>
 
-      <b-form-group label="Diagnostico">
+      <b-form-group v-if="form.appointment_status_id==59" label="Diagnostico">
         <b-textarea v-model="form.diagnostic" />
       </b-form-group>
 
@@ -25,7 +25,16 @@
         <b-textarea v-model="form.comment" />
       </b-form-group>
     </validation-observer>
-
+    <div class="demo-spacing-0">
+      <b-alert
+        variant="danger"
+        show
+      >
+        <div class="alert-body">
+          <span><strong>ATENCIÓN : </strong> Debe estar seguro de registrar la cita, no se pueden revertir los cambios.</span>
+        </div>
+      </b-alert>
+    </div>
     <template #modal-footer>
       <div class="w-100">
         <b-button variant="primary" class="float-right ml-1" @click="handleSubmit">
@@ -87,6 +96,7 @@ export default {
     async handleSubmit() {
       const valid = await this.$refs.refFormObserver.validate()
       if (!valid) return false
+
 
       const { data } = await AppointmentResource.updateStatus(this.appointmentId, this.form)
       if (data.appointment) {

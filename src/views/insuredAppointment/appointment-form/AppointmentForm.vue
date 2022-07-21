@@ -110,7 +110,20 @@
             </validation-provider>
           </b-form-group>
 
-          <b-button variant="primary" block class="mt-2" @click="handleSubmit">Guardar</b-button>
+          <b-button v-b-modal.modal-center variant="primary" block class="mt-2">Guardar</b-button>
+          <b-modal
+            id="modal-center"
+            centered
+            title="Citas Médicas"
+            ok-only
+            ok-title="Cancelar"
+            ok-variant="secondary"
+          >
+            <b-card-text>
+              Se Creara la cita, recuerde que deebe estar 10 minutos antes en la cita medica
+            </b-card-text>
+            <b-button v-b-modal.modal-center variant="success" block class="mt-2" @click="handleSubmit">Aceptar y crear la cita médica</b-button>
+          </b-modal>
         </validation-observer>
       </div>
     </div>

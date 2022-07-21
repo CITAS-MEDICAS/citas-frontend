@@ -63,7 +63,7 @@ export default [
     resource: PERMISSION_UNIT_TYPES,
   },
   {
-    title: 'Registro',
+    title: 'Pre Registro',
     route: 'registration-list',
     icon: 'UserIcon',
     action: 'read',

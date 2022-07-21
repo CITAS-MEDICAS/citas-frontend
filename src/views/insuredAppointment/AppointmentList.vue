@@ -53,6 +53,8 @@ import { AppointmentResource } from '@/network/lib/appointment'
 import { getDate, getTime } from '@/custom/filters'
 import { app } from '@/main'
 
+import { removeItem } from '@/custom/libs/date'
+
 export default {
   name: 'AppointmentList',
   components: {
@@ -165,8 +167,14 @@ export default {
       }
     },
     resolveShowCancelButton(data) {
-      if (['RESERVADO', 'SOLICITADO'].includes(data.status.name)) return true
+      let date1 = new Date(Date.now())
+      let date2 = new Date(data.start_time)
+      let difNumeric = date2.getTime() - date1.getTime()
+      let difDays = difNumeric / (1000 * 3600 * 24)
 
+      if (['RESERVADO', 'SOLICITADO'].includes(data.status.name)){
+        if (difDays>=1) return true
+      }
       return false
     }
   }
