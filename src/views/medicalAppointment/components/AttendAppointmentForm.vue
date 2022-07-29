@@ -4,6 +4,7 @@
            no-close-on-backdrop
            title="Cita Médica"
   >
+    <pre>{{ form }}</pre>
     <validation-observer ref="refFormObserver">
       <b-form-group label="Estado de la Consulta *">
         <validation-provider v-slot="{ errors }" name="Estado de la Consulta" rules="required">
@@ -83,7 +84,8 @@ export default {
     const form = ref({
       appointment_status_id: null,
       diagnostic: null,
-      comment: null
+      comment: null,
+      user_medic_id:null,
     })
     return {
       appointmentId,
@@ -94,11 +96,16 @@ export default {
   },
   methods: {
     async handleSubmit() {
+      const userData = JSON.parse(localStorage.getItem('userData'))
+      this.form.user_medic_id = userData.id
       const valid = await this.$refs.refFormObserver.validate()
       if (!valid) return false
 
 
       const { data } = await AppointmentResource.updateStatus(this.appointmentId, this.form)
+      console.log("this.form ATTEND")
+      console.log(this.form)
+      console.log(data)
       if (data.appointment) {
         this.$emit('update-list')
         this.closeForm()
@@ -112,7 +119,8 @@ export default {
       this.form = {
         appointment_status_id: null,
         diagnostic: null,
-        comment: null
+        comment: null,
+        user_medic_id: null
       }
     },
     closeForm() {

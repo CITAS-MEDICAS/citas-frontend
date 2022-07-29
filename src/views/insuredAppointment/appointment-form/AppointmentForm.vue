@@ -120,7 +120,8 @@
             ok-variant="secondary"
           >
             <b-card-text>
-              Se Creara la cita, recuerde que deebe estar 10 minutos antes en la cita medica
+              Se Creara la cita, recuerde que debe estar 10 minutos antes en la cita medica.
+              Solo puede cancelar 24hrs Antes. si no acude a la cita será penalizado.
             </b-card-text>
             <b-button v-b-modal.modal-center variant="success" block class="mt-2" @click="handleSubmit">Aceptar y crear la cita médica</b-button>
           </b-modal>

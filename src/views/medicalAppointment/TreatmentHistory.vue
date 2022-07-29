@@ -23,6 +23,13 @@
         }">
           <b-button class="ml-1" variant="outline-warning">Transferencia</b-button>
         </router-link>
+        <router-link v-if="$can('create', PERMISSION_RECONSULT_APPOINTMENTS)  && $route.query.cita" :to="{
+          name: 'appointment-reprogram-form',
+          params: {treatmentId: $route.params.treatmentId},
+          query: { cita: $route.query.cita }
+        }">
+          <b-button class="ml-1" variant="outline-secondary">Reprogramar</b-button>
+        </router-link>
       </template>
     </table-header>
 
@@ -41,14 +48,21 @@
       <template #cell(actions)="data">
         <b-button
           v-if="$can('create', PERMISSION_ATTEND_APPOINTMENTS) && resolveShowAttendButton(data.item)"
-          class="ml-1" variant="outline-info" size="sm"
+          v-b-tooltip.hover.top="'Atender al Asegurado'"
           @click="showForm(data.item.id)"
+          variant="success"
         >
           Atender
         </b-button>
+
+<!--        HeadphonesIcon
+class="ml-1" variant="outline-info" size="sm"-->
       </template>
       <template #cell(date_reservation)="data">
         {{ data.value | getDate }}
+      </template>
+      <template #cell(medic.fullname)="data">
+        {{ data.value.toUpperCase() }}
       </template>
       <template #cell(date)="data">
         <strong>{{ data.item.start_time | formatDate }}</strong>
@@ -110,38 +124,40 @@ export default {
 
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
-
+      console.log("start_time ordenado por desc")
       const { data } = await AppointmentResource.getAll({
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
-        include: 'center;unit;specialty;status;treatment.patient',
+        include: 'center;unit;specialty;status;medic;treatment.patient',
         scope: `treatment:${route.value.params.treatmentId},search:${searchQuery.value}`,
         getAll: '1'
       })
-
       totalRows.value = data.total_data
       return data.rows
     }
 
     const statusVariant = {
-      'RESERVADO': 'success',
+      'RESERVADO': 'warning',
       'SOLICITADO': 'warning',
-      'NO SE PRESENTO': 'secondary',
+      'NO SE PRESENTO': 'danger',
       'CANCELADO': 'danger',
-      'ATENDIDO': 'info'
+      'ATENDIDO': 'success',
+      'REPROGRAMADO': 'secondary',
     }
 
     const tableColumns = [
-      { key: 'actions', label: 'Acciones', thStyle: { width: '150px' } },
+      { key: 'actions', label: 'Acciones', thStyle: { width: '50px' } },
+      { key: 'status.name', label: 'Estado', sortable: false },
       { key: 'center.name', label: 'Centro', sortable: false },
       { key: 'specialty.name', label: 'Especialidad', sortable: false },
       { key: 'treatment.patient.fullname', label: 'Asegurado', sortable: false },
       { key: 'date_reservation', label: 'Reservado en fecha', sortable: false },
       { key: 'date', label: 'Cita en fecha', sortable: true },
-      { key: 'updated_at', label: 'Atendido en fecha', sortable: false },
+      { key: 'updated_at', label: 'Transacción en fecha', sortable: false },
       { key: 'diagnostic', label: 'Diagnostico', sortable: false },
-      { key: 'status.name', label: 'Estado', sortable: false }
+      { key: 'comment', label: 'Comentario', sortable: false },
+      { key: 'medic.fullname', label: 'Medico', sortable: false ,thStyle: { width: '150px' } }
     ]
 
     return {

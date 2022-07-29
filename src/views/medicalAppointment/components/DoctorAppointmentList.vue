@@ -3,9 +3,9 @@
     <table-header :per-page-options="perPageOptions">
       <template #button>
         <v-select v-model="status"
-                  style="width: 200px"
+                  style="width: 250px"
                   :clearable="true"
-                  :options="['TODOS...','RESERVADO','SOLICITADO','NO SE PRESENTO','CANCELADO','ATENDIDO']" placeholder="TODOS"
+                  :options="['TODOS...','RESERVADO','SOLICITADO','NO SE PRESENTO','REPROGRAMADO','CANCELADO','ATENDIDO']" placeholder="TODOS"
                   @input="refetchData"
         />
         <b-form-datepicker
@@ -95,7 +95,7 @@ export default {
       deleteResource,
       refetchData
     } = useList()
-    const status = ref('RESERVADO')
+    const status = ref('TODOS...')
     const starttime = ref('')
     const fetchItems = async () => {
       if (status.value === 'TODOS...') {
@@ -107,7 +107,7 @@ export default {
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
-        include: 'status;treatment.patient'
+        include: 'status;treatment.patient;center;unit'
       })
 
       totalRows.value = data.total_data
@@ -134,7 +134,8 @@ export default {
       'SOLICITADO': 'warning',
       'NO SE PRESENTO': 'secondary',
       'CANCELADO': 'danger',
-      'ATENDIDO': 'info'
+      'ATENDIDO': 'info',
+      'REPROGRAMADO': 'secondary',
     }
 
     const tableColumns = [

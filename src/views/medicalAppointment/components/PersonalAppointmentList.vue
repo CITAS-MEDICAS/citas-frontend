@@ -136,7 +136,8 @@ export default {
       'SOLICITADO': 'warning',
       'NO SE PRESENTO': 'secondary',
       'CANCELADO': 'danger',
-      'ATENDIDO': 'info'
+      'ATENDIDO': 'info',
+      'REPROGRAMADO' : 'secondary'
     }
 
     const tableColumns = [

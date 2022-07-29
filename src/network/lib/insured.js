@@ -12,6 +12,13 @@ class InsuredResource extends Resource {
       data: resource,
     })
   }
+  undelete(id, resource) {
+    return this.request({
+      url: `api/insured/undelete/${id}`,
+      method: 'get',
+      data: resource,
+    })
+  }
 }
 
 const resource = new InsuredResource()

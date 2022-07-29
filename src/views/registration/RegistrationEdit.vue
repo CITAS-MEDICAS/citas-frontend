@@ -65,17 +65,28 @@ export default {
       // const isValid = await this.$refs.refForm.validate()
 
       // if (!isValid) return
-      const { data } = await RegistrationResource.update(this.$route.params.id, this.formData)
-      if (data.registration) {
-        this.$router.push({ name: 'registration-list' }).then(() => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `Creado Exitosamente!`,
-              icon: 'CheckIcon',
-              variant: 'success',
-            },
+      try {
+        const { data                       } = await RegistrationResource.update(this.$route.params.id, this.formData)
+        if (data.registration) {
+          this.$router.push({ name: 'registration-list' }).then(() => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: `Actualizado Exitosamente!`,
+                icon: 'CheckIcon',
+                variant: 'success',
+              },
+            })
           })
+        }
+      } catch (error){
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `!El Carnet, numero de asegurado o correo ya existen Verifique porfavor!`,
+            icon: 'CheckIcon',
+            variant: 'danger',
+          },
         })
       }
     },

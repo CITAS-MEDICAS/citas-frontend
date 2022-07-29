@@ -36,10 +36,10 @@ const useList = function () {
   const deleteResource = async (resourceId, ResourceClass) => {
     const result = await app.$swal({
       title: '¿Esta used seguro/a?',
-      text: 'No se pordrá revertir este cambio.',
+      text: 'Posiblemente no se pueda revertir el cambio.',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Si, eliminar!',
+      confirmButtonText: 'Si, Continuar!',
       cancelButtonText: 'Cancelar',
       customClass: {
         confirmButton: 'btn btn-warning',

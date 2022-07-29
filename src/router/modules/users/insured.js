@@ -56,5 +56,25 @@ export default [
       resource: PERMISSION_INSURED_USERS,
       action: 'update'
     }
-  }
+  },
+  {
+    path: '/asegurados/alta',
+    name: 'insured-enabled',
+    component: () => import('@/views/insuredUsers/InsuredEnabled'),
+    meta: {
+      pageTitle: 'Alta del Asegurado',
+      breadcrumb: [
+        {
+          text: 'Asegurados',
+          to: { name: 'insured-list' }
+        },
+        {
+          text: 'Alta',
+          active: true
+        }
+      ],
+      resource: PERMISSION_INSURED_USERS,
+      action: 'create'
+    }
+  },
 ]

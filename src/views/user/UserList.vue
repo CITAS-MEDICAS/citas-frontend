@@ -117,11 +117,12 @@ export default {
 
     const tableColumns = [
       { key: 'actions', label: 'Acciones', thStyle: { width: '100px' } },
-      { key: 'id', label: '#', width: '10px', sortable: true, thStyle: { width: '50px' } },
+      { key: 'ci', label: 'CI', sortable: true },
       { key: 'name', label: 'Nombre', sortable: true },
       { key: 'paternal_surname', label: 'Ap. Paterno', sortable: true },
       { key: 'maternal_surname', label: 'Ap. Materno', sortable: true },
-      { key: 'ci', label: 'CI', sortable: true },
+      { key: 'email', label: 'correo', sortable: true },
+      { key: 'phone_number', label: 'Telefono', sortable: true },
       { key: 'roles', label: 'Roles', sortable: false },
     ]
 

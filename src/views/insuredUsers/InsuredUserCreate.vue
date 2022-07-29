@@ -24,6 +24,7 @@ import { provide, ref } from '@vue/composition-api'
 import ToastificationContent from '@core/components/toastification/ToastificationContent'
 import CreateInsuredForm from './components/CreateInsuredForm'
 import { InsuredResource } from '@/network/lib/insured'
+import {ValidationObserver, ValidationProvider} from "vee-validate";
 
 export default {
   name: 'InsuredUserCreate',

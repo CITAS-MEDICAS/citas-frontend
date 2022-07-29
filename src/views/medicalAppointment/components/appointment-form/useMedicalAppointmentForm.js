@@ -15,8 +15,11 @@ export const useMedicalAppointmentForm = emit => {
 
   const insuredName = ref('')
   const attentionTypeName = route.value.meta.attentionType
+  const attentionTypeReprogram = route.value.meta.attentionTypeReprogram
   const isReconsult = attentionTypeName === 'RECONSULTA'
-
+  const isReprogram = attentionTypeReprogram === 'REPROGRAMACION'
+  console.log("isReconsult : "+isReconsult)
+  console.log("isReprogram : "+isReprogram)
   const formData = ref({
     treatment_id: treatmentId,
     attention_type_id: null,
@@ -27,6 +30,11 @@ export const useMedicalAppointmentForm = emit => {
     calendar: null,
     time: null,
     reason: ''
+  })
+  const formUpdateStatus = ref({
+    appointment_status_id: null,
+    comment: null,
+    user_medic_id: null
   })
 
   const refFormObserver = ref(null)
@@ -124,7 +132,8 @@ export const useMedicalAppointmentForm = emit => {
     formData.value.calendar = null
     formData.value.time = null
     const medicalUnitId = formData.value.medical_unit_id
-    const attentionTypeId = formData.value.attention_type_id
+    //SI ES REPROMADO LO TRATO COMO UN attentionTypeId=51 NUEVO SINO COMO attentionTypeId=52 RECONSULTA
+    const attentionTypeId = isReprogram ? attention.find(item => item.name === "NUEVO").id : formData.value.attention_type_id
     if (medicalUnitId && attentionTypeId) {
       const { data } = await CalendarResource.availability(medicalUnitId, { attentionTypeId })
       availableDates.value = data
@@ -145,6 +154,18 @@ export const useMedicalAppointmentForm = emit => {
     }
 
     const { data } = await AppointmentResource.store(formData.value)
+
+    //REPROGRAMACION
+    console.log('isReprogram?')
+    if (isReprogram){
+      // console.log('types 70,REPROGRAMADO')
+      const userData = JSON.parse(localStorage.getItem('userData'))
+      formUpdateStatus.value.user_medic_id = userData.id
+      formUpdateStatus.value.appointment_status_id = 70
+      formUpdateStatus.value.comment = "REPROGRAMADO"
+      const { dataUpdateStatus } = await AppointmentResource.updateStatus(appointmentId, formUpdateStatus.value)
+    }
+
     if (data.appointment) {
       router.push({ name: 'insured-treatment-history', params: { id: route.value.params.treatmentId } })
     }
@@ -164,6 +185,7 @@ export const useMedicalAppointmentForm = emit => {
   return {
     treatmentTypes,
     formData,
+    formUpdateStatus,
     refFormObserver,
     specialties,
     medicalCenters,

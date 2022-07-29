@@ -97,7 +97,7 @@ export default [
       ],
       resource: PERMISSION_RECONSULT_APPOINTMENTS,
       action: 'create',
-      attentionType: 'RECONSULTA'
+      attentionType: 'RECONSULTA',
     }
   },
   {
@@ -131,5 +131,39 @@ export default [
       action: 'create',
       attentionType: 'NUEVO'
     }
-  }
+  },
+  {
+    path: '/citas-medicas/:treatmentId/reprogramacion',
+    name: 'appointment-reprogram-form',
+    component: () => import('@/views/medicalAppointment/components/appointment-calendar/AppointmentCalendar'),
+    meta: {
+      pageTitle: 'Reprogramación',
+      breadcrumb: [
+        {
+          text: 'Citas Médicas',
+          to: {
+            name: 'medical-appointments-list'
+          }
+        },
+        {
+          text: 'Historial',
+          resolve: function() {
+            return {
+              name: 'insured-treatment-history',
+              params: ['treatmentId']
+            }
+          }
+        },
+        {
+          text: 'Reconsulta',
+          active: true
+        }
+      ],
+      resource: PERMISSION_RECONSULT_APPOINTMENTS,
+      action: 'create',
+      attentionType: 'RECONSULTA',
+      attentionTypeReprogram: 'REPROGRAMACION'
+
+    }
+  },
 ]

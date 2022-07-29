@@ -154,6 +154,7 @@ export default {
       handleSubmit,
       goToDate,
       isReconsult,
+      isReprogram,
       insuredName
     } = useMedicalAppointmentForm(emit)
 
@@ -174,6 +175,7 @@ export default {
       handleSubmit,
       goToDate,
       isReconsult,
+      isReprogram,
       insuredName
     }
   }

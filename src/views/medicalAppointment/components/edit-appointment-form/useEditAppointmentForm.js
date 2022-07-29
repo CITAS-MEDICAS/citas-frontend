@@ -8,6 +8,7 @@ import { AppointmentResource } from '@/network/lib/appointment'
 
 
 export const useEditAppointmentForm = emit => {
+  console.log("useEditAppointmentForm")
   const { route, router } = useRouter()
   const appointmentId = route.value.params.appointmentId
 
@@ -40,6 +41,7 @@ export const useEditAppointmentForm = emit => {
   })
 
   const treatmentTypes = computed(() => {
+    console.log("treatmentTypes")
     const data = store.state.types.treatmentTypes
     formData.value.treatment_type_id = data.length ? data[0].id : null
     return data
@@ -50,6 +52,7 @@ export const useEditAppointmentForm = emit => {
   })
 
   const availableTimes = computed(() => {
+    console.log("availableTimes")
     if (availableDates.value.length && formData.value.calendar) {
       return availableDates.value.find(item => item.calendar_id === formData.value.calendar.calendar_id).available
     }
@@ -65,8 +68,10 @@ export const useEditAppointmentForm = emit => {
       sortByAsc: 'name',
       getAll: '1'
     })
-
+    console.log("fetchMedicalCenter")
     if (data.total_data) {
+      console.log(data)
+      console.log(data.rows[0].id)
       formData.value.medical_center_id = data.rows[0].id
       await handleMedicalUnit()
     }
@@ -74,7 +79,9 @@ export const useEditAppointmentForm = emit => {
   }
 
   const fetchMedicalUnit = async unitId => {
-    formData.value.medical_unit_id = unitId || null
+    console.log("fetchMedicalUnit")
+    console.log(formData.value.medical_unit_id)
+    formData.value.medical_unit_id = null
     const { data } = await MedicalUnitResource.getAll({
       getAll: '1',
       scope: [
@@ -87,10 +94,13 @@ export const useEditAppointmentForm = emit => {
   }
 
   const handleMedicalCenter = async () => {
+    console.log("handleMedicalCenter")
     medicalCenters.value = await fetchMedicalCenter()
   }
 
   const handleMedicalUnit = async unitId => {
+    console.log("handleMedicalUnit")
+    console.log(unitId)
     medicalUnits.value = await fetchMedicalUnit(unitId)
   }
 
@@ -111,13 +121,16 @@ export const useEditAppointmentForm = emit => {
   }
 
   const handleSubmit = async () => {
+    console.log("useEditAppointmentForm .. handleSubmit")
+
     const isValid = await refFormObserver.value.validate()
     if (!isValid) {
       return false
     }
 
     const { data } = await AppointmentResource.update(appointmentId, formData.value)
-
+    console.log(appointmentId)
+    console.log(formData.value)
     if (data.appointment) {
       router.push({ name: 'insured-treatment-history', params: { treatmentId: data.appointment.treatment_id } })
     }
@@ -127,21 +140,26 @@ export const useEditAppointmentForm = emit => {
     emit('go-to-date', formData.value.calendar.date)
   }
 
+  // CONSOLA porque no envia.
   const fetchAppointment = async () => {
     const { data: { appointment } } = await AppointmentResource.getById(appointmentId, {
       include: 'treatment.patient;calendar'
     })
-
+    console.log("fetchAppointment")
+    console.log(appointment.medical_center_id)
     patientName.value = appointment.treatment.patient.fullname
     attentionId.value = appointment?.calendar?.attention_type_id || appointment.attention_type_id
     formData.value.specialty = specialties.value.find(item => item.id === appointment.specialty_id)
     await handleMedicalCenter()
-    formData.value.medical_center_id = appointment.medical_center_id
+    // formData.value.medical_center_id = appointment.medical_center_id
+    formData.value.medical_center_id = null
     formData.value.reason = appointment.reason
 
     if(!appointment.medical_unit_id) return
-
+    console.log("if-handleMedicalUnit")
+    console.log(appointment.medical_unit_id)
     await handleMedicalUnit(appointment.medical_unit_id)
+
     formData.value.medical_unit_id = appointment.medical_unit_id
     await handleAvailability()
     formData.value.calendar = availableDatesMap.value.find(item => item.calendar_id === appointment.calendar_id)

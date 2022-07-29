@@ -2,7 +2,8 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <b-button variant="primary" :to="{ name: 'insured-create' }">Crear Asegurado</b-button>
+        <b-button class="ml-1" variant="primary" :to="{ name: 'insured-create' }">Crear Asegurado</b-button>
+        <b-button class="ml-1" variant="primary" :to="{ name: 'insured-enabled' }">Alta de Asegurado</b-button>
       </template>
     </table-header>
 
@@ -36,12 +37,12 @@
           </router-link>
 
           <b-button
-            v-b-tooltip.hover.top="'Eliminar Asegurado'"
+            v-b-tooltip.hover.top="'Dar de Baja Asegurado'"
             variant="flat-danger"
             class="btn-icon rounded-circle"
             @click="handleDelete(data.item.id)"
           >
-            <feather-icon icon="TrashIcon" />
+            <feather-icon icon="ArrowDownIcon" />
           </b-button>
           <router-link :to="{
             name: 'dependent-create-admin',
@@ -49,6 +50,7 @@
 
           }">
             <b-button v-b-tooltip.hover.top="'Crear Dependiente'"
+                      v-if="data.item.id === 31"
                       variant="flat-danger"
                       class="btn-icon rounded-circle"
             >
@@ -111,7 +113,6 @@ export default {
 
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
-
       const { data } = await InsuredResource.getAll({
         scope: `search:${searchQuery.value},OnlyInsuredRoles`,
         limit: perPage.value,
@@ -121,6 +122,7 @@ export default {
       })
 
       totalRows.value = data.total_data
+      console.log(data.rows)
       return data.rows
     }
 
