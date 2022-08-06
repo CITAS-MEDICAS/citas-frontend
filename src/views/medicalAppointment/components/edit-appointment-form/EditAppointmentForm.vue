@@ -11,7 +11,7 @@
             <legend class="col-form-label">Asegurado</legend>
             <input class="form-control" :value="patientName" readonly />
           </fieldset>
-          <pre>{{formData}}</pre>
+<!--          <pre>{{formData}}</pre>-->
           <b-form-group label="Especialidad *">
             <validation-provider v-slot="{ errors }" name="Especialidad" rules="required">
               <v-select

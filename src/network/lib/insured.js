@@ -12,10 +12,17 @@ class InsuredResource extends Resource {
       data: resource,
     })
   }
-  undelete(id, resource) {
+  undelete(id, obs, resource) {
     return this.request({
-      url: `api/insured/undelete/${id}`,
+      url: `api/insured/undelete/${id}/${obs}`,
       method: 'get',
+      data: resource,
+    })
+  }
+  deleteWithObs(id, obs, resource) {
+    return this.request({
+      url: `api/insured/${id}/${obs}`,
+      method: 'delete',
       data: resource,
     })
   }

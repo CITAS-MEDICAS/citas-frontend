@@ -132,8 +132,11 @@ export const useMedicalAppointmentForm = emit => {
     formData.value.calendar = null
     formData.value.time = null
     const medicalUnitId = formData.value.medical_unit_id
+    console.log("1")
     //SI ES REPROMADO LO TRATO COMO UN attentionTypeId=51 NUEVO SINO COMO attentionTypeId=52 RECONSULTA
+    const attention = store.state.types.attentionTypes
     const attentionTypeId = isReprogram ? attention.find(item => item.name === "NUEVO").id : formData.value.attention_type_id
+    console.log(attentionTypeId)
     if (medicalUnitId && attentionTypeId) {
       const { data } = await CalendarResource.availability(medicalUnitId, { attentionTypeId })
       availableDates.value = data
@@ -145,6 +148,7 @@ export const useMedicalAppointmentForm = emit => {
       })
       emit('update-calendar', data)
     }
+    console.log("2")
   }
 
   const handleSubmit = async () => {
@@ -152,9 +156,6 @@ export const useMedicalAppointmentForm = emit => {
     if (!isValid) {
       return false
     }
-
-    const { data } = await AppointmentResource.store(formData.value)
-
     //REPROGRAMACION
     console.log('isReprogram?')
     if (isReprogram){
@@ -165,6 +166,8 @@ export const useMedicalAppointmentForm = emit => {
       formUpdateStatus.value.comment = "REPROGRAMADO"
       const { dataUpdateStatus } = await AppointmentResource.updateStatus(appointmentId, formUpdateStatus.value)
     }
+
+    const { data } = await AppointmentResource.store(formData.value)
 
     if (data.appointment) {
       router.push({ name: 'insured-treatment-history', params: { id: route.value.params.treatmentId } })

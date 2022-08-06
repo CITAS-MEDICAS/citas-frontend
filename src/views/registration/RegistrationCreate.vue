@@ -54,18 +54,29 @@ export default {
       // const isValid = this.$refs.refForm.validate()
       // if (!isValid) return
       const { data } = await RegistrationResource.store(this.formData)
-      console.log(this.formData)
-      console.log(data)
-      if (data) {
-        this.$router.push({ name: 'registration-list' }).then(() => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `Creado Exitosamente!`,
-              icon: 'CheckIcon',
-              variant: 'success'
-            }
+      // console.log(this.formData)
+      // console.log(data)
+      try {
+        if (data) {
+          this.$router.push({ name: 'registration-list' }).then(() => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: `Creado Exitosamente!`,
+                icon: 'CheckIcon',
+                variant: 'success'
+              }
+            })
           })
+        }
+      } catch (error){
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `!El Carnet, numero de asegurado o correo ya existen Verifique porfavor!`,
+            icon: 'CheckIcon',
+            variant: 'danger',
+          },
         })
       }
     },

@@ -106,7 +106,7 @@ export default {
         scope: `search:${searchQuery.value},status:${status.value},starttime:${starttime.value}`,
         limit: perPage.value,
         page: currentPage.value,
-        [sortOption]: sortBy.value,
+        ['start_time']: sortBy.value,
         include: 'status;treatment.patient;center;unit'
       })
 

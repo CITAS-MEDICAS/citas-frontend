@@ -4,7 +4,7 @@
            no-close-on-backdrop
            title="Cita Médica"
   >
-    <pre>{{ form }}</pre>
+<!--    <pre>{{ form }}</pre>-->
     <validation-observer ref="refFormObserver">
       <b-form-group label="Estado de la Consulta *">
         <validation-provider v-slot="{ errors }" name="Estado de la Consulta" rules="required">

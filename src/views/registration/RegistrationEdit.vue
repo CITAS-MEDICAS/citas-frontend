@@ -66,7 +66,7 @@ export default {
 
       // if (!isValid) return
       try {
-        const { data                       } = await RegistrationResource.update(this.$route.params.id, this.formData)
+        const { data } = await RegistrationResource.update(this.$route.params.id, this.formData)
         if (data.registration) {
           this.$router.push({ name: 'registration-list' }).then(() => {
             this.$toast({

@@ -55,20 +55,19 @@ const useList = function () {
     if (isDeleted.status == 204) {
       app.$swal({
         icon: 'success',
-        title: '¡Eliminado!',
+        title: '¡Dado de baja!',
         text: 'La operación se realizo exitosamente.',
         timer: 1500,
         customClass: {
           confirmButton: 'btn btn-success',
         },
       })
-
       return true
     } else {
       app.$swal({
         icon: 'warning',
         title: '¡Error!',
-        text: 'Ocurrio un error en el proceso.',
+        text: 'Ocurrio un error en el proceso, consulte con el administrador',
         timer: 1500,
         customClass: {
           confirmButton: 'btn btn-success',

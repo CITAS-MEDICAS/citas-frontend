@@ -54,9 +54,8 @@
       <template #cell(date_reservation)="data">
         {{ data.value | getDate }}
       </template>
-      <template #cell(date)="data">
-        <strong>{{ data.item.start_time | formatDate }}</strong>
-      </template>
+
+
       <template #cell(status.name)="data">
         <b-badge pill :variant="`light-${statusVariant[data.value]}`">
           <small>{{ data.value.toLowerCase() }}</small>

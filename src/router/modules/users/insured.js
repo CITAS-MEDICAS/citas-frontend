@@ -77,4 +77,24 @@ export default [
       action: 'create'
     }
   },
+  {
+    path: '/asegurados/disabled/:id',
+    name: 'insured-disabled',
+    component: () => import('@/views/insuredUsers/InsuredDelete'),
+    meta: {
+      pageTitle: 'Baja Asegurado',
+      breadcrumb: [
+        {
+          text: 'Asegurados',
+          to: { name: 'insured-list' }
+        },
+        {
+          text: 'Baja',
+          active: true
+        }
+      ],
+      resource: PERMISSION_INSURED_USERS,
+      action: 'update'
+    }
+  },
 ]

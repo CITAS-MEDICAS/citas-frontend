@@ -62,19 +62,29 @@ export default {
       const isValid = await this.$refs.refForm.validate()
 
       if (!isValid) return
-
-      const { data } = await UserResource.update(this.$route.params.id, this.formData)
-
-      if (data.user) {
-        this.$router.push({ name: 'user-list' }).then(() => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `Creado Exitosamente!`,
-              icon: 'CheckIcon',
-              variant: 'success',
-            },
+      try {
+        const { data } = await UserResource.update(this.$route.params.id, this.formData)
+        if (data.user) {
+          this.$router.push({ name: 'user-list' }).then(() => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: `Creado Exitosamente!`,
+                icon: 'CheckIcon',
+                variant: 'success',
+              },
+            })
           })
+        }
+      }  catch (error){
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `Existe un personal o asegurado con el mismo Carnet,matricula o correo electrónico ... !Verifique porfavor!`,
+            // text: error,
+            icon: 'CheckIcon',
+            variant: 'danger',
+          },
         })
       }
     },

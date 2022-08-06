@@ -29,3 +29,15 @@ export const formatDate = value => {
     minute: '2-digit',
   })
 }
+
+export const formatDateSimple = value => {
+  if (!value) return value
+
+  const date = new Date(value)
+
+  return date.toLocaleString('es-BO', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+}

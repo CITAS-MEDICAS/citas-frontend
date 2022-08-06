@@ -36,14 +36,36 @@
             </b-button>
           </router-link>
 
-          <b-button
-            v-b-tooltip.hover.top="'Dar de Baja Asegurado'"
-            variant="flat-danger"
-            class="btn-icon rounded-circle"
-            @click="handleDelete(data.item.id)"
+          <router-link
+            :to="{
+              name: 'insured-disabled',
+              params: { id: data.item.id },
+            }"
           >
-            <feather-icon icon="ArrowDownIcon" />
-          </b-button>
+            <b-button
+              v-b-tooltip.hover.top="'Baja solo del dependiente'"
+              v-if="data.item.relationship_type_id !== 39"
+              variant="flat-warning"
+              class="btn-icon rounded-circle"
+            >
+              <feather-icon icon="ArrowDownIcon" />
+            </b-button>
+          </router-link>
+          <router-link
+            :to="{
+              name: 'insured-disabled',
+              params: { id: data.item.id },
+            }"
+          >
+            <b-button
+              v-b-tooltip.hover.top="'Baja del titular y sus dependientes'"
+              v-if="data.item.relationship_type_id === 39"
+              variant="flat-danger"
+              class="btn-icon rounded-circle"
+            >
+              <feather-icon icon="ArrowDownIcon" />
+            </b-button>
+          </router-link>
           <router-link :to="{
             name: 'dependent-create-admin',
             params: { id: data.item.user_id},
@@ -75,6 +97,10 @@
         </div>
       </template>
 
+      <template #cell(user.birth_date)="data">
+        <strong>{{ data.item.user.birth_date | formatDateSimple }}</strong>
+      </template>
+
       <template #cell(relationship)="data">
         {{ data.item.key }}
       </template>
@@ -90,12 +116,16 @@ import useList from '@/custom/libs/useList'
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
 import { InsuredResource } from '@/network/lib/insured'
+import {formatDate, formatDateSimple, getDate, getTime} from "@/custom/filters";
 
 export default {
   name: 'InsuredUserList',
   components: {
     TableHeader,
     TablePagination,
+  },
+  filters: {
+    formatDateSimple
   },
   setup() {
     let {
@@ -133,11 +163,12 @@ export default {
       { key: 'user.name', label: 'Nombre', sortable: false },
       { key: 'user.paternal_surname', label: 'Paterno', sortable: false },
       { key: 'user.maternal_surname', label: 'Materno', sortable: false },
-      { key: 'unit.center.name', label: 'Centro de Salud', sortable: false },
       { key: 'user.ci', label: 'Carnet', sortable: false },
-      // { key: 'user.email', label: 'mail', sortable: false },
-      { key: 'user.registration_code', label: 'Numero Asegurado', sortable: false },
       { key: 'relationship.name', label: 'Parentesco', sortable: false },
+      { key: 'unit.center.name', label: 'Centro de Salud', sortable: false },
+      { key: 'user.birth_date', label: 'Fecha Nacimiento', sortable: false },
+      { key: 'user.email', label: 'Correo', sortable: false },
+      { key: 'user.registration_code', label: 'Numero Asegurado', sortable: false },
     ]
 
     return {
