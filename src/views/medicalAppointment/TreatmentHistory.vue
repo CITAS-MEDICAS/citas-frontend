@@ -55,8 +55,6 @@
           Atender
         </b-button>
 
-<!--        HeadphonesIcon
-class="ml-1" variant="outline-info" size="sm"-->
       </template>
       <template #cell(date_reservation)="data">
         {{ data.value | getDate }}
@@ -66,6 +64,10 @@ class="ml-1" variant="outline-info" size="sm"-->
       </template>
       <template #cell(date)="data">
         <strong>{{ data.item.start_time | formatDate }}</strong>
+      </template>
+<!--      v-if="$attrs['no-body'] !== undefined"-->
+      <template #cell(updated_at)="data" >
+        <strong v-if="data.item.status.name === 'ATENDIDO'">{{ data.item.updated_at | formatDate }}</strong>
       </template>
       <template #cell(status.name)="data">
         <b-badge pill :variant="`light-${statusVariant[data.value]}`">
@@ -124,7 +126,6 @@ export default {
 
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
-      console.log("start_time ordenado por desc")
       const { data } = await AppointmentResource.getAll({
         limit: perPage.value,
         page: currentPage.value,
@@ -134,6 +135,7 @@ export default {
         getAll: '1'
       })
       totalRows.value = data.total_data
+      console.log(data)
       return data.rows
     }
 

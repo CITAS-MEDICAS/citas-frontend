@@ -148,7 +148,6 @@ export const useMedicalAppointmentForm = emit => {
       })
       emit('update-calendar', data)
     }
-    console.log("2")
   }
 
   const handleSubmit = async () => {
