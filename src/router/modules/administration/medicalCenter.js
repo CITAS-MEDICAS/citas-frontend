@@ -57,4 +57,24 @@ export default [
       action: 'update',
     },
   },
+  {
+    path: '/centros-de-salud/download/:id',
+    name: 'medical-center-download',
+    component: () => import('@/views/medicalCenter/MedicalCenterDownload.vue'),
+    meta: {
+      pageTitle: 'Editar Centro',
+      breadcrumb: [
+        {
+          text: 'Centros de Salud',
+          to: { name: 'medical-center-list' },
+        },
+        {
+          text: 'Download',
+          active: true,
+        },
+      ],
+      resource: PERMISSION_MEDICAL_CENTER,
+      action: 'update',
+    },
+  },
 ]

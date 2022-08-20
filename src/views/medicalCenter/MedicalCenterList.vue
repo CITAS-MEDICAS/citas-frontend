@@ -37,7 +37,15 @@
               <feather-icon icon="EditIcon" />
             </b-button>
           </router-link>
-
+          <b-button
+            v-if="$can('delete', PERMISSION_MEDICAL_CENTER)"
+            v-b-tooltip.hover.top="'Descargar Datos'"
+            variant="flat-danger"
+            class="btn-icon rounded-circle"
+            @click="handleDownload(data.item.id)"
+          >
+            <feather-icon icon="DownloadCloudIcon" />
+          </b-button>
           <b-button
             v-if="$can('delete', PERMISSION_MEDICAL_CENTER)"
             v-b-tooltip.hover.top="'Eliminar Centro'"
@@ -62,7 +70,6 @@
         </template>
       </template>
     </b-table>
-
     <table-pagination :total-rows="totalRows" :per-page="perPage" />
   </b-card>
 </template>
@@ -77,7 +84,7 @@ import { PERMISSION_MEDICAL_CENTER } from '@/permissions'
 export default {
   components: {
     TableHeader,
-    TablePagination
+    TablePagination,
   },
   setup() {
     let {
@@ -90,7 +97,7 @@ export default {
       sortBy,
       isSortDirDesc,
       deleteResource,
-      refetchData
+      refetchData,
     } = useList()
 
     const fetchItems = async () => {
@@ -134,6 +141,16 @@ export default {
   methods: {
     async handleDelete(resourceId) {
       const isDeleted = await this.deleteResource(resourceId, MedicalCenterResource)
+      if (isDeleted) {
+        this.refetchData()
+      }
+    },
+    async handleDownload(resourceId) {
+      const isDeleted = await MedicalCenterResource.downloadCsv(resourceId).then(response => {
+        let blob = new Blob([response.data], { type: 'application/text' } ),
+          url = window.URL.createObjectURL(blob)
+        window.open(url)
+      })
       if (isDeleted) {
         this.refetchData()
       }

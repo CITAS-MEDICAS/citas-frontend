@@ -123,7 +123,9 @@
               Se Creara la cita, recuerde que debe estar 10 minutos antes en la cita medica.
               Solo puede cancelar 24hrs Antes. si no acude a la cita será penalizado.
             </b-card-text>
-            <b-button v-b-modal.modal-center variant="success" block class="mt-2" @click="handleSubmit">Aceptar y crear la cita médica</b-button>
+            <b-button v-b-modal.modal-center variant="success" block class="mt-2" @click="handleSubmit">Aceptar y crear la cita médica
+              <b-spinner v-if="showSpinner" small />
+            </b-button>
           </b-modal>
         </validation-observer>
       </div>
@@ -163,7 +165,8 @@ export default {
       handleMedicalUnit,
       handleAvailability,
       handleSubmit,
-      goToDate
+      goToDate,
+      showSpinner
     } = useAppointmentForm(emit)
 
     return {
@@ -183,7 +186,8 @@ export default {
       handleMedicalUnit,
       handleAvailability,
       handleSubmit,
-      goToDate
+      goToDate,
+      showSpinner
     }
   }
 }

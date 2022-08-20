@@ -31,6 +31,7 @@ export const useAppointmentForm = emit => {
   const medicalUnits = ref([])
   const availableDates = ref([])
   const availableDatesMap = ref([])
+  const showSpinner = ref([])
 
   onMounted(async () => {
     await store.dispatch('types/TREATMENT_TYPE')
@@ -162,17 +163,20 @@ export const useAppointmentForm = emit => {
   }
 
   const handleSubmit = async () => {
+    // this.showSpinner = true
     const isValid = await refFormObserver.value.validate()
     // console.log("handleSubmit222222")
     // console.log(formData.value)
     if (!isValid) {
       return false
     }
+
     const { data } = await AppointmentResource.store(formData.value)
     if (data.appointment) {
       //mesaje de confirmacion
       router.push({ name: 'insured-appointment-list', params: { id: route.value.params.id } })
     }
+    // this.showSpinner = false
   }
 
   const goToDate = () => {
@@ -198,3 +202,4 @@ export const useAppointmentForm = emit => {
     goToDate,
   }
 }
+
