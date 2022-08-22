@@ -25,7 +25,7 @@ import appointment from './modules/insured/appointment'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   scrollBehavior() {
     return { x: 0, y: 0 }
