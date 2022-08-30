@@ -28,6 +28,13 @@ class AppointmentResource extends Resource {
       responseType: 'blob'
     })
   }
+  print(appointmentId) {
+    return this.request({
+      url: `/${this.uri}/${appointmentId}/pdf/?output=print`,
+      method: 'get',
+      responseType: 'blob',
+    })
+  }
 }
 
 const resource = new AppointmentResource()

@@ -58,24 +58,24 @@ export default [
       action: 'create',
     },
   },
-  // {
-  //   path: '/asegurado/:id',
-  //   name: 'dependent-show',
-  //   component: () => import('@/views/dependents/DependentShow'),
-  //   meta: {
-  //     pageTitle: 'Asegurado',
-  //     breadcrumb: [
-  //       {
-  //         text: 'Asegurado',
-  //         to: { name: 'dependent-list' },
-  //       },
-  //       {
-  //         text: 'Perfil',
-  //         active: true,
-  //       },
-  //     ],
-  //   },
-  //   resource: PERMISSION_DEPENDENT_USERS,
-  //   action: 'create',
-  // },
+  {
+    path: '/asegurado/:id/editarcontacto',
+    name: 'insured-edit-contact',
+    component: () => import('@/views/insuredUsers/InsuredContactEdit'),
+    meta: {
+      pageTitle: 'Editar Contacto del Asegurado',
+      breadcrumb: [
+        {
+          text: 'Asegurados',
+          to: { name: 'insured-list' }
+        },
+        {
+          text: 'Editar Contacto',
+          active: true
+        }
+      ],
+      resource: PERMISSION_DEPENDENT_USERS,
+      action: 'read',
+    }
+  },
 ]

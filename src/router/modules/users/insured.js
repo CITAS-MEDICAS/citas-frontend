@@ -1,4 +1,4 @@
-import { PERMISSION_INSURED_USERS } from '@/permissions'
+import {PERMISSION_INSURED_USERS, PERMISSION_MEDICAL_APPOINTMENTS} from '@/permissions'
 
 export default [
   {

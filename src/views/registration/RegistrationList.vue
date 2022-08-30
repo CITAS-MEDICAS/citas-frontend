@@ -133,7 +133,9 @@ export default {
     },
     async handleVerificationEmail(resourceId) {
       this.showSpinner = true
+      console.log("handleVerificationEmail")
       const { data } = await RegistrationResource.verificationMail(resourceId)
+      console.log(data)
       if (data.status == 'success') {
         this.$toast({
           component: ToastificationContent,
@@ -141,6 +143,15 @@ export default {
             title: `¡Credenciales enviadas!`,
             icon: 'MailIcon',
             variant: 'success'
+          }
+        })
+      } else {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: `¡Error el email debe estar verificado y validado por el asegurado!`,
+            icon: 'MailIcon',
+            variant: 'danger'
           }
         })
       }

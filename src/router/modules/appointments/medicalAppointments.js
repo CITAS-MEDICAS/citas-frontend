@@ -166,4 +166,26 @@ export default [
 
     }
   },
+  {
+    path: '/citas-medicas/:appointmentId/imprimir',
+    name: 'medical-appointments-print',
+    component: () => import('@/views/medicalAppointment/MedicalAppointmentEdit'),
+    meta: {
+      pageTitle: 'Citas Medicas',
+      breadcrumb: [
+        {
+          text: 'Citas Médicas',
+          to: {
+            name: 'medical-appointments-list'
+          }
+        },
+        {
+          text: 'Imprimir',
+          active: true
+        }
+      ],
+      resource: PERMISSION_MEDICAL_APPOINTMENTS,
+      action: 'read'
+    }
+  },
 ]

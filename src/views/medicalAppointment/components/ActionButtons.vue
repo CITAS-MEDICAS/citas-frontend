@@ -1,6 +1,12 @@
 <template>
   <div class="text-nowrap">
     <slot name="control" />
+    <b-button
+              variant="flat-success"
+              class="btn-icon rounded-circle"
+              @click="handleSubmit(item.id)">
+      <feather-icon icon="PrinterIcon" />
+    </b-button>
     <router-link
       v-if="$can('update', PERMISSION_MEDICAL_APPOINTMENTS) && resolveEditButton(item.status.name)"
       :to="{ name: 'medical-appointments-edit', params: { appointmentId: item.id }
@@ -38,7 +44,7 @@
 
 <script>
 import { PERMISSION_MEDICAL_APPOINTMENTS } from '@/permissions'
-
+import { AppointmentResource } from '@/network/lib/appointment'
 export default {
   name: 'ActionButtons',
   props: {
@@ -56,6 +62,19 @@ export default {
       resolveEditButton,
       PERMISSION_MEDICAL_APPOINTMENTS
     }
-  }
+  },
+  methods: {
+    async handleSubmit(id) {
+      console.log(id)
+      AppointmentResource.print(id).then(response => {
+          const url = window.URL.createObjectURL(new Blob([response.data]))
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', 'ticket.pdf') //or any other extension
+          document.body.appendChild(link)
+          link.click()
+        })
+    }
+  },
 }
 </script>

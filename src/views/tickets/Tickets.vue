@@ -222,15 +222,18 @@ export default {
 
     },
     async handleAvailability() {
+      console.log("handleAvailability")
       if (!this.formData.medical_unit_id) {
         return this.updateCalendar([])
       }
       this.formData.medical_center_id = this.units.find(item => item.id === this.formData.medical_unit_id).medical_center_id
+      console.log(this.formData.medical_center_id)
       // TODO: get from api ATTENTION_TYPE_ID
       const ATTENTION_TYPE_ID = 51
       await this.fetchUnitAvailability(this.formData.medical_unit_id, ATTENTION_TYPE_ID)
     },
     handleDateAvailability(strDate) {
+      console.log("handleDateAvailability")
       const data = this.filterUnitAvailabilityByDate(strDate)
       this.updateCalendar(data)
       this.goToDate(strDate)

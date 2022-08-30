@@ -51,6 +51,7 @@
               <feather-icon icon="ArrowDownIcon" />
             </b-button>
           </router-link>
+
           <router-link
             :to="{
               name: 'insured-disabled',
@@ -66,6 +67,7 @@
               <feather-icon icon="ArrowDownIcon" />
             </b-button>
           </router-link>
+
           <router-link :to="{
             name: 'dependent-create-admin',
             params: { id: data.item.user_id},
@@ -152,7 +154,7 @@ export default {
       })
 
       totalRows.value = data.total_data
-      console.log(data.rows)
+      console.log("lista")
       return data.rows
     }
 

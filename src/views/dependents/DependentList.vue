@@ -33,6 +33,21 @@
               <feather-icon icon="CalendarIcon" />
             </b-button>
           </router-link>
+          <router-link
+            :to="{
+              name: 'insured-edit-contact',
+              params: { id: data.item.id },
+            }"
+          >
+            <b-button
+              v-b-tooltip.hover.top="'Editar datos de contacto'"
+              variant="flat-success"
+              class="btn-icon rounded-circle"
+            >
+              <feather-icon icon="UserCheckIcon" />
+            </b-button>
+          </router-link>
+
         </div>
       </template>
 

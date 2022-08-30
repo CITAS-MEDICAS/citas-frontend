@@ -25,6 +25,7 @@
       <b-button variant="primary" size="lg" @click="handleSubmit">Imprimir Ticket</b-button>
     </template>
   </b-modal>
+
 </template>
 
 <script>

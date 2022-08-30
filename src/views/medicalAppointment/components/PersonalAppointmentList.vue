@@ -64,7 +64,6 @@
     </b-table>
 
     <table-pagination :total-rows="totalRows" :per-page="perPage" />
-
     <TransferAppointmentForm />
   </b-card>
 </template>

@@ -1,9 +1,9 @@
 import { computed, inject, toRefs } from '@vue/composition-api'
 import { TicketResource } from '@/network/lib/ticket'
+import sortAndStringify from "vue-select/src/utility/sortAndStringify"
 
 export const useTicketHandler = (props, emit) => {
   const formData = inject('formData')
-
   const { units } = toRefs(props)
 
   const closeForm = () => {
@@ -34,9 +34,17 @@ export const useTicketHandler = (props, emit) => {
   })
 
   const handleSubmit = async () => {
-    const { data } = await TicketResource.store(formData.value)
-    closeForm()
-    printTicket(data.ticket.id)
+    // console.log(formData.value)
+    // AQUI27082022
+
+    try {
+      const { data } = await TicketResource.store(formData.value)
+      closeForm()
+      printTicket(data.ticket.id)
+    } catch (error){
+      alert("¡ EL PACIENTE NO PUEDE REALIZAR RESERVACIONES EN ESTE CONSULTORIO. CONSULTE CON EL ADMINISTRADOR !")
+      closeForm()
+    }
   }
 
   const printTicket = ticketId => {
