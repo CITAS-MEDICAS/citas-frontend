@@ -19,6 +19,7 @@ export const useTicketHandler = (props, emit) => {
       calendar: null,
       medical_center_id: null,
       medical_unit_id: null,
+      medical_unit_name: null,
       time: {
         startTime: null,
         endTime: null,

@@ -26,6 +26,13 @@ class InsuredResource extends Resource {
       data: resource,
     })
   }
+  userMedicalUnit(ci, taquilleroUserId, resource) {
+    return this.request({
+      url: `api/insured/medical-unit/${ci}/${taquilleroUserId}`,
+      method: 'get',
+      data: resource,
+    })
+  }
 }
 
 const resource = new InsuredResource()

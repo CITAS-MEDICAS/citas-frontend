@@ -14,10 +14,10 @@
         <code>{{ (formData.time ? formData.time.startTime : null) | formatStrDateTime }}</code>
       </h1>
 
-      <h1 class="mt-2">
-        Consultorio <br>
-        <code>{{ medicalUnit }}</code>
-      </h1>
+<!--      <h1 class="mt-2">-->
+<!--        Consultorio <br>-->
+<!--        <code>{{ formData.medical_unit_name }}</code>-->
+<!--      </h1>-->
 
     </section>
     <template #modal-footer>

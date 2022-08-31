@@ -9,7 +9,7 @@
             :filterable="false"
             label="id"
             :options="users"
-            :reduce="item => item.id"
+            :reduce="item => item.user_id"
             placeholder="11-222-1234567 / 6002003-A"
             @search="onSearchInsured"
             @input="handleSelect"
@@ -25,19 +25,47 @@
             <template #no-options><h4>No se encontraron resultados...</h4></template>
             <template slot="option" slot-scope="option">
               <h2>
-                <code>CI: {{ option.ci }} <br></code>
-                <code>Matricula: {{ option.registration_code }} <br></code>
-                {{ option.concat }}
+                <code>CI: {{ option.user.ci }} <br></code>
+                <code>Código: {{ option.employer_code }} <br></code>
+                {{ option.user.fullname }}
               </h2>
             </template>
             <template slot="selected-option" slot-scope="option">
               <h2>
-                <code>CI: {{ option.ci }} <br></code>
-                {{ option.concat }}
+                <code>CI: {{ option.user.ci }} <br></code>
+                <code>Código: {{ option.employer_code }} <br></code>
+                {{ option.user.fullname }}
               </h2>
             </template>
           </v-select>
         </b-form-group>
+<!--        <b-form-group label="Consultorio" class="mt-3">-->
+<!--          <v-select-->
+<!--            v-model="formData.medical_unit_id"-->
+<!--            :options="units"-->
+<!--            :reduce="item => item.id"-->
+<!--            :clearable="false"-->
+<!--            label="name"-->
+<!--            placeholder="Consultorio-1"-->
+<!--            @input="handleAvailability"-->
+<!--          >-->
+<!--            <template #search="{ attributes, events }">-->
+<!--              <input-->
+<!--                maxlength="20"-->
+<!--                class="vs__search"-->
+<!--                v-bind="attributes"-->
+<!--                v-on="events"-->
+<!--              />-->
+<!--            </template>-->
+<!--            <template #no-options><h4>No se encontraron resultados...</h4></template>-->
+<!--            <template slot="option" slot-scope="option">-->
+<!--              <h2>{{ option.name }}</h2>-->
+<!--            </template>-->
+<!--            <template slot="selected-option" slot-scope="option">-->
+<!--              <h2>{{ option.name }}</h2>-->
+<!--            </template>-->
+<!--          </v-select>-->
+<!--        </b-form-group>-->
         <b-form-group label="Fecha" class="mt-3">
           <v-select
             v-model="formData.calendar"
@@ -184,17 +212,14 @@ export default {
       }
     },
     searchInsured: debounce(async (loading, term, vm) => {
-      // const { data } = await InsuredResource.getAll({
-      //   scope: `searchCodeCI:${term}`,
-      //   include: 'user'
-      // })
-      const taquilleroUserData = JSON.parse(localStorage.getItem('userData'))
-      const { data } = await InsuredResource.userMedicalUnit(term,taquilleroUserData.id)
-
+      const { data } = await InsuredResource.getAll({
+        scope: `searchCodeCI:${term}`,
+        include: 'user'
+      })
       console.log("searchInsured")
       console.log(data)
       loading(false)
-      vm.users = data
+      vm.users = data.rows
     }, 500),
 
     async handleSelect() {
@@ -206,7 +231,7 @@ export default {
       console.log(data.rows[0].unit)
       this.formData.medical_unit_id = data.rows[0].unit.id
       this.formData.medical_center_id = data.rows[0].unit.medical_center_id
-      this.formData.medical_center_name = data.rows[0].unit.name
+      // console.log(this.units)
       await this.handleAvailability()
     },
     async handleAvailability() {

@@ -33,10 +33,13 @@ export const useTickets = () => {
   })
 
   async function fetchMedicalUnit() {
-    const { data } = await MedicalUnitResource.getAll({
-      scope: 'authCenter',
-    })
-    units.value = data.rows
+    console.log("fetchMedicalUnit")
+    // const { data } = await MedicalUnitResource.getAll({
+    //   scope: 'authCenter',
+    // })
+    // // console.log(this.formData.user_patient_id)
+    //
+    // units.value = data.rows
   }
 
   const setAttentionType = () => {
