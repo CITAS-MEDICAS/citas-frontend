@@ -3,7 +3,7 @@
     <b-row>
       <b-col md="4" class="py-4 px-3">
         <h1>Disponibilidad</h1>
-        <b-form-group label="Código Patronal / Cédula de Identidad" class="mt-3">
+        <b-form-group label="Código Matricula / CI" class="mt-3">
           <v-select
             v-model="formData.user_patient_id"
             :filterable="false"
@@ -38,6 +38,33 @@
             </template>
           </v-select>
         </b-form-group>
+<!--        <b-form-group label="Consultorio" class="mt-3">-->
+<!--          <v-select-->
+<!--            v-model="formData.medical_unit_id"-->
+<!--            :options="units"-->
+<!--            :reduce="item => item.id"-->
+<!--            :clearable="false"-->
+<!--            label="name"-->
+<!--            placeholder="Consultorio-1"-->
+<!--            @input="handleAvailability"-->
+<!--          >-->
+<!--            <template #search="{ attributes, events }">-->
+<!--              <input-->
+<!--                maxlength="20"-->
+<!--                class="vs__search"-->
+<!--                v-bind="attributes"-->
+<!--                v-on="events"-->
+<!--              />-->
+<!--            </template>-->
+<!--            <template #no-options><h4>No se encontraron resultados...</h4></template>-->
+<!--            <template slot="option" slot-scope="option">-->
+<!--              <h2>{{ option.name }}</h2>-->
+<!--            </template>-->
+<!--            <template slot="selected-option" slot-scope="option">-->
+<!--              <h2>{{ option.name }}</h2>-->
+<!--            </template>-->
+<!--          </v-select>-->
+<!--        </b-form-group>-->
         <b-form-group label="Fecha" class="mt-3">
           <v-select
             v-model="formData.calendar"
