@@ -55,6 +55,7 @@
             </template>
           </v-select>
         </b-form-group>
+        <pre>{{ formData }}</pre>
       </b-col>
       <b-col md="8">
         <div class="py-2 pr-3">
@@ -177,7 +178,7 @@ export default {
 
   methods: {
     onSearchInsured(term, loading) {
-      console.log("onSearchInsured")
+      console.log('onSearchInsured')
       if (term.length > 5) {
         loading(true)
         this.searchInsured(loading, term, this)
@@ -189,29 +190,23 @@ export default {
       //   include: 'user'
       // })
       const taquilleroUserData = JSON.parse(localStorage.getItem('userData'))
-      const { data } = await InsuredResource.userMedicalUnit(term,taquilleroUserData.id)
+      const { data } = await InsuredResource.userMedicalUnit(term, taquilleroUserData.id)
 
-      console.log("searchInsured")
-      console.log(data)
       loading(false)
       vm.users = data
     }, 500),
 
     async handleSelect() {
-      console.log("handleSelect")
       const { data } = await InsuredResource.getAll({
         'filter[user_id][eq]': this.formData.user_patient_id,
         include: 'unit'
       })
-      console.log(data.rows[0].unit)
       this.formData.medical_unit_id = data.rows[0].unit.id
       this.formData.medical_center_id = data.rows[0].unit.medical_center_id
       this.formData.medical_center_name = data.rows[0].unit.name
       await this.handleAvailability()
     },
     async handleAvailability() {
-      console.log("handleAvailability")
-      console.log(this.formData.medical_unit_id)
       if (!this.formData.medical_unit_id) {
         return this.updateCalendar([])
       }
@@ -220,9 +215,18 @@ export default {
       // TODO: get from api ATTENTION_TYPE_ID
       const ATTENTION_TYPE_ID = 51
       await this.fetchUnitAvailability(this.formData.medical_unit_id, ATTENTION_TYPE_ID)
+
+      try {
+        console.log(this.availableDates[0])
+        const today = new Date() // if( today.getDate() === this.availableDates[0].date ) {
+        this.formData.calendar = this.availableDates[0]
+        this.handleDateAvailability(this.formData.calendar.date)
+        // }
+      } catch (e) {
+        alert('No hay fechas disponibles')
+      }
     },
     handleDateAvailability(strDate) {
-      console.log("handleDateAvailability")
       const data = this.filterUnitAvailabilityByDate(strDate)
       this.updateCalendar(data)
       this.goToDate(strDate)
