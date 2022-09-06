@@ -38,33 +38,33 @@
             </template>
           </v-select>
         </b-form-group>
-<!--        <b-form-group label="Consultorio" class="mt-3">-->
-<!--          <v-select-->
-<!--            v-model="formData.medical_unit_id"-->
-<!--            :options="units"-->
-<!--            :reduce="item => item.id"-->
-<!--            :clearable="false"-->
-<!--            label="name"-->
-<!--            placeholder="Consultorio-1"-->
-<!--            @input="handleAvailability"-->
-<!--          >-->
-<!--            <template #search="{ attributes, events }">-->
-<!--              <input-->
-<!--                maxlength="20"-->
-<!--                class="vs__search"-->
-<!--                v-bind="attributes"-->
-<!--                v-on="events"-->
-<!--              />-->
-<!--            </template>-->
-<!--            <template #no-options><h4>No se encontraron resultados...</h4></template>-->
-<!--            <template slot="option" slot-scope="option">-->
-<!--              <h2>{{ option.name }}</h2>-->
-<!--            </template>-->
-<!--            <template slot="selected-option" slot-scope="option">-->
-<!--              <h2>{{ option.name }}</h2>-->
-<!--            </template>-->
-<!--          </v-select>-->
-<!--        </b-form-group>-->
+        <b-form-group label="Consultorio" class="mt-3">
+          <v-select
+            v-model="formData.medical_unit_id"
+            :options="units"
+            :reduce="item => item.id"
+            :clearable="false"
+            label="name"
+            placeholder="Consultorio-1"
+            @input="handleAvailability"
+          >
+            <template #search="{ attributes, events }">
+              <input
+                maxlength="20"
+                class="vs__search"
+                v-bind="attributes"
+                v-on="events"
+              />
+            </template>
+            <template #no-options><h4>No se encontraron resultados...</h4></template>
+            <template slot="option" slot-scope="option">
+              <h2>{{ option.name }}</h2>
+            </template>
+            <template slot="selected-option" slot-scope="option">
+              <h2>{{ option.name }}</h2>
+            </template>
+          </v-select>
+        </b-form-group>
         <b-form-group label="Fecha" class="mt-3">
           <v-select
             v-model="formData.calendar"
@@ -72,6 +72,7 @@
             label="date"
             placeholder="Selecciona..."
             :clearable="false"
+            disabled
             @input="handleDateAvailability(formData.calendar.date)"
           >
             <template #option="option">
@@ -82,7 +83,7 @@
             </template>
           </v-select>
         </b-form-group>
-        <pre>{{ formData }}</pre>
+<!--        <pre>{{ formData }}</pre>-->
       </b-col>
       <b-col md="8">
         <div class="py-2 pr-3">
@@ -138,6 +139,7 @@ export default {
       setVisible
     } = useTickets()
 
+    const units2 = []
     const {
       refCalendar,
       calendarOptions,
@@ -153,7 +155,7 @@ export default {
       unitAvailability,
       availableDates,
       fetchUnitAvailability,
-      filterUnitAvailabilityByDate
+      filterUnitAvailabilityByDate,
     } = useMedicalUnitAvailability(emit)
 
     calendarOptions.value.editable = true
@@ -228,10 +230,10 @@ export default {
         'filter[user_id][eq]': this.formData.user_patient_id,
         include: 'unit'
       })
-      this.formData.medical_unit_id = data.rows[0].unit.id
       this.formData.medical_center_id = data.rows[0].unit.medical_center_id
       this.formData.medical_center_name = data.rows[0].unit.name
       await this.handleAvailability()
+      await this.fetchMedicalUnit()
     },
     async handleAvailability() {
       if (!this.formData.medical_unit_id) {
@@ -252,6 +254,15 @@ export default {
       } catch (e) {
         alert('No hay fechas disponibles')
       }
+    },
+    async fetchMedicalUnit() {
+      const  { data } = await MedicalUnitResource.getAll({
+        scope: `ListMedicalUnitTicket:${this.formData.user_patient_id}`,
+      })
+      console.log("fetchMedicalUnit")
+      console.log(data.rows)
+
+      this.units = data.rows
     },
     handleDateAvailability(strDate) {
       const data = this.filterUnitAvailabilityByDate(strDate)

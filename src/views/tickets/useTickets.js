@@ -27,17 +27,17 @@ export const useTickets = () => {
   onMounted(async () => {
     await store.dispatch('types/TREATMENT_TYPE')
     await store.dispatch('types/ATTENTION_TYPE')
-    await fetchMedicalUnit()
+    // await fetchMedicalUnit()
     setAttentionType()
     setTreatmentType()
   })
 
   async function fetchMedicalUnit() {
-    console.log("fetchMedicalUnit")
     // const { data } = await MedicalUnitResource.getAll({
-    //   scope: 'authCenter',
+    //   scope: `AuthCenter`,
     // })
-    // // console.log(this.formData.user_patient_id)
+    // console.log("fetchMedicalUnit")
+    // console.log(formData.value.user_patient_id)
     //
     // units.value = data.rows
   }
