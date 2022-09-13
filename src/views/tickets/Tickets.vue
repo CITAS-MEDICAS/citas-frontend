@@ -3,7 +3,7 @@
     <b-row>
       <b-col md="4" class="py-4 px-3">
         <h1>Disponibilidad</h1>
-        <b-form-group label="Código Matricula / CI" class="mt-3">
+        <b-form-group label="Carnet del Asegurado" class="mt-3">
           <v-select
             v-model="formData.user_patient_id"
             :filterable="false"
