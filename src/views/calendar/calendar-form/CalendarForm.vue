@@ -12,7 +12,7 @@
     <validation-observer ref="refFormObserver">
       <b-row>
         <b-col md="6">
-          <b-form-group label="Tipo de atención">
+          <b-form-group label="Tipo de atención.">
             <validation-provider v-slot="{ errors }" name="Tipo de Atención" rules="required">
               <v-select
                 v-model="form.attentionType"
@@ -241,6 +241,15 @@ export default {
     async handleSubmit() {
       const valid = await this.$refs.refFormObserver.validate()
       if (!valid) return false
+
+      if (this.form.attentionType===77){
+        const { data } = await CalendarResource.deleteCalendar(this.medicalUnitId, this.form)
+        if (data){
+          this.$emit('submited', true)
+          this.closeForm()
+        }
+        return
+      }
 
       const { data } = await CalendarResource.storeCalendar(this.medicalUnitId, this.form)
 

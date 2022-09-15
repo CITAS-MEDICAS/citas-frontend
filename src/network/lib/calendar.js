@@ -21,6 +21,13 @@ class CalendarResource extends Resource {
     })
   }
 
+  deleteCalendar(medicalUnitId, resource) {
+    return this.request({
+      url: `/api/medical-unit/${medicalUnitId}/calendar`,
+      method: 'delete',
+      data: resource
+    })
+  }
   availability(medicalUnitId, query) {
     return this.request({
       url: `/api/medical-unit/${medicalUnitId}/calendar/availability`,
