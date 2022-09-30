@@ -40,12 +40,13 @@
                 >
                   <template slot="no-options"> Escribe el CI del Titular ej. 1234567-1K..</template>
                   <template slot="option" slot-scope="option">
-                    {{ option.user.fullname }}
+                    {{ option.fullname }}
+                    <code class="ml-1"><small>CI: {{ option.ci }}</small></code>
                   </template>
                   <template slot="selected-option" slot-scope="option">
-                    {{ option.user.fullname }}
+                    {{ option.fullname }}
                     <code class="ml-1">
-                      <small>CI: {{ option.user.ci }}</small>
+                      <small>CI: {{ option.ci }}</small>
                     </code>
                   </template>
                 </v-select>
@@ -189,7 +190,7 @@ export default {
       this.formData.employer_date = null
       this.formData.salary = null
       this.formData.email = null,
-      this.formData.password = null
+        this.formData.password = null
       this.formData.password_confirmation = null
       this.formData.isNewAccount = true
     },
@@ -197,7 +198,7 @@ export default {
       this.formData.relationship_type_id = null
       if (this.isTitular()) {
         const relationship = this.relationships.find(item => item.name.includes(titularID))
-        if(relationship) {
+        if (relationship) {
           this.formData.relationship_type_id = relationship?.id
         } else {
           this.formData.insuredIsTitular = null
@@ -217,14 +218,15 @@ export default {
       const { data } = await InsuredResource.getAll({
         'filter[user.ci][eq]': term,
         scope: 'IsTitular',
-        include : 'user'
+        include: 'user'
       })
       loading(false)
-      vm.titularOptions = data.rows
+      vm.titularOptions = data.rows.map(item => item?.user)
+      console.log(vm.titularOptions)
     }, 500),
 
-    async setTitularOption(id) {
-      const { data } = await UserResource.getById(id)
+    async setTitularOption(userId) {
+      const { data } = await UserResource.getById(userId)
       this.titularOptions = [data.user]
     }
   }
