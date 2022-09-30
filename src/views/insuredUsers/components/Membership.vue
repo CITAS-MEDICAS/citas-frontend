@@ -40,12 +40,12 @@
                 >
                   <template slot="no-options"> Escribe el CI del Titular ej. 1234567-1K..</template>
                   <template slot="option" slot-scope="option">
-                    {{ option.fullname }}
+                    {{ option.user.fullname }}
                   </template>
                   <template slot="selected-option" slot-scope="option">
-                    {{ option.fullname }}
+                    {{ option.user.fullname }}
                     <code class="ml-1">
-                      <small>CI: {{ option.ci }}</small>
+                      <small>CI: {{ option.user.ci }}</small>
                     </code>
                   </template>
                 </v-select>
@@ -118,6 +118,7 @@ import { inject, ref } from '@vue/composition-api'
 import { required } from '@core/utils/validations/validations'
 import { TypesResource } from '@/network/lib/types'
 import { UserResource } from '@/network/lib/users'
+import { InsuredResource } from '@/network/lib/insured'
 import { debounce } from '@/libs/utils'
 
 const titularID = 'ID'
@@ -213,9 +214,10 @@ export default {
       }
     },
     searchTitular: debounce(async (loading, term, vm) => {
-      const { data } = await UserResource.getAll({
-        'filter[ci][eq]': term,
-        scope: 'IsTitular'
+      const { data } = await InsuredResource.getAll({
+        'filter[user.ci][eq]': term,
+        scope: 'IsTitular',
+        include : 'user'
       })
       loading(false)
       vm.titularOptions = data.rows
