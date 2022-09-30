@@ -24,6 +24,7 @@ export const PERMISSION_UNIT_TYPES = 'tipos-consultorio'
 export const PERMISSION_REGISTRATION = 'registro-asegurados'
 
 export const PERMISSION_MEDICAL_APPOINTMENTS = 'citas-medicas'
+// export const PERMISSION_MEDICAL_APPOINTMENTS_PRINT = 'citas-medicas-print'
 export const PERMISSION_ATTEND_APPOINTMENTS = 'atender-cita-medica'
 export const PERMISSION_TRANSFER_APPOINTMENTS = 'transferir-cita-medica'
 export const PERMISSION_RECONSULT_APPOINTMENTS = 'reconsulta-cita-medica'

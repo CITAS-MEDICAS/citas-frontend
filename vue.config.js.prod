@@ -4,7 +4,7 @@ module.exports = {
   publicPath: '/',
   devServer: {
     host: '209.126.9.113',
-    port: 8095,
+    port: 80,
   },
   lintOnSave: false,
   css: {

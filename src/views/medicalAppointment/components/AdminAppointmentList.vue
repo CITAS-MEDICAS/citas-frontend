@@ -39,6 +39,7 @@
         />
         ACCIONES
       </template>
+
       <template #cell(actions)="data">
         <ActionButtons :item="data.item">
           <template #control>
@@ -51,6 +52,7 @@
           </template>
         </ActionButtons>
       </template>
+
       <template #cell(date_reservation)="data">
         {{ data.value | getDate }}
       </template>
@@ -80,7 +82,7 @@ import ActionButtons from './ActionButtons'
 import TransferAppointmentForm from './transfer-appointment-form/TransferAppointmentForm'
 
 export default {
-  name: 'PersonalAppointmentList',
+  name: 'AdminAppointmentList',
   components: {
     TableHeader,
     TablePagination,

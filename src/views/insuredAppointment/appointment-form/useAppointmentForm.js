@@ -170,13 +170,22 @@ export const useAppointmentForm = emit => {
     if (!isValid) {
       return false
     }
+    const userData = JSON.parse(localStorage.getItem('userData'))
+    const userRole = JSON.parse(localStorage.getItem('userRole'))
+    const { data } = await AppointmentResource.getAppointmentInsuredVerification(userData.id,formData.value.specialty.id)
 
-    const { data } = await AppointmentResource.store(formData.value)
-    if (data.appointment) {
-      //mesaje de confirmacion
+
+    if (userRole.role === 'asegurado' && data[0].reservas >0){
+      alert('SEÑOR ASEGURADO : Solo puede tener una reserva por tipo de consultorio. Tambien puede cancelar las reservas')
       router.push({ name: 'insured-appointment-list', params: { id: route.value.params.id } })
     }
-    // this.showSpinner = false
+    else{
+      const { data } = await AppointmentResource.store(formData.value)
+      if (data.appointment) {
+        router.push({ name: 'insured-appointment-list', params: { id: route.value.params.id } })
+      }
+      // this.showSpinner = false
+    }
   }
 
   const goToDate = () => {
@@ -202,4 +211,5 @@ export const useAppointmentForm = emit => {
     goToDate,
   }
 }
+
 

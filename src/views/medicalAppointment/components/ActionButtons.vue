@@ -2,6 +2,7 @@
   <div class="text-nowrap">
     <slot name="control" />
     <b-button
+              v-if="$can('print', PERMISSION_MEDICAL_APPOINTMENTS) && resolveEditButton(item.status.name)"
               variant="flat-success"
               class="btn-icon rounded-circle"
               @click="handleSubmit(item.id)">

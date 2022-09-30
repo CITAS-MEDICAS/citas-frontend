@@ -9,12 +9,14 @@ export default {
   name: 'MedicalAppointmentList',
   components: {
     DoctorList: () => import('./components/DoctorAppointmentList'),
+    AdminList: () => import('./components/AdminAppointmentList'),
     PersonalList: () => import('./components/PersonalAppointmentList'),
   },
   data() {
     return {
       doctorRoles: ['medico', 'enfermera'],
-      personalRoles: ['superadmin', 'administrador', 'estadistico','trabajo-social','soporte-informatico','policia']
+      adminRoles: ['superadmin', 'administrador', 'estadistico'],
+      personalRoles: ['trabajo-social','soporte-informatico','policia']
     }
   },
   computed: {
@@ -26,6 +28,7 @@ export default {
   methods: {
     resolveComponent(role) {
       if (this.doctorRoles.includes(role)) return 'DoctorList'
+      if (this.adminRoles.includes(role)) return 'AdminList'
       if (this.personalRoles.includes(role)) return 'PersonalList'
     }
   }

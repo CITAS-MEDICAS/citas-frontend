@@ -35,7 +35,7 @@
       </b-col>
       <b-col cols="12" xl="3" md="4">
         <b-card>
-          <b-button v-if="$can('create', PERMISSION_MEDICAL_CENTER)" variant="primary" block @click="handleSubmit()">Dar de Alta</b-button>
+          <b-button variant="primary" block @click="handleSubmit()">Dar de Alta</b-button>
           <b-button variant="outline-secondary" block @click="handleCancel()">Cancelar</b-button>
         </b-card>
       </b-col>

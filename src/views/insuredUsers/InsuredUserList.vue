@@ -2,8 +2,16 @@
   <b-card no-body>
     <table-header :per-page-options="perPageOptions">
       <template #button>
-        <b-button class="ml-1" variant="primary" :to="{ name: 'insured-create' }">Crear Asegurado</b-button>
-        <b-button class="ml-1" variant="primary" :to="{ name: 'insured-enabled' }">Alta de Asegurado</b-button>
+        <b-button
+          v-if="$can('create', PERMISSION_INSURED_USERS)"
+          class="ml-1" variant="primary" :to="{ name: 'insured-create' }">
+          Crear Asegurado
+        </b-button>
+        <b-button
+          v-if="$can('update', PERMISSION_INSURED_USERS)"
+          class="ml-1" variant="primary" :to="{ name: 'insured-enabled' }">
+          Alta de Asegurado
+        </b-button>
       </template>
     </table-header>
 
@@ -118,7 +126,8 @@ import useList from '@/custom/libs/useList'
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
 import { InsuredResource } from '@/network/lib/insured'
-import {formatDate, formatDateSimple, getDate, getTime} from "@/custom/filters";
+import {formatDate, formatDateSimple, getDate, getTime} from "@/custom/filters"
+import { PERMISSION_INSURED_USERS } from '@/permissions'
 
 export default {
   name: 'InsuredUserList',
@@ -186,6 +195,7 @@ export default {
       fetchItems,
       deleteResource,
       refetchData,
+      PERMISSION_INSURED_USERS
     }
   },
 

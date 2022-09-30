@@ -5,6 +5,12 @@ class AppointmentResource extends Resource {
     super('api/appointment')
   }
 
+  getAppointmentInsuredVerification(user_id, specialty_id) {
+    return this.request({
+      url: `/${this.uri}/${user_id}/${specialty_id}`,
+      method: 'get',
+    })
+  }
   updateStatus(id, resource) {
     return this.request({
       url: `/${this.uri}/${id}/update-status`,
@@ -12,7 +18,6 @@ class AppointmentResource extends Resource {
       data: resource
     })
   }
-
   cancelAppointment(id) {
     return this.request({
       url: `/${this.uri}/${id}/cancel`,
