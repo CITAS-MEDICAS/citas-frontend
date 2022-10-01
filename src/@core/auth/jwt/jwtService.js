@@ -3,7 +3,6 @@ import jwtDefaultConfig from './jwtDefaultConfig'
 import { app } from '@/main'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
-
 export default class JwtService {
   // Will be used by this service for making API calls
   axiosIns = null
@@ -38,7 +37,6 @@ export default class JwtService {
           config.headers['Request-Role'] = activeRole.role
         }
 
-
         return config
       },
       error => Promise.reject(error)
@@ -51,8 +49,6 @@ export default class JwtService {
         const { config, response } = error
         const originalRequest = config
 
-        // console.log('-> response', response)
-
         if (originalRequest.url.includes('api/auth/login')) {
           app.$toast({
             component: ToastificationContent,
@@ -60,38 +56,38 @@ export default class JwtService {
               title: 'Error',
               text: 'Credenciales invalidos.',
               icon: 'AlertCircleIcon',
-              variant: 'danger'
-            }
+              variant: 'danger',
+            },
           })
           return Promise.reject(error)
-        } else {
-          const { data } = response
-          let title = 'Error'
-          let message =
-            data?.message || 'Ocurrio un error, contacte con el Administrador del Sistema!'
-
-          if(data?.errors.length) {
-            title = data.errors[0]?.title || title
-            message = data.errors[0]?.detail || message
-          }
-
-          app.$toast({
-            component: ToastificationContent,
-            props: {
-              title,
-              text: message,
-              icon: 'AlertCircleIcon',
-              variant: 'danger'
-            }
-          })
         }
+
+        const { data } = response
+
+        let title = 'Error'
+        let message =
+          data?.message || 'Ocurrio un error, contacte con el Administrador del Sistema!'
+
+        if (data?.errors?.length) {
+          title = data.errors[0]?.title || title
+          message = data.errors[0]?.detail || message
+        }
+
+        app.$toast({
+          component: ToastificationContent,
+          props: {
+            title,
+            text: message,
+            icon: 'AlertCircleIcon',
+            variant: 'danger',
+          },
+        })
 
         if (response && response.status === 401) {
           this.fetchRefreshToken()
 
           const retryOriginalRequest = new Promise(resolve => {
             this.addSubscriber(accessToken => {
-              console.log('retryOriginalRequest -> accessToken', accessToken)
               // Make sure to assign accessToken according to your response.
               // Check: https://pixinvent.ticksy.com/ticket/2413870
               // Change Authorization header
@@ -105,7 +101,6 @@ export default class JwtService {
         return Promise.reject(error)
       }
     )
-
   }
 
   fetchRefreshToken() {
@@ -185,7 +180,7 @@ export default class JwtService {
 
   refreshToken() {
     return this.axiosIns.post(this.jwtConfig.refreshEndpoint, {
-      refresh_token: this.getRefreshToken()
+      refresh_token: this.getRefreshToken(),
     })
   }
 
