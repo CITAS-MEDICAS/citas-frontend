@@ -284,6 +284,13 @@
       </b-row>
     </tab-content>
 <!--    <pre>{{ formData }}</pre>-->
+    <b-card no-body>
+      <b-card-body body-text-variant="primary">
+        NOTA : Debe registrar su información según su AVC-04 de forma exacta según lo que se solicita, el código patronal según el ej. 01-730-00001,
+        si no lo encuentra o tiene algún problema con su registro envíe un mensaje al correo informaciones@cnslpz.bo.,
+        en el punto 2. Centro de Salud, busque y seleccione el Centro de Salud y el número de consultorio donde le atienden.
+      </b-card-body>
+    </b-card>
   </form-wizard>
 </template>
 

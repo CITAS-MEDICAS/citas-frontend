@@ -16,6 +16,11 @@
         >
           Transferir Citas
         </b-button>
+        <!--        PRINT IMPRIMIR LISTA PDF-->
+        <b-button variant="primary" class="btn-icon ml-1" @click="downloadPdf">
+          <feather-icon icon="PrinterIcon" />
+        </b-button>
+
       </template>
     </table-header>
 
@@ -54,9 +59,18 @@
       </template>
 
       <template #cell(date_reservation)="data">
-        {{ data.value | getDate }}
+        {{ data.value| formatDate }}
       </template>
 
+      <template #cell(start_time)="data">
+        <strong>{{ data.value| formatDate }}</strong>
+      </template>
+
+      <template #cell(updated_at)="data">
+        <span v-if="data.item.status.name === 'ATENDIDO'">{{ data.item.updated_at | formatDate }}</span>
+      </template>
+
+<!--      <strong v-if="data.item.status.name === 'reservado'">{{ data.item.updated_at | formatDate }}</strong>-->
 
       <template #cell(status.name)="data">
         <b-badge pill :variant="`light-${statusVariant[data.value]}`">
@@ -110,6 +124,7 @@ export default {
     } = useList()
 
     const status = ref('RESERVADO')
+    const starttime = ref('')
     const selectedAppointments = ref([])
 
     provide('selectedAppointments', selectedAppointments)
@@ -145,10 +160,11 @@ export default {
       { key: 'center.name', label: 'Centro', sortable: false },
       { key: 'unit.name', label: 'Consultorio', sortable: false },
       { key: 'specialty.name', label: 'Especialidad', sortable: false },
-      { key: 'date_reservation', label: 'Reservado', sortable: false },
       { key: 'treatment.patient.fullname', label: 'Asegurado', sortable: false },
-      { key: 'start_time', label: 'Fecha Reserva', sortable: false },
-      { key: 'date', label: 'Fecha Atención', sortable: false },
+      { key: 'date_reservation', label: 'Fecha de Solicitud', sortable: false },
+      { key: 'start_time', label: 'Fecha Cita Medica', sortable: false },
+      { key: 'updated_at', label: 'Fecha Atención', sortable: false },
+      // { key: 'date', label: 'Fecha Atención', sortable: false },
       { key: 'status.name', label: 'Estado', sortable: false }
     ]
 
@@ -162,7 +178,19 @@ export default {
         }
       }
     })
+    const downloadPdf = async () => {
+      const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Asc' : 'Desc')
+      const response = await AppointmentResource.download({
+        scope: `search:${searchQuery.value},status:${status.value},starttime:${starttime.value}`,
+        [sortOption]: 'start_time',
+        include: 'status;treatment.patient;center;unit.specialty;unit.serviceHour;unit.staff.roles;attention',
+        date: starttime.value
+      })
 
+      const blob = new Blob([response.data], { type: 'application/pdf' })
+      const url = URL.createObjectURL(blob)
+      window.open(url)
+    }
     return {
       refTable,
       perPage,
@@ -179,7 +207,8 @@ export default {
       status,
       fetchItems,
       deleteResource,
-      refetchData
+      refetchData,
+      downloadPdf,
     }
   },
   methods: {}
