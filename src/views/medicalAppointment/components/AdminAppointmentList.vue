@@ -1,23 +1,78 @@
 <template>
   <b-card no-body>
-    <table-header :per-page-options="perPageOptions">
-      <template #button>
-        <v-select v-model="status"
-                  style="width: 200px"
-                  :clearable="false"
-                  :options="['TODOS...','RESERVADO','SOLICITADO','NO SE PRESENTO','CANCELADO','ATENDIDO']" placeholder="TODOS"
-                  @input="refetchData"
-        />
-        <b-button
-          v-if="selectedAppointments.length"
-          v-b-modal.transfer-appointment-form
-          variant="outline-info"
-          class="ml-1"
-        >
-          Transferir Citas
-        </b-button>
-      </template>
-    </table-header>
+    <div class="m-2">
+      <b-row>
+        <b-col cols="12">
+          <b-row>
+            <b-col cols="12" md="4" class="mb-1">
+              <b-row>
+                <b-col cols="5">
+                  <v-select
+                    v-model="perPage"
+                    :options="perPageOptions"
+                    class="per-page-selector"
+                    :clearable="false"
+                  />
+                </b-col>
+                <b-col cols="7">
+                  <v-select v-model="status"
+                            :clearable="false"
+                            :options="['TODOS...','RESERVADO','SOLICITADO','NO SE PRESENTO','CANCELADO','ATENDIDO']"
+                            placeholder="TODOS"
+                            @input="refetchData"
+                  />
+                </b-col>
+              </b-row>
+            </b-col>
+            <b-col cols="12" md="4" class="mb-1">
+              <b-button
+                v-if="selectedAppointments.length"
+                v-b-modal.transfer-appointment-form
+                variant="outline-info"
+              >
+                <div>Transferir Citas</div>
+              </b-button>
+            </b-col>
+          </b-row>
+        </b-col>
+        <b-col cols="12">
+          <b-row>
+            <b-col cols="12" md="4" class="mb-1">
+              <v-select v-model="medicalUnit"
+                        :clearable="true"
+                        :options="medicalUnits"
+                        label="name"
+                        :reduce="item => item.id"
+                        placeholder="Consultorio"
+                        @input="refetchData"
+              >
+                <template slot="option" slot-scope="option">
+                  {{ option.center }} - {{ option.name }}
+                </template>
+                <template slot="selected-option" slot-scope="option">
+                  {{ option.center }} - {{ option.name }}
+                </template>
+              </v-select>
+            </b-col>
+            <b-col cols="12" md="4" class="mb-1">
+              <b-row>
+                <b-col cols="6">
+                  <b-form-input v-model="startDate" type="date" :max="endDate" @input="refetchData" required />
+                </b-col>
+                <b-col cols="6">
+                  <b-form-input v-model="endDate" type="date" :min="startDate" @input="refetchData" required />
+                </b-col>
+              </b-row>
+            </b-col>
+            <b-col>
+              <div class="d-flex align-items-center justify-content-end">
+                <b-form-input v-model="searchQuery" class="d-inline-block" placeholder="Buscar..." />
+              </div>
+            </b-col>
+          </b-row>
+        </b-col>
+      </b-row>
+    </div>
 
     <b-table
       ref="refTable"
@@ -53,7 +108,7 @@
         </ActionButtons>
       </template>
 
-      <template #cell(date_reservation)="data">
+      <template #cell(start_time)="data">
         {{ data.value | getDate }}
       </template>
 
@@ -71,20 +126,22 @@
 </template>
 
 <script>
-import { ref, computed, provide } from '@vue/composition-api'
+import { ref, computed, provide, onMounted } from '@vue/composition-api'
 import useList from '@/custom/libs/useList'
 import { AppointmentResource } from '@/network/lib/appointment'
+import { MedicalUnitResource } from '@/network/lib/medicalUnit'
 import { getDate, getTime, formatDate } from '@/custom/filters'
 
-import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
 import ActionButtons from './ActionButtons'
 import TransferAppointmentForm from './transfer-appointment-form/TransferAppointmentForm'
+import { dateISO } from '@/libs/utils'
+
+const today = dateISO(new Date())
 
 export default {
   name: 'AdminAppointmentList',
   components: {
-    TableHeader,
     TablePagination,
     ActionButtons,
     TransferAppointmentForm
@@ -110,23 +167,45 @@ export default {
     } = useList()
 
     const status = ref('RESERVADO')
+    const medicalUnit = ref(null)
+    const medicalUnits = ref([])
     const selectedAppointments = ref([])
+    const startDate = ref(today)
+    const endDate = ref(today)
 
     provide('selectedAppointments', selectedAppointments)
+
+    onMounted(async () => {
+      const { data } = await MedicalUnitResource.getAll({
+        scope: [
+          'isEnabled'
+        ].join(',')
+      })
+      medicalUnits.value = data.rows
+      console.log('-> data.rows', data.rows)
+    })
 
     const fetchItems = async () => {
       if (status.value === 'TODOS...') {
         status.value = ''
       }
-      // console.log('fetchItems staty : ' + staty)
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
-      const { data } = await AppointmentResource.getAll({
-        scope: `search:${searchQuery.value},status:${status.value}`,
+      const scope = [
+        `search:${searchQuery.value}`,
+        `status:${status.value}`,
+        `reservationDate:${startDate.value}|${endDate.value}`
+      ]
+      if (medicalUnit.value) {
+        scope.push(`hasUnit:${medicalUnit.value}`)
+      }
+      const query = {
+        scope: scope.join(','),
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
         include: 'center;unit;specialty;status;treatment.patient'
-      })
+      }
+      const { data } = await AppointmentResource.getAll(query)
       totalRows.value = data.total_data
       return data.rows
     }
@@ -137,7 +216,7 @@ export default {
       'NO SE PRESENTO': 'secondary',
       'CANCELADO': 'danger',
       'ATENDIDO': 'info',
-      'REPROGRAMADO' : 'secondary'
+      'REPROGRAMADO': 'secondary'
     }
 
     const tableColumns = [
@@ -177,6 +256,10 @@ export default {
       selectedAppointments,
       selectAll,
       status,
+      medicalUnit,
+      medicalUnits,
+      startDate,
+      endDate,
       fetchItems,
       deleteResource,
       refetchData
