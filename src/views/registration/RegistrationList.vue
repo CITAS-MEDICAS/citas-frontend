@@ -52,7 +52,6 @@
         </div>
       </template>
     </b-table>
-
     <table-pagination :total-rows="totalRows" :per-page="perPage" />
   </b-card>
 </template>
@@ -67,7 +66,7 @@ import ToastificationContent from '@core/components/toastification/Toastificatio
 export default {
   components: {
     TableHeader,
-    TablePagination
+    TablePagination,
   },
   setup() {
     let {

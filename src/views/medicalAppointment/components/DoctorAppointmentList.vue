@@ -18,6 +18,7 @@
           class="ml-1"
           style="width: 150px"
         />
+<!--        PRINT IMPRIMIR LISTA PDF-->
         <b-button variant="primary" class="btn-icon ml-1" @click="downloadPdf">
           <feather-icon icon="PrinterIcon" />
         </b-button>
@@ -40,12 +41,19 @@
       <template #cell(actions)="data">
         <ShowHistoryButton :item="data.item" />
       </template>
+
       <template #cell(date_reservation)="data">
-        {{ data.value | getDate }}
+        {{ data.value| formatDate }}
       </template>
-      <template #cell(date)="data">
-        <strong>{{ data.item.start_time | formatDate }}</strong>
+
+      <template #cell(start_time)="data">
+        <strong>{{ data.value| formatDate }}</strong>
       </template>
+
+      <template #cell(updated_at)="data">
+        <span v-if="data.item.status.name === 'ATENDIDO'">{{ data.item.updated_at | formatDate }}</span>
+      </template>
+
       <template #cell(status.name)="data">
         <b-badge pill :variant="`light-${statusVariant[data.value]}`">
           <small>{{ data.value.toLowerCase() }}</small>
@@ -101,9 +109,10 @@ export default {
       if (status.value === 'TODOS...') {
         status.value = ''
       }
-      const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
+      const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Asc' : 'Desc')
       const { data } = await AppointmentResource.getAll({
         scope: `search:${searchQuery.value},status:${status.value},starttime:${starttime.value}`,
+        [sortOption]: 'start_time',
         limit: perPage.value,
         page: currentPage.value,
         ['start_time']: sortBy.value,
@@ -115,10 +124,10 @@ export default {
     }
 
     const downloadPdf = async () => {
-      const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
+      const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Asc' : 'Desc')
       const response = await AppointmentResource.download({
         scope: `search:${searchQuery.value},status:${status.value},starttime:${starttime.value}`,
-        [sortOption]: sortBy.value,
+        [sortOption]: 'start_time',
         include: 'status;treatment.patient;center;unit.specialty;unit.serviceHour;unit.staff.roles;attention',
         date: starttime.value
       })
@@ -143,8 +152,9 @@ export default {
       { key: 'center.name', label: 'Centro', sortable: false },
       { key: 'unit.name', label: 'Consultorio', sortable: false },
       { key: 'treatment.patient.fullname', label: 'Asegurado', sortable: false },
-      { key: 'date_reservation', label: 'Reservado', sortable: false },
-      { key: 'date', label: 'Fecha Cita', sortable: false },
+      { key: 'date_reservation', label: 'Fecha de Solicitud', sortable: false },
+      { key: 'start_time', label: 'Fecha Cita Medica', sortable: false },
+      { key: 'updated_at', label: 'Fecha Atención', sortable: false },
       { key: 'status.name', label: 'Estado', sortable: false }
     ]
 
