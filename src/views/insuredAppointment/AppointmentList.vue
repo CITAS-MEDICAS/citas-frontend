@@ -30,14 +30,17 @@
       </template>
 
       <template #cell(date_reservation)="data">
-        {{ data.value | getDate }}
+        {{ data.value| formatDate }}
       </template>
-      <template #cell(date)="data">
-        {{ data.item.start_time | getDate }}
+
+      <template #cell(start_time)="data">
+        <strong>{{ data.value| formatDate }}</strong>
       </template>
-      <template #cell(time)="data">
-        {{ data.item.start_time | getTime }}
+
+      <template #cell(updated_at)="data">
+        <span v-if="data.item.status.name === 'ATENDIDO'">{{ data.item.updated_at | formatDate }}</span>
       </template>
+
     </b-table>
 
     <table-pagination :total-rows="totalRows" :per-page="perPage" />
@@ -100,9 +103,9 @@ export default {
       { key: 'specialty.name', label: 'Especialidad', sortable: false },
       { key: 'center.name', label: 'Centro', sortable: false },
       { key: 'unit.name', label: 'Consultorio', sortable: false },
-      { key: 'date_reservation', label: 'Reservado', sortable: false },
-      { key: 'date', label: 'Fecha Cita', sortable: false },
-      { key: 'time', label: 'Hora Cita', sortable: false },
+      { key: 'date_reservation', label: 'Fecha de Solicitud', sortable: false },
+      { key: 'start_time', label: 'Fecha Cita Medica', sortable: false },
+      { key: 'updated_at', label: 'Fecha Atención', sortable: false },
       { key: 'status.name', label: 'Estado', sortable: false },
     ]
 

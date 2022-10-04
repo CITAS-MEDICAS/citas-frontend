@@ -27,15 +27,15 @@ class AppointmentResource extends Resource {
 
   download(query) {
     return this.request({
-      url: `/${this.uri}/download`,
+      url: `/${this.uri}/listapdf`,
       method: 'get',
       params: query,
       responseType: 'blob'
     })
   }
-  print(appointmentId) {
+  print(id) {
     return this.request({
-      url: `/${this.uri}/${appointmentId}/pdf/?output=print`,
+      url: `/${this.uri}/caratulapdf/${id}`,
       method: 'get',
       responseType: 'blob',
     })

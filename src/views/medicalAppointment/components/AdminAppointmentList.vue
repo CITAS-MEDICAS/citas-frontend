@@ -32,6 +32,10 @@
               >
                 <div>Transferir Citas</div>
               </b-button>
+              <!--        PRINT IMPRIMIR LISTA PDF-->
+              <b-button variant="primary" class="btn-icon ml-1" @click="downloadPdf">
+                <feather-icon icon="PrinterIcon" />
+              </b-button>
             </b-col>
           </b-row>
         </b-col>
@@ -108,7 +112,7 @@
         </ActionButtons>
       </template>
 
-      <template #cell(start_time)="data">
+      <template #cell(date_reservation)="data">
         {{ data.value| formatDate }}
       </template>
 
@@ -117,7 +121,7 @@
       </template>
 
       <template #cell(updated_at)="data">
-        <span v-if="data.item.status.name === 'ATENDIDO'">{{ data.item.updated_at | formatDate }}</span>
+        <span v-if="data.item.status.name === 'ATENDIDO' || data.item.status.name === 'CANCELADO' || data.item.status.name === 'NO SE PRESENTO' ">{{ data.item.updated_at | formatDate }}</span>
       </template>
 
 <!--      <strong v-if="data.item.status.name === 'reservado'">{{ data.item.updated_at | formatDate }}</strong>-->
@@ -198,10 +202,12 @@ export default {
     })
 
     const fetchItems = async () => {
+      console.log('fetchItems')
       if (status.value === 'TODOS...') {
         status.value = ''
       }
-      const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
+      // const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
+      const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Asc' : 'Desc')
       const scope = [
         `search:${searchQuery.value}`,
         `status:${status.value}`,
@@ -216,6 +222,7 @@ export default {
         page: currentPage.value,
         [sortOption]: sortBy.value,
         include: 'center;unit;specialty;status;treatment.patient'
+
       }
       const { data } = await AppointmentResource.getAll(query)
       totalRows.value = data.total_data
@@ -255,13 +262,24 @@ export default {
       }
     })
     const downloadPdf = async () => {
+      console.log('downloadPdf')
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Asc' : 'Desc')
+      const scope = [
+        `search:${searchQuery.value}`,
+        `status:${status.value}`,
+        `reservationDate:${startDate.value}|${endDate.value}`
+      ]
+      if (medicalUnit.value) {
+        scope.push(`hasUnit:${medicalUnit.value}`)
+      }
       const response = await AppointmentResource.download({
-        scope: `search:${searchQuery.value},status:${status.value},starttime:${starttime.value}`,
-        [sortOption]: 'start_time',
-        include: 'status;treatment.patient;center;unit.specialty;unit.serviceHour;unit.staff.roles;attention',
-        date: starttime.value
+        // scope: `search:${searchQuery.value},status:${status.value}`,
+        scope: scope.join(','),
+        limit: perPage.value,
+        [sortOption]: sortBy.value,
+        include: 'center;unit;specialty;status;treatment.patient'
       })
+
 
       const blob = new Blob([response.data], { type: 'application/pdf' })
       const url = URL.createObjectURL(blob)
