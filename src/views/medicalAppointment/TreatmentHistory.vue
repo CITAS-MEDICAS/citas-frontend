@@ -56,19 +56,23 @@
         </b-button>
 
       </template>
-      <template #cell(date_reservation)="data">
-        {{ data.value | getDate }}
-      </template>
+
       <template #cell(medic.fullname)="data">
         {{ data.value.toUpperCase() }}
       </template>
-      <template #cell(date)="data">
-        <strong>{{ data.item.start_time | formatDate }}</strong>
+
+      <template #cell(date_reservation)="data">
+        {{ data.value| formatDate }}
       </template>
-<!--      v-if="$attrs['no-body'] !== undefined"-->
-      <template #cell(updated_at)="data" >
-        <strong v-if="data.item.status.name === 'ATENDIDO'">{{ data.item.updated_at | formatDate }}</strong>
+
+      <template #cell(start_time)="data">
+        <strong>{{ data.value| formatDate }}</strong>
       </template>
+
+      <template #cell(updated_at)="data">
+        <span v-if="data.item.status.name === 'ATENDIDO' || data.item.status.name === 'CANCELADO' || data.item.status.name === 'NO SE PRESENTO' ">{{ data.item.updated_at | formatDate }}</span>
+      </template>
+
       <template #cell(status.name)="data">
         <b-badge pill :variant="`light-${statusVariant[data.value]}`">
           <small>{{ data.value.toLowerCase() }}</small>
@@ -154,11 +158,11 @@ export default {
       { key: 'center.name', label: 'Centro', sortable: false },
       { key: 'specialty.name', label: 'Especialidad', sortable: false },
       { key: 'treatment.patient.fullname', label: 'Asegurado', sortable: false },
-      { key: 'date_reservation', label: 'Solicitado en Fecha', sortable: false },
-      { key: 'date', label: 'Reservado en Fecha', sortable: true },
+      { key: 'date_reservation', label: 'Fecha de Solicitud', sortable: false },
+      { key: 'start_time', label: 'Fecha Cita Medica', sortable: false },
       { key: 'diagnostic', label: 'Diagnostico', sortable: false },
       { key: 'comment', label: 'Comentario', sortable: false },
-      { key: 'updated_at', label: 'Atendido en Fecha', sortable: false },
+      { key: 'updated_at', label: 'Fecha Atención', sortable: false },
       { key: 'medic.fullname', label: 'Medico', sortable: false ,thStyle: { width: '150px' } }
     ]
 
@@ -191,8 +195,9 @@ export default {
       console.log(item.start_time)
       console.log(this.resolveDifDate(item.start_time))
       if (dataPermission["role"] === "medico"){
-        console.log("si medic")
-        if (this.resolveDifDate(item.start_time)>-0.5) {
+        console.log("es rol Medico")
+        console.log(this.resolveDifDate(item.start_time))
+        if ((this.resolveDifDate(item.start_time)>=-0.5) && (this.resolveDifDate(item.start_time)<=0.5)) {
           return parseInt(item.id) === parseInt(this.$route.query.cita) && item.status.name === 'RESERVADO'
         }
       } else {

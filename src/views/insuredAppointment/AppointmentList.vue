@@ -53,7 +53,7 @@ import useList from '@/custom/libs/useList'
 import TableHeader from '@/custom/components/Tables/TableHeader'
 import TablePagination from '@/custom/components/Tables/TablePagination'
 import { AppointmentResource } from '@/network/lib/appointment'
-import { getDate, getTime } from '@/custom/filters'
+import {formatDate, getDate, getTime} from '@/custom/filters'
 import { app } from '@/main'
 
 import { removeItem } from '@/custom/libs/date'
@@ -62,10 +62,12 @@ export default {
   name: 'AppointmentList',
   components: {
     TableHeader,
-    TablePagination
+    TablePagination,
   },
   filters: {
-    getDate, getTime
+    getDate,
+    getTime,
+    formatDate
   },
   setup() {
     let {
@@ -80,7 +82,8 @@ export default {
       route,
       deleteResource,
       refetchData,
-      app
+      app,
+      formatDate
     } = useList()
 
     const fetchItems = async () => {
@@ -122,7 +125,8 @@ export default {
       fetchItems,
       deleteResource,
       refetchData,
-      app
+      app,
+      formatDate
     }
   },
 

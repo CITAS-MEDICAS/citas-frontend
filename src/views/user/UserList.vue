@@ -102,11 +102,13 @@ export default {
       isBusy.value = true
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
 
+      let sortBy = 'updated_at'
+
       const { data } = await UserResource.getAll({
         scope: `search:${searchQuery.value},onlyStaffRoles`,
         limit: perPage.value,
         page: currentPage.value,
-        [sortOption]: sortBy.value,
+        [sortOption]: sortBy,
         include: 'roles',
       })
 

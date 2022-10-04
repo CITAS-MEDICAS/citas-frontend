@@ -130,7 +130,7 @@ export default {
 
       isBusy.value = true
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
-
+      let sortBy = 'updated_at'
       const { data } = await MedicalUnitResource.getAll({
         scope: `search:${searchQuery.value}`,
         limit: perPage.value,

@@ -241,7 +241,7 @@ export default {
         `status:${status.value}`,
       ]
       if (startDate.value && endDate.value) {
-        let scope = [
+        scope = [
           `search:${searchQuery.value}`,
           `status:${status.value}`,
           `reservationDate:${startDate.value}|${endDate.value}`
@@ -298,6 +298,10 @@ export default {
     })
     const downloadPdf = async () => {
       console.log('downloadPdf')
+      if(!startDate.value || !endDate.value){
+        alert('NOTA: Debe llenar las fechas desde y hasta para imprimir el listado')
+        return
+      }
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Asc' : 'Desc')
       const scope = [
         `search:${searchQuery.value}`,

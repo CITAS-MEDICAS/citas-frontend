@@ -89,12 +89,12 @@ export default {
 
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
-
+      let sortby = 'updated_at'
       const { data } = await InsuredResource.getAll({
         scope: `search:${searchQuery.value},OnlyInsuredRoles`,
         limit: perPage.value,
         page: currentPage.value,
-        [sortOption]: sortBy.value,
+        [sortOption]: sortby,
         include: 'user;unit.center;relationship'
       })
 

@@ -66,15 +66,21 @@ export default {
   },
   methods: {
     async handleSubmit(id) {
-      console.log(id)
-      AppointmentResource.print(id).then(response => {
+      console.log("handleSubmit print")
+      try {
+        AppointmentResource.print(id).then(response => {
           const url = window.URL.createObjectURL(new Blob([response.data]))
           const link = document.createElement('a')
           link.href = url
-          link.setAttribute('download', 'ticket.pdf') //or any other extension
+          link.setAttribute('download', 'caratula_estadistica.pdf') //or any other extension
           document.body.appendChild(link)
           link.click()
         })
+      }
+      catch (e){
+        alert("NOTA: Debe asegurarse que el asegurado tiene asignado Centro y Consultorio")
+      }
+
     }
   },
 }

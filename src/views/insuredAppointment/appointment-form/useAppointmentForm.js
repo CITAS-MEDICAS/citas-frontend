@@ -176,7 +176,7 @@ export const useAppointmentForm = emit => {
 
 
     if (userRole.role === 'asegurado' && data[0].reservas >0){
-      alert('SEÑOR ASEGURADO : Solo puede tener una reserva por tipo de consultorio. Tambien puede cancelar las reservas')
+      alert('SEÑOR ASEGURADO : Solo puede tener una reserva NUEVA O RECONSULTA por cada consultorio familiar o de especialidad.')
       router.push({ name: 'insured-appointment-list', params: { id: route.value.params.id } })
     }
     else{
