@@ -85,11 +85,12 @@ export default {
 
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
+      let sortBy = 'updated_at'
       const { data } = await RegistrationResource.getAll({
         scope: `search:${searchQuery.value}`,
         limit: perPage.value,
         page: currentPage.value,
-        [sortOption]: sortBy.value
+        [sortOption]: sortBy
       })
       totalRows.value = data.total_data
       return data.rows

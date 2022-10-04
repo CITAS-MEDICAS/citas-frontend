@@ -96,12 +96,12 @@ export default {
 
     const fetchItems = async () => {
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
-
+      let sortBy = 'id'
       const { data } = await TypesResource.getRelationships({
         scope: `search:${searchQuery.value}`,
         limit: perPage.value,
         page: currentPage.value,
-        [sortOption]: sortBy.value,
+        [sortOption]: sortBy,
       })
 
       totalRows.value = data.total_data

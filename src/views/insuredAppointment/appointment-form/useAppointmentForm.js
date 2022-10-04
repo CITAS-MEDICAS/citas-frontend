@@ -44,6 +44,7 @@ export const useAppointmentForm = emit => {
   })
 
   const fetchInsured = async () => {
+    console.log('fetchInsured')
     const {
       data: { user },
     } = await UserResource.getById(route.value.params.userId, {
@@ -119,6 +120,9 @@ export const useAppointmentForm = emit => {
     formData.value.time = null
 
     let result = await fetchMedicalCenter()
+    console.log('result')
+    console.log(result)
+    console.log(insuredUser.value.latest_insured.unit.id)
 
     if (isFamiliar.value) {
       result = result.filter(
@@ -135,10 +139,23 @@ export const useAppointmentForm = emit => {
   }
 
   const handleMedicalUnit = async () => {
+    console.log('handleMedicalUnit')
+    formData.value.medical_unit_id = null
     formData.value.calendar = null
     formData.value.time = null
 
-    medicalUnits.value = await fetchMedicalUnit()
+    // medicalUnits.value = await fetchMedicalUnit()
+    let result = await fetchMedicalUnit()
+    if (isFamiliar.value) {
+      result = result.filter(
+        item => item.id === insuredUser.value.latest_insured.unit.id
+      )
+    }
+    if (result.length && isFamiliar.value) {
+      medicalUnits.value = result
+      // formData.value.medical_unit_id = result[0].id
+    }
+    console.log(result)
   }
 
   const handleAvailability = async () => {
