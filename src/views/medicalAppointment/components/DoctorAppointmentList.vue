@@ -9,6 +9,9 @@
                   @input="refetchData"
         />
         <b-form-datepicker
+          today-button
+          reset-button
+          close-button
           v-model="starttime"
           label-no-date-selected="Fecha"
           locale="es"

@@ -20,7 +20,22 @@
                 label="name"
                 :clearable="false"
                 placeholder="Selecciona..."
-                Centro de Salud   @input="handleMedicalCenter"
+                @input="handleMedicalCenter"
+              />
+              <small class="text-danger">{{ errors[0] }}</small>
+            </validation-provider>
+          </b-form-group>
+
+<!--          <b-form-group v-if="$can('delete', PERMISSION_MEDICAL_UNIT_CALENDAR)"         label="Calendario Tipo *">-->
+          <b-form-group label="Calendario Tipo *">
+            <validation-provider v-slot="{ errors }" name="Especialidad" rules="required">
+              <v-select
+                v-model="formData.attention_id"
+                :options="calendarTypes"
+                label="name"
+                :clearable="false"
+                placeholder="Selecciona..."
+                @input="handleAttention"
               />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
@@ -110,7 +125,7 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { useEditAppointmentForm } from './useEditAppointmentForm'
 import { required } from '@validations'
 import { getDate } from '@/custom/filters'
-
+import { PERMISSION_MEDICAL_UNIT_CALENDAR } from '@/permissions'
 export default {
   name: 'CalendarSidebar',
   components: {
@@ -126,6 +141,8 @@ export default {
       formData,
       refFormObserver,
       specialties,
+      calendarTypes,
+      handleAttention,
       medicalCenters,
       medicalUnits,
       availableDates,
@@ -144,6 +161,8 @@ export default {
       refFormObserver,
       required,
       specialties,
+      calendarTypes,
+      handleAttention,
       medicalCenters,
       medicalUnits,
       availableDates,
@@ -153,7 +172,8 @@ export default {
       handleMedicalUnit,
       handleAvailability,
       handleSubmit,
-      goToDate
+      goToDate,
+      PERMISSION_MEDICAL_UNIT_CALENDAR
     }
   }
 }

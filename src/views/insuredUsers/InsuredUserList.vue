@@ -129,6 +129,8 @@ import { InsuredResource } from '@/network/lib/insured'
 import {formatDate, formatDateSimple, getDate, getTime} from "@/custom/filters"
 import { PERMISSION_INSURED_USERS } from '@/permissions'
 
+const ref = require("@vue/composition-api");
+
 export default {
   name: 'InsuredUserList',
   components: {
@@ -153,12 +155,13 @@ export default {
     } = useList()
 
     const fetchItems = async () => {
+      let sortBy = 'updated_at'
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
       const { data } = await InsuredResource.getAll({
         scope: `search:${searchQuery.value},OnlyInsuredRoles`,
         limit: perPage.value,
         page: currentPage.value,
-        [sortOption]: sortBy.value,
+        [sortOption]: sortBy,
         include: 'user;unit.center;relationship;user.roles',
       })
 

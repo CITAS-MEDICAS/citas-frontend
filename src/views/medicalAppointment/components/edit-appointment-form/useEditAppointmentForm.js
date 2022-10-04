@@ -1,10 +1,12 @@
-import { computed, onMounted, ref } from '@vue/composition-api'
+import {computed, onMounted, ref} from '@vue/composition-api'
 import store from '@/store'
-import { MedicalCenterResource } from '@/network/lib/medicalCenter'
-import { MedicalUnitResource } from '@/network/lib/medicalUnit'
-import { CalendarResource } from '@/network/lib/calendar'
-import { useRouter } from '@core/utils/utils'
-import { AppointmentResource } from '@/network/lib/appointment'
+
+import {MedicalCenterResource} from '@/network/lib/medicalCenter'
+import {MedicalUnitResource} from '@/network/lib/medicalUnit'
+import {CalendarResource} from '@/network/lib/calendar'
+import {AppointmentResource} from '@/network/lib/appointment'
+import {useRouter} from '@core/utils/utils'
+
 
 
 export const useEditAppointmentForm = emit => {
@@ -16,6 +18,7 @@ export const useEditAppointmentForm = emit => {
   const attentionId = ref(null)
 
   const formData = ref({
+    attention_id: null,
     specialty: null,
     medical_center_id: null,
     medical_unit_id: null,
@@ -51,8 +54,14 @@ export const useEditAppointmentForm = emit => {
     return store.state.types.specialties
   })
 
+  const calendarTypes = computed(() => {
+    console.log("calendarTypes")
+    console.log(store.state.types.attentionTypes)
+    return store.state.types.attentionTypes.filter(attentionType => attentionType.name === 'NUEVO' || attentionType.name === 'OTRO')
+  })
+
   const availableTimes = computed(() => {
-    console.log("availableTimes")
+    console.log("availableTimes...")
     if (availableDates.value.length && formData.value.calendar) {
       return availableDates.value.find(item => item.calendar_id === formData.value.calendar.calendar_id).available
     }
@@ -60,6 +69,7 @@ export const useEditAppointmentForm = emit => {
   })
 
   const fetchMedicalCenter = async () => {
+    console.log("fetchMedicalCenter")
     formData.value.medical_center_id = null
     formData.value.medical_unit_id = null
 
@@ -68,7 +78,7 @@ export const useEditAppointmentForm = emit => {
       sortByAsc: 'name',
       getAll: '1'
     })
-    console.log("fetchMedicalCenter")
+
     if (data.total_data) {
       console.log(data)
       console.log(data.rows[0].id)
@@ -93,6 +103,17 @@ export const useEditAppointmentForm = emit => {
     return data.rows
   }
 
+  // eslint-disable-next-line camelcase
+  const handleAttention = async attention_id => {
+    console.log("handleAttention_id")
+    console.log(attention_id)
+    formData.value.medical_unit_id = null
+    formData.value.medical_center_id = null
+    formData.value.calendar = null
+    formData.value.time = null
+
+  }
+
   const handleMedicalCenter = async () => {
     console.log("handleMedicalCenter")
     medicalCenters.value = await fetchMedicalCenter()
@@ -105,8 +126,15 @@ export const useEditAppointmentForm = emit => {
   }
 
   const handleAvailability = async () => {
+    console.log("handleAvailability")
+    if (!formData.value.medical_unit_id && !formData.value.attention_id.id
+    && !formData.value.medical_center_id && !formData.value.medical_unit_id) {
+      alert("Nota: Debe llenar todos los campos para que el calendario se actualize")
+      return
+    }
+
     const medicalUnitId = formData.value.medical_unit_id
-    const attentionTypeId = attentionId.value
+    const attentionTypeId = formData.value.attention_id.id
     if (medicalUnitId && attentionTypeId) {
       const { data } = await CalendarResource.availability(medicalUnitId, { attentionTypeId })
       availableDates.value = data
@@ -172,9 +200,11 @@ export const useEditAppointmentForm = emit => {
     formData,
     refFormObserver,
     specialties,
+    handleAttention,
     medicalCenters,
     medicalUnits,
     availableDates,
+    calendarTypes,
     availableDatesMap,
     availableTimes,
     handleMedicalCenter,

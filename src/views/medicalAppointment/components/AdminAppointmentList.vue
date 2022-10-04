@@ -61,10 +61,34 @@
             <b-col cols="12" md="4" class="mb-1">
               <b-row>
                 <b-col cols="6">
-                  <b-form-input v-model="startDate" type="date" :max="endDate" @input="refetchData" required />
+<!--                  <b-form-input v-model="startDate" type="date" :max="endDate" :clearable="true" @input="refetchData" required />-->
+                  <b-form-datepicker
+                    v-model="startDate"
+                    today-button
+                    reset-button
+                    close-button
+                    label-no-date-selected="Fecha Cita Desde"
+                    locale="es"
+                    :show-decade-nav="true"
+                    :date-format-options="{day: 'numeric', month: 'numeric', year: 'numeric' }"
+                    class="ml-1"
+                    @input="refetchData"
+                  />
                 </b-col>
                 <b-col cols="6">
-                  <b-form-input v-model="endDate" type="date" :min="startDate" @input="refetchData" required />
+                  <b-form-datepicker
+                    v-model="endDate"
+                    today-button
+                    reset-button
+                    close-button
+                    label-no-date-selected="Fecha Cita Hasta"
+                    locale="es"
+                    :show-decade-nav="true"
+                    :date-format-options="{day: 'numeric', month: 'numeric', year: 'numeric' }"
+                    class="ml-1"
+                    @input="refetchData"
+                  />
+<!--                  <b-form-input v-model="endDate" type="date" :min="startDate"  @input="refetchData" required />-->
                 </b-col>
               </b-row>
             </b-col>
@@ -149,6 +173,7 @@ import TablePagination from '@/custom/components/Tables/TablePagination'
 import ActionButtons from './ActionButtons'
 import TransferAppointmentForm from './transfer-appointment-form/TransferAppointmentForm'
 import { dateISO } from '@/libs/utils'
+import flatPickr from 'vue-flatpickr-component'
 
 const today = dateISO(new Date())
 
@@ -157,7 +182,8 @@ export default {
   components: {
     TablePagination,
     ActionButtons,
-    TransferAppointmentForm
+    TransferAppointmentForm,
+    flatPickr
   },
   filters: {
     getDate,
@@ -207,12 +233,21 @@ export default {
         status.value = ''
       }
       // const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
+
+
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Asc' : 'Desc')
-      const scope = [
+      let scope = [
         `search:${searchQuery.value}`,
         `status:${status.value}`,
-        `reservationDate:${startDate.value}|${endDate.value}`
       ]
+      if (startDate.value && endDate.value) {
+        let scope = [
+          `search:${searchQuery.value}`,
+          `status:${status.value}`,
+          `reservationDate:${startDate.value}|${endDate.value}`
+        ]
+      }
+
       if (medicalUnit.value) {
         scope.push(`hasUnit:${medicalUnit.value}`)
       }
@@ -312,5 +347,8 @@ export default {
   methods: {}
 }
 </script>
+<style lang="scss">
+@import '@core/scss/vue/libs/vue-flatpicker.scss';
+</style>
 
 <style scoped></style>
