@@ -189,8 +189,7 @@ export const useAppointmentForm = emit => {
     }
     const userData = JSON.parse(localStorage.getItem('userData'))
     const userRole = JSON.parse(localStorage.getItem('userRole'))
-    const { data } = await AppointmentResource.getAppointmentInsuredVerification(userData.id,formData.value.specialty.id)
-
+    const { data } = await AppointmentResource.getAppointmentInsuredVerification(formData.value.user_patient_id,formData.value.specialty.id)
 
     if (userRole.role === 'asegurado' && data[0].reservas >0){
       alert('SEÑOR ASEGURADO : Solo puede tener una reserva NUEVA O RECONSULTA por cada consultorio familiar o de especialidad.')
