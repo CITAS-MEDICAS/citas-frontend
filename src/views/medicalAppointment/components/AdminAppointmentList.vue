@@ -130,7 +130,7 @@
               <i class="vs-icon feather icon-check" />
             </span>
           </span>
-          <span class="vs-label">{{ row.detailsShowing ? 'Ocultar' : 'Mostrar' }}</span>
+          <span class="vs-label">{{ row.detailsShowing ? 'Oculta' : 'Ver' }}</span>
         </b-form-checkbox>
       </template>
 
@@ -332,11 +332,11 @@ export default {
     }
 
     const tableColumns = [
-      { key: 'show_details', label: 'Detalles'},
-      { key: 'actions', label: 'Acciones', thStyle: { width: '150px' } },
+      { key: 'show_details', label: 'Ver', thStyle: { width: '10px' }},
+      { key: 'actions', label: 'Acciones', thStyle: { width: '100px' } },
+      { key: 'specialty.name', label: 'Especialidad', sortable: false },
       { key: 'center.name', label: 'Centro', sortable: false },
       { key: 'unit.name', label: 'Consultorio', sortable: false },
-      { key: 'specialty.name', label: 'Especialidad', sortable: false },
       { key: 'treatment.patient.fullname', label: 'Asegurado', sortable: false },
       { key: 'treatment.patient.ci', label: 'Carnet', sortable: false },
       { key: 'date_reservation', label: 'Fecha de Solicitud', sortable: false },
@@ -344,6 +344,7 @@ export default {
       { key: 'updated_at', label: 'Fecha Atención', sortable: false },
       // { key: 'date', label: 'Fecha Atención', sortable: false },
       { key: 'status.name', label: 'Estado', sortable: false },
+      { key: 'treatment.comment', label: 'Motivo Consulta', sortable: false },
     ]
 
     const selectAll = computed({
