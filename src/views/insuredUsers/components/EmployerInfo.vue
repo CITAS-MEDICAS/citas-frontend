@@ -73,6 +73,17 @@
               </validation-provider>
             </b-form-group>
           </b-col>
+
+          <b-col sm="6">
+            <b-form-group label="Ocupación">
+              <validation-provider v-slot="{ errors }" name="profession">
+                <b-form-input v-model="formData.profession" :state="errors.length ? false : null" />
+                <small class="text-danger">{{ errors[0] }}</small>
+              </validation-provider>
+            </b-form-group>
+          </b-col>
+
+
         </b-row>
       </b-col>
     </b-row>

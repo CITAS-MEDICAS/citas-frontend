@@ -32,7 +32,7 @@
           <router-link
             :to="{
               name: 'insured-edit',
-              params: { id: data.item.id },
+              params: { id: data.item.id, relationship_type_id: data.item.relationship_type_id  },
             }"
           >
             <b-button
@@ -167,6 +167,7 @@ export default {
 
       totalRows.value = data.total_data
       console.log("lista")
+      console.log(data.rows)
       return data.rows
     }
 

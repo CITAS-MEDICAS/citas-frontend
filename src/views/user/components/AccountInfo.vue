@@ -11,7 +11,7 @@
               <validation-provider
                 v-slot="{ errors }"
                 name="Correo Electronico"
-                rules="required|email"
+                rules="email|required"
               >
                 <b-form-input
                   v-model="formData.email"
@@ -74,6 +74,8 @@ export default {
   setup() {
     const formData = inject('formData')
     const refFormObserver = ref(null)
+
+    console.log('AccountInfo')
 
     const validate = async () => {
       return await refFormObserver.value.validate()

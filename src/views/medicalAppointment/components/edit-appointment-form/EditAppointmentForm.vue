@@ -11,7 +11,7 @@
             <legend class="col-form-label">Asegurado</legend>
             <input class="form-control" :value="patientName" readonly />
           </fieldset>
-<!--          <pre>{{formData}}</pre>-->
+          <pre>{{formData}}</pre>
           <b-form-group label="Especialidad *">
             <validation-provider v-slot="{ errors }" name="Especialidad" rules="required">
               <v-select
@@ -27,20 +27,6 @@
           </b-form-group>
 
 <!--          <b-form-group v-if="$can('delete', PERMISSION_MEDICAL_UNIT_CALENDAR)"         label="Calendario Tipo *">-->
-          <b-form-group label="Calendario Tipo *">
-            <validation-provider v-slot="{ errors }" name="Especialidad" rules="required">
-              <v-select
-                v-model="formData.attention_id"
-                :options="calendarTypes"
-                label="name"
-                :clearable="false"
-                placeholder="Selecciona..."
-                @input="handleAttention"
-              />
-              <small class="text-danger">{{ errors[0] }}</small>
-            </validation-provider>
-          </b-form-group>
-
           <b-form-group label="Centro de Salud *">
             <validation-provider v-slot="{ errors }" name="Centro de Salud" rules="required">
               <v-select
@@ -64,6 +50,20 @@
                 :reduce="item => item.id"
                 placeholder="Selecciona..."
                 @input="handleAvailability"
+              />
+              <small class="text-danger">{{ errors[0] }}</small>
+            </validation-provider>
+          </b-form-group>
+
+          <b-form-group label="Calendario Tipo *">
+            <validation-provider v-slot="{ errors }" name="Especialidad" rules="required">
+              <v-select
+                v-model="formData.attention"
+                :options="calendarTypes"
+                label="name"
+                :clearable="false"
+                placeholder="Selecciona..."
+                @input="handleAttention"
               />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>

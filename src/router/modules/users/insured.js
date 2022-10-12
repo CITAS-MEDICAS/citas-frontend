@@ -38,7 +38,7 @@ export default [
     }
   },
   {
-    path: '/asegurados/editar/:id',
+    path: '/asegurados/editar/:id/:relationship_type_id',
     name: 'insured-edit',
     component: () => import('@/views/insuredUsers/InsuredUserEdit'),
     meta: {

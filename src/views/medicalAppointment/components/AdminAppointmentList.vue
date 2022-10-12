@@ -14,29 +14,33 @@
                     :clearable="false"
                   />
                 </b-col>
-                <b-col cols="7">
+                <b-col cols="5">
                   <v-select v-model="status"
+                            v-b-popover.hover.left="'Reservado con Fecha Cita Médica |  Solicitado con Fecha de Solicitud  |  Atendido, Cancelado y No-se-presento con Fecha Atención | Todos, funciona con Buscar genérico'"
+                            title="El estado se vincula con las fechas"
+                            variant="outline-primary"
                             :clearable="false"
                             :options="['TODOS...','RESERVADO','SOLICITADO','NO SE PRESENTO','CANCELADO','ATENDIDO']"
                             placeholder="TODOS"
                             @input="refetchData"
                   />
                 </b-col>
+                <b-col cols="1">
+                  <b-button variant="primary" class="btn-icon ml-1" @click="downloadPdf">
+                    <feather-icon icon="PrinterIcon" />
+                  </b-button>
+                </b-col>
               </b-row>
             </b-col>
-            <b-col cols="12" md="4" class="mb-1">
-              <b-button
-                v-if="selectedAppointments.length"
-                v-b-modal.transfer-appointment-form
-                variant="outline-info"
-              >
-                <div>Transferir Citas</div>
-              </b-button>
-              <!--        PRINT IMPRIMIR LISTA PDF-->
-              <b-button variant="primary" class="btn-icon ml-1" @click="downloadPdf">
-                <feather-icon icon="PrinterIcon" />
-              </b-button>
-            </b-col>
+<!--            <b-col cols="12" md="4" class="mb-1">-->
+<!--              <b-button-->
+<!--                v-if="selectedAppointments.length"-->
+<!--                v-b-modal.transfer-appointment-form-->
+<!--                variant="outline-info"-->
+<!--              >-->
+<!--                <div>Transferir Citas</div>-->
+<!--              </b-button>-->
+<!--            </b-col>-->
           </b-row>
         </b-col>
         <b-col cols="12">
@@ -109,30 +113,84 @@
       :sort-by.sync="sortBy"
       :sort-desc.sync="isSortDirDesc"
       show-empty
-      empty-text="No se encontraron resultados"
       responsive
+      empty-text="No se encontraron resultados"
       primary-key="id"
       class="position-relative"
     >
-      <template #head(actions)="">
+      <template #cell(show_details)="row">
         <b-form-checkbox
-          v-model="selectAll"
-          style="display: inline-block"
-          class="mr-1"
-        />
+          v-model="row.detailsShowing"
+          plain
+          class="vs-checkbox-con"
+          @change="row.toggleDetails"
+        >
+          <span class="vs-checkbox">
+            <span class="vs-checkbox--check">
+              <i class="vs-icon feather icon-check" />
+            </span>
+          </span>
+          <span class="vs-label">{{ row.detailsShowing ? 'Ocultar' : 'Mostrar' }}</span>
+        </b-form-checkbox>
+      </template>
+
+      <template #row-details="row">
+        <b-card>
+          <b-row class="mb-2">
+            <b-col
+              md="4"
+              class="mb-1"
+            >
+              <strong>Fecha Nacimiento : </strong>{{ row.item.treatment.patient.birth_date | getDate }}
+            </b-col>
+            <b-col
+              md="4"
+              class="mb-1"
+            >
+              <strong>Email : </strong>{{ row.item.treatment.patient.email }}
+            </b-col>
+            <b-col
+              md="4"
+              class="mb-1"
+            >
+              <strong>Género : </strong>{{ row.item.treatment.patient.gender }}
+            </b-col>
+            <b-col
+              md="4"
+              class="mb-1"
+            >
+              <strong>Telefono : </strong>{{ row.item.treatment.patient.phone_number }} - {{ row.item.treatment.patient.insured[0].reference_phone_number }}
+            </b-col>
+            <b-col
+              md="4"
+              class="mb-1"
+            >
+              <strong>Zona y Dirección : </strong>{{ row.item.treatment.patient.insured[0].region }} - {{ row.item.treatment.patient.insured[0].address_zone }} - {{ row.item.treatment.patient.insured[0].address }}
+            </b-col>
+            <b-col
+              md="4"
+              class="mb-1"
+            >
+              <strong>Empleador : </strong>{{ row.item.treatment.patient.insured[0].employer_code }} - {{ row.item.treatment.patient.insured[0].employer_name }}
+            </b-col>
+          </b-row>
+
+          <b-button
+            size="sm"
+            variant="outline-secondary"
+            @click="row.toggleDetails"
+          >
+            Hide Details
+          </b-button>
+        </b-card>
+      </template>
+
+      <template #head(actions)="">
         ACCIONES
       </template>
 
       <template #cell(actions)="data">
-        <ActionButtons :item="data.item">
-          <template #control>
-            <b-form-checkbox
-              v-model="selectedAppointments"
-              :value="data.item"
-              style="display: inline-block"
-              class="mr-1"
-            />
-          </template>
+        <ActionButtons :item="data.item">>
         </ActionButtons>
       </template>
 
@@ -147,8 +205,6 @@
       <template #cell(updated_at)="data">
         <span v-if="data.item.status.name === 'ATENDIDO' || data.item.status.name === 'CANCELADO' || data.item.status.name === 'NO SE PRESENTO' ">{{ data.item.updated_at | formatDate }}</span>
       </template>
-
-<!--      <strong v-if="data.item.status.name === 'reservado'">{{ data.item.updated_at | formatDate }}</strong>-->
 
       <template #cell(status.name)="data">
         <b-badge pill :variant="`light-${statusVariant[data.value]}`">
@@ -176,7 +232,7 @@ import { dateISO } from '@/libs/utils'
 import flatPickr from 'vue-flatpickr-component'
 
 const today = dateISO(new Date())
-
+const now = new Date()
 export default {
   name: 'AdminAppointmentList',
   components: {
@@ -229,6 +285,7 @@ export default {
 
     const fetchItems = async () => {
       console.log('fetchItems')
+
       if (status.value === 'TODOS...') {
         status.value = ''
       }
@@ -244,7 +301,7 @@ export default {
         scope = [
           `search:${searchQuery.value}`,
           `status:${status.value}`,
-          `reservationDate:${startDate.value}|${endDate.value}`
+          `reservationDate:${status.value}|${startDate.value}|${endDate.value}`
         ]
       }
 
@@ -256,11 +313,12 @@ export default {
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
-        include: 'center;unit;specialty;status;treatment.patient'
+        include: 'center;unit;specialty;status;treatment.patient.insured'
 
       }
       const { data } = await AppointmentResource.getAll(query)
       totalRows.value = data.total_data
+      console.log(data.rows)
       return data.rows
     }
 
@@ -274,16 +332,18 @@ export default {
     }
 
     const tableColumns = [
+      { key: 'show_details', label: 'Detalles'},
       { key: 'actions', label: 'Acciones', thStyle: { width: '150px' } },
       { key: 'center.name', label: 'Centro', sortable: false },
       { key: 'unit.name', label: 'Consultorio', sortable: false },
       { key: 'specialty.name', label: 'Especialidad', sortable: false },
       { key: 'treatment.patient.fullname', label: 'Asegurado', sortable: false },
+      { key: 'treatment.patient.ci', label: 'Carnet', sortable: false },
       { key: 'date_reservation', label: 'Fecha de Solicitud', sortable: false },
       { key: 'start_time', label: 'Fecha Cita Medica', sortable: false },
       { key: 'updated_at', label: 'Fecha Atención', sortable: false },
       // { key: 'date', label: 'Fecha Atención', sortable: false },
-      { key: 'status.name', label: 'Estado', sortable: false }
+      { key: 'status.name', label: 'Estado', sortable: false },
     ]
 
     const selectAll = computed({
@@ -296,6 +356,7 @@ export default {
         }
       }
     })
+
     const downloadPdf = async () => {
       console.log('downloadPdf')
       if(!startDate.value || !endDate.value){
@@ -316,7 +377,7 @@ export default {
         scope: scope.join(','),
         limit: perPage.value,
         [sortOption]: sortBy.value,
-        include: 'center;unit;specialty;status;treatment.patient'
+        include: 'center;unit;specialty;status;treatment.patient.insured'
       })
 
 

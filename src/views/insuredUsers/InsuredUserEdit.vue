@@ -1,6 +1,6 @@
 <template>
   <div class="page-wrapper">
-    <EditUserForm />
+    <EditUserForm v-if="parseInt(this.$route.params.relationship_type_id) === 39"/>
     <hr />
     <EditInsuredForm />
   </div>
@@ -21,7 +21,6 @@ export default {
   setup() {
     const userData = ref({})
     const insuredData = ref({})
-
     provide('userData', userData)
     provide('insuredData', insuredData)
 
@@ -31,15 +30,22 @@ export default {
     }
   },
   data() {
+
     return {
       insuredId: this.$route.params.id,
     }
   },
   mounted() {
     this.getResourceData()
+    console.log('mounted')
+    console.log(this.$route.params)
+    if(parseInt(this.$route.params.relationship_type_id) === 39){
+      console.log('titular')
+    }
   },
   methods: {
     async getResourceData() {
+      console.log('getResourceData')
       const { data } = await InsuredResource.getById(this.insuredId, {
         include: 'user;unit',
       })
@@ -50,6 +56,7 @@ export default {
       this.insuredData = this.initInsuredVariables(insuredData)
     },
     initInsuredVariables(insuredData) {
+      console.log('initInsuredVariables')
       const medicalUnit = insuredData.unit
       delete insuredData.unit
       const data = {

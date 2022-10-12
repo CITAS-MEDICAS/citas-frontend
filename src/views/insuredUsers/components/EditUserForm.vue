@@ -3,7 +3,7 @@
     <b-col cols="12" xl="9" lg="8">
       <b-card no-body>
         <b-card-body>
-          <AccountInfo ref="refAccountInfo" />
+          <AccountInfo v-if="true" ref="refAccountInfo" />
           <hr />
           <PersonalInfo ref="refPersonalInfo" />
         </b-card-body>
@@ -36,6 +36,8 @@ export default {
   setup() {
     const formData = inject('userData')
     provide('formData', formData)
+    console.log('setup')
+    console.log(formData)
 
     const refAccountInfo = ref(null)
     const refPersonalInfo = ref(null)
@@ -57,8 +59,19 @@ export default {
   },
   methods: {
     async handleSubmit() {
+
+      console.log('enviarx........')
+      this.formData.insuredIsTitular =false
+      console.log(this.formData)
+      // if(!this.formData.email) {
+      //   this.formData.email = Date.now() + 'sincorreo@cnslpz.bo'
+      //   this.formData.email = 'sincorreo@cnslpz.bo'
+      // }
+
       const isValid = await this.validate()
+      console.log(isValid)
       if (!isValid) return false
+
 
       const { data } = await UserResource.update(this.formData.id, this.formData)
 

@@ -37,7 +37,6 @@
         class="btn-icon "
       >
         <feather-icon icon="EyeIcon" />
-        <small> Historial</small>
       </b-button>
     </router-link>
   </div>
