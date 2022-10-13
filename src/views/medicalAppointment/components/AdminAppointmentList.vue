@@ -32,15 +32,6 @@
                 </b-col>
               </b-row>
             </b-col>
-<!--            <b-col cols="12" md="4" class="mb-1">-->
-<!--              <b-button-->
-<!--                v-if="selectedAppointments.length"-->
-<!--                v-b-modal.transfer-appointment-form-->
-<!--                variant="outline-info"-->
-<!--              >-->
-<!--                <div>Transferir Citas</div>-->
-<!--              </b-button>-->
-<!--            </b-col>-->
           </b-row>
         </b-col>
         <b-col cols="12">
@@ -284,19 +275,17 @@ export default {
     })
 
     const fetchItems = async () => {
-      console.log('fetchItems')
 
       if (status.value === 'TODOS...') {
         status.value = ''
       }
-      // const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Desc' : 'Asc')
-
 
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Asc' : 'Desc')
       let scope = [
         `search:${searchQuery.value}`,
         `status:${status.value}`,
       ]
+
       if (startDate.value && endDate.value) {
         scope = [
           `search:${searchQuery.value}`,
@@ -308,18 +297,19 @@ export default {
       if (medicalUnit.value) {
         scope.push(`hasUnit:${medicalUnit.value}`)
       }
+
       const query = {
         scope: scope.join(','),
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
-        include: 'center;unit;specialty;status;treatment.patient.insured'
-
+        include: 'center;unit;specialty;status;treatment.patient.insured;calendar.attentionType'
       }
+
       const { data } = await AppointmentResource.getAll(query)
       totalRows.value = data.total_data
-      console.log(data.rows)
       return data.rows
+
     }
 
     const statusVariant = {
@@ -345,6 +335,7 @@ export default {
       // { key: 'date', label: 'Fecha Atención', sortable: false },
       { key: 'status.name', label: 'Estado', sortable: false },
       { key: 'treatment.comment', label: 'Motivo Consulta', sortable: false },
+      { key: 'calendar.attention_type.name', label: 'Calendario', sortable: false },
     ]
 
     const selectAll = computed({
@@ -359,32 +350,55 @@ export default {
     })
 
     const downloadPdf = async () => {
-      console.log('downloadPdf')
-      if(!startDate.value || !endDate.value){
-        alert('NOTA: Debe llenar las fechas desde y hasta para imprimir el listado')
+
+      if (status.value !== 'RESERVADO') {
+        alert('El Listado es para el estado : RESERVADO')
         return
       }
+      if (status.value === 'TODOS...') {
+        status.value = ''
+      }
+
       const sortOption = 'sortBy' + (isSortDirDesc.value ? 'Asc' : 'Desc')
-      const scope = [
+      let scope = [
         `search:${searchQuery.value}`,
         `status:${status.value}`,
-        `reservationDate:${startDate.value}|${endDate.value}`
       ]
+
+      if (startDate.value && endDate.value) {
+        scope = [
+          `search:${searchQuery.value}`,
+          `status:${status.value}`,
+          `reservationDate:${status.value}|${startDate.value}|${endDate.value}`
+        ]
+      }
+
       if (medicalUnit.value) {
         scope.push(`hasUnit:${medicalUnit.value}`)
       }
+
+      const query = {
+        scope: scope.join(','),
+        page: currentPage.value,
+        [sortOption]: sortBy.value,
+        include: 'center;unit;specialty;status;treatment.patient.insured;calendar.attentionType'
+      }
+
+      // const { data } = await AppointmentResource.getAll(query)
+      // totalRows.value = data.total_data
+      // return data.rows
+
       const response = await AppointmentResource.download({
-        // scope: `search:${searchQuery.value},status:${status.value}`,
         scope: scope.join(','),
         limit: perPage.value,
         [sortOption]: sortBy.value,
-        include: 'center;unit;specialty;status;treatment.patient.insured'
+        include: 'center;unit;specialty;status;treatment.patient.insured;calendar.attentionType'
       })
-
 
       const blob = new Blob([response.data], { type: 'application/pdf' })
       const url = URL.createObjectURL(blob)
       window.open(url)
+
     }
     return {
       refTable,
