@@ -6,7 +6,7 @@
           <b-row>
             <b-col cols="12" md="4" class="mb-1">
               <b-row>
-                <b-col cols="5">
+                <b-col cols="4">
                   <v-select
                     v-model="perPage"
                     :options="perPageOptions"
@@ -26,10 +26,23 @@
                   />
                 </b-col>
                 <b-col cols="1">
+                  <!--        PRINT IMPRIMIR LISTA PDF-->
                   <b-button variant="primary" class="btn-icon ml-1" @click="downloadPdf">
                     <feather-icon icon="PrinterIcon" />
                   </b-button>
                 </b-col>
+
+                <b-col cols="1">
+                  <JsonExcel
+                  :fetch=fetchXls
+                  name="Listado.xlsx"
+                  >
+                    <b-button variant="primary" class="btn-icon ml-1">
+                      <feather-icon icon="DownloadIcon" />
+                    </b-button>
+                  </JsonExcel>
+                </b-col>
+
               </b-row>
             </b-col>
           </b-row>
@@ -221,16 +234,19 @@ import ActionButtons from './ActionButtons'
 import TransferAppointmentForm from './transfer-appointment-form/TransferAppointmentForm'
 import { dateISO } from '@/libs/utils'
 import flatPickr from 'vue-flatpickr-component'
+import JsonExcel from "vue-json-excel";
 
 const today = dateISO(new Date())
 const now = new Date()
+
 export default {
   name: 'AdminAppointmentList',
   components: {
     TablePagination,
     ActionButtons,
     TransferAppointmentForm,
-    flatPickr
+    flatPickr,
+    JsonExcel
   },
   filters: {
     getDate,
@@ -262,6 +278,8 @@ export default {
     const startDate = ref(today)
     const endDate = ref(today)
 
+    let datax = []
+
     provide('selectedAppointments', selectedAppointments)
 
     onMounted(async () => {
@@ -273,6 +291,26 @@ export default {
       medicalUnits.value = data.rows
       console.log('-> data.rows', data.rows)
     })
+    const fetchXls = async () => {
+      let data = await fetchItems()
+      if (data) {
+        return Array.from(data, function (item) {
+          return {
+            Especialidad: String(item['specialty']['name']),
+            Centro: String(item['center']['name']),
+            Consultorio: String(item['unit']['name']),
+            Asegurado: String(item['treatment']['patient']['fullname']),
+            Carnet: String(item['treatment']['patient']['ci']),
+            fecha_solicitud: String(item['date_reservation']),
+            fecha_cita_medica: String(item['start_time']),
+            fecha_Atencion: String(item['updated_at']),
+            estado: String(item['status']['name']),
+            motivo: String(item['treatment']['comment']),
+            calendario: String(item['calendar']['attention_type']['name']),
+          }
+        })
+      }
+    }
 
     const fetchItems = async () => {
 
@@ -305,7 +343,6 @@ export default {
         [sortOption]: sortBy.value,
         include: 'center;unit;specialty;status;treatment.patient.insured;calendar.attentionType'
       }
-
       const { data } = await AppointmentResource.getAll(query)
       totalRows.value = data.total_data
       return data.rows
@@ -337,6 +374,7 @@ export default {
       { key: 'treatment.comment', label: 'Motivo Consulta', sortable: false },
       { key: 'calendar.attention_type.name', label: 'Calendario', sortable: false },
     ]
+
 
     const selectAll = computed({
       get: () => selectedAppointments.value.length === refTable.value?.localItems.length,
@@ -384,10 +422,6 @@ export default {
         include: 'center;unit;specialty;status;treatment.patient.insured;calendar.attentionType'
       }
 
-      // const { data } = await AppointmentResource.getAll(query)
-      // totalRows.value = data.total_data
-      // return data.rows
-
       const response = await AppointmentResource.download({
         scope: scope.join(','),
         limit: perPage.value,
@@ -422,9 +456,16 @@ export default {
       deleteResource,
       refetchData,
       downloadPdf,
+      fetchXls,
     }
   },
-  methods: {}
+  methods: {
+    startDownload(){
+      console.log('show loading')
+      // console.log(datax)
+
+    },
+  }
 }
 </script>
 <style lang="scss">
