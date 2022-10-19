@@ -35,7 +35,7 @@
                 <b-col cols="1">
                   <JsonExcel
                   :fetch=fetchXls
-                  name="Listado.xlsx"
+                  name="Listado.xls"
                   >
                     <b-button variant="primary" class="btn-icon ml-1">
                       <feather-icon icon="DownloadIcon" />
@@ -234,7 +234,7 @@ import ActionButtons from './ActionButtons'
 import TransferAppointmentForm from './transfer-appointment-form/TransferAppointmentForm'
 import { dateISO } from '@/libs/utils'
 import flatPickr from 'vue-flatpickr-component'
-import JsonExcel from "vue-json-excel";
+import JsonExcel from "vue-json-excel"
 
 const today = dateISO(new Date())
 const now = new Date()
