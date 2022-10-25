@@ -7,7 +7,7 @@ const useList = function () {
 
   const refTable = ref(null)
   const perPage = ref(25)
-  const perPageOptions = [10, 25, 50, 100]
+  const perPageOptions = [10, 25, 50, 100, 1000, 5000]
   const currentPage = ref(1)
   const totalRows = ref(0)
   const searchQuery = ref('')

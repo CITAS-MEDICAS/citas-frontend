@@ -1,6 +1,7 @@
 <template>
   <div class="page-wrapper">
-    <EditUserForm v-if="parseInt(this.$route.params.relationship_type_id) === 39"/>
+<!--    <EditUserForm v-if="parseInt(this.$route.params.relationship_type_id) === 39"/>-->
+    <EditUserForm/>
     <hr />
     <EditInsuredForm />
   </div>

@@ -1,25 +1,15 @@
 <template>
   <div>
-    <b-card title="Kick start your project 🚀">
-      <b-card-text>All the best for your new project.</b-card-text>
+    <b-card title="SISTEMA DE CITAS MEDICAS EN LINEA">
+<!--      <b-card-text>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</b-card-text>-->
       <b-card-text
-        >Please make sure to read our
+        >
+        Sistema de Citas Médicas, revise bien el horario asignado en su cita.
         <b-link
-          href="https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/documentation/"
+          href="www.google.com"
           target="_blank"
         >
-          Template Documentation
         </b-link>
-        to understand where to go from here and how to use our template.
-      </b-card-text>
-    </b-card>
-
-    <b-card title="Want to integrate JWT? 🔒">
-      <b-card-text
-        >We carefully crafted JWT flow so you can implement JWT with ease and with minimum efforts.
-      </b-card-text>
-      <b-card-text
-        >Please read our JWT Documentation to get more out of JWT authentication.
       </b-card-text>
     </b-card>
   </div>

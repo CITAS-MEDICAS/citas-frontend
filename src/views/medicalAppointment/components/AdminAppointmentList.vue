@@ -303,7 +303,7 @@ export default {
             Carnet: String(item['treatment']['patient']['ci']),
             fecha_solicitud: String(item['date_reservation']),
             fecha_cita_medica: String(item['start_time']),
-            fecha_Atencion: String(item['updated_at']),
+            fecha_Atencion:  String(item['status']['name']) === 'ATENDIDO' ? String(item['updated_at']) : '',
             estado: String(item['status']['name']),
             motivo: String(item['treatment']['comment']),
             calendario: String(item['calendar']['attention_type']['name']),
@@ -372,7 +372,7 @@ export default {
       // { key: 'date', label: 'Fecha Atención', sortable: false },
       { key: 'status.name', label: 'Estado', sortable: false },
       { key: 'treatment.comment', label: 'Motivo Consulta', sortable: false },
-      { key: 'calendar.attention_type.name', label: 'Calendario', sortable: false },
+      { key: 'calendar.attention_type.name', label: 'Tipo Consulta', sortable: false },
     ]
 
 

@@ -22,8 +22,6 @@ export default [
           active: true
         }
       ],
-      // funciona :
-      // resource: PERMISSION_MEDICAL_APPOINTMENTS,
       resource: PERMISSION_MEDICAL_APPOINTMENTS,
       action: 'list'
     }
