@@ -106,7 +106,7 @@ export default {
       deleteResource,
       refetchData
     } = useList()
-    const status = ref('TODOS...')
+    const status = ref('RESERVADO')
     const starttime = ref('')
     const fetchItems = async () => {
       if (status.value === 'TODOS...') {

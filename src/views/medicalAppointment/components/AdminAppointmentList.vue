@@ -177,8 +177,13 @@
             >
               <strong>Empleador : </strong>{{ row.item.treatment.patient.insured[0].employer_code }} - {{ row.item.treatment.patient.insured[0].employer_name }}
             </b-col>
+            <b-col
+              md="4"
+              class="mb-1"
+            >
+              <strong>último usuario que atendio : </strong>{{ row.item.medic.fullname }}
+            </b-col>
           </b-row>
-
           <b-button
             size="sm"
             variant="outline-secondary"
@@ -341,10 +346,12 @@ export default {
         limit: perPage.value,
         page: currentPage.value,
         [sortOption]: sortBy.value,
-        include: 'center;unit;specialty;status;treatment.patient.insured;calendar.attentionType'
+        include: 'center;unit;specialty;status;treatment.patient.insured;calendar.attentionType;medic'
       }
       const { data } = await AppointmentResource.getAll(query)
       totalRows.value = data.total_data
+      console.log('listadoxxxx')
+      console.log(data)
       return data.rows
 
     }
