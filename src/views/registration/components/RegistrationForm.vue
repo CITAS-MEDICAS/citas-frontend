@@ -339,6 +339,7 @@ export default {
         sigla:[
           { value: null, text: 'Seleccione' },
           { value: 'LP', text: 'LP' },
+          { value: 'OR', text: 'OR' },
           { value: 'CB', text: 'CB' },
           { value: 'SC', text: 'SC' },
           { value: 'PT', text: 'PT' },
