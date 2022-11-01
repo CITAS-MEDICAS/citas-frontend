@@ -181,7 +181,7 @@
               md="4"
               class="mb-1"
             >
-              <strong>último usuario que atendio : </strong>{{ row.item.medic.fullname }}
+              <strong>último usuario que atendio : </strong><span v-if="row.item.medic">{{ row.item.medic.fullname }}</span>
             </b-col>
           </b-row>
           <b-button
@@ -256,7 +256,14 @@ export default {
   filters: {
     getDate,
     getTime,
-    formatDate
+    formatDate,
+    // empty2(value) {
+    //   console.log("asdasd")
+    //   if (value is empty){
+    //     return 'n/a'
+    //   }
+    //   return value
+    // }
   },
   setup() {
     let {
@@ -294,7 +301,6 @@ export default {
         ].join(',')
       })
       medicalUnits.value = data.rows
-      console.log('-> data.rows', data.rows)
     })
     const fetchXls = async () => {
       let data = await fetchItems()

@@ -74,6 +74,7 @@ export const useCalendar = () => {
 
   const mapEvents = (items, calendar) => {
     return items.map(item => {
+      console.log("mapEvents")
       const { time, startTime, endTime, status } = item
       return {
         title: status === 'available' ? 'Disponible' : 'Reservado',
@@ -87,6 +88,7 @@ export const useCalendar = () => {
   }
 
   const updateCalendar = data => {
+    console.log("updateCalendar")
     const result = data.map(item => {
       const { available, reserved } = item
       const availableDates = mapEvents(available, item)
@@ -98,10 +100,12 @@ export const useCalendar = () => {
   }
 
   const clearEvents = () => {
+    console.log("clearEvents")
     calendarEvents.value = []
   }
 
   const goToDate = dateStr => {
+    console.log("goToDate")
     calendarApi.gotoDate(new Date(dateStr))
   }
 

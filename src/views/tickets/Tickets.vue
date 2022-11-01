@@ -10,7 +10,7 @@
             label="id"
             :options="users"
             :reduce="item => item.id"
-            placeholder="11-222-1234567 / 6002003-A"
+            placeholder="1234567"
             @search="onSearchInsured"
             @input="handleSelect"
           >
@@ -83,7 +83,6 @@
             </template>
           </v-select>
         </b-form-group>
-<!--        <pre>{{ formData }}</pre>-->
       </b-col>
       <b-col md="8">
         <div class="py-2 pr-3">
@@ -118,6 +117,7 @@ import { MedicalUnitResource } from '@/network/lib/medicalUnit'
 import TicketHandler from '@/views/tickets/ticket-handler/TicketHandler'
 import { provide, ref } from '@vue/composition-api'
 import { getDate } from '@/custom/filters'
+
 
 export default {
   name: 'Tickets',
@@ -157,6 +157,8 @@ export default {
       fetchUnitAvailability,
       filterUnitAvailabilityByDate,
     } = useMedicalUnitAvailability(emit)
+
+
 
     calendarOptions.value.editable = true
     calendarOptions.value.eventClick = ({ event: clickedEvent }) => {
@@ -207,13 +209,14 @@ export default {
 
   methods: {
     onSearchInsured(term, loading) {
-      console.log('onSearchInsured')
+      // console.log('onSearchInsured')
       if (term.length > 5) {
         loading(true)
         this.searchInsured(loading, term, this)
       }
     },
     searchInsured: debounce(async (loading, term, vm) => {
+      // console.log('searchInsured')
       // const { data } = await InsuredResource.getAll({
       //   scope: `searchCodeCI:${term}`,
       //   include: 'user'
@@ -226,6 +229,7 @@ export default {
     }, 500),
 
     async handleSelect() {
+      // console.log("handleSelect")
       const { data } = await InsuredResource.getAll({
         'filter[user_id][eq]': this.formData.user_patient_id,
         include: 'unit'
@@ -236,6 +240,7 @@ export default {
       await this.fetchMedicalUnit()
     },
     async handleAvailability() {
+      // console.log("handleAvailability")
       if (!this.formData.medical_unit_id) {
         return this.updateCalendar([])
       }
@@ -246,26 +251,35 @@ export default {
       await this.fetchUnitAvailability(this.formData.medical_unit_id, ATTENTION_TYPE_ID)
 
       try {
+        console.log('try')
         console.log(this.availableDates[0])
         const today = new Date() // if( today.getDate() === this.availableDates[0].date ) {
         this.formData.calendar = this.availableDates[0]
         this.handleDateAvailability(this.formData.calendar.date)
         // }
       } catch (e) {
+        console.log(e)
         alert('No hay fechas disponibles')
+        this.formData.medical_center_id = null
+        this.formData.medical_unit_id = null
+        this.formData.user_patient_id = null
+
       }
     },
     async fetchMedicalUnit() {
+      // console.log("fetchMedicalUnit")
       const  { data } = await MedicalUnitResource.getAll({
         scope: `ListMedicalUnitTicket:${this.formData.user_patient_id}`,
       })
-      console.log("fetchMedicalUnit")
-      console.log(data.rows)
+      // console.log("fetchMedicalUnit")
+      // console.log(data.rows)
 
       this.units = data.rows
     },
     handleDateAvailability(strDate) {
+      console.log("handleDateAvailability")
       const data = this.filterUnitAvailabilityByDate(strDate)
+      console.log(data)
       this.updateCalendar(data)
       this.goToDate(strDate)
     }
