@@ -1,8 +1,7 @@
 <template>
   <div class="app-calendar overflow-hidden border">
     <div class="row no-gutters">
-      <!--      Sidebar-->
-
+      <!-- Sidebar -->
       <div
         class="col app-calendar-sidebar flex-grow-0 overflow-hidden d-flex flex-column"
         :class="{ show: isCalendarSidebarActive }"
@@ -12,8 +11,7 @@
           @go-to-date="goToDate"
         />
       </div>
-
-      <!-- Calendar-->
+      <!-- Calendar -->
       <div class="col position-relative">
         <div class="card shadow-none border-0 mb-0 rounded-0">
           <div class="card-body pb-0">
@@ -21,13 +19,11 @@
           </div>
         </div>
       </div>
-
       <div
         class="body-content-overlay"
         :class="{ show: isCalendarSidebarActive }"
         @click="isCalendarSidebarActive = false"
       />
-
     </div>
   </div>
 </template>

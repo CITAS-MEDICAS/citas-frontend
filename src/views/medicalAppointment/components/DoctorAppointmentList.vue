@@ -41,6 +41,78 @@
       primary-key="id"
       class="position-relative"
     >
+      <template #cell(show_details)="row">
+        <b-form-checkbox
+          v-model="row.detailsShowing"
+          plain
+          class="vs-checkbox-con"
+          @change="row.toggleDetails"
+        >
+          <span class="vs-checkbox">
+            <span class="vs-checkbox--check">
+              <i class="vs-icon feather icon-check" />
+            </span>
+          </span>
+          <span class="vs-label">{{ row.detailsShowing ? 'Oculta' : 'Ver' }}</span>
+        </b-form-checkbox>
+      </template>
+
+      <template #row-details="row">
+        <b-card>
+          <b-row class="mb-2">
+            <b-col
+              md="4"
+              class="mb-1"
+            >
+              <strong>Fecha Nacimiento : </strong>{{ row.item.treatment.patient.birth_date | getDate }}
+            </b-col>
+            <b-col
+              md="4"
+              class="mb-1"
+            >
+              <strong>Email : </strong>{{ row.item.treatment.patient.email }}
+            </b-col>
+            <b-col
+              md="4"
+              class="mb-1"
+            >
+              <strong>Género : </strong>{{ row.item.treatment.patient.gender }}
+            </b-col>
+            <b-col
+              md="4"
+              class="mb-1"
+            >
+              <strong>Telefono : </strong>{{ row.item.treatment.patient.phone_number }} - {{ row.item.treatment.patient.insured[0].reference_phone_number }}
+            </b-col>
+            <b-col
+              md="4"
+              class="mb-1"
+            >
+              <strong>Zona y Dirección : </strong>{{ row.item.treatment.patient.insured[0].region }} - {{ row.item.treatment.patient.insured[0].address_zone }} - {{ row.item.treatment.patient.insured[0].address }}
+            </b-col>
+            <b-col
+              md="4"
+              class="mb-1"
+            >
+              <strong>Empleador : </strong>{{ row.item.treatment.patient.insured[0].employer_code }} - {{ row.item.treatment.patient.insured[0].employer_name }}
+            </b-col>
+            <b-col
+              md="4"
+              class="mb-1"
+            >
+              <strong>último usuario que atendio : </strong><span v-if="row.item.medic">{{ row.item.medic.fullname }}</span>
+            </b-col>
+          </b-row>
+          <b-button
+            size="sm"
+            variant="outline-secondary"
+            @click="row.toggleDetails"
+          >
+            Hide Details
+          </b-button>
+        </b-card>
+      </template>
+
       <template #cell(actions)="data">
         <ShowHistoryButton :item="data.item" />
       </template>
@@ -74,6 +146,7 @@
 import useList from '@/custom/libs/useList'
 
 import TableHeader from '@/custom/components/Tables/TableHeader'
+
 import TablePagination from '@/custom/components/Tables/TablePagination'
 import { AppointmentResource } from '@/network/lib/appointment'
 import { getDate, getTime, formatDate } from '@/custom/filters'
@@ -119,10 +192,14 @@ export default {
         limit: perPage.value,
         page: currentPage.value,
         ['start_time']: sortBy.value,
-        include: 'status;treatment.patient;center;unit'
+        include: 'center;unit;specialty;status;treatment.patient.insured;calendar.attentionType;medic'
       })
 
       totalRows.value = data.total_data
+
+      console.log('listadoxxxx')
+      console.log(data)
+
       return data.rows
     }
 
@@ -151,14 +228,19 @@ export default {
     }
 
     const tableColumns = [
-      { key: 'actions', label: 'Acciones', thStyle: { width: '150px' } },
+      { key: 'show_details', label: 'Ver', thStyle: { width: '10px' }},
+      { key: 'actions', label: 'Acciones', thStyle: { width: '100px' } },
+      { key: 'specialty.name', label: 'Especialidad', sortable: false },
       { key: 'center.name', label: 'Centro', sortable: false },
       { key: 'unit.name', label: 'Consultorio', sortable: false },
       { key: 'treatment.patient.fullname', label: 'Asegurado', sortable: false },
+      { key: 'treatment.patient.ci', label: 'Carnet', sortable: false },
       { key: 'date_reservation', label: 'Fecha de Solicitud', sortable: false },
       { key: 'start_time', label: 'Fecha Cita Medica', sortable: false },
       { key: 'updated_at', label: 'Fecha Atención', sortable: false },
-      { key: 'status.name', label: 'Estado', sortable: false }
+      { key: 'status.name', label: 'Estado', sortable: false },
+      { key: 'treatment.comment', label: 'Motivo Consulta', sortable: false },
+      { key: 'calendar.attention_type.name', label: 'Tipo Consulta', sortable: false },
     ]
 
     return {

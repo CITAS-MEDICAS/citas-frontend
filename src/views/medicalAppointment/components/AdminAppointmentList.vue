@@ -382,7 +382,6 @@ export default {
       { key: 'date_reservation', label: 'Fecha de Solicitud', sortable: false },
       { key: 'start_time', label: 'Fecha Cita Medica', sortable: false },
       { key: 'updated_at', label: 'Fecha Atención', sortable: false },
-      // { key: 'date', label: 'Fecha Atención', sortable: false },
       { key: 'status.name', label: 'Estado', sortable: false },
       { key: 'treatment.comment', label: 'Motivo Consulta', sortable: false },
       { key: 'calendar.attention_type.name', label: 'Tipo Consulta', sortable: false },

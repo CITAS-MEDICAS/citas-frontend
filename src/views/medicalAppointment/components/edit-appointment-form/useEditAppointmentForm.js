@@ -53,7 +53,13 @@ export const useEditAppointmentForm = emit => {
   })
 
   const calendarTypes = computed(() => {
-    return store.state.types.attentionTypes.filter(attentionType => attentionType.name === 'NUEVO' || attentionType.name === 'OTRO' || attentionType.name === 'RECONSULTA')
+    console.log("calendarTypes")
+    const userRole = JSON.parse(localStorage.getItem('userRole'))
+    if (userRole.role === "estadistico") {
+      return store.state.types.attentionTypes.filter(attentionType => attentionType.name === 'NUEVO' || attentionType.name === 'OTRO')
+    } else {
+      return store.state.types.attentionTypes.filter(attentionType => attentionType.name === 'NUEVO' || attentionType.name === 'OTRO' || attentionType.name === 'RECONSULTA')
+    }
   })
 
   const availableTimes = computed(() => {

@@ -45,6 +45,7 @@ export default {
     const validate = async id => {
       let account = true
       if (id === 39){
+        console.log("xxx39")
         account = await refAccountInfo.value.validate()
       }
       const personal = await refPersonalInfo.value.validate()
