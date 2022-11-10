@@ -36,8 +36,6 @@ export default {
   setup() {
     const formData = inject('userData')
     provide('formData', formData)
-    console.log('setup')
-    console.log(formData)
 
     const refAccountInfo = ref(null)
     const refPersonalInfo = ref(null)
@@ -45,7 +43,7 @@ export default {
     const validate = async id => {
       let account = true
       if (id === 39){
-        console.log("xxx39")
+        console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx39")
         account = await refAccountInfo.value.validate()
       }
       const personal = await refPersonalInfo.value.validate()
@@ -65,10 +63,11 @@ export default {
     async handleSubmit() {
 
       this.formData.insuredIsTitular =false
-      // if(!this.formData.email) {
-      //   this.formData.email = Date.now() + 'sincorreo@cnslpz.bo'
-      //   this.formData.email = 'sincorreo@cnslpz.bo'
-      // }
+      if(!this.formData.email) {
+        // this.formData.email = Date.now() + 'sincorreo@cnslpz.bo'
+        this.formData.email = 'sincorreo@cnslpz.bo'
+        console.log(this.formData.email)
+      }
 
       const isValid = await this.validate(this.$route.params.relationship_type_id)
       console.log(isValid)
