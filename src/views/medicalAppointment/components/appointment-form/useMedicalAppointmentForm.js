@@ -19,7 +19,7 @@ export const useMedicalAppointmentForm = emit => {
   const isReconsult = attentionTypeName === 'RECONSULTA'
   const isReprogram = attentionTypeReprogram === 'REPROGRAMACION'
   console.log("isReconsult : "+isReconsult)
-  console.log("isReprogram : "+isReprogram)
+  // console.log("isReprogram : "+isReprogram)
   const formData = ref({
     treatment_id: treatmentId,
     attention_type_id: null,
