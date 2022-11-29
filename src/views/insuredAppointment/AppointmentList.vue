@@ -174,14 +174,21 @@ export default {
       }
     },
     resolveShowCancelButton(data) {
-      let date1 = new Date(Date.now())
-      let date2 = new Date(data.start_time)
-      let difNumeric = date2.getTime() - date1.getTime()
-      let difDays = difNumeric / (1000 * 3600 * 24)
-      if (['RESERVADO', 'SOLICITADO'].includes(data.status.name)){
-        if (difDays>=1) return true
+      const userRole = JSON.parse(localStorage.getItem('userRole'))
+      if (userRole.role === "asegurado") {
+        let date1 = new Date(Date.now())
+        let date2 = new Date(data.start_time)
+        let difNumeric = date2.getTime() - date1.getTime()
+        let difDays = difNumeric / (1000 * 3600 * 24)
+        if (['RESERVADO', 'SOLICITADO'].includes(data.status.name)){
+          if (difDays>=1) return true
+        }
+      } else {
+        if (['RESERVADO', 'SOLICITADO'].includes(data.status.name)){
+          return true
+        }
       }
-      return false
+
     }
   }
 }

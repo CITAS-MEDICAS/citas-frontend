@@ -19,7 +19,7 @@ export const useMedicalAppointmentForm = emit => {
   const isReconsult = attentionTypeName === 'RECONSULTA'
   const isReprogram = attentionTypeReprogram === 'REPROGRAMACION'
   console.log("isReconsult : "+isReconsult)
-  // console.log("isReprogram : "+isReprogram)
+  console.log("isReprogram x: "+isReprogram)
   const formData = ref({
     treatment_id: treatmentId,
     attention_type_id: null,
@@ -132,10 +132,10 @@ export const useMedicalAppointmentForm = emit => {
     formData.value.calendar = null
     formData.value.time = null
     const medicalUnitId = formData.value.medical_unit_id
-    console.log("1")
-    //SI ES REPROMADO LO TRATO COMO UN attentionTypeId=51 NUEVO SINO COMO attentionTypeId=52 RECONSULTA
+    // OBS .. DOCUMENTO 04NOV
+    // SI ES REPROGRAMADO LO TRATO COMO UN attentionTypeId=51 NUEVO.... SINO COMO attentionTypeId=52 RECONSULTA
     const attention = store.state.types.attentionTypes
-    const attentionTypeId = isReprogram ? attention.find(item => item.name === "NUEVO").id : formData.value.attention_type_id
+    const attentionTypeId = isReprogram ? attention.find(item => item.name === "RECONSULTA").id : formData.value.attention_type_id
     console.log(attentionTypeId)
     if (medicalUnitId && attentionTypeId) {
       const { data } = await CalendarResource.availability(medicalUnitId, { attentionTypeId })
@@ -156,7 +156,7 @@ export const useMedicalAppointmentForm = emit => {
       return false
     }
     //REPROGRAMACION
-    console.log('isReprogram?')
+    console.log('isReprogram?xxxxx')
     if (isReprogram){
       // console.log('types 70,REPROGRAMADO')
       const userData = JSON.parse(localStorage.getItem('userData'))

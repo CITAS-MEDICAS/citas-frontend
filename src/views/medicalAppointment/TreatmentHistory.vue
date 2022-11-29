@@ -160,8 +160,9 @@ export default {
       { key: 'treatment.patient.fullname', label: 'Asegurado', sortable: false },
       { key: 'date_reservation', label: 'Fecha de Solicitud', sortable: false },
       { key: 'start_time', label: 'Fecha Cita Medica', sortable: false },
-      { key: 'diagnostic', label: 'Diagnostico', sortable: false },
-      { key: 'comment', label: 'Comentario', sortable: false },
+      { key: 'reason', label: 'Motivo', sortable: false },
+      { key: 'diagnostic', label: 'Diagnostico Médico', sortable: false },
+      { key: 'comment', label: 'Comentario Médico', sortable: false },
       { key: 'updated_at', label: 'Fecha Atención', sortable: false },
       { key: 'medic.fullname', label: 'Medico', sortable: false ,thStyle: { width: '150px' } }
     ]
