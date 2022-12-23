@@ -235,6 +235,7 @@ export default {
       { key: 'unit.name', label: 'Consultorio', sortable: false },
       { key: 'treatment.patient.fullname', label: 'Asegurado', sortable: false },
       { key: 'treatment.patient.ci', label: 'Carnet', sortable: false },
+      { key: 'treatment.patient.registration_code', label: 'Matricula', sortable: false },
       { key: 'date_reservation', label: 'Fecha de Solicitud', sortable: false },
       { key: 'start_time', label: 'Fecha Cita Medica', sortable: false },
       { key: 'updated_at', label: 'Fecha Atención', sortable: false },
