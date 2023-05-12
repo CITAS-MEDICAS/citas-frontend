@@ -7,7 +7,8 @@
 // 	Author URL: http://www.themeforest.net/user/pixinvent
 // ================================================================================================
 
-@import '../bootstrap-extended/include'; // Bootstrap includes
+@import '../bootstrap-extended/include';
+// Bootstrap includes
 @import '../components/include'; // Components includes
 
 .dark-layout {
@@ -19,6 +20,7 @@
     color: $theme-dark-body-color;
     background-color: $theme-dark-body-bg;
   }
+
   // universal elements
   //heading tags
   h1,
@@ -41,8 +43,10 @@
 
   // other tags
   a {
+    color: #009688;
+
     &:hover {
-      color: $primary;
+      color: darken(#009688, 10%);
     }
   }
 
@@ -93,6 +97,7 @@
   .text-body {
     color: $theme-dark-body-color !important;
   }
+
   .text-body-heading {
     color: $theme-dark-headings-color;
   }
@@ -113,7 +118,12 @@
 
   // main navbar and header navbar shadow(generic navbar)
   .header-navbar-shadow {
-    background: linear-gradient(180deg, rgba(22, 29, 49, 0.9) 44%, rgba(22, 29, 49, 0.43) 73%, rgba(22, 29, 49, 0));
+    background: linear-gradient(
+        180deg,
+        rgba(22, 29, 49, 0.9) 44%,
+        rgba(22, 29, 49, 0.43) 73%,
+        rgba(22, 29, 49, 0)
+    );
   }
 
   // main header navbar dark style
@@ -122,6 +132,7 @@
     .header-navbar {
       background-color: $theme-dark-card-bg;
     }
+
     &.navbar-sticky,
     &.navbar-static {
       .header-navbar {
@@ -129,6 +140,7 @@
       }
     }
   }
+
   .navbar-sticky {
     .header-navbar {
       &.navbar-shadow {
@@ -136,6 +148,7 @@
       }
     }
   }
+
   .header-navbar {
     background-color: $theme-dark-card-bg;
 
@@ -179,6 +192,7 @@
 
           .bookmark-input {
             background-color: $theme-dark-card-bg;
+
             .form-control {
               background-color: $theme-dark-card-bg;
             }
@@ -186,6 +200,7 @@
 
           .search-list {
             background-color: $theme-dark-card-bg;
+
             li {
               a {
                 color: $theme-dark-body-color;
@@ -219,12 +234,15 @@
                 background-color: $theme-dark-body-bg;
               }
             }
+
             .dropdown-menu-header {
               border-bottom: 1px solid $theme-dark-border-color;
             }
+
             .dropdown-menu-footer {
               background-color: $theme-dark-card-bg;
               border-top: 1px solid $theme-dark-border-color;
+
               .dropdown-item {
                 border-color: $theme-dark-border-color;
 
@@ -235,36 +253,44 @@
             }
           }
         }
+
         .dropdown-cart {
           &.empty-cart {
             &:before {
               background-color: $theme-dark-body-bg;
             }
           }
+
           li {
             color: $white;
           }
+
           .cart-item {
             color: $theme-dark-body-color;
           }
+
           .dropdown-header {
             span {
               color: $white;
             }
           }
+
           .media {
             img {
               background-color: $theme-dark-body-bg;
             }
           }
+
           .media-heading .cart-item-by {
             color: $theme-dark-text-muted-color;
           }
         }
+
         .dropdown-notification {
           .media-body .media-heading {
             color: $theme-dark-headings-color;
           }
+
           .notification-text {
             color: $theme-dark-text-muted-color;
           }
@@ -311,10 +337,10 @@
 
     .shadow-bottom {
       background: linear-gradient(
-        180deg,
-        $theme-dark-card-bg 44%,
-        rgba($theme-dark-card-bg, 0.51) 73%,
-        rgba($theme-dark-card-bg, 0)
+          180deg,
+          $theme-dark-card-bg 44%,
+          rgba($theme-dark-card-bg, 0.51) 73%,
+          rgba($theme-dark-card-bg, 0)
       );
     }
 
@@ -332,13 +358,14 @@
       .navigation > li.open:not(.menu-item-closing) > a {
         background-color: $theme-dark-body-bg;
       }
+
       .navigation > li.sidebar-group-active > a {
         background-color: $theme-dark-body-bg;
       }
     }
 
     .collapse-toggle-icon {
-      color: $primary !important;
+      color: $primary-dark !important;
     }
   }
 
@@ -347,6 +374,7 @@
   .ps__thumb-y {
     background-color: $theme-dark-body-color;
   }
+
   .ps .ps__rail-x.ps--clicking,
   .ps .ps__rail-x:focus,
   .ps .ps__rail-x:hover,
@@ -375,6 +403,7 @@
         a {
           color: $theme-dark-headings-color !important;
         }
+
         ul {
           .open,
           .sidebar-group-active {
@@ -456,15 +485,18 @@
     p {
       color: inherit;
     }
+
     .close {
       text-shadow: none;
     }
+
     &.alert-dark {
       .alert-heading,
       .alert-body,
       p {
         color: $gray-600;
       }
+
       &.alert-dismissible .close {
         color: $gray-600 !important;
       }
@@ -482,21 +514,24 @@
       }
     }
   }
+
   // Breadcrumb dark style
   .breadcrumb {
     .breadcrumb-item {
       color: $theme-dark-body-color;
+
       + .breadcrumb-item::before {
         color: $theme-dark-body-color;
       }
     }
+
     &:not([class*='breadcrumb-']) {
       .breadcrumb-item + .breadcrumb-item {
         &:before {
           background-image: url(str-replace(
-            str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
-            '#',
-            '%23'
+              str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
+              '#',
+              '%23'
           ));
         }
       }
@@ -508,9 +543,9 @@
     &.breadcrumb {
       .breadcrumb-item + .breadcrumb-item:before {
         background-image: url(str-replace(
-          str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
-          '#',
-          '%23'
+            str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
+            '#',
+            '%23'
         ));
       }
     }
@@ -521,6 +556,7 @@
   [class*='collapse-'] .card:not(:last-of-type) {
     border-color: $theme-dark-border-color;
   }
+
   // for shadow and bordered
   .collapse-border {
     .card {
@@ -547,19 +583,21 @@
         color: $theme-dark-body-color;
       }
     }
+
     [data-toggle='collapse'] {
       &:after {
         background-image: url(str-replace(
-          str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
-          '#',
-          '%23'
+            str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
+            '#',
+            '%23'
         ));
       }
+
       &:before {
         background-image: url(str-replace(
-          str-replace($chevron-up, 'currentColor', $theme-dark-body-color),
-          '#',
-          '%23'
+            str-replace($chevron-up, 'currentColor', $theme-dark-body-color),
+            '#',
+            '%23'
         ));
       }
     }
@@ -569,6 +607,17 @@
   .btn {
     &:not([class*='btn-']) {
       color: $theme-dark-body-color;
+    }
+
+    &.btn-primary,
+    &.btn-outline-primary,
+    &.btn-flat-primary {
+      border-color: $primary-dark;
+      color: $primary-dark;
+    }
+
+    &.btn-primary {
+      background-color: $primary-dark !important;
     }
 
     &.btn-dark,
@@ -584,6 +633,7 @@
     &.btn-outline-dark {
       border-color: $dark;
       color: $gray-600;
+
       &:hover:not(.disabled):not(:disabled) {
         color: $gray-600;
       }
@@ -599,7 +649,7 @@
 
   .btn-group-toggle {
     label[class*='btn-outline-'] {
-      color: $primary !important;
+      color: $primary-dark !important;
     }
   }
 
@@ -614,22 +664,27 @@
 
     .dropdown-item {
       color: $theme-dark-body-color;
+
       &:hover,
       &:focus {
         background: $dropdown-link-hover-bg;
-        color: $dropdown-link-hover-color;
+        //color: $dropdown-link-hover-color;
+        color: $primary-dark;
       }
+
       &:active,
       &.active {
         color: $dropdown-link-active-color;
         background-color: $dropdown-link-active-bg;
       }
+
       &.disabled,
       &:disabled {
         color: $theme-dark-text-muted-color;
       }
     }
   }
+
   .dropdown-divider {
     border-color: $theme-dark-border-color;
   }
@@ -667,7 +722,7 @@
           background-color: $theme-dark-pagination-bg;
 
           .page-link {
-            background-color: $primary;
+            background-color: $primary-dark;
 
             &:hover {
               color: $white;
@@ -680,7 +735,7 @@
           color: $theme-dark-body-color;
 
           &:hover {
-            color: $primary;
+            color: $primary-dark;
           }
         }
 
@@ -724,44 +779,48 @@
       &.prev {
         .page-link:before {
           background-image: url(str-replace(
-            str-replace($chevron-left, 'currentColor', $theme-dark-body-color),
-            '#',
-            '%23'
+              str-replace($chevron-left, 'currentColor', $theme-dark-body-color),
+              '#',
+              '%23'
           ));
         }
+
         &.disabled {
           .page-link {
             &:before {
               background-image: url(str-replace(
-                str-replace($chevron-left, 'currentColor', $theme-dark-text-muted-color),
-                '#',
-                '%23'
+                  str-replace($chevron-left, 'currentColor', $theme-dark-text-muted-color),
+                  '#',
+                  '%23'
               ));
             }
           }
         }
       }
+
       &.next-item,
       &.next {
         .page-link::after {
           background-image: url(str-replace(
-            str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
-            '#',
-            '%23'
+              str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
+              '#',
+              '%23'
           ));
         }
+
         &.disabled {
           .page-link {
             &:after {
               background-image: url(str-replace(
-                str-replace($chevron-right, 'currentColor', $theme-dark-text-muted-color),
-                '#',
-                '%23'
+                  str-replace($chevron-right, 'currentColor', $theme-dark-text-muted-color),
+                  '#',
+                  '%23'
               ));
             }
           }
         }
       }
+
       &.disabled {
         .page-link {
           color: $theme-dark-text-muted-color;
@@ -777,9 +836,10 @@
     .nav-item {
       .nav-link {
         color: $theme-dark-headings-color;
+
         &.active {
           background-color: $theme-dark-card-bg;
-          color: $primary;
+          color: $primary-dark;
         }
 
         &.disabled {
@@ -800,7 +860,7 @@
       .nav-link {
         &.active {
           color: $white;
-          background-color: $primary;
+          background-color: $primary-dark;
         }
       }
     }
@@ -820,6 +880,7 @@
         &:before {
           border-top-color: $theme-dark-border-color;
         }
+
         &:after {
           border-top-color: $theme-dark-card-bg;
         }
@@ -831,6 +892,7 @@
         &:before {
           border-left-color: $theme-dark-border-color;
         }
+
         &:after {
           border-left-color: $theme-dark-card-bg;
         }
@@ -842,11 +904,13 @@
         &:before {
           border-right-color: $theme-dark-border-color;
         }
+
         &:after {
           border-right-color: $theme-dark-card-bg;
         }
       }
     }
+
     .popover-header {
       color: $white;
     }
@@ -889,9 +953,10 @@
         &:focus {
           background-color: $theme-dark-body-bg;
         }
+
         &.active,
         &:active {
-          background-color: $primary;
+          background-color: $primary-dark;
           color: $white;
         }
       }
@@ -909,7 +974,11 @@
     }
 
     &.list-group-circle .list-group-item:after {
-      background-image: url(str-replace(str-replace($circle, 'currentColor', $theme-dark-body-color), '#', '%23'));
+      background-image: url(str-replace(
+          str-replace($circle, 'currentColor', $theme-dark-body-color),
+          '#',
+          '%23'
+      ));
     }
   }
 
@@ -927,6 +996,7 @@
       border-color: $theme-dark-card-bg;
     }
   }
+
   .avatar-group {
     .avatar {
       img,
@@ -965,11 +1035,13 @@
       .timeline-point:not(.timeline-point-indicator) {
         background-color: $theme-dark-card-bg;
       }
+
       .timeline-event {
         .timeline-event-time {
           color: $theme-dark-text-muted-color;
         }
       }
+
       &:last-of-type:after {
         background: linear-gradient($theme-dark-border-color, transparent);
       }
@@ -980,6 +1052,7 @@
   .card {
     background-color: $theme-dark-card-bg;
     box-shadow: $theme-dark-box-shadow;
+
     .card-footer {
       border-color: $theme-dark-border-color;
     }
@@ -1051,6 +1124,7 @@
     .revenue-report-wrapper {
       border-right-color: $theme-dark-border-color;
     }
+
     .budget-wrapper {
       .apexcharts-series:not(:first-child) {
         path {
@@ -1131,6 +1205,7 @@
         border-color: $theme-dark-input-border-color;
       }
     }
+
     &:disabled {
       ~ .custom-control-label:before {
         background-color: $theme-dark-input-disabled-border-color;
@@ -1145,6 +1220,7 @@
         background-color: $theme-dark-switch-bg;
       }
     }
+
     .custom-control-input:disabled {
       ~ .custom-control-label:before {
         background-color: $theme-dark-switch-bg-disabled;
@@ -1166,17 +1242,18 @@
     &:disabled {
       opacity: 0.5;
     }
+
     &:focus {
-      border-color: $primary;
+      border-color: $primary-dark;
     }
   }
 
   select.form-control {
     &:not([multiple='multiple']) {
       background-image: url(str-replace(
-        str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
-        '#',
-        '%23'
+          str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
+          '#',
+          '%23'
       ));
     }
   }
@@ -1226,7 +1303,7 @@
     &:focus-within {
       .form-control,
       .input-group-text {
-        border-color: $primary;
+        border-color: $primary-dark;
         box-shadow: none;
       }
     }
@@ -1280,6 +1357,7 @@
           color: $theme-dark-headings-color;
         }
       }
+
       &.thead-dark th {
         background-color: $white;
         color: $dark !important;
@@ -1295,22 +1373,27 @@
     // table-dark style
     &.table-dark {
       background-color: $white;
+
       &.table-striped tbody tr:nth-of-type(odd) {
         background-color: rgba($dark, 0.05);
+
         td {
           background-color: inherit;
         }
       }
+
       td,
       th {
         border-color: #f8f9fa !important;
         color: $dark !important;
         background-color: $white;
+
         .text-white {
           color: $dark !important;
         }
       }
     }
+
     tbody {
       tr {
         // for contextual classes
@@ -1361,6 +1444,7 @@
     // hover animation
     &.table-hover-animation tbody tr {
       background-color: $theme-dark-table-bg;
+
       &:hover {
         box-shadow: $theme-dark-box-shadow;
       }
@@ -1388,12 +1472,14 @@
       .btn-secondary,
       [class*='buttons-'] {
         background-color: $theme-dark-body-bg !important;
+
         &:active {
-          background-color: $primary !important;
+          background-color: $primary-dark !important;
           color: $white;
         }
       }
     }
+
     .dt-button-collection {
       > div[role='menu'] {
         box-shadow: $theme-dark-box-shadow;
@@ -1417,37 +1503,43 @@
         .sorting_desc {
           &:before {
             background-image: url(str-replace(
-              str-replace($chevron-up, 'currentColor', $theme-dark-body-color),
-              '#',
-              '%23'
+                str-replace($chevron-up, 'currentColor', $theme-dark-body-color),
+                '#',
+                '%23'
             ));
           }
+
           &:after {
             background-image: url(str-replace(
-              str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
-              '#',
-              '%23'
+                str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
+                '#',
+                '%23'
             ));
           }
         }
+
         .sorting {
           &:before,
           &:after {
             opacity: 0.5;
           }
         }
+
         .sorting_asc {
           &:before {
             opacity: 1;
           }
+
           &:after {
             opacity: 0.5;
           }
         }
+
         .sorting_desc {
           &:after {
             opacity: 1;
           }
+
           &:before {
             opacity: 0.5;
           }
@@ -1469,6 +1561,7 @@
       color: $theme-dark-body-color;
     }
   }
+
   .aggrid,
   .ag-header {
     background-color: $theme-dark-card-bg;
@@ -1483,6 +1576,7 @@
     .ag-icon {
       color: $theme-dark-input-border-color;
     }
+
     .ag-header-cell.ag-column-hover {
       background: transparent !important;
     }
@@ -1498,6 +1592,7 @@
       border-color: $theme-dark-border-color !important;
       color: $theme-dark-body-color;
     }
+
     .ag-cell.ag-cell-inline-editing {
       border-color: $theme-dark-border-color;
       background: $theme-dark-body-bg;
@@ -1509,6 +1604,7 @@
       .ag-paging-button {
         background-color: $theme-dark-body-bg;
       }
+
       .ag-disabled {
         background: $theme-dark-card-bg;
       }
@@ -1524,7 +1620,7 @@
     }
 
     ::-webkit-scrollbar-thumb {
-      background: $primary;
+      background: $primary-dark;
     }
   }
 
@@ -1544,6 +1640,7 @@
     .profile-header {
       .navbar {
         background-color: $theme-dark-card-bg;
+
         .navbar-toggler {
           color: $theme-dark-body-color;
           border-color: $theme-dark-border-color;
@@ -1565,6 +1662,7 @@
       border-color: $theme-dark-border-color !important;
     }
   }
+
   // Knowledge Base
   .kb-search-content-info {
     .kb-search-content {
@@ -1597,10 +1695,12 @@
         background-color: $theme-dark-card-bg !important;
       }
     }
+
     .app-fixed-search {
       background-color: $theme-dark-card-bg !important;
       border-color: $theme-dark-border-color !important;
     }
+
     .content-right {
       border-color: $theme-dark-border-color !important;
     }
@@ -1614,6 +1714,7 @@
         .app-action {
           border-color: $theme-dark-border-color;
           background-color: $theme-dark-card-bg;
+
           .action-right {
             .list-inline-item {
               .dropdown-toggle {
@@ -1633,7 +1734,7 @@
             }
 
             &.selected-row-bg {
-              background-color: rgba($primary, 0.06);
+              background-color: rgba($primary-dark, 0.06);
               border-color: $theme-dark-border-color;
             }
           }
@@ -1657,6 +1758,7 @@
       // app email details
       .email-app-details {
         border-color: $theme-dark-border-color;
+
         .email-scroll-area {
           background-color: $theme-dark-body-bg;
         }
@@ -1674,12 +1776,13 @@
             }
           }
         }
+
         .email-info-dropup {
           .dropdown-toggle::after {
             background-image: url(str-replace(
-              str-replace($chevron-down, 'currentColor', $theme-dark-text-muted-color),
-              '#',
-              '%23'
+                str-replace($chevron-down, 'currentColor', $theme-dark-text-muted-color),
+                '#',
+                '%23'
             ));
           }
         }
@@ -1697,9 +1800,11 @@
         .ql-container {
           border-color: $theme-dark-border-color;
         }
+
         label {
           color: $theme-dark-body-color;
         }
+
         .modal-body {
           border-bottom-left-radius: $modal-content-border-radius;
           border-bottom-right-radius: $modal-content-border-radius;
@@ -1713,6 +1818,7 @@
     .content-area-wrapper {
       border-color: $theme-dark-border-color;
     }
+
     // left sidebar
     .sidebar {
       .chat-profile-sidebar {
@@ -1733,16 +1839,19 @@
               &:not(.active):hover {
                 background: $theme-dark-body-bg;
               }
+
               .chat-info .card-text,
               .chat-time {
                 color: $theme-dark-text-muted-color;
               }
+
               &.active {
                 .chat-info .card-text,
                 .chat-time {
                   color: $white;
                 }
               }
+
               img {
                 border-color: $theme-dark-border-color;
               }
@@ -1751,6 +1860,7 @@
         }
       }
     }
+
     .avatar-border {
       img {
         border-color: $theme-dark-border-color;
@@ -1769,28 +1879,34 @@
             color: $theme-dark-body-color;
           }
         }
+
         .start-chat-area,
         .user-chats {
           background-image: url($chat-bg-dark);
           background-color: #1e232f;
         }
+
         .user-chats {
           .divider .divider-text {
             background: $theme-dark-card-bg;
+
             &:before,
             &:after {
               border-color: $theme-dark-border-color;
             }
           }
+
           .avatar img {
             border-color: $theme-dark-border-color;
           }
         }
+
         // Active conversation style
         .active-chat {
           .chat-left {
             .chat-content {
               background-color: $theme-dark-card-bg;
+
               p {
                 color: $theme-dark-body-color;
               }
@@ -1802,10 +1918,12 @@
               color: $white;
             }
           }
+
           // Chat form
           .chat-header .dropdown-toggle {
             color: $theme-dark-body-color;
           }
+
           .chat-header,
           .chat-app-form {
             background-color: $theme-dark-card-bg;
@@ -1826,14 +1944,17 @@
     .user-chats {
       background-color: $theme-dark-widget-bg !important;
     }
+
     .card-header,
     .chat-app-form {
       background-color: $theme-dark-card-bg;
     }
+
     .chat-app-window .user-chats .chat-left .chat-content {
       background-color: $theme-dark-card-bg !important;
       color: $theme-dark-body-color !important;
     }
+
     .chat-app-window .user-chats .avatar img {
       border-color: $theme-dark-body-bg;
     }
@@ -1854,15 +1975,19 @@
               }
             }
           }
+
           .kanban-item {
             background-color: $theme-dark-card-bg;
+
             .item-dropdown i.dropdown-toggle,
             .item-dropdown svg.dropdown-toggle {
               stroke: $white;
             }
+
             .kanban-title-button {
               color: $theme-dark-body-color;
             }
+
             i,
             svg {
               stroke: $theme-dark-body-color;
@@ -1871,6 +1996,7 @@
         }
       }
     }
+
     .update-item-sidebar {
       .nav-tabs .nav-item .nav-link,
       .tab-content .tab-pane {
@@ -1878,6 +2004,7 @@
       }
     }
   }
+
   .kanban-item.gu-mirror {
     background-color: $theme-dark-card-bg;
   }
@@ -1892,21 +2019,25 @@
           }
         }
       }
+
       .content-right {
         .todo-task-list-wrapper {
           background-color: $theme-dark-card-bg !important;
           border-color: $theme-dark-border-color;
         }
+
         .todo-task-list {
           .todo-item {
             &:not(:first-child) {
               border-color: $theme-dark-border-color;
             }
+
             &.completed {
               .todo-title {
                 color: $theme-dark-text-muted-color;
               }
             }
+
             &:hover {
               box-shadow: $theme-dark-box-shadow;
             }
@@ -1923,16 +2054,19 @@
         }
       }
     }
+
     .todo-item-action {
       .close {
         background-color: transparent !important;
       }
     }
   }
+
   .todo-item.gu-mirror {
     background-color: $theme-dark-card-bg;
     border-color: $theme-dark-border-color;
     box-shadow: $theme-dark-box-shadow;
+
     &.completed {
       .todo-title {
         color: $theme-dark-text-muted-color;
@@ -1976,6 +2110,7 @@
           .card-body {
             border-color: $theme-dark-border-color;
           }
+
           .item-options {
             .wishlist {
               span {
@@ -1992,6 +2127,7 @@
         }
       }
     }
+
     .grid-view {
       .item-name a,
       .item-price {
@@ -2016,6 +2152,7 @@
         .coupons {
           input {
             color: $theme-dark-body-color;
+
             &::placeholder {
               color: $theme-dark-body-color;
             }
@@ -2023,6 +2160,7 @@
         }
       }
     }
+
     // Ecommerce details
     .app-ecommerce-details {
       .item-features,
@@ -2036,6 +2174,7 @@
   .file-manager-application {
     .sidebar-file-manager {
       background-color: $theme-dark-card-bg !important;
+
       .jstree {
         .jstree-container-ul {
           .jstree-anchor {
@@ -2043,6 +2182,7 @@
           }
         }
       }
+
       .storage-status {
         i,
         svg {
@@ -2097,10 +2237,12 @@
             .file-logo-wrapper {
               background-color: $theme-dark-body-bg !important;
             }
+
             &:not(.selected) {
               border-color: $theme-dark-border-color !important;
             }
           }
+
           &:not(.list-view) {
             .file-manager-item {
               .file-size,
@@ -2129,7 +2271,7 @@
     }
   }
 
-  // calendar
+  // insuredAppointment-calendar
   .app-calendar {
     .app-calendar-sidebar {
       background-color: $theme-dark-card-bg;
@@ -2138,6 +2280,7 @@
       .sidebar-content-title {
         color: $theme-dark-label-color;
       }
+
       .select-all,
       .input-filter {
         ~ label {
@@ -2145,6 +2288,7 @@
         }
       }
     }
+
     .fc {
       .fc-day-today {
         background: $theme-dark-body-bg !important;
@@ -2159,6 +2303,7 @@
             background-color: $theme-dark-card-bg;
             border-color: $theme-dark-border-color;
           }
+
           .fc-day-today {
             background-color: rgba($color: $gray-100, $alpha: 0.12) !important;
 
@@ -2168,16 +2313,19 @@
           }
         }
       }
+
       .fc-popover {
         background: $theme-dark-card-bg;
         border-color: $theme-dark-border-color;
       }
+
       .fc-popover-header {
         .fc-popover-title,
         .fc-popover-close {
           color: $theme-dark-body-color;
         }
       }
+
       tbody td,
       thead th {
         border-color: $theme-dark-border-color;
@@ -2190,15 +2338,19 @@
       .fc-list,
       th {
         border-color: $theme-dark-border-color;
+
         .fc-list-day-cushion {
           background: $theme-dark-body-bg;
         }
+
         .fc-list-event:hover td {
           background-color: $theme-dark-body-bg;
         }
+
         .fc-list-event-time {
           color: $theme-dark-body-color;
         }
+
         .fc-list-event {
           td {
             border-color: $theme-dark-border-color;
@@ -2215,22 +2367,27 @@
         background-color: $theme-dark-card-bg;
         border-color: $theme-dark-border-color;
       }
+
       .invoice-data-table {
         background-color: $theme-dark-card-bg;
+
         tbody .selected-row-bg {
           background-color: $theme-dark-border-color;
         }
+
         td {
           background-color: inherit;
         }
       }
     }
   }
+
   .invoice-edit,
   .invoice-add {
     .invoice-preview-card {
       .invoice-product-details {
         background-color: $theme-dark-body-bg;
+
         .product-details-border {
           background-color: $theme-dark-card-bg;
           border-color: $theme-dark-border-color;
@@ -2238,6 +2395,7 @@
       }
     }
   }
+
   .invoice-print {
     .form-control {
       background-color: $theme-dark-card-bg;
@@ -2247,9 +2405,10 @@
   // Users Application
   .app-user-view {
     .plan-card {
-      border-color: $primary !important;
+      border-color: $primary-dark !important;
     }
   }
+
   .app-user-edit {
     .form-control.error {
       border-color: $danger !important;
@@ -2280,18 +2439,22 @@
     &.navbar-sticky .horizontal-menu-wrapper .navbar-horizontal.header-navbar.fixed-top {
       box-shadow: 0 4px 24px 0 rgba($black, 0.75) !important;
     }
+
     .horizontal-menu-wrapper {
       background: linear-gradient(
-        to bottom,
-        rgba(37, 43, 71, 0.76) 44%,
-        rgba(56, 53, 53, 0.46) 73%,
-        rgba($white, 0) 100%
+          to bottom,
+          rgba(37, 43, 71, 0.76) 44%,
+          rgba(56, 53, 53, 0.46) 73%,
+          rgba($white, 0) 100%
       ) !important;
+
       .header-navbar {
         background: $theme-dark-card-bg !important;
+
         &.navbar-shadow {
           box-shadow: 0 4px 24px 0 rgba($black, 0.75);
         }
+
         &.navbar-horizontal {
           ul#main-menu-navigation > li:hover:not(.active) > a {
             background: $theme-dark-body-bg;
@@ -2300,7 +2463,11 @@
           .active {
             .nav-link {
               &.dropdown-toggle::after {
-                background-image: url(str-replace(str-replace($chevron-down, 'currentColor', $white), '#', '%23'));
+                background-image: url(str-replace(
+                    str-replace($chevron-down, 'currentColor', $white),
+                    '#',
+                    '%23'
+                ));
               }
             }
           }
@@ -2308,15 +2475,16 @@
           .nav-link {
             &.dropdown-toggle::after {
               background-image: url(str-replace(
-                str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
-                '#',
-                '%23'
+                  str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
+                  '#',
+                  '%23'
               ));
             }
           }
         }
       }
     }
+
     .main-menu-content {
       .navbar-nav {
         .dropdown-submenu {
@@ -2325,30 +2493,39 @@
             color: $theme-dark-body-color;
           }
         }
+
         .dropdown-menu {
           a {
             &:hover {
               color: $theme-dark-headings-color !important;
             }
           }
+
           .disabled a {
             color: $theme-dark-text-muted-color;
           }
+
           .dropdown-item {
             color: $theme-dark-headings-color;
           }
+
           .dropdown-toggle {
             &::after {
               background-image: url(str-replace(
-                str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
-                '#',
-                '%23'
+                  str-replace($chevron-right, 'currentColor', $theme-dark-body-color),
+                  '#',
+                  '%23'
               ));
             }
+
             &:hover,
             &:active {
               &::after {
-                background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $white), '#', '%23'));
+                background-image: url(str-replace(
+                    str-replace($chevron-right, 'currentColor', $white),
+                    '#',
+                    '%23'
+                ));
               }
             }
           }
@@ -2366,8 +2543,9 @@
             li.active > a {
               background: $theme-dark-body-bg !important;
               color: $theme-dark-body-color;
+
               &:hover {
-                color: $primary !important;
+                color: $primary-dark !important;
               }
             }
           }
@@ -2382,5 +2560,9 @@
         }
       }
     }
+  }
+
+  .brand-text {
+    color: $primary-dark !important;
   }
 }

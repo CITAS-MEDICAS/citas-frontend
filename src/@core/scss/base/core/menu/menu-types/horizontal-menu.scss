@@ -114,14 +114,22 @@
         &.dropdown-toggle {
           &::after {
             left: 0.4rem;
-            background-image: url(str-replace(str-replace($chevron-down, 'currentColor', $body-color), '#', '%23'));
+            background-image: url(str-replace(
+              str-replace($chevron-down, 'currentColor', $body-color),
+              '#',
+              '%23'
+            ));
           }
         }
       }
       .sidebar-group-active {
         .dropdown-toggle {
           &::after {
-            background-image: url(str-replace(str-replace($chevron-down, 'currentColor', $white), '#', '%23'));
+            background-image: url(str-replace(
+              str-replace($chevron-down, 'currentColor', $white),
+              '#',
+              '%23'
+            ));
           }
         }
       }
@@ -146,7 +154,11 @@
           margin-top: -7px;
           right: 1rem;
           // content: '\e844' !important;
-          background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $body-color), '#', '%23'));
+          background-image: url(str-replace(
+            str-replace($chevron-right, 'currentColor', $body-color),
+            '#',
+            '%23'
+          ));
         }
         .dropdown-item {
           font-size: 1rem;
@@ -277,7 +289,8 @@
     &:not(.blank-page) {
       .app-content {
         // padding-top: 9.75rem;
-        padding: calc(#{$content-padding} + #{$navbar-height}* 2 + #{$floating-nav-margin}) #{$content-padding} 0 #{$content-padding}; // * 2  as we have 2 navbar (menu + navbar)  in horizontal layout.
+        padding: calc(#{$content-padding} + #{$navbar-height}* 2 + #{$floating-nav-margin}) #{$content-padding}
+          0 #{$content-padding}; // * 2  as we have 2 navbar (menu + navbar)  in horizontal layout.
       }
     }
     .horizontal-menu-wrapper {
@@ -572,8 +585,8 @@
       background: $white;
     }
     .app-content {
-      padding: calc(#{$navbar-height} + calc(#{$content-padding} - 0.8rem)) calc(#{$content-padding} - 0.8rem) 0
-        calc(#{$content-padding} - 0.8rem) !important;
+      padding: calc(#{$navbar-height} + calc(#{$content-padding} - 0.8rem))
+        calc(#{$content-padding} - 0.8rem) 0 calc(#{$content-padding} - 0.8rem) !important;
     }
   }
 }
@@ -581,8 +594,8 @@
 @include media-breakpoint-down(xs) {
   // For static navbar
   html body.horizontal-layout.navbar-static .app-content {
-    padding: calc(#{$content-padding} - 0.8rem + #{$navbar-height}) calc(#{$content-padding} - 0.8rem) 0
-      calc(#{$content-padding} - 0.8rem) !important; // - 0.8rem to reduce padding in small screen
+    padding: calc(#{$content-padding} - 0.8rem + #{$navbar-height})
+      calc(#{$content-padding} - 0.8rem) 0 calc(#{$content-padding} - 0.8rem) !important; // - 0.8rem to reduce padding in small screen
   }
 }
 // Import vertical-overlay-menu.scss for small screen support

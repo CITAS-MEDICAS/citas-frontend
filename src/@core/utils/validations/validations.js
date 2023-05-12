@@ -13,11 +13,15 @@ import {
   alpha_num as rule_alpha_num,
   length as rule_length,
 } from 'vee-validate/dist/rules'
-import ar from 'vee-validate/dist/locale/ar.json'
-import en from 'vee-validate/dist/locale/en.json'
+import es from 'vee-validate/dist/locale/es.json'
 
 // eslint-disable-next-line object-curly-newline
-import { validatorPositive, validatorUrlValidator, validatorPassword, validatorCreditCard } from './validators'
+import {
+  validatorPositive,
+  validatorUrlValidator,
+  validatorPassword,
+  validatorCreditCard,
+} from './validators'
 
 // ////////////////////////////////////////////////////////
 // General
@@ -59,7 +63,8 @@ export const credit = extend('credit-card', {
 
 export const password = extend('password', {
   validate: validatorPassword,
-  message: 'Your {_field_} must contain at least one uppercase, one lowercase, one special character and one digit',
+  message:
+    'Your {_field_} must contain at least one uppercase, one lowercase, one special character and one digit',
 })
 
 export const url = extend('url', {
@@ -67,33 +72,23 @@ export const url = extend('url', {
   message: 'URL is invalid',
 })
 
+localize('es', es)
+
 // Install English and Arabic localizations.
-localize({
-  en: {
-    messages: en.messages,
-    names: {
-      email: 'Email',
-      password: 'Password',
-    },
-    fields: {
-      password: {
-        min: '{_field_} is too short, you want to get hacked?',
-      },
-    },
-  },
-  ar: {
-    messages: ar.messages,
-    names: {
-      email: 'البريد الإلكتروني',
-      password: 'كلمة السر',
-    },
-    fields: {
-      password: {
-        min: 'كلمة السر قصيرة جداً سيتم اختراقك',
-      },
-    },
-  },
-})
+// localize({
+//   es: {
+//     messages: es.messages,
+//     names: {
+//       email: 'Email',
+//       password: 'Password',
+//     },
+//     fields: {
+//       password: {
+//         min: '{_field_} is too short, you want to get hacked?',
+//       },
+//     },
+//   },
+// })
 // ////////////////////////////////////////////////////////
 // NOTE:
 // Quasar validation for reference only
@@ -132,22 +127,20 @@ localize({
 //   return re.test(val) || 'URL is invalid'
 // }
 
-// export const date = val => {
+export const date = val => {
+  // If blank return
+  if (val === undefined || val === null || val.length === 0) return true
 
-//   // If blank return
-//   if (val === undefined || val === null || val.length === 0) return true
+  // https://github.com/quasarframework/quasar/blob/dev/ui/src/utils/patterns.js
+  return /^-?[\d]+\/[0-1]\d\/[0-3]\d$/.test(val) || 'Date is invalid'
+}
 
-//   // https://github.com/quasarframework/quasar/blob/dev/ui/src/utils/patterns.js
-//   return /^-?[\d]+\/[0-1]\d\/[0-3]\d$/.test(val) || 'Date is invalid'
-// }
+export const max = (val, max) => {
+  // If blank return
+  if (val === undefined || val === null) return true
 
-// export const max = (val, max) => {
-
-//   // If blank return
-//   if (val === undefined || val === null) return true
-
-//   return val.length <= max || `More than ${max} characters are not allowed`
-// }
+  return val.length <= max || `More than ${max} characters are not allowed`
+}
 
 // export const max_arr = (val, max) => {
 //   return val.length <= max || `More than ${max} values are not allowed`

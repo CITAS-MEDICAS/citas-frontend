@@ -35,7 +35,8 @@ export default {
 
       // Update DOM for dark-layout
       if (skin === 'dark') document.body.classList.add('dark-layout')
-      else if (document.body.className.match('dark-layout')) document.body.classList.remove('dark-layout')
+      else if (document.body.className.match('dark-layout'))
+        document.body.classList.remove('dark-layout')
     },
     UPDATE_ROUTER_TRANSITION(state, val) {
       state.layout.routerTransition = val

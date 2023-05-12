@@ -1,11 +1,5 @@
 <template>
-  <e-charts
-    ref="line"
-    autoresize
-    :options="option"
-    theme="theme-color"
-    auto-resize
-  />
+  <e-charts ref="line" autoresize :options="option" theme="theme-color" auto-resize />
 </template>
 
 <script>
@@ -54,9 +48,7 @@ export default {
           },
           splitLine: {
             lineStyle: {
-              color: [
-                '#eeeeee',
-              ],
+              color: ['#eeeeee'],
             },
           },
           axisLine: {

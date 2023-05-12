@@ -23,7 +23,8 @@
     &.inRange:hover {
       background: lighten($color: $primary, $amount: 30%);
       border-color: lighten($color: $primary, $amount: 30%);
-      box-shadow: -5px 0 0 lighten($color: $primary, $amount: 30%), 5px 0 0 lighten($color: $primary, $amount: 30%);
+      box-shadow: -5px 0 0 lighten($color: $primary, $amount: 30%),
+        5px 0 0 lighten($color: $primary, $amount: 30%);
     }
     &.startRange,
     &.endRange,

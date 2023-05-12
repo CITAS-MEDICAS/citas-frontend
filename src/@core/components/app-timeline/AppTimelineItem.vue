@@ -2,13 +2,13 @@
   <li
     v-bind="$attrs"
     class="timeline-item"
-    :class="[`timeline-variant-${variant}`, fillBorder ? `timeline-item-fill-border-${variant}` : null]"
+    :class="[
+      `timeline-variant-${variant}`,
+      fillBorder ? `timeline-item-fill-border-${variant}` : null,
+    ]"
     v-on="$listeners"
   >
-    <div
-      v-if="!icon"
-      class="timeline-item-point"
-    />
+    <div v-if="!icon" class="timeline-item-point" />
     <div
       v-else
       class="timeline-item-icon d-flex align-items-center justify-content-center rounded-circle"
@@ -19,15 +19,9 @@
     <slot>
       <div class="d-flex flex-sm-row flex-column flex-wrap justify-content-between mb-1 mb-sm-0">
         <h6 v-text="title" />
-        <small
-          class="timeline-item-time text-nowrap text-muted"
-          v-text="time"
-        />
+        <small class="timeline-item-time text-nowrap text-muted" v-text="time" />
       </div>
-      <p
-        class="mb-0"
-        v-text="subtitle"
-      />
+      <p class="mb-0" v-text="subtitle" />
     </slot>
   </li>
 </template>

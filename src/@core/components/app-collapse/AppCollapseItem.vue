@@ -1,13 +1,7 @@
 <template>
-  <b-card
-    no-body
-    :class="{'open': visible}"
-    @mouseenter="collapseOpen"
-    @mouseleave="collapseClose"
-  >
+  <b-card no-body :class="{ open: visible }" @mouseenter="collapseOpen" @mouseleave="collapseClose">
     <b-card-header
-
-      :class="{'collapsed': !visible}"
+      :class="{ collapsed: !visible }"
       :aria-expanded="visible ? 'true' : 'false'"
       :aria-controls="collapseItemID"
       role="tab"
@@ -19,12 +13,7 @@
       </slot>
     </b-card-header>
 
-    <b-collapse
-      :id="collapseItemID"
-      v-model="visible"
-      :accordion="accordion"
-      role="tabpanel"
-    >
+    <b-collapse :id="collapseItemID" v-model="visible" :accordion="accordion" role="tabpanel">
       <b-card-body>
         <slot />
       </b-card-body>
@@ -33,9 +22,7 @@
 </template>
 
 <script>
-import {
-  BCard, BCardHeader, BCardBody, BCollapse,
-} from 'bootstrap-vue'
+import { BCard, BCardHeader, BCardBody, BCollapse } from 'bootstrap-vue'
 import { v4 as uuidv4 } from 'uuid'
 
 export default {

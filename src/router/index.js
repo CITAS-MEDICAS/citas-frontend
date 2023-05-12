@@ -1,74 +1,58 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import dashboard from './modules/pages/dashboard'
+import pages from './modules/pages/pages'
+
+import medicalCenter from './modules/administration/medicalCenter'
+import medicalUnit from './modules/administration/medicalUnit'
+import specialities from '@/router/modules/administration/specialities'
+import serviceHours from './modules/administration/service_hours'
+import relationship from './modules/administration/relationship'
+import registration from './modules/administration/registration'
+import medicalUnitType from './modules/administration/medicalUnitType'
+import calendar from './modules/administration/calendar'
+
+import medicalAppointment from './modules/appointments/medicalAppointments'
+
+import user from './modules/users/user'
+import role from './modules/users/role'
+import insured from './modules/users/insured'
+
+import dependent from './modules/insured/dependent'
+import appointment from './modules/insured/appointment'
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   scrollBehavior() {
     return { x: 0, y: 0 }
   },
   routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: () => import('@/views/Home.vue'),
-      meta: {
-        pageTitle: 'Home',
-        breadcrumb: [
-          {
-            text: 'Home',
-            active: true,
-          },
-        ],
-      },
-    },
-    {
-      path: '/second-page',
-      name: 'second-page',
-      component: () => import('@/views/SecondPage.vue'),
-      meta: {
-        pageTitle: 'Second Page',
-        breadcrumb: [
-          {
-            text: 'Second Page',
-            active: true,
-          },
-        ],
-      },
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: () => import('@/views/Login.vue'),
-      meta: {
-        layout: 'full',
-      },
-    },
-    {
-      path: '/error-404',
-      name: 'error-404',
-      component: () => import('@/views/error/Error404.vue'),
-      meta: {
-        layout: 'full',
-      },
-    },
-    {
-      path: '*',
-      redirect: 'error-404',
-    },
+    ...pages,
+    ...dashboard,
+    // Administration
+    ...medicalCenter,
+    ...medicalUnit,
+    ...specialities,
+    ...serviceHours,
+    ...relationship,
+    ...medicalUnitType,
+    ...calendar,
+    // Reservations
+    ...medicalAppointment,
+    // Users
+    ...user,
+    ...role,
+    ...insured,
+    // Insured
+    ...dependent,
+    ...appointment,
+    // registration
+    ...registration,
   ],
-})
-
-// ? For splash screen
-// Remove afterEach hook if you are not using splash screen
-router.afterEach(() => {
-  // Remove initial loading
-  const appLoading = document.getElementById('loading-bg')
-  if (appLoading) {
-    appLoading.style.display = 'none'
-  }
 })
 
 export default router

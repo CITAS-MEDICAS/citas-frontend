@@ -1,11 +1,5 @@
 <template>
-  <e-charts
-    ref="line"
-    autoresize
-    :options="line"
-    theme="theme-color"
-    auto-resize
-  />
+  <e-charts ref="line" autoresize :options="line" theme="theme-color" auto-resize />
 </template>
 
 <script>
@@ -31,12 +25,14 @@ export default {
     return {
       line: {
         // Make gradient line here
-        visualMap: [{
-          show: true,
-          type: 'continuous',
-          min: 0,
-          max: 400,
-        }],
+        visualMap: [
+          {
+            show: true,
+            type: 'continuous',
+            min: 0,
+            max: 400,
+          },
+        ],
         grid: {
           width: '96%',
           left: '30px',
@@ -46,10 +42,12 @@ export default {
         tooltip: {
           trigger: 'axis',
         },
-        xAxis: [{
-          boundaryGap: false,
-          data: this.optionData.xAxisData,
-        }],
+        xAxis: [
+          {
+            boundaryGap: false,
+            data: this.optionData.xAxisData,
+          },
+        ],
         yAxis: {
           type: 'value',
           splitLine: { show: false },

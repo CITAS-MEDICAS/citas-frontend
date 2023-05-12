@@ -19,6 +19,8 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+.idea/
+.github/
 
 !.vscode/*.code-snippets
 

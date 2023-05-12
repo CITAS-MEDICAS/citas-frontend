@@ -24,7 +24,11 @@
   // dropzone message icon
   .dz-message:before {
     content: '';
-    background-image: url(str-replace(str-replace($download, 'currentColor', $primary), '#', '%23'));
+    background-image: url(str-replace(
+      str-replace($download, 'currentColor', $primary),
+      '#',
+      '%23'
+    ));
     font-size: 80px;
     position: absolute;
     top: 14rem;

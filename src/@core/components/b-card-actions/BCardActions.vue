@@ -17,10 +17,7 @@
       :style="cardStyles"
       v-on="$listeners"
     >
-      <div
-        v-if="showHeader"
-        class="card-header"
-      >
+      <div v-if="showHeader" class="card-header">
         <!-- Title & SubTitle -->
         <div>
           <b-card-title>{{ $attrs.title }}</b-card-title>
@@ -58,9 +55,7 @@
 </template>
 
 <script>
-import {
-  BCard, BCardTitle, BCardSubTitle, BCardBody, BCollapse, BOverlay,
-} from 'bootstrap-vue'
+import { BCard, BCardTitle, BCardSubTitle, BCardBody, BCollapse, BOverlay } from 'bootstrap-vue'
 import BCardActionsContainer from './BCardActionsContainer.vue'
 
 export default {

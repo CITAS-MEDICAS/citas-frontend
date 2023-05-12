@@ -76,7 +76,16 @@
       }
 
       // bg color lighten for rgba - opacity set
-      @if ($color_name != 'light' and $color_name != 'black' and $color_name != 'white' and $color_name != 'dark') {
+      @if (
+        $color_name !=
+          'light' and
+          $color_name !=
+          'black' and
+          $color_name !=
+          'white' and
+          $color_name !=
+          'dark'
+      ) {
         .bg-light-#{$color_name} {
           background: rgba($color_value, 0.12) !important;
           color: $color_value !important;
@@ -104,7 +113,16 @@
       }
 
       // avatar with light bg
-      @if ($color_name != 'light' and $color_name != 'black' and $color_name != 'white' and $color_name != 'dark') {
+      @if (
+        $color_name !=
+          'light' and
+          $color_name !=
+          'black' and
+          $color_name !=
+          'white' and
+          $color_name !=
+          'dark'
+      ) {
         .avatar.bg-light-#{$color_name} {
           color: $color_value !important;
         }
@@ -202,7 +220,11 @@
           }
 
           &.dropdown-toggle::after {
-            background-image: url(str-replace(str-replace($chevron-down, 'currentColor', $color_value), '#', '%23'));
+            background-image: url(str-replace(
+              str-replace($chevron-down, 'currentColor', $color_value),
+              '#',
+              '%23'
+            ));
           }
         }
       }
@@ -263,7 +285,11 @@
           }
 
           &.dropdown-toggle::after {
-            background-image: url(str-replace(str-replace($chevron-down, 'currentColor', $color_value), '#', '%23'));
+            background-image: url(str-replace(
+              str-replace($chevron-down, 'currentColor', $color_value),
+              '#',
+              '%23'
+            ));
           }
           // split toggle have show class
           .show > &.dropdown-toggle {
@@ -317,7 +343,16 @@
       }
 
       // For Pagination
-      @if ($color_name != 'light' and $color_name != 'black' and $color_name != 'white' and $color_name != 'dark') {
+      @if (
+        $color_name !=
+          'light' and
+          $color_name !=
+          'black' and
+          $color_name !=
+          'white' and
+          $color_name !=
+          'dark'
+      ) {
         .pagination-#{$color-name} {
           .page-item {
             &.active {
@@ -379,7 +414,16 @@
       }
 
       // For Nav Pills
-      @if ($color_name != 'light' and $color_name != 'black' and $color_name != 'white' and $color_name != 'dark') {
+      @if (
+        $color_name !=
+          'light' and
+          $color_name !=
+          'black' and
+          $color_name !=
+          'white' and
+          $color_name !=
+          'dark'
+      ) {
         .nav-pill-#{$color-name} {
           .nav-item {
             .nav-link {

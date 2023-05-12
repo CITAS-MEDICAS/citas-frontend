@@ -1,7 +1,7 @@
 export const initialAbility = [
   {
     action: 'read',
-    subject: 'Auth',
+    subject: 'Guest',
   },
 ]
 

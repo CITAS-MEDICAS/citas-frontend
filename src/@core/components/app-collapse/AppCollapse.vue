@@ -1,9 +1,5 @@
 <template>
-  <div
-    role="tablist"
-    class="collapse-icon"
-    :class="collapseClasses"
-  >
+  <div role="tablist" class="collapse-icon" :class="collapseClasses">
     <slot />
   </div>
 </template>

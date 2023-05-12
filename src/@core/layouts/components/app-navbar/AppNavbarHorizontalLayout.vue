@@ -1,17 +1,10 @@
 <template>
   <div class="navbar-container d-flex content align-items-center">
-
     <!-- Nav Menu Toggler -->
     <ul class="nav navbar-nav d-xl-none">
       <li class="nav-item">
-        <b-link
-          class="nav-link"
-          @click="toggleVerticalMenuActive"
-        >
-          <feather-icon
-            icon="MenuIcon"
-            size="21"
-          />
+        <b-link class="nav-link" @click="toggleVerticalMenuActive">
+          <feather-icon icon="MenuIcon" size="21" />
         </b-link>
       </li>
     </ul>
@@ -34,9 +27,7 @@
 </template>
 
 <script>
-import {
-  BLink, BNavbarNav,
-} from 'bootstrap-vue'
+import { BLink, BNavbarNav } from 'bootstrap-vue'
 import Bookmarks from './components/Bookmarks.vue'
 import Locale from './components/Locale.vue'
 import DarkToggler from './components/DarkToggler.vue'
@@ -65,6 +56,5 @@ export default {
       default: () => {},
     },
   },
-
 }
 </script>

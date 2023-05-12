@@ -1,10 +1,11 @@
 // Core variables and mixins
 
-@import '../bootstrap-extended/include'; // Bootstrap includes
+@import '../bootstrap-extended/include';
+// Bootstrap includes
 @import '../components/include'; // Components includes
 
 $fc-calendar-height: 650px;
-$fc-sidebar-width: 18rem;
+$fc-sidebar-width: 30rem;
 $fc-event-font-weight: 600;
 $fc-event-font-size: 0.8rem;
 $fc-event-padding-x: 0.5rem;
@@ -12,20 +13,23 @@ $fc-event-padding-y: 0.25rem;
 $fc-toolbar-btn-padding: 0.438rem 0.5rem;
 $fc-day-toggle-btn-padding: 0.55rem 1.5rem;
 
-// Full calendar styles
+// Full insuredAppointment-calendar styles
 .fc {
   // Toolbar
   .fc-toolbar {
     flex-wrap: wrap;
     flex-direction: row !important;
+
     .fc-prev-button,
     .fc-next-button {
       display: inline-block;
       background-color: transparent;
       border-color: transparent;
+
       .fc-icon {
         color: $body-color;
       }
+
       &:hover,
       &:active,
       &:focus {
@@ -34,41 +38,50 @@ $fc-day-toggle-btn-padding: 0.55rem 1.5rem;
         box-shadow: none !important;
       }
     }
+
     .fc-prev-button {
       padding-left: 0 !important;
     }
+
     .fc-toolbar-chunk:first-child {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
     }
+
     .fc-button {
       padding: $fc-toolbar-btn-padding;
+
       &:active,
       &:focus {
         box-shadow: none;
       }
     }
+
     .fc-button-group {
       .fc-button {
         text-transform: capitalize;
+
         &:focus {
           box-shadow: none;
         }
       }
+
       .fc-button-primary {
         &:not(.fc-prev-button):not(.fc-next-button) {
           // background-color: rgba($primary, 0.1);
           background-color: transparent;
-          border-color: $primary;
-          color: $primary;
+          border-color: $primary-dark;
+          color: $primary-dark;
+
           &.fc-button-active,
           &:hover {
-            background-color: rgba($color: $primary, $alpha: 0.2) !important;
-            border-color: $primary !important;
-            color: $primary;
+            background-color: rgba($color: $primary-dark, $alpha: 0.2) !important;
+            border-color: $primary-dark !important;
+            color: $primary-dark;
           }
         }
+
         &.fc-sidebarToggle-button {
           border: 0;
 
@@ -80,6 +93,7 @@ $fc-day-toggle-btn-padding: 0.55rem 1.5rem;
           }
         }
       }
+
       .fc-sidebarToggle-button {
         padding-left: 0;
         background-color: transparent !important;
@@ -93,6 +107,7 @@ $fc-day-toggle-btn-padding: 0.55rem 1.5rem;
           margin-left: 0;
         }
       }
+
       .fc-dayGridMonth-button,
       .fc-timeGridWeek-button,
       .fc-timeGridDay-button,
@@ -103,22 +118,27 @@ $fc-day-toggle-btn-padding: 0.55rem 1.5rem;
         &:first-child {
           border-radius: $btn-border-radius;
         }
+
         &:first-child {
           border-top-right-radius: 0;
           border-bottom-right-radius: 0;
         }
+
         &:last-child {
           border-top-left-radius: 0;
           border-bottom-left-radius: 0;
         }
       }
     }
+
     & > * > :not(:first-child) {
       margin-left: 0rem;
     }
+
     .fc-toolbar-title {
       margin-left: 0.25rem;
     }
+
     .fc--button:empty,
     .fc-toolbar-chunk:empty {
       display: none;
@@ -129,6 +149,7 @@ $fc-day-toggle-btn-padding: 0.55rem 1.5rem;
   tbody td,
   thead th {
     border-color: $border-color;
+
     &.fc-col-header-cell {
       border-right: 0;
       border-left: 0;
@@ -143,21 +164,26 @@ $fc-day-toggle-btn-padding: 0.55rem 1.5rem;
   .fc-scrollgrid-section-liquid > td {
     border-bottom: 0;
   }
+
   .fc-daygrid-event-harness {
     .fc-event {
       font-size: $fc-event-font-size;
       font-weight: $fc-event-font-weight;
       padding: $fc-event-padding-y $fc-event-padding-x;
     }
+
     & + .fc-daygrid-event-harness {
       margin-top: 0.3rem;
     }
   }
+
   .fc-daygrid-day-bottom {
     margin-top: 0.3rem;
   }
+
   .fc-daygrid-day {
     padding: 5px;
+
     .fc-daygrid-day-top {
       flex-direction: row;
     }
@@ -169,6 +195,7 @@ $fc-day-toggle-btn-padding: 0.55rem 1.5rem;
   .fc-list-event-time {
     color: $body-color;
   }
+
   .fc-day-today {
     background: $body-bg !important;
     background-color: $body-bg !important;
@@ -183,10 +210,12 @@ $fc-day-toggle-btn-padding: 0.55rem 1.5rem;
         border-left: 0;
         border-right: 0;
       }
+
       .fc-timegrid-axis {
         border-color: $border-color;
       }
     }
+
     .fc-timegrid-axis {
       &.fc-scrollgrid-shrink {
         .fc-timegrid-axis-cushion {
@@ -195,17 +224,21 @@ $fc-day-toggle-btn-padding: 0.55rem 1.5rem;
         }
       }
     }
+
     .fc-timegrid-slots {
       .fc-timegrid-slot {
         height: 3rem;
+
         .fc-timegrid-slot-label-frame {
           text-align: center;
+
           .fc-timegrid-slot-label-cushion {
             text-transform: uppercase;
           }
         }
       }
     }
+
     .fc-timegrid-divider {
       display: none;
     }
@@ -214,15 +247,18 @@ $fc-day-toggle-btn-padding: 0.55rem 1.5rem;
   // List View
   .fc-list {
     border-color: $border-color;
+
     .fc-list-day-cushion {
       background: $body-bg;
     }
+
     .fc-list-event {
       &:hover {
         td {
           background-color: $body-bg;
         }
       }
+
       td {
         border-color: $border-color;
       }
@@ -234,6 +270,7 @@ $fc-day-toggle-btn-padding: 0.55rem 1.5rem;
 .app-calendar {
   position: relative;
   border-radius: $card-border-radius;
+
   .app-calendar-sidebar {
     position: absolute;
     left: calc(-#{$fc-sidebar-width} - 1.2rem);
@@ -244,15 +281,18 @@ $fc-day-toggle-btn-padding: 0.55rem 1.5rem;
     border-right: 1px solid $border-color;
     flex-basis: $fc-sidebar-width;
     transition: all 0.2s, background 0s, border 0s;
+
     &.show {
       left: 0;
     }
+
     .sidebar-content-title {
       font-size: 0.85rem;
       color: $text-muted;
       text-transform: uppercase;
       letter-spacing: 0.6px;
     }
+
     .select-all,
     .input-filter {
       & ~ label {
@@ -291,9 +331,11 @@ $fc-day-toggle-btn-padding: 0.55rem 1.5rem;
           cursor: pointer;
           line-height: 1.5;
         }
+
         .dropdown .dropdown-menu .dropdown-item {
           padding: 0.14rem 1.428rem;
         }
+
         .dropdown-toggle::after {
           display: none;
         }
@@ -310,31 +352,39 @@ $fc-day-toggle-btn-padding: 0.55rem 1.5rem;
       font-size: 1.45rem;
     }
   }
+
   .fc-header-toolbar {
     margin-bottom: 1.75rem !important;
   }
+
   .fc-view-harness {
     margin: 0 -1.6rem;
   }
+
   .fc-scrollgrid {
     border-color: $border-color;
   }
+
   .fc-day-past,
   .fc-day-future {
     .fc-daygrid-day-number {
       color: $text-muted;
     }
   }
+
   .fc-popover {
     box-shadow: $box-shadow;
+
     .fc-popover-header {
       background: transparent;
       padding: 0.5rem;
+
       .fc-popover-title,
       .fc-popover-close {
         color: $headings-color;
       }
     }
+
     .fc-popover-body {
       *:not(:last-of-type) {
         margin-bottom: 0.3rem;
@@ -349,6 +399,7 @@ $fc-day-toggle-btn-padding: 0.55rem 1.5rem;
       }
     }
   }
+
   .fc-list-event {
     background: transparent !important;
   }

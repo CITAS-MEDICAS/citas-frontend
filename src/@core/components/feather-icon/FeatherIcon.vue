@@ -30,7 +30,11 @@ export default {
     if (!props.badge) return svg
 
     // Badge
-    const badgeEl = h('span', { staticClass: 'badge badge-up badge-pill', class: props.badgeClasses }, [props.badge])
+    const badgeEl = h(
+      'span',
+      { staticClass: 'badge badge-up badge-pill', class: props.badgeClasses },
+      [props.badge]
+    )
 
     // Return span with children
     return h('span', { staticClass: 'feather-icon position-relative' }, [svg, badgeEl])
@@ -40,6 +44,6 @@ export default {
 
 <style lang="scss">
 svg.feather {
-  outline: none
+  outline: none;
 }
 </style>

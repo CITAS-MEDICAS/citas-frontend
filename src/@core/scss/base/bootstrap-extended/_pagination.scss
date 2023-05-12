@@ -45,7 +45,11 @@
       border-radius: 50%;
 
       &:before {
-        background-image: url(str-replace(str-replace($chevron-left, 'currentColor', $pagination-color), '#', '%23'));
+        background-image: url(str-replace(
+          str-replace($chevron-left, 'currentColor', $pagination-color),
+          '#',
+          '%23'
+        ));
         background-repeat: no-repeat;
         background-position: center;
         background-size: 14px;
@@ -63,7 +67,11 @@
       &:hover {
         background-color: $primary !important;
         &:before {
-          background-image: url(str-replace(str-replace($chevron-left, 'currentColor', $white), '#', '%23')) !important;
+          background-image: url(str-replace(
+            str-replace($chevron-left, 'currentColor', $white),
+            '#',
+            '%23'
+          )) !important;
         }
       }
     }
@@ -105,7 +113,11 @@
       border-radius: 50%;
 
       &:after {
-        background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $pagination-color), '#', '%23'));
+        background-image: url(str-replace(
+          str-replace($chevron-right, 'currentColor', $pagination-color),
+          '#',
+          '%23'
+        ));
         background-repeat: no-repeat;
         background-position: center;
         background-size: 14px;
@@ -148,7 +160,11 @@
   &.previous {
     .page-link {
       &:before {
-        background-image: url(str-replace(str-replace($chevron-left, 'currentColor', $pagination-color), '#', '%23'));
+        background-image: url(str-replace(
+          str-replace($chevron-left, 'currentColor', $pagination-color),
+          '#',
+          '%23'
+        ));
         background-repeat: no-repeat;
         background-position: center;
         background-size: 14px;
@@ -183,7 +199,11 @@
   &.next {
     .page-link {
       &:after {
-        background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $pagination-color), '#', '%23'));
+        background-image: url(str-replace(
+          str-replace($chevron-right, 'currentColor', $pagination-color),
+          '#',
+          '%23'
+        ));
         background-repeat: no-repeat;
         background-position: center;
         background-size: 14px;

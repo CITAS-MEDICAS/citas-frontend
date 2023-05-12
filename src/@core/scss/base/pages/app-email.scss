@@ -295,7 +295,11 @@ $email_details_header_height: 5rem;
         .dropdown-toggle::after {
           left: -2px;
           margin: 0;
-          background-image: url(str-replace(str-replace($chevron-down, 'currentColor', $text-muted), '#', '%23'));
+          background-image: url(str-replace(
+            str-replace($chevron-down, 'currentColor', $text-muted),
+            '#',
+            '%23'
+          ));
           background-size: 0.857rem;
         }
         .dropdown-menu {

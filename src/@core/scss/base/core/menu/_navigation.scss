@@ -30,9 +30,11 @@
   &.menu-fixed {
     position: fixed;
   }
+
   &.menu-static {
     height: 100%;
     padding-bottom: calc(100% - 20rem);
+
     .main-menu-content {
       height: unset !important;
     }
@@ -57,6 +59,7 @@
     margin-top: -0.7rem;
     filter: blur(5px);
     background: linear-gradient(#fff 41%, hsla(0, 0%, 100%, 0.11) 95%, hsla(0, 0%, 100%, 0));
+
     .bordered-layout & {
       background: linear-gradient($body-bg 41%, hsla(0, 0%, 100%, 0.11) 95%, hsla(0, 0%, 100%, 0));
     }
@@ -76,14 +79,17 @@
     position: relative;
     padding: 0.35rem 1rem 0.3rem 1.64rem;
     transition: 300ms ease all, background 0s;
+
     .navbar-brand {
       display: flex;
       align-items: center;
-      margin-top: 1.35rem;
+      //margin-top: 1.35rem;
       font-size: inherit;
+
       .brand-logo img {
         max-width: 36px;
       }
+
       .brand-text {
         color: $primary;
         padding-left: 1rem;
@@ -94,6 +100,7 @@
         animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
       }
     }
+
     .modern-nav-toggle {
       animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
     }
@@ -102,6 +109,7 @@
   .main-menu-content {
     height: calc(100% - #{$navbar-height}) !important;
     position: relative;
+
     .ps__rail-y {
       z-index: 3;
     }
@@ -114,7 +122,8 @@
 
     &.navigation-main {
       overflow-x: hidden;
-      padding-bottom: .75rem;
+      padding-bottom: 0.75rem;
+
       > li:first-child {
         margin-top: 0.5rem;
       }
@@ -156,6 +165,7 @@
       display: block;
       text-overflow: ellipsis;
       overflow: hidden;
+
       i,
       svg {
         height: 11px;

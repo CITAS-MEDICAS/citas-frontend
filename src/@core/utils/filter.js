@@ -28,7 +28,10 @@ export const avatarText = value => {
  * @param {String} value date to format
  * @param {Object} formatting Intl object to format with
  */
-export const formatDate = (value, formatting = { month: 'short', day: 'numeric', year: 'numeric' }) => {
+export const formatDate = (
+  value,
+  formatting = { month: 'short', day: 'numeric', year: 'numeric' }
+) => {
   if (!value) return value
   return new Intl.DateTimeFormat('en-US', formatting).format(new Date(value))
 }

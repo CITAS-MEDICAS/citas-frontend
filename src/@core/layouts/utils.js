@@ -1,6 +1,6 @@
-import router from '@/router'
 import { isObject } from '@core/utils/utils'
 import { computed } from '@vue/composition-api'
+import router from '@/router'
 
 /**
  * Return which component to render based on it's data/context
@@ -48,7 +48,9 @@ export const isNavLinkActive = link => {
 
   if (!resolveRoutedName) return false
 
-  return matchedRoutes.some(route => route.name === resolveRoutedName || route.meta.navActiveLink === resolveRoutedName)
+  return matchedRoutes.some(
+    route => route.name === resolveRoutedName || route.meta.navActiveLink === resolveRoutedName
+  )
 }
 
 /**

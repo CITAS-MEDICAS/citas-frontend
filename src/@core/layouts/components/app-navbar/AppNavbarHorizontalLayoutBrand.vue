@@ -2,15 +2,9 @@
   <div class="navbar-header d-xl-block d-none">
     <ul class="nav navbar-nav">
       <li class="nav-item">
-        <b-link
-          class="navbar-brand"
-          to="/"
-        >
+        <b-link class="navbar-brand" to="/">
           <span class="brand-logo">
-            <b-img
-              :src="appLogoImage"
-              alt="logo"
-            />
+            <b-img :src="appLogoImage" alt="logo" />
           </span>
           <h2 class="brand-text mb-0">
             {{ appName }}
@@ -41,6 +35,4 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

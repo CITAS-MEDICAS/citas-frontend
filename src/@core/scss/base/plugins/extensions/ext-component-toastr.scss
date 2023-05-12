@@ -119,7 +119,11 @@
     background-color: $warning;
   }
   &:after {
-    background-image: url(str-replace(str-replace($warningIcon, 'currentColor', $white), '#', '%23'));
+    background-image: url(str-replace(
+      str-replace($warningIcon, 'currentColor', $white),
+      '#',
+      '%23'
+    ));
   }
 }
 

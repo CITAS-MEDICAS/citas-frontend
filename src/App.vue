@@ -1,18 +1,12 @@
 <template>
-  <div
-    id="app"
-    class="h-100"
-    :class="[skinClasses]"
-  >
+  <div id="app" class="h-100" :class="[skinClasses]">
     <component :is="layout">
       <router-view />
     </component>
-
   </div>
 </template>
 
 <script>
-
 // This will be populated in `beforeCreate` hook
 import { $themeColors, $themeBreakpoints, $themeConfig } from '@themeConfig'
 import { provideToast } from 'vue-toastification/composition'
@@ -29,12 +23,10 @@ const LayoutFull = () => import('@/layouts/full/LayoutFull.vue')
 
 export default {
   components: {
-
     // Layouts
     LayoutHorizontal,
     LayoutVertical,
     LayoutFull,
-
   },
   // ! We can move this computed: layout & contentLayoutType once we get to use Vue 3
   // Currently, router.currentRoute is not reactive and doesn't trigger any change
@@ -61,7 +53,9 @@ export default {
 
     // eslint-disable-next-line no-plusplus
     for (let i = 0, len = breakpoints.length; i < len; i++) {
-      $themeBreakpoints[breakpoints[i]] = Number(useCssVar(`--breakpoint-${breakpoints[i]}`, document.documentElement).value.slice(0, -2))
+      $themeBreakpoints[breakpoints[i]] = Number(
+        useCssVar(`--breakpoint-${breakpoints[i]}`, document.documentElement).value.slice(0, -2)
+      )
     }
 
     // Set RTL

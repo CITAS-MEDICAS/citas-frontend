@@ -47,7 +47,11 @@
   .dropdown.show {
     .dropdown-toggle {
       &::after {
-        background-image: url(str-replace(str-replace($chevron-down, 'currentColor', $white), '#', '%23'));
+        background-image: url(str-replace(
+          str-replace($chevron-down, 'currentColor', $white),
+          '#',
+          '%23'
+        ));
       }
     }
   }
@@ -55,7 +59,11 @@
   .dropdown-toggle {
     &:not(.active) {
       &::after {
-        background-image: url(str-replace(str-replace($chevron-down, 'currentColor', $body-color), '#', '%23'));
+        background-image: url(str-replace(
+          str-replace($chevron-down, 'currentColor', $body-color),
+          '#',
+          '%23'
+        ));
       }
     }
   }

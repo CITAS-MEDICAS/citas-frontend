@@ -1,22 +1,16 @@
 <template>
   <div
     class="app-content content"
-    :class="[{'show-overlay': $store.state.app.shallShowOverlay}, $route.meta.contentClass]"
+    :class="[{ 'show-overlay': $store.state.app.shallShowOverlay }, $route.meta.contentClass]"
   >
     <div class="content-overlay" />
     <div class="header-navbar-shadow" />
-    <div
-      class="content-wrapper"
-      :class="contentWidth === 'boxed' ? 'container p-0' : null"
-    >
+    <div class="content-wrapper" :class="contentWidth === 'boxed' ? 'container p-0' : null">
       <slot name="breadcrumb">
         <app-breadcrumb />
       </slot>
       <div class="content-body">
-        <transition
-          :name="routerTransition"
-          mode="out-in"
-        >
+        <transition :name="routerTransition" mode="out-in">
           <slot />
         </transition>
       </div>
@@ -36,12 +30,11 @@ export default {
     const { routerTransition, contentWidth } = useAppConfig()
 
     return {
-      routerTransition, contentWidth,
+      routerTransition,
+      contentWidth,
     }
   },
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

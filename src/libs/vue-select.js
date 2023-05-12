@@ -7,8 +7,14 @@ vSelect.props.components.default = () => ({
     render: h => h('feather-icon', { props: { size: '14', icon: 'XIcon' } }),
   },
   OpenIndicator: {
-    render: h => h('feather-icon', { props: { size: '15', icon: 'ChevronDownIcon' }, class: 'open-indicator' }),
+    render: h =>
+      h('feather-icon', {
+        props: { size: '15', icon: 'ChevronDownIcon' },
+        class: 'open-indicator',
+      }),
   },
 })
 
-Vue.component(vSelect)
+Vue.component('v-select', vSelect)
+
+require('@core/scss/vue/libs/vue-select.scss')

@@ -1,12 +1,15 @@
+import dashboard from './dashboard'
+import users from './users'
+import administration from './administration'
+import config from './config'
+import insuredUsers from './insuredUsers'
+import appointment from './appointments'
+
 export default [
-  {
-    title: 'Home',
-    route: 'home',
-    icon: 'HomeIcon',
-  },
-  {
-    title: 'Second Page',
-    route: 'second-page',
-    icon: 'FileIcon',
-  },
+  ...dashboard,
+  ...administration,
+  ...appointment,
+  ...users,
+  ...insuredUsers,
+  ...config
 ]

@@ -34,7 +34,11 @@
   &.has-sub {
     > a:after {
       content: '';
-      background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $body-color), '#', '%23'));
+      background-image: url(str-replace(
+        str-replace($chevron-right, 'currentColor', $body-color),
+        '#',
+        '%23'
+      ));
       background-repeat: no-repeat;
       background-position: center;
       background-size: $arrow-font-size;
@@ -67,24 +71,31 @@
   height: calc(
     100vh -
       calc(
-        calc(#{$contentPadding} * #{$spacingSides}) + #{$navbarHeight} + #{$footerHeight} + #{$floatingNavMargin} + #{$horizontalMenuHeight}
+        calc(#{$contentPadding} * #{$spacingSides}) + #{$navbarHeight} + #{$footerHeight} + #{$floatingNavMargin} +
+          #{$horizontalMenuHeight}
       )
   );
   height: calc(
     var(--vh, 1vh) * 100 -
       calc(
-        calc(#{$contentPadding} * #{$spacingSides}) + #{$navbarHeight} + #{$footerHeight} + #{$floatingNavMargin} + #{$horizontalMenuHeight}
+        calc(#{$contentPadding} * #{$spacingSides}) + #{$navbarHeight} + #{$footerHeight} + #{$floatingNavMargin} +
+          #{$horizontalMenuHeight}
       )
   );
   // responsive size height
   @if $horizontalLayout {
     @include media-breakpoint-down(lg) {
       height: calc(
-        100vh - calc(calc(calc(#{$contentPadding} - 0.8rem) * #{$spacingSides}) + #{$navbarHeight} + #{$footerHeight})
+        100vh -
+          calc(
+            calc(calc(#{$contentPadding} - 0.8rem) * #{$spacingSides}) + #{$navbarHeight} + #{$footerHeight}
+          )
       );
       height: calc(
         var(--vh, 1vh) * 100 -
-          calc(calc(calc(#{$contentPadding} - 0.8rem) * #{$spacingSides}) + #{$navbarHeight} + #{$footerHeight})
+          calc(
+            calc(calc(#{$contentPadding} - 0.8rem) * #{$spacingSides}) + #{$navbarHeight} + #{$footerHeight}
+          )
       );
     }
   } @else {
@@ -92,15 +103,15 @@
       height: calc(
         100vh -
           calc(
-            calc(calc(#{$contentPadding} * #{$spacingSides}) - calc(0.8rem * #{$spacingSides})) + #{$navbarHeight} + #{$footerHeight} +
-              #{$floatingNavMargin} + #{$horizontalMenuHeight}
+            calc(calc(#{$contentPadding} * #{$spacingSides}) - calc(0.8rem * #{$spacingSides})) + #{$navbarHeight} +
+              #{$footerHeight} + #{$floatingNavMargin} + #{$horizontalMenuHeight}
           )
       );
       height: calc(
         var(--vh, 1vh) * 100 -
           calc(
-            calc(calc(#{$contentPadding} * #{$spacingSides}) - calc(0.8rem * #{$spacingSides})) + #{$navbarHeight} + #{$footerHeight} +
-              #{$floatingNavMargin} + #{$horizontalMenuHeight}
+            calc(calc(#{$contentPadding} * #{$spacingSides}) - calc(0.8rem * #{$spacingSides})) + #{$navbarHeight} +
+              #{$footerHeight} + #{$floatingNavMargin} + #{$horizontalMenuHeight}
           )
       );
     }

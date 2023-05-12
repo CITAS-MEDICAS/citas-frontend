@@ -1,23 +1,15 @@
 <template>
   <div class="app-auto-suggest">
-    <input
-      v-model="searchQuery"
-      type="text"
-      v-bind="inputProps"
-    >
+    <input v-model="searchQuery" type="text" v-bind="inputProps" />
     <ul class="auto-suggest-suggestions-list">
       <li
         v-for="(suggestion_list, grp_name, grp_index) in filteredData"
         :key="grp_index"
         class="suggestions-groups-list"
       >
-
         <!-- Group Header -->
         <p class="suggestion-group-title">
-          <slot
-            name="group"
-            :group_name="grp_name"
-          >
+          <slot name="group" :group_name="grp_name">
             <span>
               {{ grp_name }}
             </span>
@@ -32,10 +24,7 @@
             class="suggestion-group-suggestion cursor-pointer"
             @click="suggestionSelected(suggestion)"
           >
-            <slot
-              :name="grp_name"
-              :suggestion="suggestion"
-            >
+            <slot :name="grp_name" :suggestion="suggestion">
               <span>{{ suggestion[data[grp_name].key] }}</span>
             </slot>
           </li>
@@ -44,10 +33,7 @@
             v-if="!suggestion_list.length && searchQuery"
             class="suggestion-group-suggestion no-results"
           >
-            <slot
-              name="noResult"
-              :group_name="grp_name"
-            >
+            <slot name="noResult" :group_name="grp_name">
               <p>No Results Found.</p>
             </slot>
           </li>
@@ -87,15 +73,16 @@ export default {
     }
 
     return {
-      searchQuery, filteredData, suggestionSelected,
+      searchQuery,
+      filteredData,
+      suggestionSelected,
     }
   },
 }
 </script>
 
 <style scoped>
-ul
-{
+ul {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -119,10 +106,10 @@ p {
 
 .suggestion-group-title {
   font-weight: 500;
-  padding: .75rem 1rem .25rem;
+  padding: 0.75rem 1rem 0.25rem;
 }
 
 .suggestion-group-suggestion {
-  padding: .75rem 1rem
+  padding: 0.75rem 1rem;
 }
 </style>

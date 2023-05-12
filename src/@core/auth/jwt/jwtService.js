@@ -1,5 +1,8 @@
 import jwtDefaultConfig from './jwtDefaultConfig'
 
+import { app } from '@/main'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+
 export default class JwtService {
   // Will be used by this service for making API calls
   axiosIns = null
@@ -22,39 +25,67 @@ export default class JwtService {
       config => {
         // Get token from localStorage
         const accessToken = this.getToken()
+        const activeRole = this.getActiveRole()
 
         // If token is present add it to request's Authorization Header
         if (accessToken) {
           // eslint-disable-next-line no-param-reassign
           config.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`
         }
+
+        if (activeRole) {
+          config.headers['Request-Role'] = activeRole.role
+        }
+
         return config
       },
-      error => Promise.reject(error),
+      error => Promise.reject(error)
     )
 
     // Add request/response interceptor
     this.axiosIns.interceptors.response.use(
       response => response,
       error => {
-        // const { config, response: { status } } = error
         const { config, response } = error
         const originalRequest = config
 
-        // if (status === 401) {
+        if (originalRequest.url.includes('api/auth/login')) {
+          app.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Error',
+              text: 'Credenciales invalidos.',
+              icon: 'AlertCircleIcon',
+              variant: 'danger',
+            },
+          })
+          return Promise.reject(error)
+        }
+
+        const { data } = response
+
+        let title = 'Error'
+        let message =
+          data?.message || 'Ocurrio un error, contacte con el Administrador del Sistema!'
+
+        if (data?.errors?.length) {
+          title = data.errors[0]?.title || title
+          message = data.errors[0]?.detail || message
+        }
+
+        app.$toast({
+          component: ToastificationContent,
+          props: {
+            title,
+            text: message,
+            icon: 'AlertCircleIcon',
+            variant: 'danger',
+          },
+        })
+
         if (response && response.status === 401) {
-          if (!this.isAlreadyFetchingAccessToken) {
-            this.isAlreadyFetchingAccessToken = true
-            this.refreshToken().then(r => {
-              this.isAlreadyFetchingAccessToken = false
+          this.fetchRefreshToken()
 
-              // Update accessToken in localStorage
-              this.setToken(r.data.accessToken)
-              this.setRefreshToken(r.data.refreshToken)
-
-              this.onAccessTokenFetched(r.data.accessToken)
-            })
-          }
           const retryOriginalRequest = new Promise(resolve => {
             this.addSubscriber(accessToken => {
               // Make sure to assign accessToken according to your response.
@@ -66,9 +97,34 @@ export default class JwtService {
           })
           return retryOriginalRequest
         }
+
         return Promise.reject(error)
-      },
+      }
     )
+  }
+
+  fetchRefreshToken() {
+    if (this.isAlreadyFetchingAccessToken) return
+
+    this.isAlreadyFetchingAccessToken = true
+    this.refreshToken()
+      .then(({ data }) => {
+        this.isAlreadyFetchingAccessToken = false
+
+        if (data.access_token && data.refresh_token) {
+          this.setToken(data.access_token)
+          this.setRefreshToken(data.refresh_token)
+        }
+
+        this.onAccessTokenFetched(data.access_token)
+      })
+      .catch(error => {
+        console.log('refreshToken -> error', error.response)
+        if (error.response.data.message === 'The refresh token is invalid.') {
+          this.clearStorage()
+          window.location = '/login'
+        }
+      })
   }
 
   onAccessTokenFetched(accessToken) {
@@ -95,8 +151,27 @@ export default class JwtService {
     localStorage.setItem(this.jwtConfig.storageRefreshTokenKeyName, value)
   }
 
+  setUserData(userData) {
+    localStorage.setItem(this.jwtConfig.storageUserDataKeyName, JSON.stringify(userData))
+  }
+
+  getUserData() {
+    return JSON.parse(localStorage.getItem(this.jwtConfig.storageUserDataKeyName))
+  }
+
+  clearStorage() {
+    localStorage.removeItem(this.jwtConfig.storageTokenKeyName)
+    localStorage.removeItem(this.jwtConfig.storageRefreshTokenKeyName)
+    localStorage.removeItem('userRoles')
+    localStorage.removeItem('userRole')
+  }
+
   login(...args) {
     return this.axiosIns.post(this.jwtConfig.loginEndpoint, ...args)
+  }
+
+  logout() {
+    return this.axiosIns.post(this.jwtConfig.logoutEndpoint)
   }
 
   register(...args) {
@@ -105,7 +180,23 @@ export default class JwtService {
 
   refreshToken() {
     return this.axiosIns.post(this.jwtConfig.refreshEndpoint, {
-      refreshToken: this.getRefreshToken(),
+      refresh_token: this.getRefreshToken(),
     })
+  }
+
+  setUserRoles(permissions) {
+    localStorage.setItem('userRoles', JSON.stringify(permissions))
+  }
+
+  getUserRoles() {
+    return JSON.parse(localStorage.getItem('userRoles'))
+  }
+
+  setActiveRole(role) {
+    localStorage.setItem('userRole', JSON.stringify(role))
+  }
+
+  getActiveRole() {
+    return JSON.parse(localStorage.getItem('userRole'))
   }
 }
